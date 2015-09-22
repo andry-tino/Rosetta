@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EB88111-9FD9-41F9-9CB0-5CFFAA65E5C6}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker", "ASTWalker\ASTWalker.csproj", "{CB3FF60E-AF76-471A-98A3-DFED31A10E94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB3FF60E-AF76-471A-98A3-DFED31A10E94}.Debug|x86.ActiveCfg = Debug|x86
+		{CB3FF60E-AF76-471A-98A3-DFED31A10E94}.Debug|x86.Build.0 = Debug|x86
+		{CB3FF60E-AF76-471A-98A3-DFED31A10E94}.Release|x86.ActiveCfg = Release|x86
+		{CB3FF60E-AF76-471A-98A3-DFED31A10E94}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CB3FF60E-AF76-471A-98A3-DFED31A10E94} = {1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}
+	EndGlobalSection
+EndGlobal
