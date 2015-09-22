@@ -8,8 +8,8 @@
     <ProjectGuid>{CB3FF60E-AF76-471A-98A3-DFED31A10E94}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ASTWalker</RootNamespace>
-    <AssemblyName>ASTWalker</AssemblyName>
+    <RootNamespace>Rosetta.AST</RootNamespace>
+    <AssemblyName>Rosetta.ASTWalker</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
