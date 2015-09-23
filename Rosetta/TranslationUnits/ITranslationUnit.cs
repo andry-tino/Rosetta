@@ -17,5 +17,13 @@ namespace Rosetta.Translation
         /// </summary>
         /// <returns>TypeScript code.</returns>
         string Translate();
+
+        /// <summary>
+        /// Gets the <see cref="TranslationHost"/> for this <see cref="ITranslationUnit"/>.
+        /// </summary>
+        TranslationHost Host
+        {
+            get;
+        }
     }
 }

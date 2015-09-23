@@ -6,6 +6,7 @@
 namespace Rosetta.Translation
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Interface for describing compound translation elements.
@@ -15,7 +16,7 @@ namespace Rosetta.Translation
         /// <summary>
         /// Gets the list of inner units.
         /// </summary>
-        ITranslationUnit[] InnerUnits
+        IEnumerable<ITranslationUnit> InnerUnits
         {
             get;
         }
