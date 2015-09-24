@@ -30,13 +30,8 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// Sets the visibility of the class.
+        /// 
         /// </summary>
-        public VisibilityToken Visibility
-        {
-            set { this.visibility = value; }
-        }
-
         public IEnumerable<ITranslationUnit> InnerUnits
         {
             get
@@ -45,21 +40,59 @@ namespace Rosetta.Translation
             }
         }
 
+        /// <summary>
+        /// Translate the unit into TypeScript.
+        /// </summary>
+        /// <returns></returns>
         public string Translate()
         {
-            return "public class a { {0} }";
+            return string.Format(
+                "{0} class {1} { {0} }"
+                ); // Call other translation units
         }
 
-        public TranslationHost Host
+        /// <summary>
+        /// Sets the visibility of the class.
+        /// </summary>
+        public VisibilityToken Visibility
         {
-            get 
-            {
-                return new TranslationHost();
-            }
+            set { this.visibility = value; }
         }
 
-        public void AddPropertyDeclaration()
+        #region Compound translation unit methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        public void AddMemberDeclaration(ITranslationUnit translationUnit)
         {
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        public void AddPropertyDeclaration(ITranslationUnit translationUnit)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        public void AddConstructorDeclaration(ITranslationUnit translationUnit)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        public void AddMethodDeclaration(ITranslationUnit translationUnit)
+        {
+        }
+
+        #endregion
     }
 }
