@@ -44,8 +44,9 @@
     <Compile Include="ICompoundTranslationUnit.cs" />
     <Compile Include="ITranslationUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tokens\Lexems.cs" />
+    <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="tokens\VisibilityToken.cs" />
-    <Compile Include="TranslationHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="simple\" />
