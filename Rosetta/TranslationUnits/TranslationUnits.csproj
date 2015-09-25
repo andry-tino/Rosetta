@@ -44,13 +44,12 @@
     <Compile Include="ICompoundTranslationUnit.cs" />
     <Compile Include="ITranslationUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="simple\IdentifierTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="tokens\VisibilityToken.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="simple\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

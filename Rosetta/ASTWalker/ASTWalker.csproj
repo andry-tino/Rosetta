@@ -96,6 +96,7 @@
     <Compile Include="ClassASTWalker.cs" />
     <Compile Include="IASTWalker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WalkerTranslationUnitMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
