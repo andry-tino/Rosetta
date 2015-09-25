@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Runner
+namespace Rosetta.Runner
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {

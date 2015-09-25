@@ -18,8 +18,7 @@ namespace Rosetta.AST
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="node"></param>
         /// <returns></returns>
-        ITranslationUnit Walk(CSharpSyntaxNode node);
+        ITranslationUnit Walk();
     }
 }

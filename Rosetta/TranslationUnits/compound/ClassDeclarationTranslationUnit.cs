@@ -48,7 +48,7 @@ namespace Rosetta.Translation
         /// <param name="name"></param>
         /// <param name="baseClassName"></param>
         /// <returns></returns>
-        public ClassDeclarationTranslationUnit Create(VisibilityToken visibility, string name, string baseClassName)
+        public static ClassDeclarationTranslationUnit Create(VisibilityToken visibility, string name, string baseClassName)
         {
             return new ClassDeclarationTranslationUnit()
             {
