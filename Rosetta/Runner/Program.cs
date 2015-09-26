@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/// <summary>
+/// Program.cs
+/// Andrea Tino - 2015
+/// </summary>
 
 namespace Rosetta.Runner
 {

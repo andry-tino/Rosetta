@@ -12,7 +12,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Interface for describing compound translation elements.
     /// </summary>
-    public class ClassDeclarationTranslationUnit : ITranslationUnit, ICompoundTranslationUnit
+    public class ClassDeclarationTranslationUnit : ScopedElementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
         // Inner units
         private IEnumerable<ITranslationUnit> memberDeclarations;
@@ -23,9 +23,8 @@ namespace Rosetta.Translation
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDeclarationTranslationUnit"/> class.
         /// </summary>
-        private ClassDeclarationTranslationUnit()
+        protected ClassDeclarationTranslationUnit() : base()
         {
-            this.Visibility = VisibilityToken.None;
             this.Name = string.Empty;
             this.BaseClassName = null;
             this.Interfaces = new List<string>();
@@ -35,8 +34,7 @@ namespace Rosetta.Translation
             this.propertyDeclarations = new List<ITranslationUnit>();
             this.methodDeclarations = new List<ITranslationUnit>();
         }
-
-        private VisibilityToken Visibility { get; set; }
+        
         private string Name { get; set; }
         private string BaseClassName { get; set; }
         private IEnumerable<string> Interfaces { get; set; }
