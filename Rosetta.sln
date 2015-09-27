@@ -3,28 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EB88111-9FD9-41F9-9CB0-5CFFAA65E5C6}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker", "ASTWalker\ASTWalker.csproj", "{CB3FF60E-AF76-471A-98A3-DFED31A10E94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "Runner\Runner.csproj", "{869D1B89-8513-4733-9F5A-17A22C7B165B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker", "src\ASTWalker\ASTWalker.csproj", "{CB3FF60E-AF76-471A-98A3-DFED31A10E94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationUnits", "TranslationUnits\TranslationUnits.csproj", "{851A3ACD-A1C2-40CD-8BA0-0296EEDBF025}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "src\Runner\Runner.csproj", "{869D1B89-8513-4733-9F5A-17A22C7B165B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationUnits", "src\TranslationUnits\TranslationUnits.csproj", "{851A3ACD-A1C2-40CD-8BA0-0296EEDBF025}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2683807F-29C3-4ED2-90F5-B342DB0A8B04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker.UnitTests", "ASTWalker.UnitTests\ASTWalker.UnitTests.csproj", "{E1E7E1AA-FC1B-49AC-9F99-7D2AD20FD193}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker.UnitTests", "test\ASTWalker.UnitTests\ASTWalker.UnitTests.csproj", "{E1E7E1AA-FC1B-49AC-9F99-7D2AD20FD193}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationUnits.UnitTests", "TranslationUnits.UnitTests\TranslationUnits.UnitTests.csproj", "{29131CA9-196F-4118-8703-7D1FBBBA4688}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationUnits.UnitTests", "test\TranslationUnits.UnitTests\TranslationUnits.UnitTests.csproj", "{29131CA9-196F-4118-8703-7D1FBBBA4688}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{28FDF6E2-34FE-455B-AD7D-588920B2055F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestData", "TestData\TestData.csproj", "{C9710DF8-1539-4AC0-A62B-F6F917485796}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestData", "test\resources\TestData\TestData.csproj", "{C9710DF8-1539-4AC0-A62B-F6F917485796}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
