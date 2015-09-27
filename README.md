@@ -1,4 +1,7 @@
 # Rosetta
+
+[![Build Status](https://travis-ci.org/andry-tino/Rosetta.svg)](https://travis-ci.org/andry-tino/Rosetta)
+
 C# to TypeScript via [Roslyn](https://github.com/dotnet/roslyn)
 
 ## Overview
