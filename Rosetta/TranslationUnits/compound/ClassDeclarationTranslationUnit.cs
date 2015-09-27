@@ -7,6 +7,7 @@ namespace Rosetta.Translation
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Collections.Generic;
 
     /// <summary>
@@ -84,30 +85,33 @@ namespace Rosetta.Translation
             StringWriter writer = new StringWriter();
 
             // Opening declaration
-            writer.WriteLine("{0} class {1} {2}");
+            string classVisibility = TokenUtility.ToString(this.Visibility);
+            string interfaceImplementation = this.BuildClassInheritanceAndInterfaceImplementationList();
+
+            writer.WriteLine("{0} class {1} {2} {3}", classVisibility, this.Name, interfaceImplementation, Lexems.OpenCurlyBracket);
 
             // Translating members first
             foreach (ITranslationUnit translationUnit in this.memberDeclarations)
             {
-                // TODO
+                writer.Write(translationUnit.Translate());
             }
 
             // Then constructors
             foreach (ITranslationUnit translationUnit in this.constructorDeclarations)
             {
-                // TODO
+                writer.Write(translationUnit.Translate());
             }
 
             // Then properties
             foreach (ITranslationUnit translationUnit in this.propertyDeclarations)
             {
-                // TODO
+                writer.Write(translationUnit.Translate());
             }
 
             // Finally methods
             foreach (ITranslationUnit translationUnit in this.methodDeclarations)
             {
-                // TODO
+                writer.Write(translationUnit.Translate());
             }
 
             // Closing
@@ -151,5 +155,28 @@ namespace Rosetta.Translation
         }
 
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private string BuildClassInheritanceAndInterfaceImplementationList()
+        {
+            string list = ": ";
+
+            list += this.BaseClassName == null ? string.Empty : this.BaseClassName;
+
+            if (this.Interfaces.Count() == 0)
+            {
+                return list;
+            }
+            
+            foreach (string implementedInterface in this.Interfaces)
+            {
+                list += string.Format(", {0}", implementedInterface);
+            }
+
+            return list;
+        }
     }
 }

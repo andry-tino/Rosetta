@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Runner")]
-[assembly: AssemblyDescription("Main runner entry point for Rosetta.")]
+[assembly: AssemblyTitle("TestData")]
+[assembly: AssemblyDescription("Test data for tests.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andrea Tino")]
-[assembly: AssemblyProduct("Runner")]
+[assembly: AssemblyProduct("TestData")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("Andrea Tino")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("869d1b89-8513-4733-9f5a-17a22c7b165b")]
+[assembly: Guid("c9710df8-1539-4ac0-a62b-f6f917485796")]
 
 // Version information for an assembly consists of the following four values:
 //

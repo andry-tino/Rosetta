@@ -6,7 +6,7 @@
     <ProjectGuid>{29131CA9-196F-4118-8703-7D1FBBBA4688}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TranslationUnits.UnitTests</RootNamespace>
+    <RootNamespace>Translation.UnitTests</RootNamespace>
     <AssemblyName>TranslationUnits.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,8 +50,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="ClassDeclarationTest.cs" />
+    <Compile Include="data\ClassDeclarations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TestData\TestData.csproj">
+      <Project>{c9710df8-1539-4ac0-a62b-f6f917485796}</Project>
+      <Name>TestData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TranslationUnits\TranslationUnits.csproj">
+      <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
+      <Name>TranslationUnits</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

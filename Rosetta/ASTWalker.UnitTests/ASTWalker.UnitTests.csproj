@@ -6,7 +6,7 @@
     <ProjectGuid>{E1E7E1AA-FC1B-49AC-9F99-7D2AD20FD193}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ASTWalker.UnitTests</RootNamespace>
+    <RootNamespace>AST.UnitTests</RootNamespace>
     <AssemblyName>ASTWalker.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -52,6 +52,16 @@
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASTWalker\ASTWalker.csproj">
+      <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
+      <Name>ASTWalker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestData\TestData.csproj">
+      <Project>{c9710df8-1539-4ac0-a62b-f6f917485796}</Project>
+      <Name>TestData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -13,9 +13,9 @@ namespace Rosetta.Translation
     public static class TokenUtility
     {
         /// <summary>
-        /// 
+        /// Converts the visibility into the appropriate TypeScript token.
         /// </summary>
-        /// <param name="visibilityToken"></param>
+        /// <param name="visibilityToken">The visibility.</param>
         /// <returns></returns>
         public static string ToString(this VisibilityToken visibilityToken)
         {
