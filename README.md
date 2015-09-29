@@ -1,6 +1,6 @@
 # Rosetta
 
-[![Build Status](https://travis-ci.org/andry-tino/Rosetta.svg)](https://travis-ci.org/andry-tino/Rosetta)
+[![Build Status](http://antino-enlad.cloudapp.net:8080/job/Rosetta/badge/icon)](http://antino-enlad.cloudapp.net:8080/job/Rosetta/)
 
 C# to TypeScript via [Roslyn](https://github.com/dotnet/roslyn)
 
