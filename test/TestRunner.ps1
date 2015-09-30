@@ -9,13 +9,16 @@ param(
 
 foreach ($TestAssembly in $TestAssemblies)
 {
-  $PathToTestAssembly = join-path -Path $WorkspacePath -ChildPath $TestAssembly;
-  $PathToTestAssembly = join-path -Path $WorkspacePath -ChildPath "bin/Debug/$TestAssembly.dll";
+  $PathToTestAssembly = join-path -Path $WorkspacePath -ChildPath 'test';
+  $PathToTestAssembly = join-path -Path $PathToTestAssembly -ChildPath $TestAssembly;
+  $PathToTestAssembly = join-path -Path $PathToTestAssembly -ChildPath "bin/Debug/$TestAssembly.dll";
+  
+  write-output "Executing $PathToTestAssembly...";
 	
   # Testing
   $Result = & $MSTestPath "/testcontainer:$PathToTestAssembly";
-  if ($Result)
+  if ($LASTEXITCODE -gt 0)
   {
-    throw;
+    throw new-object 'System.Exception';
   }
 }
