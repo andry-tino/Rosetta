@@ -13,6 +13,7 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.Text;
 
     using Rosetta.Translation;
+    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Walks a class AST node.
@@ -20,6 +21,7 @@ namespace Rosetta.AST
     public class ClassASTWalker : CSharpSyntaxWalker, IASTWalker
     {
         private CSharpSyntaxNode node;
+
         private ClassDeclarationTranslationUnit classDeclaration;
 
         /// <summary>
@@ -34,10 +36,11 @@ namespace Rosetta.AST
             }
 
             this.node = node;
+            Class classHelper = new Class(classDeclarationSyntaxNode);
 
             this.classDeclaration = ClassDeclarationTranslationUnit.Create(
-                VisibilityToken.None, 
-                classDeclarationSyntaxNode.Identifier.Text, 
+                classHelper.Visibility, 
+                classHelper.Name, 
                 "");
         }
 
