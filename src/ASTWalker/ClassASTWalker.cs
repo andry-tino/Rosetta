@@ -36,7 +36,7 @@ namespace Rosetta.AST
             }
 
             this.node = node;
-            Class classHelper = new Class(classDeclarationSyntaxNode);
+            ClassDeclaration classHelper = new ClassDeclaration(classDeclarationSyntaxNode);
 
             this.classDeclaration = ClassDeclarationTranslationUnit.Create(
                 classHelper.Visibility, 

@@ -14,21 +14,32 @@ namespace Rosetta.AST
     /// <summary>
     /// Interface for describing AST walkers.
     /// </summary>
-    public static class Source
+    internal static class Source
     {
         private static SyntaxTree programRoot;
 
         /// <summary>
-        /// 
+        /// Gets the compilation object for <see cref="ProgramRoot"/> allowing access to its semantic model.
         /// </summary>
         public static CSharpCompilation Compilation
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
-        /// 
+        /// Gets the semantic model for <see cref="ProgramRoot"/>.
+        /// </summary>
+        public static SemanticModel SemanticModel
+        {
+            get
+            {
+                return Compilation.GetSemanticModel(ProgramRoot);
+            }
+        }
+
+        /// <summary>
+        /// Gets the program root's <see cref="SyntaxTree"/>.
         /// </summary>
         public static SyntaxTree ProgramRoot
         {
@@ -36,11 +47,12 @@ namespace Rosetta.AST
             set
             {
                 programRoot = value;
+                BuildSemanticModel();
             }
         }
 
         /// <summary>
-        /// 
+        /// Builds the semantic model associated to the root program <see cref="ProgramRoot"/>.
         /// </summary>
         private static void BuildSemanticModel()
         {

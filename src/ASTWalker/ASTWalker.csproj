@@ -104,9 +104,11 @@
   <ItemGroup>
     <Compile Include="ASTExtractor.cs" />
     <Compile Include="ClassASTWalker.cs" />
-    <Compile Include="helpers\Class.cs" />
-    <Compile Include="helpers\Inheritable.cs" />
+    <Compile Include="helpers\declarations\ClassDeclaration.cs" />
+    <Compile Include="helpers\declarations\InheritableDeclaration.cs" />
+    <Compile Include="helpers\declarations\InterfaceDeclaration.cs" />
     <Compile Include="helpers\Modifiers.cs" />
+    <Compile Include="helpers\references\TypeReference.cs" />
     <Compile Include="IASTWalker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source.cs" />
