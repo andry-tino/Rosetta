@@ -53,6 +53,7 @@
     <Compile Include="ClassDeclarationTest.cs" />
     <Compile Include="data\ClassDeclarations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestSuite.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\resources\TestData\TestData.csproj">

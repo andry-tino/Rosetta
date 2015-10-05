@@ -8,22 +8,47 @@ namespace Rosetta.Tests
     using System;
 
     /// <summary>
-    /// Utility class for tokens.
+    /// Acts like a factory.
     /// </summary>
     public static class SourceGenerator
     {
         /// <summary>
-        /// 
+        /// The class name.
         /// </summary>
-        public static string SimpleProgram
+        public static string Name { get; set; }
+
+        /// <summary>
+        /// The base class name.
+        /// </summary>
+        public static string BaseName { get; set; }
+
+        /// <summary>
+        /// Defines default values.
+        /// </summary>
+        static SourceGenerator()
         {
-            get
+            Name = "MyClass";
+            BaseName = "MyBaseClass";
+        }
+
+        /// <summary>
+        /// Generates the appropriate class given some options.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <returns></returns>
+        public static string Generate(SourceOptions options = SourceOptions.None)
+        {
+            ClassGenerator classes = new ClassGenerator()
             {
-                return new ClassGenerator()
-                {
-                    Name = ""
-                }.VerySimpleClass;
+                Name = Name
+            };
+
+            if (options.HasFlag(SourceOptions.HasInheritance))
+            {
+                return classes.ClassWithBaseClass;
             }
+
+            return classes.VerySimpleClass;
         }
     }
 }
