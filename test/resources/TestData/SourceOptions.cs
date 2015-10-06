@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.Tests
+namespace Rosetta.Tests.Data
 {
     using System;
 

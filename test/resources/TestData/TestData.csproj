@@ -7,8 +7,8 @@
     <ProjectGuid>{C9710DF8-1539-4AC0-A62B-F6F917485796}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestData</RootNamespace>
-    <AssemblyName>TestData</AssemblyName>
+    <RootNamespace>Rosetta.Tests.Data</RootNamespace>
+    <AssemblyName>Rosetta.TestData</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
