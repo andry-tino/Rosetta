@@ -11,7 +11,7 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    using Rosetta.ASTWalker.Helpers;
+    using Rosetta.AST.Helpers;
     using Rosetta.Tests.Utils;
 
     [TestClass]
@@ -31,10 +31,21 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TypeName()
         {
-            SyntaxNode node = new NodeLocator(Class1SyntaxTree).LocateFirst(typeof(SyntaxNode));
+            SyntaxNode node = new NodeLocator(Class1SyntaxTree).LocateFirst(typeof(SimpleBaseTypeSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!", "SimpleBaseTypeSyntax"));
+
+            SimpleBaseTypeSyntax simpleBaseTypeNode = node as SimpleBaseTypeSyntax;
+            Assert.IsNotNull(simpleBaseTypeNode, "Found node should be of type `{0}`!", "SimpleBaseTypeSyntax");
+
+            TypeReference typeReference = new TypeReference(simpleBaseTypeNode);
+            string identifier = typeReference.Identifier;
+            Assert.IsNotNull(identifier, "Property `Identifier` should not be null!");
         }
     }
 }

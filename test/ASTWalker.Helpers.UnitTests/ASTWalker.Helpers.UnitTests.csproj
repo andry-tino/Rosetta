@@ -121,6 +121,10 @@
     <Compile Include="TypeReferenceTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ASTWalker\ASTWalker.csproj">
+      <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
+      <Name>ASTWalker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\resources\TestData\TestData.csproj">
       <Project>{c9710df8-1539-4ac0-a62b-f6f917485796}</Project>
       <Name>TestData</Name>
