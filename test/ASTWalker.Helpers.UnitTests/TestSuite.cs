@@ -6,6 +6,7 @@
 namespace Rosetta.ASTWalker.Helpers.UnitTests
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Rosetta.Tests.Data;
@@ -15,12 +16,12 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         /// <summary>
         /// Simple class.
         /// </summary>
-        public static string Class1 { get; set; }
+        public static KeyValuePair<string, IReadOnlyDictionary<string, string>> Class1 { get; private set; }
 
         /// <summary>
         /// Class with base class.
         /// </summary>
-        public static string Class2 { get; set; }
+        public static KeyValuePair<string, IReadOnlyDictionary<string, string>> Class2 { get; private set; }
 
         [AssemblyInitialize]
         public static void Initialize(TestContext context)

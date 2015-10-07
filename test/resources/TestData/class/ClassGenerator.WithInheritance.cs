@@ -6,6 +6,7 @@
 namespace Rosetta.Tests
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Simple class.
@@ -18,7 +19,7 @@ namespace Rosetta.Tests
         public string BaseClassName { get; set; }
 
         /// <summary>
-        /// A very simle class for an executable.
+        /// A very simle class with base class for an executable.
         /// </summary>
         public string ClassWithBaseClass
         {
@@ -41,6 +42,21 @@ namespace Rosetta.Tests
                         }
                     }",
                 this.Name, this.BaseClassName);
+            }
+        }
+
+        /// <summary>
+        /// Attributes for <see cref="ClassWithBaseClass"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> ClassWithBaseClassAttributes
+        {
+            get
+            {
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("ClassName", this.Name);
+                dictionary.Add("BaseClassName", this.BaseClassName);
+
+                return dictionary;
             }
         }
     }

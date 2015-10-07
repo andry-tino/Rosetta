@@ -23,7 +23,7 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         public static void Initialize(TestContext context)
         {
             // Creating needed resources
-            Class1SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class1).GetRoot();
+            Class1SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class1.Key).GetRoot();
         }
 
         [ClassCleanup]
@@ -46,6 +46,7 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
             TypeReference typeReference = new TypeReference(simpleBaseTypeNode);
             string identifier = typeReference.Identifier;
             Assert.IsNotNull(identifier, "Property `Identifier` should not be null!");
+            Assert.AreEqual(TestSuite.Class1.Value["BaseClassName"], identifier);
         }
     }
 }

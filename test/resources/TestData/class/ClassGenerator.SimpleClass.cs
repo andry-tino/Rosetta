@@ -6,6 +6,7 @@
 namespace Rosetta.Tests
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Simple class.
@@ -36,6 +37,20 @@ namespace Rosetta.Tests
                         }
                     }",
                 this.Name);
+            }
+        }
+
+        /// <summary>
+        /// Attributes for <see cref="VerySimpleClass"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> VerySimpleClassAttributes
+        {
+            get
+            {
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("ClassName", this.Name);
+
+                return dictionary;
             }
         }
     }
