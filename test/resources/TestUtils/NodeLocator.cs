@@ -44,8 +44,11 @@ namespace Rosetta.Tests.Utils
         /// <returns>A <see cref="SyntaxNode"/>.</returns>
         public SyntaxNode LocateFirst(Type nodeType)
         {
+            ValidateInputType(nodeType);
+
             List<SyntaxNode> nodes = new List<SyntaxNode>();
             var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node));
+            astExecutor.Start();
 
             return nodes.Count > 0 ? nodes[0] : null;
         }
@@ -57,10 +60,21 @@ namespace Rosetta.Tests.Utils
         /// <returns>A <see cref="SyntaxNode"/>.</returns>
         public IEnumerable<SyntaxNode> LocateAll(Type nodeType)
         {
+            ValidateInputType(nodeType);
+
             List<SyntaxNode> nodes = new List<SyntaxNode>();
             var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node));
+            astExecutor.Start();
 
             return nodes.ToArray();
+        }
+
+        private static void ValidateInputType(Type type)
+        {
+            if (!type.IsSubclassOf(typeof(SyntaxNode)))
+            {
+                throw new InvalidOperationException("Type should be a subclass of `SyntaxNode`!");
+            }
         }
     }
 }

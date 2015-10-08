@@ -11,6 +11,7 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
 
     using Rosetta.Tests.Data;
     
+    [TestClass]
     public class TestSuite
     {
         /// <summary>

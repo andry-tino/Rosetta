@@ -24,7 +24,7 @@ namespace Rosetta.Tests.Utils
         /// <param name="node"></param>
         /// <param name="type"></param>
         /// <param name="operation"></param>
-        public ASTWalkerNodeTypeOperationExecutor(SyntaxNode node, Type type, Action<SyntaxNode> operation)
+        public ASTWalkerNodeTypeOperationExecutor(SyntaxNode node, Type type, Action<SyntaxNode> operation) : base(SyntaxWalkerDepth.StructuredTrivia)
         {
             if (node == null)
             {
@@ -48,6 +48,14 @@ namespace Rosetta.Tests.Utils
         /// Immutable object.
         /// </summary>
         public SyntaxNode Root { get; private set; }
+
+        /// <summary>
+        /// Starts the visiting process
+        /// </summary>
+        public void Start()
+        {
+            this.Visit(this.Root);
+        }
 
         /// <summary>
         /// 

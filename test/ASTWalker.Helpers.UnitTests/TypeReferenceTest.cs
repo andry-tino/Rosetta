@@ -17,13 +17,13 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
     [TestClass]
     public class TypeReferenceTest
     {
-        private static SyntaxNode Class1SyntaxTree;
+        private static SyntaxNode Class2SyntaxTree;
 
         [ClassInitialize]
         public static void Initialize(TestContext context)
         {
             // Creating needed resources
-            Class1SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class1.Key).GetRoot();
+            Class2SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class2.Key).GetRoot();
         }
 
         [ClassCleanup]
@@ -37,7 +37,7 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         [TestMethod]
         public void TypeName()
         {
-            SyntaxNode node = new NodeLocator(Class1SyntaxTree).LocateFirst(typeof(SimpleBaseTypeSyntax));
+            SyntaxNode node = new NodeLocator(Class2SyntaxTree).LocateFirst(typeof(SimpleBaseTypeSyntax));
             Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!", "SimpleBaseTypeSyntax"));
 
             SimpleBaseTypeSyntax simpleBaseTypeNode = node as SimpleBaseTypeSyntax;
