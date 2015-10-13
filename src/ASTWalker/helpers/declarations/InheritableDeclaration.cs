@@ -21,8 +21,8 @@ namespace Rosetta.AST.Helpers
         protected TypeDeclarationSyntax syntaxNode;
 
         // Cached values
-        private IEnumerable<TypeReference> baseTypes;
-
+        private IEnumerable<BaseTypeReference> baseTypes;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Inheritable"/> class.
         /// </summary>
@@ -55,14 +55,14 @@ namespace Rosetta.AST.Helpers
         /// <remarks>
         /// Value is cached.
         /// </remarks>
-        public virtual IEnumerable<TypeReference> BaseTypes
+        public virtual IEnumerable<BaseTypeReference> BaseTypes
         {
             get
             {
                 if (this.baseTypes == null)
                 {
                     BaseListSyntax listSyntax = this.syntaxNode.BaseList;
-                    this.baseTypes = new List<TypeReference>();
+                    this.baseTypes = new List<BaseTypeReference>();
 
                     foreach (SyntaxNode node in listSyntax.ChildNodes())
                     {
@@ -74,7 +74,7 @@ namespace Rosetta.AST.Helpers
                             {
                                 case TypeKind.Class:
                                 case TypeKind.Interface:
-                                    ((List<TypeReference>)this.baseTypes).Add(new TypeReference(node as SimpleBaseTypeSyntax));
+                                    ((List<BaseTypeReference>)this.baseTypes).Add(new BaseTypeReference(node as BaseTypeSyntax));
                                     break;
                                 default:
                                     // Not recognized, skip it

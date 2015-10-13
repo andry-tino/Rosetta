@@ -20,8 +20,8 @@ namespace Rosetta.AST.Helpers
     internal class ClassDeclaration : InheritableDeclaration
     {
         // Cached values
-        private IEnumerable<TypeReference> interfaces;
-        private TypeReference baseClass;
+        private IEnumerable<BaseTypeReference> interfaces;
+        private BaseTypeReference baseClass;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDeclarationSyntax"/> class.
@@ -40,7 +40,7 @@ namespace Rosetta.AST.Helpers
         /// <remarks>
         /// Value is cached.
         /// </remarks>
-        public TypeReference BaseClass
+        public BaseTypeReference BaseClass
         {
             get
             {
@@ -59,7 +59,7 @@ namespace Rosetta.AST.Helpers
         /// <remarks>
         /// Value is cached.
         /// </remarks>
-        public IEnumerable<TypeReference> ImplementedInterfaces
+        public IEnumerable<BaseTypeReference> ImplementedInterfaces
         {
             get
             {

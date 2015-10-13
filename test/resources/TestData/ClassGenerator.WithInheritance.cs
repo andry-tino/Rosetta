@@ -33,6 +33,10 @@ namespace Rosetta.Tests
 
                     namespace HelloWorld
                     {{
+                        class {1}
+                        {{
+                        }}
+
                         class {0} : {1}
                         {{
                             static void Main(string[] args)

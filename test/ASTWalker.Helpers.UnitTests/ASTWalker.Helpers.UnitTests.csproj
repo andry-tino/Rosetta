@@ -118,7 +118,7 @@
   <ItemGroup>
     <Compile Include="TestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeReferenceTest.cs" />
+    <Compile Include="BaseTypeReferenceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ASTWalker\ASTWalker.csproj">

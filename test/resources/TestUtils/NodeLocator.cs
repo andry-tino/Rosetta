@@ -54,6 +54,22 @@ namespace Rosetta.Tests.Utils
         }
 
         /// <summary>
+        /// Gets the last occurrance of a node type in the AST.
+        /// </summary>
+        /// <param name="nodeType">The node type to look for.</param>
+        /// <returns>A <see cref="SyntaxNode"/>.</returns>
+        public SyntaxNode LocateLast(Type nodeType)
+        {
+            ValidateInputType(nodeType);
+
+            List<SyntaxNode> nodes = new List<SyntaxNode>();
+            var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node));
+            astExecutor.Start();
+
+            return nodes.Count > 0 ? nodes[nodes.Count - 1] : null;
+        }
+
+        /// <summary>
         /// Gets all occurrances of a node type in the AST.
         /// </summary>
         /// <param name="nodeType">The node type to look for.</param>

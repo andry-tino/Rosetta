@@ -24,7 +24,11 @@ namespace Rosetta.Tests.Utils
         /// <param name="node"></param>
         /// <param name="type"></param>
         /// <param name="operation"></param>
-        public ASTWalkerNodeTypeOperationExecutor(SyntaxNode node, Type type, Action<SyntaxNode> operation) : base(SyntaxWalkerDepth.StructuredTrivia)
+        /// <remarks>
+        /// The walker will walk through all nodes as depth level.
+        /// </remarks>
+        public ASTWalkerNodeTypeOperationExecutor(SyntaxNode node, Type type, Action<SyntaxNode> operation) 
+            : base(SyntaxWalkerDepth.Node)
         {
             if (node == null)
             {

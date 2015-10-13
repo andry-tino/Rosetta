@@ -108,7 +108,7 @@
     <Compile Include="helpers\declarations\InheritableDeclaration.cs" />
     <Compile Include="helpers\declarations\InterfaceDeclaration.cs" />
     <Compile Include="helpers\Modifiers.cs" />
-    <Compile Include="helpers\references\TypeReference.cs" />
+    <Compile Include="helpers\references\BaseTypeReference.cs" />
     <Compile Include="IASTWalker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source.cs" />

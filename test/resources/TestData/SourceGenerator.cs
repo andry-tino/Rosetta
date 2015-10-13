@@ -52,6 +52,7 @@ namespace Rosetta.Tests.Data
 
             if (options.HasFlag(SourceOptions.HasInheritance))
             {
+                classes.BaseClassName = BaseName;
                 return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
                     classes.ClassWithBaseClass, classes.ClassWithBaseClassAttributes);
             }
