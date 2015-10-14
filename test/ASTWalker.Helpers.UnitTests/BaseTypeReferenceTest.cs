@@ -22,6 +22,8 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
     {
         private static SyntaxTree Class2SyntaxTree;
         private static SemanticModel Class2SemanticModel;
+        private static SyntaxTree Class3SyntaxTree;
+        private static SemanticModel Class3SemanticModel;
 
         [ClassInitialize]
         public static void Initialize(TestContext context)
@@ -31,6 +33,11 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
             Class2SemanticModel = CSharpCompilation.Create("Class").AddReferences(
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
                 Class2SyntaxTree).GetSemanticModel(Class2SyntaxTree);
+
+            Class3SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class3.Key);
+            Class3SemanticModel = CSharpCompilation.Create("Class").AddReferences(
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
+                Class3SyntaxTree).GetSemanticModel(Class3SyntaxTree);
         }
 
         [ClassCleanup]
@@ -39,10 +46,10 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         }
 
         /// <summary>
-        /// Tests that we can successfully retrieve the type name when having a type in base list.
+        /// Tests that we can successfully retrieve the type name when having a class type in base list.
         /// </summary>
         [TestMethod]
-        public void TypeNameFromBaseType()
+        public void ClassTypeNameFromBaseList()
         {
             SyntaxNode node = new NodeLocator(Class2SyntaxTree).LocateLast(typeof(ClassDeclarationSyntax));
             Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!", typeof(ClassDeclarationSyntax).Name));
@@ -57,6 +64,27 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
             Assert.AreNotEqual(string.Empty, name, "Type name should not be empty!");
             Assert.IsNotNull(name, "Type name should not be null!");
             Assert.AreEqual(TestSuite.Class2.Value["BaseClassName"], name, "Type name is not the one in source!");
+        }
+
+        /// <summary>
+        /// Tests that we can successfully retrieve the type name when having an interface type.
+        /// </summary>
+        [TestMethod]
+        public void InterfaceTypeNameFromBaseList()
+        {
+            SyntaxNode node = new NodeLocator(Class3SyntaxTree).LocateLast(typeof(ClassDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!", typeof(ClassDeclarationSyntax).Name));
+
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+            BaseTypeSyntax baseTypeNode = classDeclarationNode.BaseList.Types.FirstOrDefault();
+            Assert.IsNotNull(baseTypeNode, "Found node should be of type `{0}`!", typeof(BaseTypeSyntax).Name);
+
+            BaseTypeReference baseTypeReference = new BaseTypeReference(baseTypeNode);
+            string name = baseTypeReference.Name;
+
+            Assert.AreNotEqual(string.Empty, name, "Type name should not be empty!");
+            Assert.IsNotNull(name, "Type name should not be null!");
+            Assert.AreEqual(TestSuite.Class3.Value["Interface1Name"], name, "Type name is not the one in source!");
         }
     }
 }

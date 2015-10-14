@@ -24,12 +24,18 @@ namespace Rosetta.Tests.Data
         public static string BaseName { get; set; }
 
         /// <summary>
+        /// The interface #1 name.
+        /// </summary>
+        public static string Interface1Name { get; set; }
+
+        /// <summary>
         /// Defines default values.
         /// </summary>
         static SourceGenerator()
         {
             Name = "MyClass";
             BaseName = "MyBaseClass";
+            Interface1Name = "MyInterface1";
         }
 
         /// <summary>
@@ -50,6 +56,15 @@ namespace Rosetta.Tests.Data
                 Name = Name
             };
 
+            // Class with interface
+            if (options.HasFlag(SourceOptions.ImplementsInterfaces))
+            {
+                classes.Interface1Name = Interface1Name;
+                return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
+                    classes.ClassWith1Interface, classes.ClassWith1InterfaceAttributes);
+            }
+
+            // Class with base class
             if (options.HasFlag(SourceOptions.HasInheritance))
             {
                 classes.BaseClassName = BaseName;
@@ -57,6 +72,7 @@ namespace Rosetta.Tests.Data
                     classes.ClassWithBaseClass, classes.ClassWithBaseClassAttributes);
             }
 
+            // Simple class
             return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
                 classes.VerySimpleClass, classes.VerySimpleClassAttributes);
         }

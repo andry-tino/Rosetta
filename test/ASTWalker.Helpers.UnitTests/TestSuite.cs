@@ -24,11 +24,17 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         /// </summary>
         public static KeyValuePair<string, IReadOnlyDictionary<string, string>> Class2 { get; private set; }
 
+        /// <summary>
+        /// Class with interface.
+        /// </summary>
+        public static KeyValuePair<string, IReadOnlyDictionary<string, string>> Class3 { get; private set; }
+
         [AssemblyInitialize]
         public static void Initialize(TestContext context)
         {
             Class1 = SourceGenerator.Generate();
             Class2 = SourceGenerator.Generate(SourceOptions.HasInheritance);
+            Class3 = SourceGenerator.Generate(SourceOptions.ImplementsInterfaces);
         }
 
         [AssemblyCleanup]

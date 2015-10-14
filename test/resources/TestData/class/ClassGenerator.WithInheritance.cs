@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// SimpleClass.cs
+/// ClassGenerator.WithInheritance.cs
 /// Andrea Tino - 2015
 /// </summary>
 

@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ClassGenerator.SimpleClass.cs
+/// ClassGenerator.WithInterfaces.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -14,9 +14,14 @@ namespace Rosetta.Tests
     internal partial class ClassGenerator
     {
         /// <summary>
-        /// A very simle class for an executable.
+        /// 
         /// </summary>
-        public string VerySimpleClass
+        public string Interface1Name { get; set; }
+
+        /// <summary>
+        /// A very simle class with one interface for an executable.
+        /// </summary>
+        public string ClassWith1Interface
         {
             get
             {
@@ -28,7 +33,11 @@ namespace Rosetta.Tests
 
                     namespace HelloWorld
                     {{
-                        class {0}
+                        interface {1}
+                        {{
+                        }}
+
+                        class {0} : {1}
                         {{
                             static void Main(string[] args)
                             {{
@@ -36,19 +45,20 @@ namespace Rosetta.Tests
                             }}
                         }}
                     }}",
-                this.Name);
+                this.Name, this.Interface1Name);
             }
         }
 
         /// <summary>
-        /// Attributes for <see cref="VerySimpleClass"/>.
+        /// Attributes for <see cref="ClassWith1Interface"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, string> VerySimpleClassAttributes
+        public IReadOnlyDictionary<string, string> ClassWith1InterfaceAttributes
         {
             get
             {
                 var dictionary = new Dictionary<string, string>();
                 dictionary.Add("ClassName", this.Name);
+                dictionary.Add("Interface1Name", this.Interface1Name);
 
                 return dictionary;
             }
