@@ -16,25 +16,13 @@ namespace Rosetta.AST.Helpers
     internal class BaseTypeReference
     {
         private BaseTypeSyntax baseTypeSyntaxNode;
-        private SemanticModel semanticModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeReference"/> class.
         /// </summary>
         /// <param name="baseTypeSyntaxNode"></param>
-        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode) 
-            : this(baseTypeSyntaxNode, Source.SemanticModel)
+        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TypeReference"/> class.
-        /// </summary>
-        /// <param name="baseTypeSyntaxNode"></param>
-        /// <param name="semanticModel"></param>
-        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, SemanticModel semanticModel)
-        {
-            this.semanticModel = semanticModel;
             this.baseTypeSyntaxNode = baseTypeSyntaxNode;
         }
 
@@ -43,7 +31,13 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public string Name
         {
-            get { return this.baseTypeSyntaxNode.Type.ToString(); }
+            get
+            {
+                var simpleNameSyntaxNode = this.baseTypeSyntaxNode.Type as SimpleNameSyntax;
+                return simpleNameSyntaxNode != null ? 
+                    simpleNameSyntaxNode.Identifier.ValueText : 
+                    this.baseTypeSyntaxNode.Type.ToString();
+            }
         }
     }
 }

@@ -39,10 +39,10 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         }
 
         /// <summary>
-        /// 
+        /// Tests that we can successfully retrieve the type name when having a type in base list.
         /// </summary>
         [TestMethod]
-        public void TypeName()
+        public void TypeNameFromBaseType()
         {
             SyntaxNode node = new NodeLocator(Class2SyntaxTree).LocateLast(typeof(ClassDeclarationSyntax));
             Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!", typeof(ClassDeclarationSyntax).Name));
@@ -51,14 +51,12 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
             BaseTypeSyntax baseTypeNode = classDeclarationNode.BaseList.Types.FirstOrDefault();
             Assert.IsNotNull(baseTypeNode, "Found node should be of type `{0}`!", typeof(BaseTypeSyntax).Name);
 
-            string a = Class2SemanticModel.GetDeclaredSymbol(classDeclarationNode).BaseType.Name;
-
-            BaseTypeReference baseTypeReference = new BaseTypeReference(baseTypeNode, Class2SemanticModel);
+            BaseTypeReference baseTypeReference = new BaseTypeReference(baseTypeNode);
             string name = baseTypeReference.Name;
 
             Assert.AreNotEqual(string.Empty, name, "Type name should not be empty!");
-            Assert.IsNotNull(name, "Property `Name` should not be null!");
-            Assert.AreEqual(TestSuite.Class2.Value["BaseClassName"], name);
+            Assert.IsNotNull(name, "Type name should not be null!");
+            Assert.AreEqual(TestSuite.Class2.Value["BaseClassName"], name, "Type name is not the one in source!");
         }
     }
 }
