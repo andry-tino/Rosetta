@@ -35,6 +35,18 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ClassDeclarationSyntax"/> class.
+        /// </summary>
+        /// <param name="classDeclarationNode"></param>
+        /// <param name="semanticModel"></param>
+        public ClassDeclaration(ClassDeclarationSyntax classDeclarationNode, SemanticModel semanticModel)
+            : base(classDeclarationNode, semanticModel)
+        {
+            this.interfaces = null;
+            this.baseClass = null;
+        }
+
+        /// <summary>
         /// Gets the base class.
         /// </summary>
         /// <remarks>
@@ -46,7 +58,13 @@ namespace Rosetta.AST.Helpers
             {
                 if (this.baseClass == null)
                 {
-                    this.baseClass = null;
+                    foreach (BaseTypeReference baseType in this.BaseTypes)
+                    {
+                        if (baseType.Kind == TypeKind.Class)
+                        {
+                            this.baseClass = baseType;
+                        }
+                    }
                 }
 
                 return this.baseClass;
@@ -65,7 +83,14 @@ namespace Rosetta.AST.Helpers
             {
                 if (this.interfaces == null)
                 {
-                    this.interfaces = null;
+                    this.interfaces = new List<BaseTypeReference>();
+                    foreach (BaseTypeReference baseType in this.BaseTypes)
+                    {
+                        if (baseType.Kind == TypeKind.Interface)
+                        {
+                            ((List<BaseTypeReference>)this.interfaces).Add(baseType);
+                        }
+                    }
                 }
 
                 return this.interfaces;

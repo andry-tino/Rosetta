@@ -97,6 +97,51 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
             TestRetrieveClassName(classDeclarationNode, TestSuite.Class3.Value["ClassName"]);
         }
 
+        /// <summary>
+        /// Tests that we can successfully retrieve the base class name.
+        /// </summary>
+        [TestMethod]
+        public void BaseClassNameFromClass()
+        {
+            SyntaxNode node = new NodeLocator(Class1SyntaxTree).LocateLast(typeof(ClassDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(ClassDeclarationSyntax).Name));
+
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+
+            TestRetrieveBaseClassName(classDeclarationNode, Class1SemanticModel, null);
+        }
+
+        /// <summary>
+        /// Tests that we can successfully retrieve the base class name.
+        /// </summary>
+        [TestMethod]
+        public void BaseClassNameFromClassWithInheritance()
+        {
+            SyntaxNode node = new NodeLocator(Class2SyntaxTree).LocateLast(typeof(ClassDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(ClassDeclarationSyntax).Name));
+
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+
+            TestRetrieveBaseClassName(classDeclarationNode, Class2SemanticModel, TestSuite.Class2.Value["BaseClassName"]);
+        }
+
+        /// <summary>
+        /// Tests that we can successfully retrieve the base class name.
+        /// </summary>
+        [TestMethod]
+        public void BaseClassNameFromClassWithInterface()
+        {
+            SyntaxNode node = new NodeLocator(Class3SyntaxTree).LocateLast(typeof(ClassDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(ClassDeclarationSyntax).Name));
+
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+
+            TestRetrieveBaseClassName(classDeclarationNode, Class3SemanticModel, null);
+        }
+
         #region Helpers
 
         private static void TestRetrieveClassName(ClassDeclarationSyntax classDeclarationNode, string expected)
@@ -110,6 +155,27 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
             Assert.IsNotNull(name, "Class name should not be null!");
             Assert.AreNotEqual(string.Empty, name, "Class name should not be empty!");
             Assert.AreEqual(expected, name, "Class name is not the one in source!");
+        }
+
+        private static void TestRetrieveBaseClassName(ClassDeclarationSyntax classDeclarationNode, SemanticModel semanticModel, string expected)
+        {
+            Assert.IsNotNull(classDeclarationNode, "Found node should be of type `{0}`!",
+                typeof(ClassDeclarationSyntax).Name);
+
+            ClassDeclaration classDeclaration = new ClassDeclaration(classDeclarationNode, semanticModel);
+            BaseTypeReference baseClass = classDeclaration.BaseClass;
+
+            if (expected == null)
+            {
+                Assert.IsNull(baseClass, "Class name should be null!");
+                return;
+            }
+
+            string name = classDeclaration.BaseClass.Name;
+
+            Assert.IsNotNull(name, "Class name should not be null!");
+            Assert.AreNotEqual(string.Empty, name, "Class name should not be empty!");
+            Assert.AreEqual(expected, name, "Base class name is not the one in source!");
         }
 
         #endregion

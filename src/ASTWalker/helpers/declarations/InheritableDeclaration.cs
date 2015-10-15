@@ -8,6 +8,7 @@ namespace Rosetta.AST.Helpers
     using System;
     using System.Collections.Generic;
     using Microsoft.CodeAnalysis;
+    using Roslyn = Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -19,6 +20,7 @@ namespace Rosetta.AST.Helpers
     internal abstract class InheritableDeclaration
     {
         protected TypeDeclarationSyntax syntaxNode;
+        protected SemanticModel semanticModel;
 
         // Cached values
         private IEnumerable<BaseTypeReference> baseTypes;
@@ -31,6 +33,18 @@ namespace Rosetta.AST.Helpers
         {
             this.syntaxNode = syntaxNode;
             this.baseTypes = null;
+            this.semanticModel = null;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Inheritable"/> class.
+        /// </summary>
+        /// <param name="syntaxNode"></param>
+        /// <param name="semanticModel"></param>
+        public InheritableDeclaration(TypeDeclarationSyntax syntaxNode, SemanticModel semanticModel) 
+            : this(syntaxNode)
+        {
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -61,30 +75,52 @@ namespace Rosetta.AST.Helpers
             {
                 if (this.baseTypes == null)
                 {
-                    BaseListSyntax listSyntax = this.syntaxNode.BaseList;
                     this.baseTypes = new List<BaseTypeReference>();
 
-                    foreach (SyntaxNode node in listSyntax.ChildNodes())
+                    BaseListSyntax baselist = this.syntaxNode.BaseList;
+                    if (baselist != null)
                     {
-                        if (node.Kind() == SyntaxKind.SimpleBaseType)
+                        SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.syntaxNode.BaseList.Types;
+                        foreach (BaseTypeSyntax baseType in listSyntax)
                         {
-                            ITypeSymbol typeSymbol = Source.SemanticModel.GetTypeInfo(node).Type;
-
-                            switch (typeSymbol.TypeKind)
+                            if (baseType.Kind() == SyntaxKind.SimpleBaseType)
                             {
-                                case TypeKind.Class:
-                                case TypeKind.Interface:
-                                    ((List<BaseTypeReference>)this.baseTypes).Add(new BaseTypeReference(node as BaseTypeSyntax));
-                                    break;
-                                default:
-                                    // Not recognized, skip it
-                                    continue;
+                                ITypeSymbol typeSymbol = this.SemanticModel.GetSymbolInfo(
+                                    baseType.Type).Symbol as ITypeSymbol;
+
+                                switch (typeSymbol.TypeKind)
+                                {
+                                    case Roslyn.TypeKind.Class:
+                                        ((List<BaseTypeReference>)this.baseTypes).Add(
+                                            new BaseTypeReference(baseType, Roslyn.TypeKind.Class));
+                                        break;
+                                    case Roslyn.TypeKind.Interface:
+                                        ((List<BaseTypeReference>)this.baseTypes).Add(
+                                            new BaseTypeReference(baseType, Roslyn.TypeKind.Interface));
+                                        break;
+                                    default:
+                                        // Not recognized, skip it
+                                        continue;
+                                }
                             }
                         }
                     }
                 }
 
                 return this.baseTypes;
+            }
+        }
+
+        protected SemanticModel SemanticModel
+        {
+            get
+            {
+                if (this.semanticModel == null)
+                {
+                    return Source.SemanticModel;
+                }
+
+                return this.semanticModel;
             }
         }
     }
