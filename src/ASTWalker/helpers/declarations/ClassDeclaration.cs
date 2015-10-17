@@ -51,6 +51,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         /// <remarks>
         /// Value is cached.
+        /// If class has no base class, <code>null</code> is returned.
         /// </remarks>
         public BaseTypeReference BaseClass
         {
@@ -76,6 +77,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         /// <remarks>
         /// Value is cached.
+        /// If class implements no interfaces, an empty list is returned.
         /// </remarks>
         public IEnumerable<BaseTypeReference> ImplementedInterfaces
         {

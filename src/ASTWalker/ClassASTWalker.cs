@@ -41,7 +41,7 @@ namespace Rosetta.AST
             this.classDeclaration = ClassDeclarationTranslationUnit.Create(
                 classHelper.Visibility, 
                 classHelper.Name, 
-                "");
+                classHelper.BaseClass.Name);
         }
 
         /// <summary>

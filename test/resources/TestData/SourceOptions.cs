@@ -14,18 +14,23 @@ namespace Rosetta.Tests.Data
     public enum SourceOptions
     {
         /// <summary>
-        /// 
+        /// Has a base class.
         /// </summary>
-        HasInheritance = 0x001,
+        HasInheritance = 0x0001,
 
         /// <summary>
-        /// 
+        /// Has at least one interface.
         /// </summary>
-        ImplementsInterfaces = 0x010,
+        ImplementsInterfaces = 0x0010,
 
         /// <summary>
-        /// 
+        /// Has many entities as base types.
         /// </summary>
-        None = 0x000
+        BaseListMany = 0x0100,
+
+        /// <summary>
+        /// No options.
+        /// </summary>
+        None = 0x0000
     }
 }

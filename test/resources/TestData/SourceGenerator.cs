@@ -29,6 +29,16 @@ namespace Rosetta.Tests.Data
         public static string Interface1Name { get; set; }
 
         /// <summary>
+        /// The interface #2 name.
+        /// </summary>
+        public static string Interface2Name { get; set; }
+
+        /// <summary>
+        /// The interface #3 name.
+        /// </summary>
+        public static string Interface3Name { get; set; }
+
+        /// <summary>
         /// Defines default values.
         /// </summary>
         static SourceGenerator()
@@ -36,6 +46,8 @@ namespace Rosetta.Tests.Data
             Name = "MyClass";
             BaseName = "MyBaseClass";
             Interface1Name = "MyInterface1";
+            Interface2Name = "MyInterface2";
+            Interface3Name = "MyInterface3";
         }
 
         /// <summary>
@@ -55,6 +67,17 @@ namespace Rosetta.Tests.Data
             {
                 Name = Name
             };
+
+            // Class with many interfaces
+            if (options.HasFlag(SourceOptions.ImplementsInterfaces) && 
+                options.HasFlag(SourceOptions.BaseListMany))
+            {
+                classes.Interface1Name = Interface1Name;
+                classes.Interface2Name = Interface2Name;
+                classes.Interface3Name = Interface3Name;
+                return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
+                    classes.ClassWithManyInterfaces, classes.ClassWithManyInterfacesAttributes);
+            }
 
             // Class with interface
             if (options.HasFlag(SourceOptions.ImplementsInterfaces))
