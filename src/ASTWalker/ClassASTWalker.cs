@@ -40,8 +40,13 @@ namespace Rosetta.AST
 
             this.classDeclaration = ClassDeclarationTranslationUnit.Create(
                 classHelper.Visibility, 
-                classHelper.Name, 
-                classHelper.BaseClass.Name);
+                classHelper.Name,
+                classHelper.BaseClass == null ? null : classHelper.BaseClass.Name);
+
+            foreach (BaseTypeReference implementedInterface in classHelper.ImplementedInterfaces)
+            {
+                this.classDeclaration.AddImplementedInterfaceName(implementedInterface.Name);
+            }
         }
 
         /// <summary>

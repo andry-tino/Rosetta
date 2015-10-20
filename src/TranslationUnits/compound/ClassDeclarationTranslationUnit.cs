@@ -49,6 +49,11 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public static ClassDeclarationTranslationUnit Create(VisibilityToken visibility, string name, string baseClassName)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name), "Class name cannot be null!");
+            }
+
             return new ClassDeclarationTranslationUnit()
             {
                 Visibility = visibility,

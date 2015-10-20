@@ -10,13 +10,17 @@ namespace Rosetta.Translation.UnitTests
 
     using Rosetta.Translation;
     using Rosetta.Translation.UnitTests.Data;
+    using Utils = Rosetta.Tests.Utils;
 
     [TestClass]
     public class ClassDeclarationTest
     {
+        private static string RenderedClass1;
+
         [ClassInitialize]
         public static void Initialize(TestContext context)
         {
+            RenderedClass1 = string.Empty;
         }
 
         [ClassCleanup]
@@ -25,25 +29,50 @@ namespace Rosetta.Translation.UnitTests
         }
 
         [TestMethod]
-        public void VisibilityTokenApplied()
+        public void PublicVisibilityTokenApplied()
         {
-            TestVisibilityTokenApplied(VisibilityToken.Public);
-            TestVisibilityTokenApplied(VisibilityToken.Private);
-            TestVisibilityTokenApplied(VisibilityToken.Protected);
-            TestVisibilityTokenApplied(VisibilityToken.None);
+            VisibilityToken visibility = VisibilityToken.Public;
+            ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(visibility, "SampleClass", null);
+
+            string typescript = translationUnit.Translate();
+            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript, 
+                string.Format("{0}.Class", nameof(this.PublicVisibilityTokenApplied)), 
+                Utils.FileType.TypeScript);
+
+            Assert.IsTrue(typescript.Contains(TokenUtility.PublicVisibilityToken),
+                string.Format("Token {0} expected!", TokenUtility.PublicVisibilityToken));
         }
 
-        /// <summary>
-        /// Tests a specific visibility for class declaration.
-        /// </summary>
-        /// <param name="visibility">Visibility to test.</param>
-        private static void TestVisibilityTokenApplied(VisibilityToken visibility)
+        [TestMethod]
+        public void PrivateVisibilityTokenApplied()
         {
+            VisibilityToken visibility = VisibilityToken.Private;
             ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(visibility, "SampleClass", null);
-            string typescript = translationUnit.Translate();
 
-            Assert.IsTrue(typescript.Contains(TokenUtility.ToString(visibility)), 
-                string.Format("Token {0} expected!", TokenUtility.ToString(visibility)));
+            string typescript = translationUnit.Translate();
+            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript, 
+                string.Format("{0}.Class", nameof(this.PrivateVisibilityTokenApplied)),
+                Utils.FileType.TypeScript);
+
+            Assert.IsTrue(typescript.Contains(TokenUtility.PrivateVisibilityToken),
+                string.Format("Token {0} expected!", TokenUtility.PrivateVisibilityToken));
+        }
+
+        [TestMethod]
+        public void NoVisibilityTokenApplied()
+        {
+            VisibilityToken visibility = VisibilityToken.None;
+            ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(visibility, "SampleClass", null);
+
+            string typescript = translationUnit.Translate();
+            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript, 
+                string.Format("{0}.Class", nameof(this.NoVisibilityTokenApplied)),
+                Utils.FileType.TypeScript);
+
+            Assert.IsFalse(typescript.Contains(TokenUtility.PublicVisibilityToken),
+                string.Format("Token {0} not expected!", TokenUtility.PublicVisibilityToken));
+            Assert.IsFalse(typescript.Contains(TokenUtility.PrivateVisibilityToken),
+                string.Format("Token {0} not expected!", TokenUtility.PrivateVisibilityToken));
         }
     }
 }
