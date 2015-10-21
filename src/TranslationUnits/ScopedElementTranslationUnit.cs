@@ -20,9 +20,18 @@ namespace Rosetta.Translation
         /// <summary>
         /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
         /// </summary>
-        protected ScopedElementTranslationUnit()
+        protected ScopedElementTranslationUnit() : 
+            this(VisibilityToken.None)
         {
-            this.Visibility = VisibilityToken.None;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
+        /// </summary>
+        /// <param name="visibility"></param>
+        protected ScopedElementTranslationUnit(VisibilityToken visibility)
+        {
+            this.Visibility = visibility;
         }
     }
 }

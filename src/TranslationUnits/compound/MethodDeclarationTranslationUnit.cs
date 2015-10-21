@@ -12,8 +12,10 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing methods.
     /// </summary>
-    public class MethodDeclarationTranslationUnit : ScopedElementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class MethodDeclarationTranslationUnit : MemberTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
+        private string returnType;
+
         // Inner units
         private IEnumerable<ITranslationUnit> parameters;
         private IEnumerable<ITranslationUnit> bodyElements;
@@ -21,30 +23,42 @@ namespace Rosetta.Translation
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
         /// </summary>
-        protected MethodDeclarationTranslationUnit() : base()
+        /// <param name="name"></param>
+        /// <param name="returnType"></param>
+        /// <param name="visibility"></param>
+        protected MethodDeclarationTranslationUnit() : base(string.Empty, VisibilityToken.None)
         {
-            this.Visibility = VisibilityToken.None;
-            this.Name = string.Empty;
+            this.ReturnType = null;
 
             this.parameters = new List<ITranslationUnit>();
             this.bodyElements = new List<ITranslationUnit>();
         }
         
-        private string Name { get; set; }
+        private string ReturnType
+        {
+            get { return this.returnType ?? Lexems.VoidReturnType; }
+            set { this.returnType = value; }
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="visibility"></param>
+        /// <param name="returnType"></param>
         /// <param name="name"></param>
-        /// <param name="baseClassName"></param>
         /// <returns></returns>
-        public static MethodDeclarationTranslationUnit Create(VisibilityToken visibility, string name)
+        public static MethodDeclarationTranslationUnit Create(VisibilityToken visibility, string returnType, string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             return new MethodDeclarationTranslationUnit()
             {
                 Visibility = visibility,
-                Name = name
+                Name = name,
+                ReturnType = returnType
             };
         }
 
@@ -68,7 +82,7 @@ namespace Rosetta.Translation
             StringWriter writer = new StringWriter();
 
             // Opening declaration
-            writer.WriteLine("{0} class {1} {2}");
+            writer.WriteLine("{0} {1} {2}", TokenUtility.ToString(this.Visibility), this.ReturnType, this.Name);
 
             return writer.ToString();
         }

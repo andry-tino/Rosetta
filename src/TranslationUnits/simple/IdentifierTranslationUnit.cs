@@ -8,31 +8,29 @@ namespace Rosetta.Translation
     using System;
 
     /// <summary>
-    /// Interface for describing compound translation elements.
+    /// Translation unit for identifiers.
     /// </summary>
     public class IdentifierTranslationUnit : ITranslationUnit
     {
+        private string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="IdentifierTranslationUnit"/> class.
         /// </summary>
-        private IdentifierTranslationUnit()
+        /// <param name="name"></param>
+        private IdentifierTranslationUnit(string name)
         {
-            
+            this.name = name;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
         /// <param name="name"></param>
-        /// <param name="baseClassName"></param>
         /// <returns></returns>
-        public static IdentifierTranslationUnit Create(VisibilityToken visibility, string name, string baseClassName)
+        public static IdentifierTranslationUnit Create(string name)
         {
-            return new IdentifierTranslationUnit()
-            {
-                
-            };
+            return new IdentifierTranslationUnit(name);
         }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public string Translate()
         {
-            return "";
+            return this.name;
         }
     }
 }

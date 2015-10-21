@@ -41,5 +41,10 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         public const string CloseSquareBracket = "]";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string VoidReturnType = "void";
     }
 }
