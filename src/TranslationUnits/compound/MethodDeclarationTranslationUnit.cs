@@ -13,32 +13,16 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing methods.
     /// </summary>
-    public class MethodDeclarationTranslationUnit : MemberTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class MethodDeclarationTranslationUnit : MethodSignatureDeclarationTranslationUnit
     {
-        private string returnType;
-
-        // Inner units
-        private IEnumerable<ITranslationUnit> arguments;
         private IEnumerable<ITranslationUnit> statements;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="returnType"></param>
-        /// <param name="visibility"></param>
-        protected MethodDeclarationTranslationUnit() : base(string.Empty, VisibilityToken.None)
+        protected MethodDeclarationTranslationUnit() : base(IdentifierTranslationUnit.Empty, VisibilityToken.None)
         {
-            this.ReturnType = null;
-
-            this.arguments = new List<ITranslationUnit>();
             this.statements = new List<ITranslationUnit>();
-        }
-        
-        private string ReturnType
-        {
-            get { return this.returnType ?? Lexems.VoidReturnType; }
-            set { this.returnType = value; }
         }
 
         /// <summary>
@@ -48,7 +32,7 @@ namespace Rosetta.Translation
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static MethodDeclarationTranslationUnit Create(VisibilityToken visibility, string returnType, string name)
+        public new static MethodDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
         {
             if (name == null)
             {
@@ -66,7 +50,7 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<ITranslationUnit> InnerUnits
+        public override IEnumerable<ITranslationUnit> InnerUnits
         {
             get
             {
@@ -78,7 +62,7 @@ namespace Rosetta.Translation
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
-        public string Translate()
+        public override string Translate()
         {
             StringWriter writer = new StringWriter();
 
@@ -87,7 +71,7 @@ namespace Rosetta.Translation
                 TokenUtility.ToString(this.Visibility), 
                 this.ReturnType, 
                 this.Name, 
-                SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())),
+                SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.OpenCurlyBracket);
 
             // The body, we render them as a list of semicolon/newline separated elements
@@ -107,14 +91,6 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="translationUnit"></param>
         public void AddStatement(ITranslationUnit translationUnit)
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="translationUnit"></param>
-        public void AddArgument(ITranslationUnit translationUnit)
         {
         }
 
