@@ -39,9 +39,9 @@ namespace Rosetta.AST
             ClassDeclaration classHelper = new ClassDeclaration(classDeclarationSyntaxNode);
 
             this.classDeclaration = ClassDeclarationTranslationUnit.Create(
-                classHelper.Visibility, 
-                classHelper.Name,
-                classHelper.BaseClass == null ? null : classHelper.BaseClass.Name);
+                classHelper.Visibility,
+                IdentifierTranslationUnit.Create(classHelper.Name),
+                classHelper.BaseClass == null ? null : IdentifierTranslationUnit.Create(classHelper.BaseClass.Name));
 
             foreach (BaseTypeReference implementedInterface in classHelper.ImplementedInterfaces)
             {

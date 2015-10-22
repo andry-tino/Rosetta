@@ -6,6 +6,7 @@
 namespace Rosetta.Translation
 {
     using System;
+    using System.Linq;
     using System.IO;
     using System.Collections.Generic;
 
@@ -17,8 +18,8 @@ namespace Rosetta.Translation
         private string returnType;
 
         // Inner units
-        private IEnumerable<ITranslationUnit> parameters;
-        private IEnumerable<ITranslationUnit> bodyElements;
+        private IEnumerable<ITranslationUnit> arguments;
+        private IEnumerable<ITranslationUnit> statements;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
@@ -30,8 +31,8 @@ namespace Rosetta.Translation
         {
             this.ReturnType = null;
 
-            this.parameters = new List<ITranslationUnit>();
-            this.bodyElements = new List<ITranslationUnit>();
+            this.arguments = new List<ITranslationUnit>();
+            this.statements = new List<ITranslationUnit>();
         }
         
         private string ReturnType
@@ -82,7 +83,19 @@ namespace Rosetta.Translation
             StringWriter writer = new StringWriter();
 
             // Opening declaration
-            writer.WriteLine("{0} {1} {2}", TokenUtility.ToString(this.Visibility), this.ReturnType, this.Name);
+            writer.WriteLine("{0} {1} {2} {3} {4}", 
+                TokenUtility.ToString(this.Visibility), 
+                this.ReturnType, 
+                this.Name, 
+                SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())),
+                Lexems.OpenCurlyBracket);
+
+            // The body, we render them as a list of semicolon/newline separated elements
+            writer.WriteLine("{0}", SyntaxUtility.ToNewlineSemicolonSeparatedList(
+                this.statements.Select(unit => unit.Translate())));
+
+            // Closing declaration
+            writer.WriteLine("{0}", Lexems.CloseCurlyBracket);
 
             return writer.ToString();
         }
@@ -93,7 +106,15 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         /// <param name="translationUnit"></param>
-        public void AddMemberDeclaration(ITranslationUnit translationUnit)
+        public void AddStatement(ITranslationUnit translationUnit)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        public void AddArgument(ITranslationUnit translationUnit)
         {
         }
 

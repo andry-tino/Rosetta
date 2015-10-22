@@ -45,6 +45,26 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string Comma = ",";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Dot = ".";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Semicolon = ";";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string Newline = Environment.NewLine;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string VoidReturnType = "void";
     }
 }

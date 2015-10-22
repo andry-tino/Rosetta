@@ -52,6 +52,7 @@
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="tokens\VisibilityToken.cs" />
+    <Compile Include="utilities\SyntaxUtility.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

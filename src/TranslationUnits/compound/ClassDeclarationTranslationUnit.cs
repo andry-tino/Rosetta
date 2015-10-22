@@ -26,9 +26,9 @@ namespace Rosetta.Translation
         /// </summary>
         protected ClassDeclarationTranslationUnit() : base()
         {
-            this.Name = string.Empty;
+            this.Name = IdentifierTranslationUnit.Empty;
             this.BaseClassName = null;
-            this.Interfaces = new List<string>();
+            this.Interfaces = new List<ITranslationUnit>();
 
             this.memberDeclarations = new List<ITranslationUnit>();
             this.constructorDeclarations = new List<ITranslationUnit>();
@@ -36,9 +36,9 @@ namespace Rosetta.Translation
             this.methodDeclarations = new List<ITranslationUnit>();
         }
         
-        private string Name { get; set; }
-        private string BaseClassName { get; set; }
-        private IEnumerable<string> Interfaces { get; set; }
+        private ITranslationUnit Name { get; set; }
+        private ITranslationUnit BaseClassName { get; set; }
+        private IEnumerable<ITranslationUnit> Interfaces { get; set; }
 
         /// <summary>
         /// 
@@ -47,7 +47,7 @@ namespace Rosetta.Translation
         /// <param name="name"></param>
         /// <param name="baseClassName"></param>
         /// <returns></returns>
-        public static ClassDeclarationTranslationUnit Create(VisibilityToken visibility, string name, string baseClassName)
+        public static ClassDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name, ITranslationUnit baseClassName)
         {
             if (name == null)
             {
@@ -93,7 +93,11 @@ namespace Rosetta.Translation
             string classVisibility = TokenUtility.ToString(this.Visibility);
             string interfaceImplementation = this.BuildClassInheritanceAndInterfaceImplementationList();
 
-            writer.WriteLine("{0} class {1} {2} {3}", classVisibility, this.Name, interfaceImplementation, Lexems.OpenCurlyBracket);
+            writer.WriteLine("{0} class {1} {2} {3}", 
+                classVisibility, 
+                this.Name, 
+                interfaceImplementation, 
+                Lexems.OpenCurlyBracket);
 
             // Translating members first
             foreach (ITranslationUnit translationUnit in this.memberDeclarations)
@@ -167,21 +171,18 @@ namespace Rosetta.Translation
         /// <returns></returns>
         private string BuildClassInheritanceAndInterfaceImplementationList()
         {
-            string list = ": ";
+            List<string> baseList = new List<string>();
 
-            list += this.BaseClassName == null ? string.Empty : this.BaseClassName;
-
-            if (this.Interfaces.Count() == 0)
+            if (this.BaseClassName != null)
             {
-                return list;
-            }
-            
-            foreach (string implementedInterface in this.Interfaces)
-            {
-                list += string.Format(", {0}", implementedInterface);
+                baseList.Add(this.BaseClassName.Translate());
             }
 
-            return list;
+            baseList.AddRange(this.Interfaces.Select(unit => unit.Translate()));
+
+            return baseList.Count > 0 ? 
+                string.Format("{0} {1}", Lexems.Semicolon, SyntaxUtility.ToTokenSeparatedList(baseList, Lexems.Comma)) : 
+                string.Empty;
         }
     }
 }

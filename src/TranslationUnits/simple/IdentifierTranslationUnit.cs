@@ -34,6 +34,14 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static IdentifierTranslationUnit Empty
+        {
+            get { return Create(string.Empty); }
+        }
+
+        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
