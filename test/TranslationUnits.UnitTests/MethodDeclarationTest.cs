@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ClassDeclarationTest.cs
+/// MethodDeclarationTest.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -13,7 +13,7 @@ namespace Rosetta.Translation.UnitTests
     using Utils = Rosetta.Tests.Utils;
 
     [TestClass]
-    public class ClassDeclarationTest
+    public class MethodDeclarationTest
     {
         [ClassInitialize]
         public static void Initialize(TestContext context)
@@ -29,12 +29,12 @@ namespace Rosetta.Translation.UnitTests
         public void PublicVisibilityTokenApplied()
         {
             VisibilityToken visibility = VisibilityToken.Public;
-            ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Create("SampleClass"), null);
+            ITranslationUnit translationUnit = MethodDeclarationTranslationUnit.Create(
+                visibility, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
 
             string typescript = translationUnit.Translate();
-            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript, 
-                string.Format("{0}.Class", nameof(this.PublicVisibilityTokenApplied)), 
+            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
+                string.Format("{0}.Method", nameof(this.PublicVisibilityTokenApplied)),
                 Utils.FileType.TypeScript);
 
             Assert.IsTrue(typescript.Contains(TokenUtility.PublicVisibilityToken),
@@ -45,12 +45,12 @@ namespace Rosetta.Translation.UnitTests
         public void PrivateVisibilityTokenApplied()
         {
             VisibilityToken visibility = VisibilityToken.Private;
-            ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Create("SampleClass"), null);
+            ITranslationUnit translationUnit = MethodDeclarationTranslationUnit.Create(
+                visibility, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
 
             string typescript = translationUnit.Translate();
-            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript, 
-                string.Format("{0}.Class", nameof(this.PrivateVisibilityTokenApplied)),
+            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
+                string.Format("{0}.Method", nameof(this.PrivateVisibilityTokenApplied)),
                 Utils.FileType.TypeScript);
 
             Assert.IsTrue(typescript.Contains(TokenUtility.PrivateVisibilityToken),
@@ -61,12 +61,12 @@ namespace Rosetta.Translation.UnitTests
         public void NoVisibilityTokenApplied()
         {
             VisibilityToken visibility = VisibilityToken.None;
-            ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Create("SampleClass"), null);
+            ITranslationUnit translationUnit = MethodDeclarationTranslationUnit.Create(
+                visibility, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
 
             string typescript = translationUnit.Translate();
-            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript, 
-                string.Format("{0}.Class", nameof(this.NoVisibilityTokenApplied)),
+            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
+                string.Format("{0}.Method", nameof(this.NoVisibilityTokenApplied)),
                 Utils.FileType.TypeScript);
 
             Assert.IsFalse(typescript.Contains(TokenUtility.PublicVisibilityToken),

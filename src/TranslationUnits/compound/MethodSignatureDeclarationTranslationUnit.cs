@@ -96,8 +96,8 @@ namespace Rosetta.Translation
             // Opening declaration
             writer.WriteLine("{0} {1} {2} {3}",
                 TokenUtility.ToString(this.Visibility),
-                this.ReturnType,
-                this.Name,
+                this.ReturnType.Translate(),
+                this.Name.Translate(),
                 SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())));
 
             return writer.ToString();

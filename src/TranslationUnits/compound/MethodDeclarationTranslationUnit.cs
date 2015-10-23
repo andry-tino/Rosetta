@@ -69,8 +69,8 @@ namespace Rosetta.Translation
             // Opening declaration
             writer.WriteLine("{0} {1} {2} {3} {4}", 
                 TokenUtility.ToString(this.Visibility), 
-                this.ReturnType, 
-                this.Name, 
+                this.ReturnType.Translate(), 
+                this.Name.Translate(), 
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.OpenCurlyBracket);
 

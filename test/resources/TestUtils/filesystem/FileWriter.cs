@@ -27,14 +27,14 @@ namespace Rosetta.Tests.Utils
         }
 
         /// <summary>
-        /// Writes UTF-8 content to test deployment directory.
+        /// Writes UTF-8 content to test result directory.
         /// </summary>
         /// <param name="content"></param>
         /// <param name="fileName"></param>
         public void WriteToFile(string content, string fileName, FileType fileType = FileType.None)
         {
             string folderPath = Path.GetFullPath(this.context.DeploymentDirectory);
-            string filePath = Path.Combine(Path.GetFullPath(this.context.DeploymentDirectory), 
+            string filePath = Path.Combine(Path.GetFullPath(this.context.TestRunDirectory), 
                 string.Concat(fileName, fileType.FileExtension()));
 
             FileAttributes attributes = File.GetAttributes(folderPath);

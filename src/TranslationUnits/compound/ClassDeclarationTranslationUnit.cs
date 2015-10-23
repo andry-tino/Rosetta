@@ -95,7 +95,7 @@ namespace Rosetta.Translation
 
             writer.WriteLine("{0} class {1} {2} {3}", 
                 classVisibility, 
-                this.Name, 
+                this.Name.Translate(), 
                 interfaceImplementation, 
                 Lexems.OpenCurlyBracket);
 
