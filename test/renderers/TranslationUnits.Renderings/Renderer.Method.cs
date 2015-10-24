@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Renderer.Class.cs
+/// Renderer.Metod.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -18,11 +18,11 @@ namespace Rosetta.Translation.Renderings
         /// 
         /// </summary>
         /// <returns></returns>
-        [RenderingResource("SimpleClass.ts")]
-        public string RenderSimpleClass()
+        [RenderingResource("SimpleMethod.ts")]
+        public string RenderSimpleMethod()
         {
-            ITranslationUnit translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "SampleClass", null);
+            ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
+                VisibilityToken.Public, null, "SimpleMethod");
 
             return translationUnit.Translate();
         }

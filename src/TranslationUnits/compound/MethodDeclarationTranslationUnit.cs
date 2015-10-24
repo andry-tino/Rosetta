@@ -67,7 +67,7 @@ namespace Rosetta.Translation
             StringWriter writer = new StringWriter();
 
             // Opening declaration
-            writer.WriteLine("{0} {1} {2} {3} {4}", 
+            writer.WriteLine("{0} {1} {2}{3} {4}", 
                 TokenUtility.ToString(this.Visibility), 
                 this.ReturnType.Translate(), 
                 this.Name.Translate(), 

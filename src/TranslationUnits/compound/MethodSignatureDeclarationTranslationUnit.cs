@@ -103,7 +103,7 @@ namespace Rosetta.Translation
             StringWriter writer = new StringWriter();
 
             // Opening declaration
-            writer.WriteLine("{0} {1} {2} {3}",
+            writer.WriteLine("{0} {1} {2}{3}",
                 TokenUtility.ToString(this.Visibility),
                 this.ReturnType.Translate(),
                 this.Name.Translate(),
