@@ -7,6 +7,7 @@ namespace Rosetta.Translation
 {
     using System;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Collections.Generic;
 
     /// <summary>
@@ -61,6 +62,16 @@ namespace Rosetta.Translation
         public static string ToNewlineSemicolonSeparatedList(IEnumerable<string> items)
         {
             return ToTokenSeparatedList(items, Lexems.Semicolon + Lexems.Newline);
+        }
+
+        /// <summary>
+        /// Collapses consecutive white spaces into one.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string CollapseMultipleWhiteSpaces(string input)
+        {
+            return new Regex(@"\s+").Replace(input, " ");
         }
     }
 }

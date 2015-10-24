@@ -21,5 +21,18 @@ namespace Rosetta.Translation.Renderings
         {
             translationUnit.AddImplementedInterface(IdentifierTranslationUnit.Create(interfaceName));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        /// <param name="method"></param>
+        public static void AddEmptyMethod(this ClassDeclarationTranslationUnit translationUnit, string method)
+        {
+            ITranslationUnit methodDeclaration = MethodDeclarationTranslationUnit.Create(
+                VisibilityToken.Public, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create(method));
+
+            translationUnit.AddMethodDeclaration(methodDeclaration);
+        }
     }
 }

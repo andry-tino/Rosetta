@@ -73,5 +73,41 @@ namespace Rosetta.Translation.Renderings
 
             return translationUnit.Translate();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("EmptyClassWithInheritanceAndManyInterface.ts")]
+        public string RenderEmptyClassWithInheritanceAndManyInterface()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
+                VisibilityToken.Public, "EmptyClassWithInheritanceAndManyInterface", "BaseClass")
+                as ClassDeclarationTranslationUnit;
+
+            translationUnit.AddInterface("Interface1");
+            translationUnit.AddInterface("Interface2");
+            translationUnit.AddInterface("Interface3");
+
+            return translationUnit.Translate();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("ClassWithEmptyMethods.ts")]
+        public string RenderClassWithEmptyMethods()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
+                VisibilityToken.Public, "ClassWithEmptyMethods", null)
+                as ClassDeclarationTranslationUnit;
+
+            translationUnit.AddEmptyMethod("Method1");
+            translationUnit.AddEmptyMethod("Method2");
+            translationUnit.AddEmptyMethod("Method3");
+
+            return translationUnit.Translate();
+        }
     }
 }

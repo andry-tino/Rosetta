@@ -218,7 +218,7 @@ namespace Rosetta.Translation
 
             string implementationList = this.Interfaces.Count() > 0 ? 
                 string.Format("{0} {1}", Lexems.ImplementsKeyword, SyntaxUtility.ToTokenSeparatedList(
-                    this.Interfaces.Select(unit => unit.Translate()), Lexems.Comma)) : 
+                    this.Interfaces.Select(unit => unit.Translate()), Lexems.Comma + " ")) : 
                 string.Empty;
             
             return string.Format("{0} {1}", baseClass, implementationList);
