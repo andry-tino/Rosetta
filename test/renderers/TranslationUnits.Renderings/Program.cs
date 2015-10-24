@@ -3,11 +3,14 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Translation.Renderings
+namespace Rosetta.Translation.Renderings
 {
     using System;
 
-    class Program
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class Program
     {
         static void Main(string[] args)
         {

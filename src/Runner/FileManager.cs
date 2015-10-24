@@ -13,7 +13,7 @@ namespace Rosetta.Runner
     /// <summary>
     /// Handles files. Reading, writing and general handling.
     /// </summary>
-    public class FileManager : IEnumerable<string>
+    internal class FileManager : IEnumerable<string>
     {
         private IEnumerable<string> files;
 
