@@ -30,6 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker.Helpers.UnitTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUtils", "test\resources\TestUtils\TestUtils.csproj", "{0678ABB3-50CE-453F-8EB5-1F21F10061B3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "renderers", "renderers", "{A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationUnits.Renderings", "test\renderers\TranslationUnits.Renderings\TranslationUnits.Renderings.csproj", "{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +105,14 @@ Global
 		{0678ABB3-50CE-453F-8EB5-1F21F10061B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0678ABB3-50CE-453F-8EB5-1F21F10061B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{0678ABB3-50CE-453F-8EB5-1F21F10061B3}.Release|x86.Build.0 = Release|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Debug|x86.Build.0 = Debug|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Release|x86.ActiveCfg = Release|Any CPU
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +127,8 @@ Global
 		{C9710DF8-1539-4AC0-A62B-F6F917485796} = {28FDF6E2-34FE-455B-AD7D-588920B2055F}
 		{6A5CB19D-99E7-4743-9D93-4EA7FB9A8145} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
 		{0678ABB3-50CE-453F-8EB5-1F21F10061B3} = {28FDF6E2-34FE-455B-AD7D-588920B2055F}
+		{A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
+		{ADCC4B90-4340-49D0-91F5-11E99BEF93B1} = {A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45

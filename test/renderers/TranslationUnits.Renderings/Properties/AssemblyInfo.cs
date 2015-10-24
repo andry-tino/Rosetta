@@ -1,17 +1,17 @@
 ﻿using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ASTWalker")]
-[assembly: AssemblyDescription("Walkers for navigating the AST.")]
+[assembly: AssemblyTitle("TranslationUnits.Renderings")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Andrea Tino")]
-[assembly: AssemblyProduct("ASTWalker")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("TranslationUnits.Renderings")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("Andrea Tino")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -19,8 +19,8 @@ using System.Runtime.CompilerServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Setting visibility for unit tests
-[assembly: InternalsVisibleTo("Rosetta.ASTWalker.Helpers.UnitTests")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("adcc4b90-4340-49d0-91f5-11e99bef93b1")]
 
 // Version information for an assembly consists of the following four values:
 //
