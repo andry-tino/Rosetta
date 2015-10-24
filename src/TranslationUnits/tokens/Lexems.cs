@@ -60,11 +60,26 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string Colon = ":";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static string Newline = Environment.NewLine;
 
         /// <summary>
         /// 
         /// </summary>
         public const string VoidReturnType = "void";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ExtendsKeyword = "extends";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ImplementsKeyword = "implements";
     }
 }
