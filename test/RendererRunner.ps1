@@ -9,7 +9,7 @@ write-output "Running renderer...";
 write-output "Workspace path is: $WorkspacePath";
 
 $RenderPath = "$OutputPath\RenderResults";
-new-item "$RenderPath" -type directory;
+new-item "$RenderPath" -type directory | out-null;
 
 $RendererExecPath = "$WorkspacePath\test\renderers\TranslationUnits.Renderings\bin\Debug\Rosetta.TranslationUnits.Renderings.exe";
 
@@ -21,4 +21,4 @@ if ($LASTEXITCODE -gt 0)
 }
 
 write-output "Files generated in: $RenderPath!";
-get-childitem "$RenderPath"
+get-childitem "$RenderPath";
