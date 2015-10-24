@@ -86,6 +86,15 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// The nesting level.
+        /// </summary>
+        public int NestingLevel
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>

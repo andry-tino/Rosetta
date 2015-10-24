@@ -17,5 +17,10 @@ namespace Rosetta.Translation
         /// </summary>
         /// <returns>TypeScript code.</returns>
         string Translate();
+
+        /// <summary>
+        /// Gets or sets the nesting level the translation unit is subjected to.
+        /// </summary>
+        int NestingLevel { get; set; }
     }
 }
