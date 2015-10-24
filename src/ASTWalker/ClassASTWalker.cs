@@ -45,7 +45,7 @@ namespace Rosetta.AST
 
             foreach (BaseTypeReference implementedInterface in classHelper.ImplementedInterfaces)
             {
-                this.classDeclaration.AddImplementedInterfaceName(implementedInterface.Name);
+                this.classDeclaration.AddImplementedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
             }
         }
 

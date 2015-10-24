@@ -65,9 +65,15 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="interfaceName"></param>
-        public void AddImplementedInterfaceName(string interfaceName)
+        /// <param name="implementedInterface"></param>
+        public void AddImplementedInterface(ITranslationUnit implementedInterface)
         {
+            if (implementedInterface == null)
+            {
+                throw new ArgumentNullException(nameof(implementedInterface));
+            }
+
+            ((List<ITranslationUnit>)this.Interfaces).Add(implementedInterface);
         }
 
         /// <summary>
@@ -146,6 +152,12 @@ namespace Rosetta.Translation
         /// <param name="translationUnit"></param>
         public void AddMemberDeclaration(ITranslationUnit translationUnit)
         {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            ((List<ITranslationUnit>)this.memberDeclarations).Add(translationUnit);
         }
 
         /// <summary>
@@ -154,6 +166,12 @@ namespace Rosetta.Translation
         /// <param name="translationUnit"></param>
         public void AddPropertyDeclaration(ITranslationUnit translationUnit)
         {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            ((List<ITranslationUnit>)this.propertyDeclarations).Add(translationUnit);
         }
 
         /// <summary>
@@ -162,6 +180,12 @@ namespace Rosetta.Translation
         /// <param name="translationUnit"></param>
         public void AddConstructorDeclaration(ITranslationUnit translationUnit)
         {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            ((List<ITranslationUnit>)this.constructorDeclarations).Add(translationUnit);
         }
 
         /// <summary>
@@ -170,6 +194,12 @@ namespace Rosetta.Translation
         /// <param name="translationUnit"></param>
         public void AddMethodDeclaration(ITranslationUnit translationUnit)
         {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            ((List<ITranslationUnit>)this.methodDeclarations).Add(translationUnit);
         }
 
         #endregion

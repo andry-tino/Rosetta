@@ -7,8 +7,6 @@ namespace Rosetta.Translation.Renderings
 {
     using System;
 
-    using Rosetta.Renderings.Utils;
-
     /// <summary>
     /// 
     /// </summary>
@@ -48,8 +46,7 @@ namespace Rosetta.Translation.Renderings
             }
 
             return MethodDeclarationTranslationUnit.Create(
-                visibility, returnType == null ? 
-                null : IdentifierTranslationUnit.Create(name),
+                visibility, returnType == null ? null : IdentifierTranslationUnit.Create(returnType),
                 IdentifierTranslationUnit.Create(name));
         }
     }
