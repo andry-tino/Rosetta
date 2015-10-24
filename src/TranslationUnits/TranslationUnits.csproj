@@ -45,6 +45,7 @@
     <Compile Include="compound\MethodDeclarationTranslationUnit.cs" />
     <Compile Include="compound\MethodSignatureDeclarationTranslationUnit.cs" />
     <Compile Include="formatters\IFormatter.cs" />
+    <Compile Include="formatters\NullFormatter.cs" />
     <Compile Include="formatters\TabFormatter.cs" />
     <Compile Include="formatters\WhiteSpaceFormatter.cs" />
     <Compile Include="ICompoundTranslationUnit.cs" />
