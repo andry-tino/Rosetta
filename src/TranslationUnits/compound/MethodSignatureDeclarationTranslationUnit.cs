@@ -86,21 +86,15 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// The nesting level.
-        /// </summary>
-        public int NestingLevel
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
         public virtual string Translate()
         {
-            StringWriter writer = new StringWriter();
+            FormatWriter writer = new FormatWriter()
+            {
+                Formatter = this.Formatter
+            };
 
             // Opening declaration
             writer.WriteLine("{0} {1} {2}{3}",

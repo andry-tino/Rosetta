@@ -65,11 +65,21 @@ namespace Rosetta.Translation.Renderings
 
                 string path = Path.Combine(this.OutputFolderPath, fileName);
 
-                string typeScript = (string)methodInfo.Invoke(this, null);
-
-                using (StreamWriter writer = new StreamWriter(path))
+                try
                 {
-                    writer.Write(typeScript);
+                    string typeScript = (string)methodInfo.Invoke(this, null);
+
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        writer.Write(typeScript);
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(
+                        string.Format(
+                            "An error occurred in method `{0}`!", 
+                            methodInfo.Name), e);
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing scoped elements.
     /// </summary>
-    public abstract class ScopedElementTranslationUnit
+    public abstract class ScopedElementTranslationUnit : NestedElementTranslationUnit
     {
         /// <summary>
         /// The visibility of the element.
@@ -20,8 +20,8 @@ namespace Rosetta.Translation
         /// <summary>
         /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
         /// </summary>
-        protected ScopedElementTranslationUnit() : 
-            this(VisibilityToken.None)
+        protected ScopedElementTranslationUnit() 
+            : this(VisibilityToken.None)
         {
         }
 
@@ -29,7 +29,17 @@ namespace Rosetta.Translation
         /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
         /// </summary>
         /// <param name="visibility"></param>
-        protected ScopedElementTranslationUnit(VisibilityToken visibility)
+        protected ScopedElementTranslationUnit(VisibilityToken visibility) 
+            : this(visibility, AutomaticNestingLevel)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
+        /// </summary>
+        /// <param name="visibility"></param>
+        /// <param name="nestingLevel"></param>
+        protected ScopedElementTranslationUnit(VisibilityToken visibility, int nestingLevel) : base(nestingLevel)
         {
             this.Visibility = visibility;
         }

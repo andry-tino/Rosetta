@@ -64,7 +64,10 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public override string Translate()
         {
-            StringWriter writer = new StringWriter();
+            FormatWriter writer = new FormatWriter()
+            {
+                Formatter = this.Formatter
+            };
 
             // Opening declaration
             writer.WriteLine("{0} {1} {2}{3} {4}", 

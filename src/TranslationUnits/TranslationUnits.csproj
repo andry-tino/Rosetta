@@ -50,6 +50,7 @@
     <Compile Include="formatters\WhiteSpaceFormatter.cs" />
     <Compile Include="ICompoundTranslationUnit.cs" />
     <Compile Include="ITranslationUnit.cs" />
+    <Compile Include="NestedElementTranslationUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScopedElementTranslationUnit.cs" />
     <Compile Include="simple\ArgumentDefinitionTranslationUnit.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="tokens\VisibilityToken.cs" />
+    <Compile Include="utilities\FormatWriter.cs" />
     <Compile Include="utilities\SyntaxUtility.cs" />
   </ItemGroup>
   <ItemGroup />

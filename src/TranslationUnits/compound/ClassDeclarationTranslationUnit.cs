@@ -88,21 +88,15 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// The nesting level.
-        /// </summary>
-        public int NestingLevel
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
         public string Translate()
         {
-            StringWriter writer = new StringWriter();
+            FormatWriter writer = new FormatWriter()
+            {
+                Formatter = this.Formatter
+            };
 
             // Opening declaration
             string classVisibility = TokenUtility.ToString(this.Visibility);
@@ -117,25 +111,25 @@ namespace Rosetta.Translation
             // Translating members first
             foreach (ITranslationUnit translationUnit in this.memberDeclarations)
             {
-                writer.Write(translationUnit.Translate());
+                writer.WriteLine(translationUnit.Translate());
             }
 
             // Then constructors
             foreach (ITranslationUnit translationUnit in this.constructorDeclarations)
             {
-                writer.Write(translationUnit.Translate());
+                writer.WriteLine(translationUnit.Translate());
             }
 
             // Then properties
             foreach (ITranslationUnit translationUnit in this.propertyDeclarations)
             {
-                writer.Write(translationUnit.Translate());
+                writer.WriteLine(translationUnit.Translate());
             }
 
             // Finally methods
             foreach (ITranslationUnit translationUnit in this.methodDeclarations)
             {
-                writer.Write(translationUnit.Translate());
+                writer.WriteLine(translationUnit.Translate());
             }
 
             // Closing
