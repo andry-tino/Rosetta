@@ -7,12 +7,13 @@ namespace Rosetta.ThirdParty.Google.DiffMatchPatch
 {
     using System;
 
-    using DiffMatchPatch;
+    using GoogleDMP = global::DiffMatchPatch;
 
     /// <summary>
     /// 
     /// </summary>
     public class Diff
     {
+        GoogleDMP.Diff diff = new GoogleDMP.Diff(GoogleDMP.Operation.EQUAL, "");
     }
 }
