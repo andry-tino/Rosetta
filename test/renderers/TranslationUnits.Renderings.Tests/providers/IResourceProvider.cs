@@ -17,6 +17,6 @@ namespace Rosetta.Translation.Renderings.Tests
         /// Provides the necessary resources for processing comparison test.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<KeyValuePair<string, string>> Provide();
+        IEnumerable<TestResource> Provide();
     }
 }

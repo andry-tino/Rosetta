@@ -51,7 +51,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="deployment\ResourceDeployer.cs" />
+    <Compile Include="providers\ClassesResourceDeployer.cs" />
     <Compile Include="providers\IResourceProvider.cs" />
+    <Compile Include="providers\MethodsResourceDeployer.cs" />
+    <Compile Include="providers\TestResource.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,7 +68,9 @@
       <Name>TranslationUnits.Renderings.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="comparison\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
