@@ -50,9 +50,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="deployment\ResourceDeployer.cs" />
+    <Compile Include="providers\IResourceProvider.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\3rd-party\Google.DiffMatchPatch\Google.DiffMatchPatch.csproj">
+      <Project>{269baab4-ab26-4093-8986-6c3886463f09}</Project>
+      <Name>Google.DiffMatchPatch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TranslationUnits.Renderings.Data\TranslationUnits.Renderings.Data.csproj">
+      <Project>{c9fd0872-c099-49b4-a55e-8ae0c3ea5675}</Project>
+      <Name>TranslationUnits.Renderings.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -71,6 +84,18 @@
       </ItemGroup>
     </When>
   </Choose>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\classes\ClassWithEmptyMethods.ts" />
+    <EmbeddedResource Include="archetypes\classes\EmptyClassWithInheritance.ts" />
+    <EmbeddedResource Include="archetypes\classes\EmptyClassWithInheritanceAndManyInterface.ts" />
+    <EmbeddedResource Include="archetypes\classes\EmptyClassWithManyInterface.ts" />
+    <EmbeddedResource Include="archetypes\classes\EmptyClassWithOneInterface.ts" />
+    <EmbeddedResource Include="archetypes\classes\SimpleEmptyClass.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\methods\SimpleEmptyMethod.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethodWithReturn.ts" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
