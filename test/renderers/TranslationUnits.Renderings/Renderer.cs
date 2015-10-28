@@ -40,12 +40,23 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
-        /// Searches through all public methos decorated with the <see cref="RenderingResourceAttribute"/>
-        /// attribute, gets translation and writes files on hard drive.
+        /// 
         /// </summary>
         public void Render()
         {
-            MethodInfo[] methods = typeof(Renderer).GetMethods();
+            this.RenderFromMethodInfoArray(DataProvider.ClassesMethodsProvider);
+            this.RenderFromMethodInfoArray(DataProvider.MethodsMethodsProvider);
+        }
+
+        /// <summary>
+        /// Searches through all public methos decorated with the <see cref="RenderingResourceAttribute"/>
+        /// attribute, gets translation and writes files on hard drive.
+        /// </summary>
+        /// <param name="type"></param>
+        private void RenderFromMethodInfoArray(Type type)
+        {
+            var classInstance = Activator.CreateInstance(type);
+            var methods = type.GetMethods();
 
             foreach (MethodInfo methodInfo in methods)
             {
@@ -67,7 +78,7 @@ namespace Rosetta.Translation.Renderings
 
                 try
                 {
-                    string typeScript = (string)methodInfo.Invoke(this, null);
+                    string typeScript = (string)methodInfo.Invoke(classInstance, null);
 
                     using (StreamWriter writer = new StreamWriter(path))
                     {

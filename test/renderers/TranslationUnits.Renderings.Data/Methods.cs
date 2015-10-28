@@ -1,9 +1,9 @@
 ﻿/// <summary>
-/// Renderer.Metod.cs
+/// Methods.cs
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.Translation.Renderings
+namespace Rosetta.Translation.Renderings.Data
 {
     using System;
 
@@ -12,7 +12,7 @@ namespace Rosetta.Translation.Renderings
     /// <summary>
     /// 
     /// </summary>
-    internal partial class Renderer
+    public class Methods
     {
         /// <summary>
         /// 

@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.Translation.Renderings
+namespace Rosetta.Translation.Renderings.Data
 {
     using System;
 

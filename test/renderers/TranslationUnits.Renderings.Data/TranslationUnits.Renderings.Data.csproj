@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ADCC4B90-4340-49D0-91F5-11E99BEF93B1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{C9FD0872-C099-49B4-A55E-8AE0C3EA5675}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.Translation.Renderings</RootNamespace>
-    <AssemblyName>Rosetta.TranslationUnits.Renderings</AssemblyName>
+    <RootNamespace>Rosetta.Translation.Renderings.Data</RootNamespace>
+    <AssemblyName>Rosetta.TranslationUnits.Renderings.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,25 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Classes.cs" />
+    <Compile Include="Methods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer.cs" />
+    <Compile Include="utilities\TranslationUnitBuilder.cs" />
+    <Compile Include="utilities\TranslationUnitHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\TranslationUnits\TranslationUnits.csproj">
+      <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
+      <Name>TranslationUnits</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RenderingUtils\RenderingUtils.csproj">
       <Project>{b7f49289-4a5c-439c-bda4-98174145df2d}</Project>
       <Name>RenderingUtils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TranslationUnits.Renderings.Data\TranslationUnits.Renderings.Data.csproj">
-      <Project>{c9fd0872-c099-49b4-a55e-8ae0c3ea5675}</Project>
-      <Name>TranslationUnits.Renderings.Data</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
