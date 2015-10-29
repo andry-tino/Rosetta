@@ -58,6 +58,7 @@
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="tokens\VisibilityToken.cs" />
+    <Compile Include="utilities\CodePerfect.cs" />
     <Compile Include="utilities\FormatWriter.cs" />
     <Compile Include="utilities\SyntaxUtility.cs" />
   </ItemGroup>

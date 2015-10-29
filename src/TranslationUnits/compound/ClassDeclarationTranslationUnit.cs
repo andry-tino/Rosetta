@@ -111,24 +111,40 @@ namespace Rosetta.Translation
             // Translating members first
             foreach (ITranslationUnit translationUnit in this.memberDeclarations)
             {
+                if (translationUnit as NestedElementTranslationUnit != null)
+                {
+                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+                }
                 writer.WriteLine(translationUnit.Translate());
             }
 
             // Then constructors
             foreach (ITranslationUnit translationUnit in this.constructorDeclarations)
             {
+                if (translationUnit as NestedElementTranslationUnit != null)
+                {
+                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+                }
                 writer.WriteLine(translationUnit.Translate());
             }
 
             // Then properties
             foreach (ITranslationUnit translationUnit in this.propertyDeclarations)
             {
+                if (translationUnit as NestedElementTranslationUnit != null)
+                {
+                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+                }
                 writer.WriteLine(translationUnit.Translate());
             }
 
             // Finally methods
             foreach (ITranslationUnit translationUnit in this.methodDeclarations)
             {
+                if (translationUnit as NestedElementTranslationUnit != null)
+                {
+                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+                }
                 writer.WriteLine(translationUnit.Translate());
             }
 
