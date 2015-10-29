@@ -82,6 +82,7 @@ namespace Rosetta.AST
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
             base.VisitFieldDeclaration(node);
+            this.FieldDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -91,6 +92,7 @@ namespace Rosetta.AST
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
             base.VisitPropertyDeclaration(node);
+            this.PropertyDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -100,6 +102,7 @@ namespace Rosetta.AST
         public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
             base.VisitVariableDeclaration(node);
+            this.VariableDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -109,6 +112,7 @@ namespace Rosetta.AST
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             base.VisitMethodDeclaration(node);
+            this.MethodDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -118,7 +122,37 @@ namespace Rosetta.AST
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
             base.VisitConstructorDeclaration(node);
+            this.ConstructorDeclarationVisited(this, new WalkerEventArgs());
         }
+
+        #endregion
+
+        #region Walk events
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event WalkerEvent FieldDeclarationVisited;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event WalkerEvent PropertyDeclarationVisited;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event WalkerEvent VariableDeclarationVisited;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event WalkerEvent MethodDeclarationVisited;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event WalkerEvent ConstructorDeclarationVisited;
 
         #endregion
     }

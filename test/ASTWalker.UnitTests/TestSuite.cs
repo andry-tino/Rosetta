@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.ASTWalker.UnitTests
+namespace Rosetta.AST.UnitTests
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
