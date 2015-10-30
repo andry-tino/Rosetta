@@ -20,14 +20,16 @@ namespace Rosetta.AST
     /// </summary>
     public class ClassASTWalker : CSharpSyntaxWalker, IASTWalker
     {
-        private CSharpSyntaxNode node;
+        // Protected for testability
+        protected CSharpSyntaxNode node;
 
-        private ClassDeclarationTranslationUnit classDeclaration;
+        // Protected for testability
+        protected ClassDeclarationTranslationUnit classDeclaration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassASTWalker"/> class.
         /// </summary>
-        private ClassASTWalker(CSharpSyntaxNode node)
+        protected ClassASTWalker(CSharpSyntaxNode node)
         {
             var classDeclarationSyntaxNode = node as ClassDeclarationSyntax;
             if (classDeclarationSyntaxNode == null)
