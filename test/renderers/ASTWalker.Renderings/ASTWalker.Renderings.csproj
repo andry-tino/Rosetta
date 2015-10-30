@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
@@ -52,6 +53,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\resources\TestUtils\TestUtils.csproj">
+      <Project>{0678abb3-50ce-453f-8eb5-1f21f10061b3}</Project>
+      <Name>TestUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASTWalker.Renderings.Data\ASTWalker.Renderings.Data.csproj">
+      <Project>{63d01926-ed5c-4d41-83c9-f98e05201c53}</Project>
+      <Name>ASTWalker.Renderings.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RenderingUtils\RenderingUtils.csproj">
       <Project>{b7f49289-4a5c-439c-bda4-98174145df2d}</Project>
       <Name>RenderingUtils</Name>

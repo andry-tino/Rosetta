@@ -32,7 +32,7 @@ namespace Rosetta.AST.Renderings
             {
                 return new Type[]
                 {
-                    
+                    DataProvider.SimpleEntitiesProvider
                 };
             }
         }
