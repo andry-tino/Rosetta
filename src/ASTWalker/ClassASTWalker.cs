@@ -84,7 +84,7 @@ namespace Rosetta.AST
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
             base.VisitFieldDeclaration(node);
-            this.FieldDeclarationVisited(this, new WalkerEventArgs());
+            this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Rosetta.AST
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
             base.VisitPropertyDeclaration(node);
-            this.PropertyDeclarationVisited(this, new WalkerEventArgs());
+            this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Rosetta.AST
         public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
             base.VisitVariableDeclaration(node);
-            this.VariableDeclarationVisited(this, new WalkerEventArgs());
+            this.InvokeVariableDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -114,7 +114,15 @@ namespace Rosetta.AST
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             base.VisitMethodDeclaration(node);
-            this.MethodDeclarationVisited(this, new WalkerEventArgs());
+
+            // TODO: Create translation unit and add it to the class declaration methods
+            var translationUnit = MethodDeclarationTranslationUnit.Create(
+                VisibilityToken.None, 
+                IdentifierTranslationUnit.Create("returntype"), 
+                IdentifierTranslationUnit.Create("name"));
+            this.classDeclaration.AddMethodDeclaration(translationUnit);
+
+            this.InvokeMethodDeclarationVisited(this, new WalkerEventArgs());
         }
 
         /// <summary>
@@ -124,7 +132,7 @@ namespace Rosetta.AST
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
             base.VisitConstructorDeclaration(node);
-            this.ConstructorDeclarationVisited(this, new WalkerEventArgs());
+            this.InvokeConstructorDeclarationVisited(this, new WalkerEventArgs());
         }
 
         #endregion
@@ -157,5 +165,45 @@ namespace Rosetta.AST
         public event WalkerEvent ConstructorDeclarationVisited;
 
         #endregion
+
+        private void InvokeFieldDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.FieldDeclarationVisited != null)
+            {
+                this.FieldDeclarationVisited(sender, e);
+            }
+        }
+
+        private void InvokePropertyDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.PropertyDeclarationVisited != null)
+            {
+                this.PropertyDeclarationVisited(sender, e);
+            }
+        }
+
+        private void InvokeVariableDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.VariableDeclarationVisited != null)
+            {
+                this.VariableDeclarationVisited(sender, e);
+            }
+        }
+
+        private void InvokeMethodDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.MethodDeclarationVisited != null)
+            {
+                this.MethodDeclarationVisited(sender, e);
+            }
+        }
+
+        private void InvokeConstructorDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.ConstructorDeclarationVisited != null)
+            {
+                this.ConstructorDeclarationVisited(sender, e);
+            }
+        }
     }
 }

@@ -6,9 +6,17 @@
 namespace Rosetta.AST.Renderings.Data
 {
     using System;
+    using System.Collections.Generic;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Symbols;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using Microsoft.CodeAnalysis.Text;
 
     using Rosetta.Renderings.Utils;
     using Rosetta.Translation;
+    using Rosetta.Tests.Data;
+    using Rosetta.Tests.Utils;
 
     /// <summary>
     /// 
@@ -18,9 +26,20 @@ namespace Rosetta.AST.Renderings.Data
         [RenderingResource("SimpleEmptyClass.ts")]
         public string RenderSimpleEmptyClass()
         {
-            // Use ASTWalker
-            // Get TU and run Translate()
-            return "";
+            var sourceInfo = SourceGenerator.Generate(SourceOptions.None);
+            string source = sourceInfo.Key;
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ClassDeclarationSyntax));
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = ClassASTWalker.Create(classDeclarationNode);
+
+            // Getting the translation unit
+            ITranslationUnit translationUnit = astWalker.Walk();
+            return translationUnit.Translate();
         }
     }
 }
