@@ -103,6 +103,7 @@ namespace Rosetta.Translation
             string baseList = this.BuildClassInheritanceAndInterfaceImplementationList();
 
             writer.WriteLine("{0} class {1} {2} {3}", 
+                text => ClassDeclarationCodePerfect.RefineDeclaration(text), 
                 classVisibility, 
                 this.Name.Translate(),
                 baseList, 
@@ -149,7 +150,9 @@ namespace Rosetta.Translation
             }
 
             // Closing
-            writer.WriteLine("{0}", Lexems.CloseCurlyBracket);
+            writer.WriteLine("{0}",
+                text => ClassDeclarationCodePerfect.RefineDeclaration(text), 
+                Lexems.CloseCurlyBracket);
 
             return writer.ToString();
         }

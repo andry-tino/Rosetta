@@ -55,7 +55,7 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="format">The format pattern.</param>
         /// <param name="arg">The replacing arguments.</param>
-        public void WriteLine(string format, params object[] arg)
+        public void WriteLine(string format, params string[] arg)
         {
             if (format == null)
             {
@@ -71,6 +71,38 @@ namespace Rosetta.Translation
                 this.formatter.FormatLine(
                     string.Format(
                         EscapeInputFormat(format), arg)));
+        }
+
+        /// <summary>
+        /// Writes a line by replacing the syntax for a <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="format">The format pattern.</param>
+        /// <param name="postprocessor">The action to perform before writing and after applying placeholders.</param>
+        /// <param name="arg">The replacing arguments.</param>
+        public void WriteLine(string format, Func<string, string> postprocessor, params string[] arg)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+            if (postprocessor == null)
+            {
+                throw new ArgumentNullException(nameof(postprocessor));
+            }
+
+            StringWriter writer = new StringWriter();
+
+            // Argument `format` will contain a format-pattern
+            // thus, it is possible that the formatting fails because of curly brackets
+            // like in `public void MyMethod() { /* something */ }`
+            //                                 +- This bracket   +
+            //                                                   |- And this!
+            writer.Write(
+                this.formatter.FormatLine(
+                    string.Format(
+                        EscapeInputFormat(format), arg)));
+
+            this.writer.WriteLine(postprocessor(writer.ToString()));
         }
 
         /// <summary>
@@ -135,6 +167,11 @@ namespace Rosetta.Translation
             return aggregate;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cleanString"></param>
+        /// <returns></returns>
         public static string EscapeCleanString(string cleanString)
         {
             return cleanString.Replace("{", "{{").Replace("}", "}}");
