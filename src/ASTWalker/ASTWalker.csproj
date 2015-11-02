@@ -103,7 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASTExtractor.cs" />
-    <Compile Include="ClassASTWalker.cs" />
+    <Compile Include="helpers\declarations\MethodDeclaration.cs" />
+    <Compile Include="helpers\Helper.cs" />
+    <Compile Include="helpers\types\TypedIdentifier.cs" />
+    <Compile Include="walkers\ClassASTWalker.cs" />
     <Compile Include="helpers\declarations\ClassDeclaration.cs" />
     <Compile Include="helpers\declarations\InheritableDeclaration.cs" />
     <Compile Include="helpers\declarations\InterfaceDeclaration.cs" />
@@ -115,9 +118,11 @@
     <Compile Include="Source.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="WalkerEventArgs.cs" />
+    <Compile Include="walkers\MethodASTWalker.cs" />
     <Compile Include="WalkerTranslationUnitMapping.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

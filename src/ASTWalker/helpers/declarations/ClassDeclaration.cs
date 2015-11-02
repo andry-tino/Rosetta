@@ -12,8 +12,6 @@ namespace Rosetta.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    using Rosetta.Translation;
-
     /// <summary>
     /// Helper for accessing class in AST
     /// </summary>
@@ -24,7 +22,7 @@ namespace Rosetta.AST.Helpers
         private BaseTypeReference baseClass;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClassDeclarationSyntax"/> class.
+        /// Initializes a new instance of the <see cref="ClassDeclaration"/> class.
         /// </summary>
         /// <param name="classDeclarationNode"></param>
         public ClassDeclaration(ClassDeclarationSyntax classDeclarationNode) 
@@ -35,7 +33,7 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClassDeclarationSyntax"/> class.
+        /// Initializes a new instance of the <see cref="ClassDeclaration"/> class.
         /// </summary>
         /// <param name="classDeclarationNode"></param>
         /// <param name="semanticModel"></param>

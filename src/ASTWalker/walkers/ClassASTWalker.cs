@@ -34,7 +34,9 @@ namespace Rosetta.AST
             var classDeclarationSyntaxNode = node as ClassDeclarationSyntax;
             if (classDeclarationSyntaxNode == null)
             {
-                throw new ArgumentException("Specified node is not of type ClassDeclarationSyntax");
+                throw new ArgumentException(
+                    string.Format("Specified node is not of type {0}",
+                    typeof(ClassDeclarationSyntax).Name));
             }
 
             this.node = node;
@@ -115,11 +117,8 @@ namespace Rosetta.AST
         {
             base.VisitMethodDeclaration(node);
 
-            // TODO: Create translation unit and add it to the class declaration methods
-            var translationUnit = MethodDeclarationTranslationUnit.Create(
-                VisibilityToken.None, 
-                IdentifierTranslationUnit.Create("returntype"), 
-                IdentifierTranslationUnit.Create("name"));
+            var methodWalker = MethodASTWalker.Create(node);
+            var translationUnit = methodWalker.Walk();
             this.classDeclaration.AddMethodDeclaration(translationUnit);
 
             this.InvokeMethodDeclarationVisited(this, new WalkerEventArgs());

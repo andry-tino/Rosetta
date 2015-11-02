@@ -13,28 +13,24 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing base type references in AST.
     /// </summary>
-    internal class BaseTypeReference
+    internal class BaseTypeReference : Helper
     {
-        private BaseTypeSyntax baseTypeSyntaxNode;
-        private SemanticModel semanticModel;
         private Microsoft.CodeAnalysis.TypeKind? kind;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TypeReference"/> class.
+        /// Initializes a new instance of the <see cref="BaseTypeReference"/> class.
         /// </summary>
         /// <param name="baseTypeSyntaxNode"></param>
         /// <remarks>
         /// This is a minimal constructor, some properties might be unavailable.
         /// </remarks>
-        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode)
+        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode) 
+            : this(baseTypeSyntaxNode, null)
         {
-            this.baseTypeSyntaxNode = baseTypeSyntaxNode;
-            this.semanticModel = null;
-            this.kind = null;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TypeReference"/> class.
+        /// Initializes a new instance of the <see cref="BaseTypeReference"/> class.
         /// </summary>
         /// <param name="baseTypeSyntaxNode"></param>
         /// <param name="kind"></param>
@@ -42,9 +38,9 @@ namespace Rosetta.AST.Helpers
         /// When providing the semantic model, some properites will be devised from that.
         /// </remarks>
         public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, SemanticModel semanticModel)
-            : this(baseTypeSyntaxNode)
+            : base(baseTypeSyntaxNode, semanticModel)
         {
-            this.semanticModel = semanticModel;
+            this.kind = null;
         }
 
         /// <summary>
@@ -79,9 +75,9 @@ namespace Rosetta.AST.Helpers
                     return this.kind.Value.ToTypeKind();
                 }
 
-                if (this.semanticModel != null)
+                if (this.SemanticModel != null)
                 {
-                    return this.semanticModel.GetTypeInfo(this.baseTypeSyntaxNode).Type.TypeKind.ToTypeKind();
+                    return this.SemanticModel.GetTypeInfo(this.BaseTypeSyntaxNode).Type.TypeKind.ToTypeKind();
                 }
 
                 throw new InvalidOperationException(
@@ -97,11 +93,16 @@ namespace Rosetta.AST.Helpers
         {
             get
             {
-                var simpleNameSyntaxNode = this.baseTypeSyntaxNode.Type as SimpleNameSyntax;
+                var simpleNameSyntaxNode = this.BaseTypeSyntaxNode.Type as SimpleNameSyntax;
                 return simpleNameSyntaxNode != null ? 
                     simpleNameSyntaxNode.Identifier.ValueText : 
-                    this.baseTypeSyntaxNode.Type.ToString();
+                    this.BaseTypeSyntaxNode.Type.ToString();
             }
+        }
+        
+        private BaseTypeSyntax BaseTypeSyntaxNode
+        {
+            get { return this.syntaxNode as BaseTypeSyntax; }
         }
     }
 }

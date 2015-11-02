@@ -23,6 +23,10 @@ namespace Rosetta.AST.Renderings.Data
     /// </summary>
     public class SimpleEntities
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [RenderingResource("SimpleEmptyClass.ts")]
         public string RenderSimpleEmptyClass()
         {

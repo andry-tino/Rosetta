@@ -12,15 +12,15 @@ namespace Rosetta.Translation
     /// </summary>
     public class ArgumentDefinitionTranslationUnit : ITranslationUnit
     {
-        private string typeName;
-        private string name;
+        private ITranslationUnit typeName;
+        private ITranslationUnit name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArgumentDefinitionTranslationUnit"/> class.
         /// </summary>
         /// <param name="typeName"></param>
         /// <param name="name"></param>
-        private ArgumentDefinitionTranslationUnit(string typeName, string name)
+        private ArgumentDefinitionTranslationUnit(ITranslationUnit typeName, ITranslationUnit name)
         {
             this.typeName = typeName;
             this.name = name;
@@ -32,7 +32,7 @@ namespace Rosetta.Translation
         /// <param name="typeName"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ArgumentDefinitionTranslationUnit Create(string typeName, string name)
+        public static ArgumentDefinitionTranslationUnit Create(ITranslationUnit typeName, ITranslationUnit name)
         {
             return new ArgumentDefinitionTranslationUnit(typeName, name);
         }
@@ -52,7 +52,7 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public string Translate()
         {
-            return string.Format("{0} {1}", this.typeName, this.name);
+            return string.Format("{0} {1}", this.typeName.Translate(), this.name.Translate());
         }
     }
 }

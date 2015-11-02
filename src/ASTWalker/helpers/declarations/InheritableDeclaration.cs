@@ -17,11 +17,8 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing classes and interfaces in AST.
     /// </summary>
-    internal abstract class InheritableDeclaration
+    internal abstract class InheritableDeclaration : Helper
     {
-        protected TypeDeclarationSyntax syntaxNode;
-        protected SemanticModel semanticModel;
-
         // Cached values
         private IEnumerable<BaseTypeReference> baseTypes;
         
@@ -29,11 +26,9 @@ namespace Rosetta.AST.Helpers
         /// Initializes a new instance of the <see cref="Inheritable"/> class.
         /// </summary>
         /// <param name="syntaxNode"></param>
-        public InheritableDeclaration(TypeDeclarationSyntax syntaxNode)
+        public InheritableDeclaration(TypeDeclarationSyntax syntaxNode) 
+            : this(syntaxNode, null)
         {
-            this.syntaxNode = syntaxNode;
-            this.baseTypes = null;
-            this.semanticModel = null;
         }
 
         /// <summary>
@@ -42,9 +37,9 @@ namespace Rosetta.AST.Helpers
         /// <param name="syntaxNode"></param>
         /// <param name="semanticModel"></param>
         public InheritableDeclaration(TypeDeclarationSyntax syntaxNode, SemanticModel semanticModel) 
-            : this(syntaxNode)
+            : base(syntaxNode, semanticModel)
         {
-            this.semanticModel = semanticModel;
+            this.baseTypes = null;
         }
 
         /// <summary>
@@ -52,7 +47,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public virtual VisibilityToken Visibility
         {
-            get { return Modifiers.Get(this.syntaxNode.Modifiers); }
+            get { return Modifiers.Get(this.TypeDeclarationSyntaxNode.Modifiers); }
         }
 
         /// <summary>
@@ -60,7 +55,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public virtual string Name
         {
-            get { return this.syntaxNode.Identifier.ValueText; }
+            get { return this.TypeDeclarationSyntaxNode.Identifier.ValueText; }
         }
 
         /// <summary>
@@ -77,10 +72,10 @@ namespace Rosetta.AST.Helpers
                 {
                     this.baseTypes = new List<BaseTypeReference>();
 
-                    BaseListSyntax baselist = this.syntaxNode.BaseList;
+                    BaseListSyntax baselist = this.TypeDeclarationSyntaxNode.BaseList;
                     if (baselist != null)
                     {
-                        SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.syntaxNode.BaseList.Types;
+                        SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.TypeDeclarationSyntaxNode.BaseList.Types;
                         foreach (BaseTypeSyntax baseType in listSyntax)
                         {
                             if (baseType.Kind() == SyntaxKind.SimpleBaseType)
@@ -110,18 +105,10 @@ namespace Rosetta.AST.Helpers
                 return this.baseTypes;
             }
         }
-
-        protected SemanticModel SemanticModel
+        
+        private TypeDeclarationSyntax TypeDeclarationSyntaxNode
         {
-            get
-            {
-                if (this.semanticModel == null)
-                {
-                    return Source.SemanticModel;
-                }
-
-                return this.semanticModel;
-            }
+            get { return this.syntaxNode as TypeDeclarationSyntax; }
         }
     }
 }
