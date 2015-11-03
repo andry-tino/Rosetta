@@ -20,6 +20,11 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         public static KeyValuePair<string, IReadOnlyDictionary<string, string>> Class1 { get; private set; }
 
         /// <summary>
+        /// Simple class with empty methods.
+        /// </summary>
+        public static KeyValuePair<string, IReadOnlyDictionary<string, string>> Class11 { get; private set; }
+
+        /// <summary>
         /// Class with base class.
         /// </summary>
         public static KeyValuePair<string, IReadOnlyDictionary<string, string>> Class2 { get; private set; }
@@ -33,6 +38,7 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
         public static void Initialize(TestContext context)
         {
             Class1 = SourceGenerator.Generate();
+            Class11 = SourceGenerator.Generate(SourceOptions.EmptyElements);
             Class2 = SourceGenerator.Generate(SourceOptions.HasInheritance);
             Class3 = SourceGenerator.Generate(SourceOptions.ImplementsInterfaces);
         }

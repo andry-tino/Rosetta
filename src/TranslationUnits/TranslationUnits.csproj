@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="compound\ClassDeclarationTranslationUnit.cs" />
-    <Compile Include="compound\MemberTranslationUnit.cs" />
+    <Compile Include="MemberTranslationUnit.cs" />
     <Compile Include="compound\MethodDeclarationTranslationUnit.cs" />
     <Compile Include="compound\MethodSignatureDeclarationTranslationUnit.cs" />
     <Compile Include="formatters\IFormatter.cs" />
@@ -54,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScopedElementTranslationUnit.cs" />
     <Compile Include="simple\ArgumentDefinitionTranslationUnit.cs" />
+    <Compile Include="simple\FieldDeclarationTranslationUnit.cs" />
     <Compile Include="simple\IdentifierTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\TokenUtility.cs" />

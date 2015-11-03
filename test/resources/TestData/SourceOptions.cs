@@ -16,21 +16,26 @@ namespace Rosetta.Tests.Data
         /// <summary>
         /// Has a base class.
         /// </summary>
-        HasInheritance = 0x0001,
+        HasInheritance = 0x00001,
 
         /// <summary>
         /// Has at least one interface.
         /// </summary>
-        ImplementsInterfaces = 0x0010,
+        ImplementsInterfaces = 0x00010,
 
         /// <summary>
         /// Has many entities as base types.
         /// </summary>
-        BaseListMany = 0x0100,
+        BaseListMany = 0x00100,
+
+        /// <summary>
+        /// Defines elements that are empty.
+        /// </summary>
+        EmptyElements = 0x01000,
 
         /// <summary>
         /// No options.
         /// </summary>
-        None = 0x0000
+        None = 0x00000
     }
 }

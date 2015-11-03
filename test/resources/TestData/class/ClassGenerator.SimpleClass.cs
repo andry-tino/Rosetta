@@ -53,5 +53,71 @@ namespace Rosetta.Tests
                 return dictionary;
             }
         }
+
+        /// <summary>
+        /// A very simle class with empty methods.
+        /// </summary>
+        public string VerySimpleClassWithEmptyMethods
+        {
+            get
+            {
+                return string.Format(@"
+                    using System;
+                    using System.Collections;
+                    using System.Linq;
+                    using System.Text;
+
+                    namespace HelloWorld
+                    {{
+                        public class {0}
+                        {{
+                            public static void Method1() {{
+                            }}
+
+                            protected static void Method2() {{
+                            }}
+
+                            public void Method3() {{
+                            }}
+
+                            public int Method4() {{
+                            }}
+
+                            public string Method5() {{
+                            }}
+
+                            public object Method6(int param1) {{
+                            }}
+
+                            public object Method7(int param1, int param2) {{
+                            }}
+                        }}
+                    }}",
+                this.Name);
+            }
+        }
+
+        /// <summary>
+        /// Attributes for <see cref="VerySimpleClassWithEmptyMethods"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> VerySimpleClassWithEmptyMethodsAttributes
+        {
+            get
+            {
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("ClassName", this.Name);
+                dictionary.Add("Method1Name", "Method1");
+                dictionary.Add("Method2Name", "Method2");
+                dictionary.Add("Method3Name", "Method3");
+                dictionary.Add("Method4Name", "Method4");
+                dictionary.Add("Method5Name", "Method5");
+                dictionary.Add("Method6Name", "Method6");
+                dictionary.Add("Method7Name", "Method7");
+                dictionary.Add("Param1Name", "param1");
+                dictionary.Add("Param2Name", "param2");
+
+                return dictionary;
+            }
+        }
     }
 }

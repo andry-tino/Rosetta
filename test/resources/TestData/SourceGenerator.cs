@@ -95,6 +95,13 @@ namespace Rosetta.Tests.Data
                     classes.ClassWithBaseClass, classes.ClassWithBaseClassAttributes);
             }
 
+            // Empty elements
+            if (options.HasFlag(SourceOptions.EmptyElements))
+            {
+                return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
+                    classes.VerySimpleClassWithEmptyMethods, classes.VerySimpleClassWithEmptyMethodsAttributes);
+            }
+
             // Simple class
             return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
                 classes.VerySimpleClass, classes.VerySimpleClassAttributes);
