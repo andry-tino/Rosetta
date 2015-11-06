@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="ASTExtractor.cs" />
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
+    <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
     <Compile Include="helpers\Helper.cs" />
     <Compile Include="helpers\types\TypedIdentifier.cs" />
     <Compile Include="walkers\ClassASTWalker.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Types.cs" />
     <Compile Include="WalkerEventArgs.cs" />
     <Compile Include="walkers\MethodASTWalker.cs" />
+    <Compile Include="walkers\NamespaceASTWalker.cs" />
     <Compile Include="WalkerTranslationUnitMapping.cs" />
   </ItemGroup>
   <ItemGroup>
