@@ -83,7 +83,11 @@ namespace Rosetta.Translation
         {
             get
             {
-                throw new NotImplementedException();
+                return 
+                    this.constructorDeclarations
+                    .Concat(this.constructorDeclarations)
+                    .Concat(this.memberDeclarations)
+                    .Concat(this.propertyDeclarations);
             }
         }
 

@@ -81,5 +81,15 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         public const string ImplementsKeyword = "implements";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ModuleKeyword = "module";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ExportKeyword = "export";
     }
 }

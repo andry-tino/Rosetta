@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="compound\ClassDeclarationTranslationUnit.cs" />
+    <Compile Include="compound\ModuleTranslationUnit.cs" />
     <Compile Include="MemberTranslationUnit.cs" />
     <Compile Include="compound\MethodDeclarationTranslationUnit.cs" />
     <Compile Include="compound\MethodSignatureDeclarationTranslationUnit.cs" />
