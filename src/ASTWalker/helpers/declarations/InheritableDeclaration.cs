@@ -21,9 +21,9 @@ namespace Rosetta.AST.Helpers
     {
         // Cached values
         private IEnumerable<BaseTypeReference> baseTypes;
-        
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Inheritable"/> class.
+        /// Initializes a new instance of the <see cref="InheritableDeclaration"/> class.
         /// </summary>
         /// <param name="syntaxNode"></param>
         public InheritableDeclaration(TypeDeclarationSyntax syntaxNode) 
@@ -32,7 +32,7 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Inheritable"/> class.
+        /// Initializes a new instance of the <see cref="InheritableDeclaration"/> class.
         /// </summary>
         /// <param name="syntaxNode"></param>
         /// <param name="semanticModel"></param>
