@@ -32,6 +32,7 @@ namespace Rosetta.Translation.Renderings
             {
                 return new Type[] 
                 {
+                    DataProvider.ModulesMethodsProvider,
                     DataProvider.ClassesMethodsProvider,
                     DataProvider.MethodsMethodsProvider
                 };

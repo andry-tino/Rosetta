@@ -19,6 +19,11 @@ namespace Rosetta.Tests.Data
         public static string Name { get; set; }
 
         /// <summary>
+        /// The namespace name.
+        /// </summary>
+        public static string NamespaceName { get; set; }
+
+        /// <summary>
         /// The base class name.
         /// </summary>
         public static string BaseName { get; set; }
@@ -45,6 +50,7 @@ namespace Rosetta.Tests.Data
         {
             Name = "MyClass";
             BaseName = "MyBaseClass";
+            NamespaceName = "MyNamespace";
             Interface1Name = "MyInterface1";
             Interface2Name = "MyInterface2";
             Interface3Name = "MyInterface3";
@@ -100,6 +106,14 @@ namespace Rosetta.Tests.Data
             {
                 return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
                     classes.VerySimpleClassWithEmptyMethods, classes.VerySimpleClassWithEmptyMethodsAttributes);
+            }
+
+            // Namespace
+            if (options.HasFlag(SourceOptions.HasNamespace))
+            {
+                classes.NamespaceName = NamespaceName;
+                return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
+                    classes.VerySimpleClassInNamespace, classes.VerySimpleClassInNamespaceAttributes);
             }
 
             // Simple class

@@ -17,6 +17,17 @@ namespace Rosetta.Translation.Renderings
         /// <summary>
         /// 
         /// </summary>
+        public static Type ModulesMethodsProvider
+        {
+            get
+            {
+                return typeof(Modules);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static Type ClassesMethodsProvider
         {
             get

@@ -17,6 +17,17 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         /// <param name="translationUnit"></param>
         /// <param name="interfaceName"></param>
+        public static void AddClass(this ModuleTranslationUnit translationUnit, string className)
+        {
+            translationUnit.AddClass(ClassDeclarationTranslationUnit.Create(
+                VisibilityToken.Public, IdentifierTranslationUnit.Create(className), null));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        /// <param name="interfaceName"></param>
         public static void AddInterface(this ClassDeclarationTranslationUnit translationUnit, string interfaceName)
         {
             translationUnit.AddImplementedInterface(IdentifierTranslationUnit.Create(interfaceName));

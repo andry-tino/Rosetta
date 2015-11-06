@@ -14,6 +14,11 @@ namespace Rosetta.Tests
     internal partial class ClassGenerator
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public string NamespaceName { get; set; }
+
+        /// <summary>
         /// A very simle class for an executable.
         /// </summary>
         public string VerySimpleClass
@@ -48,6 +53,49 @@ namespace Rosetta.Tests
             get
             {
                 var dictionary = new Dictionary<string, string>();
+                dictionary.Add("ClassName", this.Name);
+
+                return dictionary;
+            }
+        }
+
+        /// <summary>
+        /// A very simle class for an executable.
+        /// </summary>
+        public string VerySimpleClassInNamespace
+        {
+            get
+            {
+                return string.Format(@"
+                    using System;
+                    using System.Collections;
+                    using System.Linq;
+                    using System.Text;
+
+                    namespace {0}
+                    {{
+                        class {1}
+                        {{
+                            static void Main(string[] args)
+                            {{
+                                Console.WriteLine(""Hello, World!"");
+                            }}
+                        }}
+                    }}",
+                this.NamespaceName,
+                this.Name);
+            }
+        }
+
+        /// <summary>
+        /// Attributes for <see cref="VerySimpleClass"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> VerySimpleClassInNamespaceAttributes
+        {
+            get
+            {
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("NamespaceName", this.Name);
                 dictionary.Add("ClassName", this.Name);
 
                 return dictionary;

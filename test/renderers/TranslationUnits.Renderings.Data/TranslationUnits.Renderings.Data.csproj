@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Classes.cs" />
     <Compile Include="Methods.cs" />
+    <Compile Include="Modules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utilities\TranslationUnitBuilder.cs" />
     <Compile Include="utilities\TranslationUnitHelper.cs" />

@@ -15,6 +15,21 @@ namespace Rosetta.Translation.Renderings.Data
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildModuleTranslationUnit(string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return ModuleTranslationUnit.Create(IdentifierTranslationUnit.Create(name));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <param name="baseClassName"></param>
@@ -27,7 +42,7 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             return ClassDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Create(name), 
+                visibility, IdentifierTranslationUnit.Create(name),
                 baseClassName == null ? null : IdentifierTranslationUnit.Create(baseClassName));
         }
 
