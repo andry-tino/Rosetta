@@ -20,7 +20,7 @@ namespace Rosetta.Translation
         /// <param name="name"></param>
         private IdentifierTranslationUnit(string name)
         {
-            this.name = name;
+            this.name = ValidateName(name);
         }
 
         /// <summary>
@@ -66,5 +66,19 @@ namespace Rosetta.Translation
         {
             return this.name;
         }
+
+        #region Validation
+
+        private static string ValidateName(string name)
+        {
+            if (name.Contains(" "))
+            {
+                throw new ArgumentException("Name cannot contain spaces", nameof(name));
+            }
+
+            return name;
+        }
+
+        #endregion
     }
 }
