@@ -2,7 +2,8 @@
 
 param(
   [parameter(mandatory = $true)] [string] $WorkspacePath,
-  [parameter(mandatory = $true)] [string] $OutputPath
+  [parameter(mandatory = $true)] [string] $OutputPath,
+  [bool] $PrintRenderedFiles = $true
 );
 
 write-output "Running renderer...";
@@ -26,6 +27,16 @@ if ($LASTEXITCODE -gt 0)
 write-output "Files generated in: $RenderPathTranslationUnits!";
 get-childitem "$RenderPathTranslationUnits";
 
+if ($PrintRenderedFiles)
+{
+  foreach ($file in get-childitem "$RenderPathTranslationUnits")
+  {
+    write-output "Printing: $file!";
+	write-output "----------------";
+    get-content $file.FullName;
+  }
+}
+
 # Running renderers for Translation units
 $Result = & $RendererExecPathAST "$RenderPathAST";
 if ($LASTEXITCODE -gt 0)
@@ -35,3 +46,13 @@ if ($LASTEXITCODE -gt 0)
 
 write-output "Files generated in: $RenderPathAST!";
 get-childitem "$RenderPathAST";
+
+if ($PrintRenderedFiles)
+{
+  foreach ($file in get-childitem "$RenderPathAST")
+  {
+    write-output "Printing: $file!";
+	write-output "----------------";
+    get-content $file.FullName;
+  }
+}
