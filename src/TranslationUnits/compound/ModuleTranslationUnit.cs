@@ -103,9 +103,14 @@ namespace Rosetta.Translation
                 {
                     ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
                 }
-                writer.WriteLine("{0} {1}", 
-                    Lexems.ExportKeyword, 
-                    translationUnit.Translate());
+
+                // Classes need injection for observing indentation
+                if (translationUnit as ITranslationInjector != null)
+                {
+                    ((ITranslationInjector)translationUnit).InjectedTranslationUnitBefore = IdentifierTranslationUnit.Create(Lexems.ExportKeyword);
+                }
+
+                writer.WriteLine(translationUnit.Translate());
             }
 
             // Then, interfaces

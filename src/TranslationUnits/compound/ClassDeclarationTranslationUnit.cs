@@ -6,20 +6,23 @@
 namespace Rosetta.Translation
 {
     using System;
-    using System.IO;
     using System.Linq;
     using System.Collections.Generic;
 
     /// <summary>
     /// Interface for describing compound translation elements.
     /// </summary>
-    public class ClassDeclarationTranslationUnit : ScopedElementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class ClassDeclarationTranslationUnit : ScopedElementTranslationUnit, 
+        ITranslationUnit, ICompoundTranslationUnit, ITranslationInjector
     {
         // Inner units
         private IEnumerable<ITranslationUnit> memberDeclarations;
         private IEnumerable<ITranslationUnit> constructorDeclarations;
         private IEnumerable<ITranslationUnit> propertyDeclarations;
         private IEnumerable<ITranslationUnit> methodDeclarations;
+
+        // Injected units
+        private ITranslationUnit injectedBefore;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDeclarationTranslationUnit"/> class.
@@ -34,6 +37,8 @@ namespace Rosetta.Translation
             this.constructorDeclarations = new List<ITranslationUnit>();
             this.propertyDeclarations = new List<ITranslationUnit>();
             this.methodDeclarations = new List<ITranslationUnit>();
+
+            this.injectedBefore = null;
         }
         
         private ITranslationUnit Name { get; set; }
@@ -92,6 +97,35 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Sets the <see cref="ITranslationUnit"/> to concatenate 
+        /// before the translation of the main one.
+        /// </summary>
+        public ITranslationUnit InjectedTranslationUnitBefore
+        {
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.injectedBefore = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ITranslationUnit"/> to concatenate 
+        /// after the translation of the main one.
+        /// </summary>
+        public ITranslationUnit InjectedTranslationUnitAfter
+        {
+            set
+            {
+                throw new NotImplementedException("This class does not support injection after the main translation!");
+            }
+        }
+
+        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
@@ -106,12 +140,25 @@ namespace Rosetta.Translation
             string classVisibility = TokenUtility.ToString(this.Visibility);
             string baseList = this.BuildClassInheritanceAndInterfaceImplementationList();
 
-            writer.WriteLine("{0} class {1} {2} {3}", 
-                text => ClassDeclarationCodePerfect.RefineDeclaration(text), 
-                classVisibility, 
+            if (this.injectedBefore == null)
+            {
+                writer.WriteLine("{0} class {1} {2} {3}",
+                text => ClassDeclarationCodePerfect.RefineDeclaration(text),
+                classVisibility,
                 this.Name.Translate(),
-                baseList, 
+                baseList,
                 Lexems.OpenCurlyBracket);
+            }
+            else
+            {
+                writer.WriteLine("{0} {1} class {2} {3} {4}",
+                text => ClassDeclarationCodePerfect.RefineDeclaration(text),
+                this.injectedBefore.Translate(),
+                classVisibility,
+                this.Name.Translate(),
+                baseList,
+                Lexems.OpenCurlyBracket);
+            }
 
             // Translating members first
             foreach (ITranslationUnit translationUnit in this.memberDeclarations)
