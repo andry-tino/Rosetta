@@ -77,17 +77,22 @@ namespace Rosetta.Translation
         /// Writes a line by replacing the syntax for a <see cref="TextWriter"/>.
         /// </summary>
         /// <param name="format">The format pattern.</param>
-        /// <param name="postprocessor">The action to perform before writing and after applying placeholders.</param>
+        /// <param name="preprocessor">The action to perform before writing and after applying placeholders.</param>
         /// <param name="arg">The replacing arguments.</param>
-        public void WriteLine(string format, Func<string, string> postprocessor, params string[] arg)
+        /// <remarks>
+        /// We must ensure that <see cref="preprocessor"/> is executed before <see cref="formatter"/> is called. In
+        /// fact, formatter will add spaces, possibly, and this formatting would be removed if the post processor
+        /// removes spaces.
+        /// </remarks>
+        public void WriteLine(string format, Func<string, string> preprocessor, params string[] arg)
         {
             if (format == null)
             {
                 throw new ArgumentNullException(nameof(format));
             }
-            if (postprocessor == null)
+            if (preprocessor == null)
             {
-                throw new ArgumentNullException(nameof(postprocessor));
+                throw new ArgumentNullException(nameof(preprocessor));
             }
 
             StringWriter writer = new StringWriter();
@@ -99,10 +104,11 @@ namespace Rosetta.Translation
             //                                                   |- And this!
             writer.Write(
                 this.formatter.FormatLine(
-                    string.Format(
-                        EscapeInputFormat(format), arg)));
+                    preprocessor(
+                        string.Format(
+                            EscapeInputFormat(format), arg))));
 
-            this.writer.WriteLine(postprocessor(writer.ToString()));
+            this.writer.WriteLine(writer.ToString());
         }
 
         /// <summary>
