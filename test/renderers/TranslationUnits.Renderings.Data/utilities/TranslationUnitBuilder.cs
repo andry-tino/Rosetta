@@ -64,5 +64,27 @@ namespace Rosetta.Translation.Renderings.Data
                 visibility, returnType == null ? null : IdentifierTranslationUnit.Create(returnType),
                 IdentifierTranslationUnit.Create(name));
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visibility"></param>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildMemberTranslationUnit(VisibilityToken visibility, string type, string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            return FieldDeclarationTranslationUnit.Create(
+                visibility, IdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
+        }
     }
 }

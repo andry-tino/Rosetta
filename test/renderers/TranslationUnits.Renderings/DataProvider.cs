@@ -46,5 +46,16 @@ namespace Rosetta.Translation.Renderings
                 return typeof(Methods);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Type MembersMethodsProvider
+        {
+            get
+            {
+                return typeof(Members);
+            }
+        }
     }
 }

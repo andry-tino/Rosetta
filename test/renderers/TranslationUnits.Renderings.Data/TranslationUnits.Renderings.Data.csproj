@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes.cs" />
+    <Compile Include="Members.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="Modules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
