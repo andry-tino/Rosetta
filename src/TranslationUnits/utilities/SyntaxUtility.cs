@@ -20,8 +20,9 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="items"></param>
         /// <param name="separator"></param>
+        /// <param name="separatorLast"></param>
         /// <returns></returns>
-        public static string ToTokenSeparatedList(IEnumerable<string> items, string separator)
+        public static string ToTokenSeparatedList(IEnumerable<string> items, string separator, bool includeSeparatorAtLast = false)
         {
             if (items == null)
             {
@@ -35,7 +36,7 @@ namespace Rosetta.Translation
             string output = string.Empty;
             for (int i = 0, l = items.Count(); i < l; i++)
             {
-                output += items.ElementAt(i) + (i == l - 1 ? string.Empty : separator);
+                output += items.ElementAt(i) + (i == l - 1 ? (includeSeparatorAtLast ? separator : string.Empty) : separator);
             }
 
             return output;
@@ -45,11 +46,12 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         /// <param name="items"></param>
+        /// <param name="includeSeparatorAtLast"></param>
         /// <returns></returns>
-        public static string ToBracketEnclosedList(IEnumerable<string> items)
+        public static string ToBracketEnclosedList(IEnumerable<string> items, bool includeSeparatorAtLast = false)
         {
             return string.Format("{1}{0}{2}", 
-                ToTokenSeparatedList(items, Lexems.Comma), 
+                ToTokenSeparatedList(items, Lexems.Comma, includeSeparatorAtLast), 
                 Lexems.OpenRoundBracket, 
                 Lexems.CloseRoundBracket);
         }
@@ -58,10 +60,11 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         /// <param name="items"></param>
+        /// <param name="includeSeparatorAtLast"></param>
         /// <returns></returns>
-        public static string ToNewlineSemicolonSeparatedList(IEnumerable<string> items)
+        public static string ToNewlineSemicolonSeparatedList(IEnumerable<string> items, bool includeSeparatorAtLast = false)
         {
-            return ToTokenSeparatedList(items, Lexems.Semicolon + Lexems.Newline);
+            return ToTokenSeparatedList(items, Lexems.Semicolon + Lexems.Newline, includeSeparatorAtLast);
         }
 
         /// <summary>

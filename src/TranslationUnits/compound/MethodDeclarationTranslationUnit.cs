@@ -79,7 +79,7 @@ namespace Rosetta.Translation
 
             // The body, we render them as a list of semicolon/newline separated elements
             writer.WriteLine("{0}", SyntaxUtility.ToNewlineSemicolonSeparatedList(
-                this.statements.Select(unit => unit.Translate())));
+                this.statements.Select(unit => unit.Translate()), true));
 
             // Closing declaration
             writer.WriteLine("{0}", Lexems.CloseCurlyBracket);
