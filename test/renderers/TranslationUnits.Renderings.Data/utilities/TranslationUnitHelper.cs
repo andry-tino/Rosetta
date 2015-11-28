@@ -16,11 +16,29 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <param name="translationUnit"></param>
-        /// <param name="interfaceName"></param>
-        public static void AddClass(this ModuleTranslationUnit translationUnit, string className)
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public static ClassDeclarationTranslationUnit AddClass(this ModuleTranslationUnit translationUnit, string className)
         {
-            translationUnit.AddClass(ClassDeclarationTranslationUnit.Create(
-                VisibilityToken.Public, IdentifierTranslationUnit.Create(className), null));
+            var classTranslationUnit = ClassDeclarationTranslationUnit.Create(
+                VisibilityToken.Public, IdentifierTranslationUnit.Create(className), null);
+            translationUnit.AddClass(classTranslationUnit);
+            return classTranslationUnit;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        /// <param name="className"></param>
+        /// <param name="baseClassName"></param>
+        /// <returns></returns>
+        public static ClassDeclarationTranslationUnit AddClass(this ModuleTranslationUnit translationUnit, string className, string baseClassName)
+        {
+            var classTranslationUnit = ClassDeclarationTranslationUnit.Create(
+                VisibilityToken.Public, IdentifierTranslationUnit.Create(className), IdentifierTranslationUnit.Create(baseClassName));
+            translationUnit.AddClass(classTranslationUnit);
+            return classTranslationUnit;
         }
 
         /// <summary>
@@ -37,13 +55,44 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <param name="translationUnit"></param>
-        /// <param name="method"></param>
-        public static void AddEmptyMethod(this ClassDeclarationTranslationUnit translationUnit, string method)
+        /// <param name="returnType"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static MethodDeclarationTranslationUnit AddMethod(this ClassDeclarationTranslationUnit translationUnit, string returnType, string name)
         {
-            ITranslationUnit methodDeclaration = MethodDeclarationTranslationUnit.Create(
-                VisibilityToken.Public, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create(method));
+            var methodTranslationUnit = MethodDeclarationTranslationUnit.Create(VisibilityToken.Public, 
+                returnType != null ? IdentifierTranslationUnit.Create(returnType) : null, 
+                IdentifierTranslationUnit.Create(name));
+            translationUnit.AddMethodDeclaration(methodTranslationUnit);
+            return methodTranslationUnit;
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public static MethodDeclarationTranslationUnit AddEmptyMethod(this ClassDeclarationTranslationUnit translationUnit, string method)
+        {
+            var methodDeclaration = MethodDeclarationTranslationUnit.Create(
+                VisibilityToken.Public, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create(method));
             translationUnit.AddMethodDeclaration(methodDeclaration);
+            return methodDeclaration;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public static VariableDeclarationTranslationUnit AddVariable(this MethodDeclarationTranslationUnit translationUnit, string type, string name)
+        {
+            var variableDeclaration = VariableDeclarationTranslationUnit.Create(
+                type != null ? IdentifierTranslationUnit.Create("int") : null, IdentifierTranslationUnit.Create(name));
+            translationUnit.AddStatement(variableDeclaration);
+            return variableDeclaration;
         }
     }
 }
