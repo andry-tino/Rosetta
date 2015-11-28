@@ -57,24 +57,11 @@ namespace Rosetta.Translation
         /// <param name="arg">The replacing arguments.</param>
         public void WriteLine(string format, params string[] arg)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
-
-            // Argument `format` will contain a format-pattern
-            // thus, it is possible that the formatting fails because of curly brackets
-            // like in `public void MyMethod() { /* something */ }`
-            //                                 +- This bracket   +
-            //                                                   |- And this!
-            this.writer.WriteLine(
-                this.formatter.FormatLine(
-                    string.Format(
-                        EscapeInputFormat(format), arg)));
+            this.writer.WriteLine(this.GetStringToWrite(format, arg));
         }
 
         /// <summary>
-        /// Writes a line by replacing the syntax for a <see cref="TextWriter"/>.
+        /// Writes by replacing the syntax for a <see cref="TextWriter"/>.
         /// </summary>
         /// <param name="format">The format pattern.</param>
         /// <param name="preprocessor">The action to perform before writing and after applying placeholders.</param>
@@ -85,6 +72,54 @@ namespace Rosetta.Translation
         /// removes spaces.
         /// </remarks>
         public void WriteLine(string format, Func<string, string> preprocessor, params string[] arg)
+        {
+            this.writer.WriteLine(this.GetStringToWrite(format, preprocessor, arg));
+        }
+
+        /// <summary>
+        /// Writes a line by replacing the syntax for a <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="format">The format pattern.</param>
+        /// <param name="arg">The replacing arguments.</param>
+        public void Write(string format, params string[] arg)
+        {
+            this.writer.Write(this.GetStringToWrite(format, arg));
+        }
+
+        /// <summary>
+        /// Writes by replacing the syntax for a <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="format">The format pattern.</param>
+        /// <param name="preprocessor">The action to perform before writing and after applying placeholders.</param>
+        /// <param name="arg">The replacing arguments.</param>
+        /// <remarks>
+        /// We must ensure that <see cref="preprocessor"/> is executed before <see cref="formatter"/> is called. In
+        /// fact, formatter will add spaces, possibly, and this formatting would be removed if the post processor
+        /// removes spaces.
+        /// </remarks>
+        public void Write(string format, Func<string, string> preprocessor, params string[] arg)
+        {
+            this.writer.Write(this.GetStringToWrite(format, preprocessor, arg));
+        }
+
+        private string GetStringToWrite(string format, params string[] arg)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+
+            // Argument `format` will contain a format-pattern
+            // thus, it is possible that the formatting fails because of curly brackets
+            // like in `public void MyMethod() { /* something */ }`
+            //                                 +- This bracket   +
+            //                                                   |- And this!
+            return this.formatter.FormatLine(
+                    string.Format(
+                        EscapeInputFormat(format), arg));
+        }
+
+        private string GetStringToWrite(string format, Func<string, string> preprocessor, params string[] arg)
         {
             if (format == null)
             {
@@ -108,7 +143,7 @@ namespace Rosetta.Translation
                         string.Format(
                             EscapeInputFormat(format), arg))));
 
-            this.writer.WriteLine(writer.ToString());
+            return writer.ToString();
         }
 
         /// <summary>

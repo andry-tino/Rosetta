@@ -95,6 +95,12 @@ namespace Rosetta.Translation
         /// <param name="translationUnit"></param>
         public void AddStatement(ITranslationUnit translationUnit)
         {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            ((List<ITranslationUnit>)this.statements).Add(translationUnit);
         }
 
         #endregion

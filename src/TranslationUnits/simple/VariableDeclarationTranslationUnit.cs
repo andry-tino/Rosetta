@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// FieldDeclarationTranslationUnit.cs
+/// VariableDeclarationTranslationUnit.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -13,25 +13,24 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing a method signature (no body).
     /// </summary>
-    public class FieldDeclarationTranslationUnit : MemberTranslationUnit, ITranslationUnit
+    public class VariableDeclarationTranslationUnit : NestedElementTranslationUnit, ITranslationUnit
     {
         private ITranslationUnit type;
+        private ITranslationUnit name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldDeclarationTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="VariableDeclarationTranslationUnit"/> class.
         /// </summary>
-        protected FieldDeclarationTranslationUnit()
-            : this(IdentifierTranslationUnit.Empty, VisibilityToken.None)
+        protected VariableDeclarationTranslationUnit() : this(AutomaticNestingLevel)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldDeclarationTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="VariableDeclarationTranslationUnit"/> class.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="visibility"></param>
-        protected FieldDeclarationTranslationUnit(ITranslationUnit name, VisibilityToken visibility)
-            : base(name, visibility)
+        /// <param name="nestingLevel"></param>
+        protected VariableDeclarationTranslationUnit(int nestingLevel)
+            : base(nestingLevel)
         {
             this.type = null;
         }
@@ -39,25 +38,19 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static FieldDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name)
+        public static VariableDeclarationTranslationUnit Create(ITranslationUnit type, ITranslationUnit name)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return new FieldDeclarationTranslationUnit()
+            return new VariableDeclarationTranslationUnit()
             {
-                Visibility = visibility,
-                Name = name,
+                name = name,
                 type = type
             };
         }
@@ -74,12 +67,22 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
-            writer.WriteLine("{0} {1} {2} {3}",
+            if (this.type != null)
+            {
+                writer.Write("{0} {1} {2} {3}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
-                TokenUtility.ToString(this.Visibility),
-                this.Name.Translate(),
+                Lexems.VariableDeclaratorKeyword,
+                this.name.Translate(),
                 Lexems.Colon,
                 this.type.Translate());
+            }
+            else
+            {
+                writer.Write("{0} {1}",
+                text => ClassDeclarationCodePerfect.RefineDeclaration(text),
+                Lexems.VariableDeclaratorKeyword,
+                this.name.Translate());
+            }
 
             return writer.ToString();
         }

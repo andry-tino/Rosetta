@@ -91,5 +91,10 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         public const string ExportKeyword = "export";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string VariableDeclaratorKeyword = "var";
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="simple\ArgumentDefinitionTranslationUnit.cs" />
     <Compile Include="simple\FieldDeclarationTranslationUnit.cs" />
     <Compile Include="simple\IdentifierTranslationUnit.cs" />
+    <Compile Include="simple\VariableDeclarationTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="tokens\VisibilityToken.cs" />

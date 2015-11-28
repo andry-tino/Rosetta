@@ -52,17 +52,28 @@ namespace Rosetta.Translation.Renderings.Data
         /// <param name="visibility"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
+        /// <param name="statements"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildMethodTranslationUnit(VisibilityToken visibility, string returnType, string name)
+        public static ITranslationUnit BuildMethodTranslationUnit(VisibilityToken visibility, string returnType, string name, ITranslationUnit[] statements = null)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return MethodDeclarationTranslationUnit.Create(
+            MethodDeclarationTranslationUnit translationUnit =  MethodDeclarationTranslationUnit.Create(
                 visibility, returnType == null ? null : IdentifierTranslationUnit.Create(returnType),
                 IdentifierTranslationUnit.Create(name));
+
+            if (statements != null)
+            {
+                foreach (ITranslationUnit statement in statements)
+                {
+                    translationUnit.AddStatement(statement);
+                }
+            }
+
+            return translationUnit;
         }
         
         /// <summary>
