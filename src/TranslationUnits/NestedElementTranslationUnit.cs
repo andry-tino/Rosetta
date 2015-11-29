@@ -106,6 +106,29 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Ensures that compound <see cref="ITranslationUnit"/> will increment added unit's nesting level.
+        /// </summary>
+        /// <param name="translationUnit">The translation unit to add.</param>
+        protected virtual void AddTranslationUnit(ITranslationUnit translationUnit)
+        {
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
+            this.AddTranslationUnitCore(translationUnit);
+        }
+
+        /// <summary>
+        /// Logic to provide in subclasses to add <see cref="ITranslationUnit"/> (for compound translation units).
+        /// 
+        /// TODO: Turn this into abstract and make all unit use one method for add compound units. 
+        /// TODO: Add to ICompoundUnit interface and have classes distinguish uisng RTTI!
+        /// </summary>
+        /// <param name="translationUnit">The translation unit to add.</param>
+        protected virtual void AddTranslationUnitCore(ITranslationUnit translationUnit) { }
+
+        /// <summary>
         /// When the indentation level changes, we need to apply a different formatter.
         /// When the nesting level changes, this procedure will adjust it in case the 
         /// automatic nesting level has been set to automatic.

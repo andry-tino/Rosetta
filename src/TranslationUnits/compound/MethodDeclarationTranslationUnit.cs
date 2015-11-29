@@ -80,16 +80,7 @@ namespace Rosetta.Translation
             // Statements
             // The body, we render them as a list of semicolon/newline separated elements
             writer.WriteLine("{0}", SyntaxUtility.ToNewlineSemicolonSeparatedList(
-                this.statements.Select(
-                    delegate(ITranslationUnit unit) 
-                    {
-                        if (unit as NestedElementTranslationUnit != null)
-                        {
-                            ((NestedElementTranslationUnit)unit).NestingLevel = this.NestingLevel + 1;
-                        }
-                        return unit.Translate();
-                    }
-                    ), true));
+                this.statements.Select(unit => unit.Translate()), true));
 
             // Closing declaration
             writer.WriteLine("{0}", Lexems.CloseCurlyBracket);
@@ -108,6 +99,11 @@ namespace Rosetta.Translation
             if (translationUnit == null)
             {
                 throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
             }
 
             ((List<ITranslationUnit>)this.statements).Add(translationUnit);
