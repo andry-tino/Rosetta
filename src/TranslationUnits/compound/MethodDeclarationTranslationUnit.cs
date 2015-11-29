@@ -77,9 +77,19 @@ namespace Rosetta.Translation
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.OpenCurlyBracket);
 
+            // Statements
             // The body, we render them as a list of semicolon/newline separated elements
             writer.WriteLine("{0}", SyntaxUtility.ToNewlineSemicolonSeparatedList(
-                this.statements.Select(unit => unit.Translate()), true));
+                this.statements.Select(
+                    delegate(ITranslationUnit unit) 
+                    {
+                        if (unit as NestedElementTranslationUnit != null)
+                        {
+                            ((NestedElementTranslationUnit)unit).NestingLevel = this.NestingLevel + 1;
+                        }
+                        return unit.Translate();
+                    }
+                    ), true));
 
             // Closing declaration
             writer.WriteLine("{0}", Lexems.CloseCurlyBracket);
