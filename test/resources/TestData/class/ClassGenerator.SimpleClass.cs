@@ -188,6 +188,15 @@ namespace Rosetta.Tests
                             private int field1;
                             public string field2;
                             int field3;
+
+                            public void Method1() {{
+                                string variable1;
+                            }}
+
+                            private void Method2() {{
+                                int variable1;
+                                string variable2;
+                            }}
                         }}
                     }}",
                 this.Name);

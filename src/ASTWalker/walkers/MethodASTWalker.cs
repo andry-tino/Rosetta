@@ -208,6 +208,12 @@ namespace Rosetta.AST
         public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
         {
             base.VisitLocalDeclarationStatement(node);
+
+            var variableDeclaration = new VariableDeclaration(node.Declaration);
+            var variableDeclarationTranslationUnit = VariableDeclarationTranslationUnit.Create(
+                IdentifierTranslationUnit.Create(variableDeclaration.Type), IdentifierTranslationUnit.Create(variableDeclaration.Name));
+            this.methodDeclaration.AddStatement(variableDeclarationTranslationUnit);
+
             this.VisitStatement(node);
         }
 
