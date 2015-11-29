@@ -167,5 +167,45 @@ namespace Rosetta.Tests
                 return dictionary;
             }
         }
+
+        /// <summary>
+        /// A simple class.
+        /// </summary>
+        public string SimpleClass
+        {
+            get
+            {
+                return string.Format(@"
+                    using System;
+                    using System.Collections;
+                    using System.Linq;
+                    using System.Text;
+
+                    namespace HelloWorld
+                    {{
+                        class {0}
+                        {{
+                            private int field1;
+                            public string field2;
+                            int field3;
+                        }}
+                    }}",
+                this.Name);
+            }
+        }
+
+        /// <summary>
+        /// Attributes for <see cref="SimpleClass"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> SimpleClassAttributes
+        {
+            get
+            {
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("ClassName", this.Name);
+
+                return dictionary;
+            }
+        }
     }
 }

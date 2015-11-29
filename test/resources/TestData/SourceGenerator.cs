@@ -60,6 +60,7 @@ namespace Rosetta.Tests.Data
         /// Generates the appropriate class given some options.
         /// </summary>
         /// <param name="options">The options.</param>
+        /// <param name="classOptions">The options for classes.</param>
         /// <returns>
         /// A <see cref="KeyValuePair"/> where the first element is the source 
         /// string and the second element is the set of attributes.
@@ -67,7 +68,7 @@ namespace Rosetta.Tests.Data
         /// 
         /// TODO: Abstract with a wrapper type wrapping around KeyValuePair.
         public static KeyValuePair<string, IReadOnlyDictionary<string, string>> 
-            Generate(SourceOptions options = SourceOptions.None)
+            Generate(SourceOptions options = SourceOptions.None, ClassOptions classOptions = ClassOptions.None)
         {
             ClassGenerator classes = new ClassGenerator()
             {
@@ -117,6 +118,11 @@ namespace Rosetta.Tests.Data
             }
 
             // Simple class
+            if (classOptions.HasFlag(ClassOptions.HasContent))
+            {
+                return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
+                classes.SimpleClass, classes.SimpleClassAttributes);
+            }
             return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
                 classes.VerySimpleClass, classes.VerySimpleClassAttributes);
         }

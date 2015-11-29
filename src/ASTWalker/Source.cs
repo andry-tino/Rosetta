@@ -14,14 +14,14 @@ namespace Rosetta.AST
     /// <summary>
     /// Interface for describing AST walkers.
     /// </summary>
-    internal static class Source
+    public static class Source
     {
         private static SyntaxTree programRoot;
 
         /// <summary>
         /// Gets the compilation object for <see cref="ProgramRoot"/> allowing access to its semantic model.
         /// </summary>
-        public static CSharpCompilation Compilation
+        internal static CSharpCompilation Compilation
         {
             get;
             private set;
@@ -30,7 +30,7 @@ namespace Rosetta.AST
         /// <summary>
         /// Gets the semantic model for <see cref="ProgramRoot"/>.
         /// </summary>
-        public static SemanticModel SemanticModel
+        internal static SemanticModel SemanticModel
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Rosetta.AST
                 throw new InvalidOperationException("We need a syntax tree to build the semantic model!");
             }
 
-            Compilation = CSharpCompilation.Create("Class").AddReferences(
+            Compilation = CSharpCompilation.Create("Source").AddReferences(
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(programRoot);
         }
     }

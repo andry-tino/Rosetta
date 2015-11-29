@@ -167,7 +167,7 @@ namespace Rosetta.Translation
                 {
                     ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
                 }
-                writer.WriteLine(translationUnit.Translate());
+                writer.WriteLine("{0}{1}", translationUnit.Translate(), Lexems.Semicolon);
             }
 
             // Then constructors

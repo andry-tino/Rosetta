@@ -13,7 +13,7 @@ namespace Rosetta.Translation
     public static class TokenUtility
     {
         /// <summary>
-        /// 
+        /// The public TypeScript keyword.
         /// </summary>
         public static string PublicVisibilityToken
         {
@@ -21,7 +21,7 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// 
+        /// The private TypeScript keyword.
         /// </summary>
         public static string PrivateVisibilityToken
         {
@@ -29,7 +29,7 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// 
+        /// The protected TypeScript keyword.
         /// </summary>
         public static string ProtectedVisibilityToken
         {

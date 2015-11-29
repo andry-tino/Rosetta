@@ -74,7 +74,7 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
-            writer.WriteLine("{0} {1} {2} {3}",
+            writer.Write("{0} {1} {2} {3}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
                 TokenUtility.ToString(this.Visibility),
                 this.Name.Translate(),

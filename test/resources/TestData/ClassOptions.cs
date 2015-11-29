@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// SourceOptions.cs
+/// ClassOptions.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -8,35 +8,35 @@ namespace Rosetta.Tests.Data
     using System;
 
     /// <summary>
-    /// Flags for factory generation regarding the code.
+    /// Flags for factory generation regarding classes.
     /// </summary>
     [Flags]
-    public enum SourceOptions
+    public enum ClassOptions
     {
         /// <summary>
-        /// Has a base class.
+        /// Has fields.
         /// </summary>
-        HasNamespace = 0x000001,
+        HasFields = 0x000001,
 
         /// <summary>
-        /// Has a base class.
+        /// Has methods.
         /// </summary>
-        HasInheritance = 0x000010,
+        HasMethods = 0x000010,
 
         /// <summary>
-        /// Has at least one interface.
+        /// Has properties.
         /// </summary>
-        ImplementsInterfaces = 0x000100,
+        HasProperties = 0x000100,
 
         /// <summary>
-        /// Has many entities as base types.
+        /// Has constructor.
         /// </summary>
-        BaseListMany = 0x001000,
+        HasConstructor = 0x001000,
 
         /// <summary>
-        /// Defines elements that are empty.
+        /// Methods, properties should be empty or not?
         /// </summary>
-        EmptyElements = 0x010000,
+        HasContent = 0x010000,
 
         /// <summary>
         /// No options.

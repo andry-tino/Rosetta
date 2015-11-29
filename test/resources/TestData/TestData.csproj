@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassOptions.cs" />
     <Compile Include="class\ClassGenerator.cs" />
     <Compile Include="class\ClassGenerator.SimpleClass.cs" />
     <Compile Include="class\ClassGenerator.WithInheritance.cs" />
