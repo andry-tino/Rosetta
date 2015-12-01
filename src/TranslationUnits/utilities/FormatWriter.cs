@@ -156,7 +156,10 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Escapes the input string.
         /// 
+        /// TODO: At the moment repetitive placeholders are not supported. 
+        /// Thus a stirng like `{1}{2}{1}` will not be correctly escaped. Fix this!
         /// </summary>
         /// <param name="inputFormat"></param>
         /// <returns></returns>

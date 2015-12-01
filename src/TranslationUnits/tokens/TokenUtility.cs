@@ -45,5 +45,27 @@ namespace Rosetta.Translation
         {
             return visibilityToken != VisibilityToken.None ? visibilityToken.ToString("G").ToLower() : string.Empty;
         }
+
+        /// <summary>
+        /// Converts the operator into the appropriate TypeScript token.
+        /// </summary>
+        /// <param name="operatorToken">The visibility.</param>
+        /// <returns></returns>
+        public static string ToString(this OperatorToken operatorToken)
+        {
+            switch (operatorToken)
+            {
+                case OperatorToken.Addition:
+                    return Lexems.Plus;
+                case OperatorToken.Subtraction:
+                    return Lexems.Minus;
+                case OperatorToken.Multiplication:
+                    return Lexems.Times;
+                case OperatorToken.Divide:
+                    return Lexems.Divide;
+                default:
+                    return string.Empty;
+            }
+        }
     }
 }

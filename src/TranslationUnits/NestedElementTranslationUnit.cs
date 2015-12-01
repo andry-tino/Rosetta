@@ -106,6 +106,29 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Utility method used to safely increment the nesting level of an <see cref="ITranslationUnit"/> only in case it supports
+        /// nesting level.
+        /// </summary>
+        /// <param name="translationUnit">The <see cref="ITranslationUnit"/> whose nesting level should be incremented.</param>
+        /// <param name="parentTranslationUnit">The <see cref="ITranslationUnit"/> which is supposed to be the parent.</param>
+        /// <remarks>
+        /// This will cause <paramref name="translationUnit"/> to be checked. In case it supports nestin level, then its
+        /// nesting level is changed in order to have the nesting level of <paramref name="parentTranslationUnit"/> + 1.
+        /// </remarks>
+        public static void IncrementNestingLevel(ITranslationUnit translationUnit, ITranslationUnit parentTranslationUnit)
+        {
+            NestedElementTranslationUnit nestedTranslationUnit = translationUnit as NestedElementTranslationUnit;
+            NestedElementTranslationUnit nestedParentTranslationUnit = parentTranslationUnit as NestedElementTranslationUnit;
+
+            if (nestedTranslationUnit == null || nestedParentTranslationUnit == null)
+            {
+                return;
+            }
+
+            nestedTranslationUnit.NestingLevel = nestedParentTranslationUnit.NestingLevel + 1;
+        }
+
+        /// <summary>
         /// Ensures that compound <see cref="ITranslationUnit"/> will increment added unit's nesting level.
         /// </summary>
         /// <param name="translationUnit">The translation unit to add.</param>

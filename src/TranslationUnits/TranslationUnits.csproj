@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="compound\ClassDeclarationTranslationUnit.cs" />
+    <Compile Include="compound\expressions\BinaryExpressionTranslationUnit.cs" />
+    <Compile Include="compound\expressions\ExpressionTranslationUnit.cs" />
     <Compile Include="compound\ModuleTranslationUnit.cs" />
+    <Compile Include="compound\statements\StatementTranslationUnit.cs" />
     <Compile Include="ITranslationInjector.cs" />
     <Compile Include="MemberTranslationUnit.cs" />
     <Compile Include="compound\MethodDeclarationTranslationUnit.cs" />
@@ -58,10 +61,12 @@
     <Compile Include="simple\ArgumentDefinitionTranslationUnit.cs" />
     <Compile Include="simple\FieldDeclarationTranslationUnit.cs" />
     <Compile Include="simple\IdentifierTranslationUnit.cs" />
+    <Compile Include="simple\LiteralTranslationUnit.cs" />
     <Compile Include="simple\VariableDeclarationTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />
+    <Compile Include="tokens\OperatorToken.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
-    <Compile Include="tokens\VisibilityToken.cs" />
+    <Compile Include="utilities\VisibilityToken.cs" />
     <Compile Include="utilities\CodePerfect.cs" />
     <Compile Include="utilities\FormatWriter.cs" />
     <Compile Include="utilities\SyntaxUtility.cs" />

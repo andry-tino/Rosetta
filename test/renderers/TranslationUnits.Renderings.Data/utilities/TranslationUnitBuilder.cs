@@ -97,5 +97,18 @@ namespace Rosetta.Translation.Renderings.Data
             return FieldDeclarationTranslationUnit.Create(
                 visibility, IdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operatorToken"></param>
+        /// <param name="number1"></param>
+        /// <param name="number2"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildExpressionTranslationUnit(OperatorToken operatorToken, int number1, int number2)
+        {
+            return BinaryExpressionTranslationUnit.Create(
+                LiteralTranslationUnit<int>.Create(number1), LiteralTranslationUnit<int>.Create(number2), operatorToken);
+        }
     }
 }

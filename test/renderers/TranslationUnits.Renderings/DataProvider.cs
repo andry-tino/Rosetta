@@ -8,6 +8,7 @@ namespace Rosetta.Translation.Renderings
     using System;
 
     using Rosetta.Translation.Renderings.Data;
+    using BinaryExpressions = Rosetta.Translation.Renderings.Data.BinaryExpressions;
 
     /// <summary>
     /// 
@@ -15,7 +16,7 @@ namespace Rosetta.Translation.Renderings
     internal static class DataProvider
     {
         /// <summary>
-        /// 
+        /// Gets render methods for <see cref="Modules"/>.
         /// </summary>
         public static Type ModulesMethodsProvider
         {
@@ -26,7 +27,7 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
-        /// 
+        /// Gets render methods for <see cref="Classes"/>.
         /// </summary>
         public static Type ClassesMethodsProvider
         {
@@ -37,7 +38,7 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
-        /// 
+        /// Gets render methods for <see cref="Methods"/>.
         /// </summary>
         public static Type MethodsMethodsProvider
         {
@@ -48,13 +49,24 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
-        /// 
+        /// Gets render methods for <see cref="Members"/>.
         /// </summary>
         public static Type MembersMethodsProvider
         {
             get
             {
                 return typeof(Members);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="BinaryExpressions.Expressions"/>.
+        /// </summary>
+        public static Type BinaryExpressionsMethodsProvider
+        {
+            get
+            {
+                return typeof(BinaryExpressions.Expressions);
             }
         }
     }

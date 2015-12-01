@@ -65,7 +65,32 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string Plus = "+";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Minus = "-";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Times = "*";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Divide = "/";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static string Newline = Environment.NewLine;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string Whitespace = " ";
 
         /// <summary>
         /// 
