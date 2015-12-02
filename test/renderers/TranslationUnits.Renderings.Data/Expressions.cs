@@ -104,4 +104,52 @@ namespace Rosetta.Translation.Renderings.Data
             }
         }
     }
+
+    namespace MemberAccessExpressions
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public class Expressions
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("MemberAccessExpressions.This.ts")]
+            public string MemberAccessExpressionThis()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit("MyMember",
+                    MemberAccessExpressionTranslationUnit.MemberAccessMethod.This);
+
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("MemberAccessExpressions.Base.ts")]
+            public string MemberAccessExpressionBase()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit("MyMember",
+                    MemberAccessExpressionTranslationUnit.MemberAccessMethod.Base);
+
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("MemberAccessExpressions.None.ts")]
+            public string MemberAccessExpressionNone()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit("MyMember",
+                    MemberAccessExpressionTranslationUnit.MemberAccessMethod.None);
+
+                return translationUnit.Translate();
+            }
+        }
+    }
 }

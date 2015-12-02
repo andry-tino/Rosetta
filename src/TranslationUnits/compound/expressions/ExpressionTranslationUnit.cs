@@ -8,7 +8,7 @@ namespace Rosetta.Translation
     using System;
 
     /// <summary>
-    /// Class describing modules.
+    /// Class describing expressions.
     /// </summary>
     public class ExpressionTranslationUnit : NestedElementTranslationUnit
     {

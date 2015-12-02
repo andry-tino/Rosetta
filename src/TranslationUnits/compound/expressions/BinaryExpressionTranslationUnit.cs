@@ -9,7 +9,7 @@ namespace Rosetta.Translation
     using System.Collections.Generic;
 
     /// <summary>
-    /// Class describing modules.
+    /// Class describing binary expressions.
     /// </summary>
     public class BinaryExpressionTranslationUnit : ExpressionTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {

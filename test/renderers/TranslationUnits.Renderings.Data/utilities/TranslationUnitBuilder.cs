@@ -150,6 +150,17 @@ namespace Rosetta.Translation.Renderings.Data
             return ParenthesizedExpressionTranslationUnit.Create(expression);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildExpressionTranslationUnit(string memberName, 
+            MemberAccessExpressionTranslationUnit.MemberAccessMethod accessMethod)
+        {
+            return MemberAccessExpressionTranslationUnit.Create(IdentifierTranslationUnit.Create(memberName), accessMethod);
+        }
+
         #endregion
     }
 }

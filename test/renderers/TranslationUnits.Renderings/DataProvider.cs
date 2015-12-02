@@ -13,6 +13,7 @@ namespace Rosetta.Translation.Renderings
     using UnaryExpressions = Rosetta.Translation.Renderings.Data.UnaryExpressions;
     using CastExpressions = Rosetta.Translation.Renderings.Data.CastExpressions;
     using ParenthesizedExpressions = Rosetta.Translation.Renderings.Data.ParenthesizedExpressions;
+    using MemberAccessExpressions = Rosetta.Translation.Renderings.Data.MemberAccessExpressions;
 
     /// <summary>
     /// 
@@ -104,6 +105,17 @@ namespace Rosetta.Translation.Renderings
             get
             {
                 return typeof(ParenthesizedExpressions.Expressions);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="MemberAccessExpressions.Expressions"/>.
+        /// </summary>
+        public static Type MemberAccessExpressionsMethodsProvider
+        {
+            get
+            {
+                return typeof(MemberAccessExpressions.Expressions);
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Rosetta.Translation
     using System.Collections.Generic;
 
     /// <summary>
-    /// Class describing modules.
+    /// Class describing parenthesis wrapped expressions.
     /// </summary>
     public class ParenthesizedExpressionTranslationUnit : ExpressionTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {

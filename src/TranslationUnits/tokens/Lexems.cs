@@ -141,5 +141,15 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         public const string VariableDeclaratorKeyword = "var";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ThisKeyword = "this";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string BaseKeyword = "super";
     }
 }

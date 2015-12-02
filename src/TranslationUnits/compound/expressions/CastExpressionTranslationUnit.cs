@@ -9,7 +9,7 @@ namespace Rosetta.Translation
     using System.Collections.Generic;
 
     /// <summary>
-    /// Class describing modules.
+    /// Class describing cast expressions.
     /// </summary>
     public class CastExpressionTranslationUnit : ExpressionTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
