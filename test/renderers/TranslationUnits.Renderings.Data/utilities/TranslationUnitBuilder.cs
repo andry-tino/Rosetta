@@ -118,6 +118,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         /// <param name="operatorToken"></param>
         /// <param name="number"></param>
+        /// <param name="postfix"></param>
         /// <returns></returns>
         public static ITranslationUnit BuildExpressionTranslationUnit(OperatorToken operatorToken, int number, bool postfix = true)
         {
@@ -127,16 +128,26 @@ namespace Rosetta.Translation.Renderings.Data
         }
 
         /// <summary>
-        /// 
+        /// /
         /// </summary>
-        /// <param name="operatorToken"></param>
-        /// <param name="number"></param>
+        /// <param name="type"></param>
+        /// <param name="variableName"></param>
         /// <returns></returns>
         public static ITranslationUnit BuildExpressionTranslationUnit(string type, string variableName)
         {
             return CastExpressionTranslationUnit.Create(
                 IdentifierTranslationUnit.Create(type), 
                 IdentifierTranslationUnit.Create(variableName));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildExpressionTranslationUnit(ITranslationUnit expression)
+        {
+            return ParenthesizedExpressionTranslationUnit.Create(expression);
         }
 
         #endregion

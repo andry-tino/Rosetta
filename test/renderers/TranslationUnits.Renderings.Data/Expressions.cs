@@ -83,4 +83,25 @@ namespace Rosetta.Translation.Renderings.Data
             }
         }
     }
+
+    namespace ParenthesizedExpressions
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public class Expressions
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("ParenthesizedExpressions.VariableWrapping.ts")]
+            public string ParenthesizedExpressionVariableWrapping()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(IdentifierTranslationUnit.Create("myVariable"));
+
+                return translationUnit.Translate();
+            }
+        }
+    }
 }

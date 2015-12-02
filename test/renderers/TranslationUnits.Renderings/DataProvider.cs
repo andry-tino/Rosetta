@@ -12,6 +12,7 @@ namespace Rosetta.Translation.Renderings
     using BinaryExpressions = Rosetta.Translation.Renderings.Data.BinaryExpressions;
     using UnaryExpressions = Rosetta.Translation.Renderings.Data.UnaryExpressions;
     using CastExpressions = Rosetta.Translation.Renderings.Data.CastExpressions;
+    using ParenthesizedExpressions = Rosetta.Translation.Renderings.Data.ParenthesizedExpressions;
 
     /// <summary>
     /// 
@@ -92,6 +93,17 @@ namespace Rosetta.Translation.Renderings
             get
             {
                 return typeof(CastExpressions.Expressions);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="ParenthesizedExpressions.Expressions"/>.
+        /// </summary>
+        public static Type ParenthesizedExpressionsMethodsProvider
+        {
+            get
+            {
+                return typeof(ParenthesizedExpressions.Expressions);
             }
         }
     }
