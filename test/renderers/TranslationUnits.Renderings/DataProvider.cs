@@ -9,6 +9,7 @@ namespace Rosetta.Translation.Renderings
 
     using Rosetta.Translation.Renderings.Data;
     using BinaryExpressions = Rosetta.Translation.Renderings.Data.BinaryExpressions;
+    using UnaryExpressions = Rosetta.Translation.Renderings.Data.UnaryExpressions;
 
     /// <summary>
     /// 
@@ -67,6 +68,17 @@ namespace Rosetta.Translation.Renderings
             get
             {
                 return typeof(BinaryExpressions.Expressions);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="UnaryExpressions.Expressions"/>.
+        /// </summary>
+        public static Type UnaryExpressionsMethodsProvider
+        {
+            get
+            {
+                return typeof(UnaryExpressions.Expressions);
             }
         }
     }

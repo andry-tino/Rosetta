@@ -98,6 +98,8 @@ namespace Rosetta.Translation.Renderings.Data
                 visibility, IdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
         }
 
+        #region Expressions
+
         /// <summary>
         /// 
         /// </summary>
@@ -110,5 +112,20 @@ namespace Rosetta.Translation.Renderings.Data
             return BinaryExpressionTranslationUnit.Create(
                 LiteralTranslationUnit<int>.Create(number1), LiteralTranslationUnit<int>.Create(number2), operatorToken);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operatorToken"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildExpressionTranslationUnit(OperatorToken operatorToken, int number, bool postfix = true)
+        {
+            return UnaryExpressionTranslationUnit.Create(
+                LiteralTranslationUnit<int>.Create(number), operatorToken, 
+                postfix ? UnaryExpressionTranslationUnit.UnaryPosition.Postfix : UnaryExpressionTranslationUnit.UnaryPosition.Prefix);
+        }
+
+        #endregion
     }
 }

@@ -63,6 +63,10 @@ namespace Rosetta.Translation
                     return Lexems.Times;
                 case OperatorToken.Divide:
                     return Lexems.Divide;
+                case OperatorToken.Increment:
+                    return Lexems.PlusPlus;
+                case OperatorToken.Decrement:
+                    return Lexems.MinusMinus;
                 default:
                     return string.Empty;
             }

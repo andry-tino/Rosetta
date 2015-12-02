@@ -85,6 +85,16 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string PlusPlus = "++";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string MinusMinus = "--";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static string Newline = Environment.NewLine;
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
-        /// 
+        /// Gets the providers.
         /// </summary>
         protected override Type[] DataProviders
         {
@@ -36,7 +36,8 @@ namespace Rosetta.Translation.Renderings
                     DataProvider.ClassesMethodsProvider,
                     DataProvider.MethodsMethodsProvider,
                     DataProvider.MembersMethodsProvider,
-                    DataProvider.BinaryExpressionsMethodsProvider
+                    DataProvider.BinaryExpressionsMethodsProvider,
+                    DataProvider.UnaryExpressionsMethodsProvider
                 };
             }
         }

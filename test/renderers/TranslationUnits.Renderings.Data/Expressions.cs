@@ -29,4 +29,37 @@ namespace Rosetta.Translation.Renderings.Data
             }
         }
     }
+
+    namespace UnaryExpressions
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public class Expressions
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("UnaryExpression.PostfixIncrement.ts")]
+            public string UnaryExpressionPostfixIncrement()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(OperatorToken.Increment, 1, true);
+
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("UnaryExpression.PrefixIncrement.ts")]
+            public string UnaryExpressionPrefixIncrement()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(OperatorToken.Increment, 1, false);
+
+                return translationUnit.Translate();
+            }
+        }
+    }
 }

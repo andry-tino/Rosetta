@@ -43,6 +43,7 @@
     <Compile Include="compound\ClassDeclarationTranslationUnit.cs" />
     <Compile Include="compound\expressions\BinaryExpressionTranslationUnit.cs" />
     <Compile Include="compound\expressions\ExpressionTranslationUnit.cs" />
+    <Compile Include="compound\expressions\UnaryExpressionTranslationUnit.cs" />
     <Compile Include="compound\ModuleTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementTranslationUnit.cs" />
     <Compile Include="ITranslationInjector.cs" />

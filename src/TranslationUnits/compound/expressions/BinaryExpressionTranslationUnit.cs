@@ -6,8 +6,6 @@
 namespace Rosetta.Translation
 {
     using System;
-    using System.Linq;
-    using System.IO;
     using System.Collections.Generic;
 
     /// <summary>
@@ -42,7 +40,9 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="rhand"></param>
+        /// <param name="lhand"></param>
+        /// <param name="operatorToken"></param>
         /// <returns></returns>
         public static BinaryExpressionTranslationUnit Create(ITranslationUnit rhand, ITranslationUnit lhand, OperatorToken operatorToken)
         {
@@ -70,7 +70,7 @@ namespace Rosetta.Translation
         {
             get
             {
-                return new ITranslationUnit[] { this.leftOperand, this.rightOperand };
+                return new ITranslationUnit[] { this.LeftOperand, this.RightOperand };
             }
         }
 

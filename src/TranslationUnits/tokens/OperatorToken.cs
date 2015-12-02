@@ -35,6 +35,16 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        Increment,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Decrement,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Undefined
     }
 }
