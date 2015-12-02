@@ -126,6 +126,19 @@ namespace Rosetta.Translation.Renderings.Data
                 postfix ? UnaryExpressionTranslationUnit.UnaryPosition.Postfix : UnaryExpressionTranslationUnit.UnaryPosition.Prefix);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operatorToken"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildExpressionTranslationUnit(string type, string variableName)
+        {
+            return CastExpressionTranslationUnit.Create(
+                IdentifierTranslationUnit.Create(type), 
+                IdentifierTranslationUnit.Create(variableName));
+        }
+
         #endregion
     }
 }

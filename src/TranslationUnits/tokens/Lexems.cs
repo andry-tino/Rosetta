@@ -45,6 +45,16 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string OpenAngularBracket = "<";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string CloseAngularBracket = ">";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string Comma = ",";
 
         /// <summary>

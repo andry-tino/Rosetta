@@ -62,4 +62,25 @@ namespace Rosetta.Translation.Renderings.Data
             }
         }
     }
+
+    namespace CastExpressions
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public class Expressions
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("CastExpression.NativeCast.ts")]
+            public string CastExpressionNativeCast()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit("int", "myVariable");
+
+                return translationUnit.Translate();
+            }
+        }
+    }
 }

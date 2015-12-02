@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="compound\ClassDeclarationTranslationUnit.cs" />
     <Compile Include="compound\expressions\BinaryExpressionTranslationUnit.cs" />
+    <Compile Include="compound\expressions\CastExpressionTranslationUnit.cs" />
     <Compile Include="compound\expressions\ExpressionTranslationUnit.cs" />
     <Compile Include="compound\expressions\UnaryExpressionTranslationUnit.cs" />
     <Compile Include="compound\ModuleTranslationUnit.cs" />

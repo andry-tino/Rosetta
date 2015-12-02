@@ -8,8 +8,10 @@ namespace Rosetta.Translation.Renderings
     using System;
 
     using Rosetta.Translation.Renderings.Data;
+
     using BinaryExpressions = Rosetta.Translation.Renderings.Data.BinaryExpressions;
     using UnaryExpressions = Rosetta.Translation.Renderings.Data.UnaryExpressions;
+    using CastExpressions = Rosetta.Translation.Renderings.Data.CastExpressions;
 
     /// <summary>
     /// 
@@ -79,6 +81,17 @@ namespace Rosetta.Translation.Renderings
             get
             {
                 return typeof(UnaryExpressions.Expressions);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="CastExpressions.Expressions"/>.
+        /// </summary>
+        public static Type CastExpressionsMethodsProvider
+        {
+            get
+            {
+                return typeof(CastExpressions.Expressions);
             }
         }
     }

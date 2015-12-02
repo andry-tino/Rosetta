@@ -18,7 +18,7 @@ namespace Rosetta.Translation
         private ITranslationUnit rightOperand;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpressionTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="BinaryExpressionTranslationUnit"/> class.
         /// </summary>
         protected BinaryExpressionTranslationUnit()
             : this(AutomaticNestingLevel)
@@ -26,7 +26,7 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpressionTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="BinaryExpressionTranslationUnit"/> class.
         /// </summary>
         /// <param name="nestingLevel"></param>
         protected BinaryExpressionTranslationUnit(int nestingLevel)

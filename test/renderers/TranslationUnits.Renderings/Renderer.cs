@@ -37,7 +37,8 @@ namespace Rosetta.Translation.Renderings
                     DataProvider.MethodsMethodsProvider,
                     DataProvider.MembersMethodsProvider,
                     DataProvider.BinaryExpressionsMethodsProvider,
-                    DataProvider.UnaryExpressionsMethodsProvider
+                    DataProvider.UnaryExpressionsMethodsProvider,
+                    DataProvider.CastExpressionsMethodsProvider
                 };
             }
         }
