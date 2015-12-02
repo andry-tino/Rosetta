@@ -118,5 +118,16 @@ namespace Rosetta.Translation.Renderings
                 return typeof(MemberAccessExpressions.Expressions);
             }
         }
+
+        /// <summary>
+        /// Gets render methods for <see cref="MixedExpressions"/>.
+        /// </summary>
+        public static Type MixedExpressionsMethodsProvider
+        {
+            get
+            {
+                return typeof(MixedExpressions);
+            }
+        }
     }
 }
