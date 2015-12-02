@@ -95,23 +95,13 @@ namespace Rosetta.Translation
         private ITranslationUnit Type
         {
             get { return this.type; }
-
-            set
-            {
-                NestedElementTranslationUnit.IncrementNestingLevel(value, this);
-                this.type = value;
-            }
+            set { this.type = value; }
         }
 
         private ITranslationUnit Castee
         {
             get { return this.body; }
-
-            set
-            {
-                NestedElementTranslationUnit.IncrementNestingLevel(value, this);
-                this.body = value;
-            }
+            set { this.body = value; }
         }
 
         #endregion

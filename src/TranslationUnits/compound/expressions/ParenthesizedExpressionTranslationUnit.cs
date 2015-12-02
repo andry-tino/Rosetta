@@ -87,12 +87,7 @@ namespace Rosetta.Translation
         private ITranslationUnit WrappedExpression
         {
             get { return this.body; }
-
-            set
-            {
-                NestedElementTranslationUnit.IncrementNestingLevel(value, this);
-                this.body = value;
-            }
+            set { this.body = value; }
         }
 
         #endregion

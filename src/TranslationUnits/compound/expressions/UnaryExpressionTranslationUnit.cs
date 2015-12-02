@@ -93,12 +93,7 @@ namespace Rosetta.Translation
         private ITranslationUnit Operand
         {
             get { return this.operand; }
-
-            set
-            {
-                NestedElementTranslationUnit.IncrementNestingLevel(value, this);
-                this.operand = value;
-            }
+            set { this.operand = value; }
         }
 
         #endregion
