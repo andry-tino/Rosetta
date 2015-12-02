@@ -32,5 +32,34 @@ namespace Rosetta.Translation.Renderings.Data
 
             return translationUnit.Translate();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("MixedExpressions.SimpleParentheticArithmetic.ts")]
+        public string MixedExpressionSimpleParentheticArithmetic()
+        {
+            // Expression: 2 * 3 + 100++ * (200 - 300)
+            var translationUnit = BinaryExpressionTranslationUnit.Create(
+                BinaryExpressionTranslationUnit.Create(
+                    LiteralTranslationUnit<int>.Create(2),
+                    LiteralTranslationUnit<int>.Create(3),
+                    OperatorToken.Multiplication),
+                BinaryExpressionTranslationUnit.Create(
+                    UnaryExpressionTranslationUnit.Create(
+                        LiteralTranslationUnit<int>.Create(100), 
+                        OperatorToken.Increment, 
+                        UnaryExpressionTranslationUnit.UnaryPosition.Postfix),
+                    ParenthesizedExpressionTranslationUnit.Create(
+                        BinaryExpressionTranslationUnit.Create(
+                            LiteralTranslationUnit<int>.Create(200), 
+                            LiteralTranslationUnit<int>.Create(300), 
+                            OperatorToken.Subtraction)),
+                    OperatorToken.Multiplication),
+                OperatorToken.Addition);
+
+            return translationUnit.Translate();
+        }
     }
 }

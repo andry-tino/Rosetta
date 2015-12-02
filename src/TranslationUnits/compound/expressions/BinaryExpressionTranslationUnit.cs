@@ -40,11 +40,11 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rhand"></param>
         /// <param name="lhand"></param>
+        /// <param name="rhand"></param>
         /// <param name="operatorToken"></param>
         /// <returns></returns>
-        public static BinaryExpressionTranslationUnit Create(ITranslationUnit rhand, ITranslationUnit lhand, OperatorToken operatorToken)
+        public static BinaryExpressionTranslationUnit Create(ITranslationUnit lhand, ITranslationUnit rhand, OperatorToken operatorToken)
         {
             if (rhand == null)
             {
