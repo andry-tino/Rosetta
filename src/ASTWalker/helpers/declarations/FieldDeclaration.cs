@@ -66,7 +66,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public string Name
         {
-            get { return this.variableDeclaration.Name; }
+            get { return this.variableDeclaration.Names[0]; }
         }
 
         /// <summary>

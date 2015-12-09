@@ -10,7 +10,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Translation unit for literals.
     /// </summary>
-    public class LiteralTranslationUnit<T> : ITranslationUnit where T : struct
+    public class LiteralTranslationUnit<T> : ITranslationUnit
     {
         private T literalValue;
 

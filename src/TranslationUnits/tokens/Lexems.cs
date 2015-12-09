@@ -75,6 +75,11 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string EqualsSign = "=";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string Plus = "+";
 
         /// <summary>

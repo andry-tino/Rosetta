@@ -14,7 +14,7 @@ namespace Rosetta.AST
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    /// Walks a class AST node.
+    /// Walks a namespace AST node.
     /// </summary>
     public class NamespaceASTWalker : CSharpSyntaxWalker, IASTWalker
     {

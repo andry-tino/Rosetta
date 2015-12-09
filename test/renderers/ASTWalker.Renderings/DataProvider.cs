@@ -24,5 +24,16 @@ namespace Rosetta.AST.Renderings
                 return typeof(SimpleEntities);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Type SimpleEntitiesWithSimpleContentProvider
+        {
+            get
+            {
+                return typeof(SimpleEntitiesWithSimpleContent);
+            }
+        }
     }
 }

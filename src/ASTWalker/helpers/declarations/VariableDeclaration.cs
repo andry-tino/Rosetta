@@ -6,6 +6,7 @@
 namespace Rosetta.AST.Helpers
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -40,17 +41,40 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the name of the variable.
         /// </summary>
-        public string Name
+        public string[] Names
         {
-            get { return this.VariableDeclarationSyntaxNode.Variables[0].Identifier.ValueText; }
+            get
+            {
+                return this.VariableDeclarationSyntaxNode.Variables.Select(
+                    variableDeclarator => variableDeclarator.Identifier.ValueText).ToArray();
+            }
         }
 
         /// <summary>
         /// Gets the type of the variable.
         /// </summary>
+        /// <remarks>
+        /// Might be null.
+        /// </remarks>
         public string Type
         {
             get { return this.SemanticModel.GetSymbolInfo(this.VariableDeclarationSyntaxNode.Type).Symbol.Name; }
+        }
+
+        /// <summary>
+        /// Gets the expression representing the assignment values.
+        /// </summary>
+        /// <remarks>
+        /// Elements in the array might be null.
+        /// </remarks>
+        public ExpressionSyntax[] Expressions
+        {
+            get
+            {
+                return this.VariableDeclarationSyntaxNode.Variables.Select(
+                    variableDeclarator => variableDeclarator.Initializer == null ? 
+                    null : variableDeclarator.Initializer.Value).ToArray();
+            }
         }
 
         private VariableDeclarationSyntax VariableDeclarationSyntaxNode

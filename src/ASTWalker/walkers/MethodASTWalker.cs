@@ -16,7 +16,7 @@ namespace Rosetta.AST
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    /// Walks a class AST node.
+    /// Walks a method AST node.
     /// </summary>
     public class MethodASTWalker : CSharpSyntaxWalker, IASTWalker
     {
@@ -132,13 +132,31 @@ namespace Rosetta.AST
         }
 
         /// <summary>
-        /// 
+        /// TODO: Disable this, expressions are evaluated in the context of single statements.
         /// </summary>
         /// <param name="node"></param>
         public override void VisitExpressionStatement(ExpressionStatementSyntax node)
         {
             base.VisitExpressionStatement(node);
+
+            // Create the translation unit using the builder
+            //ITranslationUnit expressionTranslationUnit = new ExpressionTranslationUnitBuilder(node.Expression).Build();
+            //if (expressionTranslationUnit != null)
+            //{
+            //    this.methodDeclaration.AddStatement(expressionTranslationUnit);
+            //}
+
             this.VisitStatement(node);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public override void VisitBinaryExpression(BinaryExpressionSyntax node)
+        {
+            base.VisitBinaryExpression(node);// Needed?
+            //this.VisitStatement(node);
         }
 
         /// <summary>
@@ -210,8 +228,12 @@ namespace Rosetta.AST
             base.VisitLocalDeclarationStatement(node);
 
             var variableDeclaration = new VariableDeclaration(node.Declaration);
+            ExpressionSyntax expression = variableDeclaration.Expressions[0]; // This can contain null, so need to act accordingly
+            ITranslationUnit expressionTranslationUnit = expression == null ? null : new ExpressionTranslationUnitBuilder(expression).Build();
             var variableDeclarationTranslationUnit = VariableDeclarationTranslationUnit.Create(
-                IdentifierTranslationUnit.Create(variableDeclaration.Type), IdentifierTranslationUnit.Create(variableDeclaration.Name));
+                IdentifierTranslationUnit.Create(variableDeclaration.Type), 
+                IdentifierTranslationUnit.Create(variableDeclaration.Names[0]), 
+                expressionTranslationUnit);
             this.methodDeclaration.AddStatement(variableDeclarationTranslationUnit);
 
             this.VisitStatement(node);

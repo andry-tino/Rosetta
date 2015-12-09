@@ -45,6 +45,8 @@
     <Compile Include="class\ClassGenerator.SimpleClass.cs" />
     <Compile Include="class\ClassGenerator.WithInheritance.cs" />
     <Compile Include="class\ClassGenerator.WithInterfaces.cs" />
+    <Compile Include="class\ClassGenerator.WithMethodExpressionContent.cs" />
+    <Compile Include="FunctionOptions.cs" />
     <Compile Include="SourceGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceOptions.cs" />

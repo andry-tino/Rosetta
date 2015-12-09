@@ -107,6 +107,10 @@
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
     <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
     <Compile Include="helpers\declarations\VariableDeclaration.cs" />
+    <Compile Include="helpers\expressions\BinaryExpression.cs" />
+    <Compile Include="helpers\expressions\ExpressionTranslationUnitBuilder.cs" />
+    <Compile Include="helpers\expressions\LiteralExpression.cs" />
+    <Compile Include="helpers\expressions\ParenthesizedExpression.cs" />
     <Compile Include="helpers\Helper.cs" />
     <Compile Include="helpers\types\TypedIdentifier.cs" />
     <Compile Include="utilities\VisibilityUtilities.cs" />
@@ -139,6 +143,7 @@
       <Name>TranslationUnits</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
