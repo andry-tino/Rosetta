@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="ClassDeclarationTest.cs" />
     <Compile Include="data\ClassDeclarations.cs" />
+    <Compile Include="data\Expressions.cs" />
+    <Compile Include="ExpressionUnitTest.cs" />
     <Compile Include="MethodDeclarationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="regex\Regex.ClassDeclaration.cs" />
