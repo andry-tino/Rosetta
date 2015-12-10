@@ -22,7 +22,10 @@ namespace Rosetta.Translation.UnitTests.Data
             get { return LiteralTranslationUnit<int>.Create(RandomInteger); }
         }
         
-        private static int RandomInteger
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int RandomInteger
         {
             get { return new Random(0).Next(0, 1000); }
         }

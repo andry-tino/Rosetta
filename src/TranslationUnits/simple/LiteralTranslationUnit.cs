@@ -39,7 +39,14 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public string Translate()
         {
-            return this.literalValue.ToString();
+            string value = this.literalValue.ToString();
+
+            if (typeof(T) == typeof(string))
+            {
+                value = string.Format("{1}{0}{1}", value, Lexems.SingleQuote);
+            }
+
+            return value;
         }
     }
 }

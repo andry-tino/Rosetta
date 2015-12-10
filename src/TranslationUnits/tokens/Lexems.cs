@@ -75,6 +75,16 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string SingleQuote = "'";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string DoubleQuote = "\"";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string EqualsSign = "=";
 
         /// <summary>
