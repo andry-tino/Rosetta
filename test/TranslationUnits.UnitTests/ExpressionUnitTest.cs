@@ -52,7 +52,7 @@ namespace Rosetta.Translation.UnitTests
 
             string typescript = translationUnit.Translate();
             new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
-                string.Format("{0}.Code", nameof(this.IntegerAddition)),
+                string.Format("{0}.Code", nameof(this.IntegerMultiply)),
                 Utils.FileType.TypeScript);
 
             Assert.AreEqual(string.Format("{0} * {1}", number1.Translate(), number2.Translate()),
@@ -69,7 +69,7 @@ namespace Rosetta.Translation.UnitTests
 
             string typescript = translationUnit.Translate();
             new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
-                string.Format("{0}.Code", nameof(this.IntegerAddition)),
+                string.Format("{0}.Code", nameof(this.IntegerSubtract)),
                 Utils.FileType.TypeScript);
 
             Assert.AreEqual(string.Format("{0} - {1}", number1.Translate(), number2.Translate()),
@@ -86,10 +86,26 @@ namespace Rosetta.Translation.UnitTests
 
             string typescript = translationUnit.Translate();
             new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
-                string.Format("{0}.Code", nameof(this.IntegerAddition)),
+                string.Format("{0}.Code", nameof(this.IntegerDivide)),
                 Utils.FileType.TypeScript);
 
             Assert.AreEqual(string.Format("{0} / {1}", number1.Translate(), number2.Translate()),
+                typescript, "Expression does not match expected!");
+        }
+
+        [TestMethod]
+        public void Parenthesized()
+        {
+            ITranslationUnit number = Expressions.RandomIntegerLiteral;
+
+            ITranslationUnit translationUnit = ParenthesizedExpressionTranslationUnit.Create(number);
+
+            string typescript = translationUnit.Translate();
+            new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
+                string.Format("{0}.Code", nameof(this.Parenthesized)),
+                Utils.FileType.TypeScript);
+
+            Assert.AreEqual(string.Format("({0})", number.Translate()),
                 typescript, "Expression does not match expected!");
         }
     }
