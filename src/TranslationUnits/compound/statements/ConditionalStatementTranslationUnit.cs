@@ -12,7 +12,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing conditional statements.
     /// </summary>
-    public class ConditionalStatementTranslationUnit : StatementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class ConditionalStatementTranslationUnit : StatementTranslationUnit
     {
         /// <summary>
         /// Contains all test expressions:
@@ -92,7 +92,7 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<ITranslationUnit> InnerUnits
+        public override IEnumerable<ITranslationUnit> InnerUnits
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Rosetta.Translation
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
-        public string Translate()
+        public override string Translate()
         {
             FormatWriter writer = new FormatWriter()
             {

@@ -128,6 +128,7 @@
     <Compile Include="WalkerEventArgs.cs" />
     <Compile Include="walkers\MethodASTWalker.cs" />
     <Compile Include="walkers\NamespaceASTWalker.cs" />
+    <Compile Include="walkers\statements\StatementASTWalker.cs" />
     <Compile Include="WalkerTranslationUnitMapping.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -143,7 +144,9 @@
       <Name>TranslationUnits</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="helpers\statements\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

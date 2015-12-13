@@ -79,6 +79,8 @@ namespace Rosetta.AST
             return this.methodDeclaration;
         }
 
+        // TODO: MUST DO: Use statement AST walker for each statement. Here we just override the statement visit method and then rely on the statement AST walker for the rest.
+
         #region CSharpSyntaxWalker overrides
 
         /// <summary>
