@@ -41,7 +41,8 @@ namespace Rosetta.Translation.Renderings
                     DataProvider.CastExpressionsMethodsProvider,
                     DataProvider.ParenthesizedExpressionsMethodsProvider,
                     DataProvider.MemberAccessExpressionsMethodsProvider,
-                    DataProvider.MixedExpressionsMethodsProvider
+                    DataProvider.MixedExpressionsMethodsProvider,
+                    DataProvider.StatementsMethodsProvider
                 };
             }
         }

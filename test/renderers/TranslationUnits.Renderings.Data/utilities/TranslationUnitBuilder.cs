@@ -6,6 +6,7 @@
 namespace Rosetta.Translation.Renderings.Data
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// 
@@ -98,6 +99,50 @@ namespace Rosetta.Translation.Renderings.Data
                 visibility, IdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildLiteralTranslationUnit(int value)
+        {
+            return LiteralTranslationUnit<int>.Create(value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildLiteralTranslationUnit(string value)
+        {
+            return LiteralTranslationUnit<string>.Create(value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildLiteralTranslationUnit(bool value)
+        {
+            return LiteralTranslationUnit<bool>.Create(value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildVariableDeclarationTranslationUnit(string type, string name, ITranslationUnit expression = null)
+        {
+            return VariableDeclarationTranslationUnit.Create(
+                type == null ? null : IdentifierTranslationUnit.Create(type), 
+                IdentifierTranslationUnit.Create(name),
+                expression);
+        }
+
         #region Expressions
 
         /// <summary>
@@ -159,6 +204,39 @@ namespace Rosetta.Translation.Renderings.Data
             MemberAccessExpressionTranslationUnit.MemberAccessMethod accessMethod)
         {
             return MemberAccessExpressionTranslationUnit.Create(IdentifierTranslationUnit.Create(memberName), accessMethod);
+        }
+
+        #endregion
+
+        #region Statements
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="testExpression"></param>
+        /// <param name="bodyStatements"></param>
+        /// <param name="elseStatements"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildIfStatementTranslationUnit(ITranslationUnit testExpression, IEnumerable<ITranslationUnit> bodyStatements, IEnumerable<ITranslationUnit> elseStatements = null)
+        {
+            var translationUnit = ConditionalStatementTranslationUnit.Create(1, elseStatements != null);
+
+            translationUnit.SetTestExpression(testExpression, 0);
+
+            foreach (var statement in bodyStatements)
+            {
+                translationUnit.AddStatementInConditionalBlock(statement, 0);
+            }
+
+            if (elseStatements != null)
+            {
+                foreach (var statement in elseStatements)
+                {
+                    translationUnit.AddStatementInElseBlock(statement);
+                }
+            }
+
+            return translationUnit;
         }
 
         #endregion

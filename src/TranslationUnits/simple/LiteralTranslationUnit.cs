@@ -41,9 +41,16 @@ namespace Rosetta.Translation
         {
             string value = this.literalValue.ToString();
 
+            // Case: string
             if (typeof(T) == typeof(string))
             {
                 value = string.Format("{1}{0}{1}", value, Lexems.SingleQuote);
+            }
+
+            // Case: boolean
+            if (typeof(T) == typeof(bool))
+            {
+                value = string.Format("{0}", bool.Parse(value) ? Lexems.TrueKeyword : Lexems.FalseKeyword);
             }
 
             return value;

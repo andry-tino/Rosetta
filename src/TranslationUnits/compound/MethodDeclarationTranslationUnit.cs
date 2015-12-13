@@ -15,6 +15,7 @@ namespace Rosetta.Translation
     /// </summary>
     public class MethodDeclarationTranslationUnit : MethodSignatureDeclarationTranslationUnit
     {
+        // TODO: Use StatementsGroupTranslationUnit
         private IEnumerable<ITranslationUnit> statements;
 
         /// <summary>

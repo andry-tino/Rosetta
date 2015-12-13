@@ -166,5 +166,30 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         public const string BaseKeyword = "super";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string IfKeyword = "if";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ElseIfKeyword = "else if";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ElseKeyword = "else";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string TrueKeyword = "true";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string FalseKeyword = "false";
     }
 }

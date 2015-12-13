@@ -52,9 +52,9 @@ namespace Rosetta.Translation.Renderings.Data
                 null,
                 "SimpleMethod",
                 new ITranslationUnit[] {
-                    VariableDeclarationTranslationUnit.Create(IdentifierTranslationUnit.Create("int"), IdentifierTranslationUnit.Create("variable1")),
-                    VariableDeclarationTranslationUnit.Create(IdentifierTranslationUnit.Create("string"), IdentifierTranslationUnit.Create("variable2")),
-                    VariableDeclarationTranslationUnit.Create(null, IdentifierTranslationUnit.Create("variable3"))
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("int", "variable1"),
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("string", "variable2"),
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(null, "variable3")
                 });
 
             return translationUnit.Translate();

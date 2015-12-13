@@ -14,6 +14,7 @@ namespace Rosetta.Translation.Renderings
     using CastExpressions = Rosetta.Translation.Renderings.Data.CastExpressions;
     using ParenthesizedExpressions = Rosetta.Translation.Renderings.Data.ParenthesizedExpressions;
     using MemberAccessExpressions = Rosetta.Translation.Renderings.Data.MemberAccessExpressions;
+    using ConditionalStatements = Rosetta.Translation.Renderings.Data.ConditionalStatements;
 
     /// <summary>
     /// 
@@ -127,6 +128,17 @@ namespace Rosetta.Translation.Renderings
             get
             {
                 return typeof(MixedExpressions);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="ConditionalStatements.Statements"/>.
+        /// </summary>
+        public static Type StatementsMethodsProvider
+        {
+            get
+            {
+                return typeof(ConditionalStatements.Statements);
             }
         }
     }
