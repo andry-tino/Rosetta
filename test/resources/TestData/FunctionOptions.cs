@@ -16,31 +16,36 @@ namespace Rosetta.Tests.Data
         /// <summary>
         /// Has variables.
         /// </summary>
-        HasVariables = 0x000001,
+        HasVariables = 0x0000001,
 
         /// <summary>
         /// Has expressions.
         /// </summary>
-        HasExpressions = 0x000010,
+        HasExpressions = 0x0000010,
+
+        /// <summary>
+        /// Has expressions.
+        /// </summary>
+        HasStatements = 0x0000100,
 
         /// <summary>
         /// Has loops.
         /// </summary>
-        HasLoops = 0x000100,
+        HasLoops = 0x0001000,
 
         /// <summary>
         /// Has conditionals.
         /// </summary>
-        HasConditionals = 0x001000,
+        HasConditionals = 0x0010000,
 
         /// <summary>
         /// Has lambda expressions.
         /// </summary>
-        HasLambdas = 0x010000,
+        HasLambdas = 0x0100000,
 
         /// <summary>
         /// No options.
         /// </summary>
-        None = 0x000000
+        None = 0x0000000
     }
 }

@@ -127,6 +127,13 @@ namespace Rosetta.Tests.Data
                 classes.ClassWithMethodArithmeticExpressions, classes.ClassWithMethodArithmeticExpressionsAttributes);
             }
 
+            // Class with statements
+            if (classOptions.HasFlag(ClassOptions.HasContent) && functionOptions.HasFlag(FunctionOptions.HasStatements))
+            {
+                return new KeyValuePair<string, IReadOnlyDictionary<string, string>>(
+                classes.ClassWithIfStatements, classes.ClassWithIfStatementsAttributes);
+            }
+
             // Simple class
             if (classOptions.HasFlag(ClassOptions.HasContent))
             {

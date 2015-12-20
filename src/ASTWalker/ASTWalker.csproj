@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASTExtractor.cs" />
+    <Compile Include="exceptions\UnsupportedSyntaxException.cs" />
     <Compile Include="helpers\declarations\FieldDeclaration.cs" />
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
     <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="helpers\expressions\LiteralExpression.cs" />
     <Compile Include="helpers\expressions\ParenthesizedExpression.cs" />
     <Compile Include="helpers\Helper.cs" />
+    <Compile Include="helpers\statements\ConditionalStatement.cs" />
     <Compile Include="helpers\types\TypedIdentifier.cs" />
     <Compile Include="utilities\VisibilityUtilities.cs" />
     <Compile Include="walkers\ClassASTWalker.cs" />
@@ -128,7 +130,9 @@
     <Compile Include="WalkerEventArgs.cs" />
     <Compile Include="walkers\MethodASTWalker.cs" />
     <Compile Include="walkers\NamespaceASTWalker.cs" />
+    <Compile Include="walkers\statements\ConditionalStatementASTWalker.cs" />
     <Compile Include="walkers\statements\StatementASTWalker.cs" />
+    <Compile Include="walkers\statements\StatementASTWalkerBuilder.cs" />
     <Compile Include="WalkerTranslationUnitMapping.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,9 +148,7 @@
       <Name>TranslationUnits</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="helpers\statements\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

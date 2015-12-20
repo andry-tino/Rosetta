@@ -47,5 +47,30 @@ namespace Rosetta.AST.Renderings.Data
             ITranslationUnit translationUnit = astWalker.Walk();
             return translationUnit.Translate();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("ClassWithMethodStatements.ts")]
+        public string RenderClassWithMethodStatements()
+        {
+            var sourceInfo = SourceGenerator.Generate(SourceOptions.None, ClassOptions.HasContent, FunctionOptions.HasStatements);
+            string source = sourceInfo.Key;
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ClassDeclarationSyntax));
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = ClassASTWalker.Create(classDeclarationNode);
+
+            // Getting the translation unit
+            ITranslationUnit translationUnit = astWalker.Walk();
+            return translationUnit.Translate();
+        }
     }
 }

@@ -11,17 +11,15 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Describes walkers in statements (statements that have blocks).
+    /// TODO: Consider making it abstract
     /// </summary>
     public class StatementASTWalker : CSharpSyntaxWalker, IASTWalker
     {
-        // Protected for testability
         protected CSharpSyntaxNode node;
-
-        // Protected for testability
+        
         protected StatementTranslationUnit statement;
 
         /// <summary>
@@ -29,25 +27,16 @@ namespace Rosetta.AST
         /// </summary>
         protected StatementASTWalker(CSharpSyntaxNode node)
         {
-            var namespaceSyntaxNode = node as StatementSyntax;
-            if (namespaceSyntaxNode == null)
+            var statementSyntaxNode = node as StatementSyntax;
+            if (statementSyntaxNode == null)
             {
                 throw new ArgumentException(
                     string.Format("Specified node is not of type {0}",
                     typeof(StatementSyntax).Name));
             }
 
-            // TODO: use helper, generate proper translation unit
-        }
-
-        /// <summary>
-        /// Factory method for class <see cref="StatementASTWalker"/>.
-        /// </summary>
-        /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
-        /// <returns></returns>
-        public static StatementASTWalker Create(CSharpSyntaxNode node)
-        {
-            return new StatementASTWalker(node);
+            this.node = node;
+            this.statement = null;
         }
 
         /// <summary>
@@ -60,8 +49,17 @@ namespace Rosetta.AST
             // Visiting
             this.Visit(node);
 
+            this.WalkCore();
+
             // Returning root
             return this.statement;
+        }
+
+        /// <summary>
+        /// TODO: Consider making it abstract
+        /// </summary>
+        protected virtual void WalkCore()
+        {
         }
 
         #region CSharpSyntaxWalker overrides
@@ -69,7 +67,16 @@ namespace Rosetta.AST
         public override void VisitIfStatement(IfStatementSyntax node)
         {
             base.VisitIfStatement(node);
-            this.InvokeIfStatementVisited(this, new WalkerEventArgs());
+
+            //if (node.Parent == this.node)
+            //{
+                this.VisitIfStatementCore(node);
+                this.InvokeIfStatementVisited(this, new WalkerEventArgs());
+            //}
+        }
+
+        protected virtual void VisitIfStatementCore(IfStatementSyntax node)
+        {
         }
 
         #endregion
@@ -82,7 +89,7 @@ namespace Rosetta.AST
         public event WalkerEvent IfStatementVisited;
 
         #endregion
-        
+
         private void InvokeIfStatementVisited(object sender, WalkerEventArgs e)
         {
             if (this.IfStatementVisited != null)

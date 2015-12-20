@@ -81,6 +81,10 @@ namespace Rosetta.AST
 
         // TODO: MUST DO: Use statement AST walker for each statement. Here we just override the statement visit method and then rely on the statement AST walker for the rest.
 
+        // TODO: Better design, create ASTWalkerBase which inherits from CSharpSyntaxWalker.
+        // Make all ASTWalker(s) inherit from it and provide virtual methods for statements in order to provide only one
+        // method for statement visit.
+
         #region CSharpSyntaxWalker overrides
 
         /// <summary>
@@ -134,7 +138,7 @@ namespace Rosetta.AST
         }
 
         /// <summary>
-        /// TODO: Disable this, expressions are evaluated in the context of single statements.
+        /// TODO: Remove this, expressions are evaluated in the context of single statements.
         /// </summary>
         /// <param name="node"></param>
         public override void VisitExpressionStatement(ExpressionStatementSyntax node)
@@ -148,16 +152,6 @@ namespace Rosetta.AST
             //    this.methodDeclaration.AddStatement(expressionTranslationUnit);
             //}
 
-            this.VisitStatement(node);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        public override void VisitBinaryExpression(BinaryExpressionSyntax node)
-        {
-            base.VisitBinaryExpression(node);// Needed?
             //this.VisitStatement(node);
         }
 
@@ -229,6 +223,7 @@ namespace Rosetta.AST
         {
             base.VisitLocalDeclarationStatement(node);
 
+            // TODO: Remove and use generic approach
             var variableDeclaration = new VariableDeclaration(node.Declaration);
             ExpressionSyntax expression = variableDeclaration.Expressions[0]; // This can contain null, so need to act accordingly
             ITranslationUnit expressionTranslationUnit = expression == null ? null : new ExpressionTranslationUnitBuilder(expression).Build();
@@ -238,7 +233,7 @@ namespace Rosetta.AST
                 expressionTranslationUnit);
             this.methodDeclaration.AddStatement(variableDeclarationTranslationUnit);
 
-            this.VisitStatement(node);
+            //this.VisitStatement(node);
         }
 
         /// <summary>
@@ -333,6 +328,11 @@ namespace Rosetta.AST
 
         private void VisitStatement(StatementSyntax node)
         {
+            IASTWalker walker = new StatementASTWalkerBuilder(node).Build();
+            ITranslationUnit statementTranslationUnit = walker.Walk();
+
+            this.methodDeclaration.AddStatement(statementTranslationUnit);
+
             this.InvokeStatementVisited(this, new WalkerEventArgs());
         }
 
