@@ -17,6 +17,7 @@ namespace Rosetta.AST
 
     /// <summary>
     /// Walks a class AST node.
+    /// // TODO: Override class definition in order to create an inner class and remove the node!
     /// </summary>
     public class ClassASTWalker : CSharpSyntaxWalker, IASTWalker
     {

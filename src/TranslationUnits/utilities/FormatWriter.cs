@@ -114,9 +114,14 @@ namespace Rosetta.Translation
             // like in `public void MyMethod() { /* something */ }`
             //                                 +- This bracket   +
             //                                                   |- And this!
-            return this.formatter.FormatLine(
-                    string.Format(
-                        EscapeInputFormat(format), arg));
+            //
+            // Spaces must be propagated across multiple lines
+            var escapedProcessedString = string.Format(EscapeInputFormat(format), arg);
+            var lines = GetAllLinesInString(escapedProcessedString);
+            var formattedLines = lines.Select(item => this.formatter.FormatLine(item)).ToArray();
+            var singleLine = AllLinesIntoOneString(formattedLines);
+
+            return singleLine;
         }
 
         private string GetStringToWrite(string format, Func<string, string> preprocessor, params string[] arg)
@@ -137,13 +142,30 @@ namespace Rosetta.Translation
             // like in `public void MyMethod() { /* something */ }`
             //                                 +- This bracket   +
             //                                                   |- And this!
-            writer.Write(
-                this.formatter.FormatLine(
-                    preprocessor(
-                        string.Format(
-                            EscapeInputFormat(format), arg))));
+            var escapedProcessedString = string.Format(EscapeInputFormat(format), arg);
+            var preprocessedString = preprocessor(escapedProcessedString);
+            var lines = GetAllLinesInString(preprocessedString);
+            var formattedLines = lines.Select(item => this.formatter.FormatLine(item)).ToArray();
+            var singleLine = AllLinesIntoOneString(formattedLines);
 
+            writer.Write(singleLine);
             return writer.ToString();
+        }
+
+        private static string[] GetAllLinesInString(string source)
+        {
+            return source.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+        }
+
+        private static string AllLinesIntoOneString(string[] lines)
+        {
+            string output = string.Empty;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                output += lines[i] + (i == lines.Length - 1 ? string.Empty : Environment.NewLine);
+            }
+
+            return output;
         }
 
         /// <summary>

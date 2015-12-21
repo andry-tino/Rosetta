@@ -120,7 +120,7 @@ namespace Rosetta.Translation
                     this.testExpressions[i].Translate(),
                     Lexems.CloseRoundBracket);
                 writer.WriteLine("{0}",
-                    Lexems.CloseCurlyBracket);
+                    Lexems.OpenCurlyBracket);
 
                 writer.WriteLine("{0}",
                     this.bodies[i].Translate());
@@ -199,6 +199,11 @@ namespace Rosetta.Translation
                 this.bodies[index] = StetementsGroupTranslationUnit.Create();
             }
 
+            if (statement as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;
+            }
+
             this.bodies[index].AddStatement(statement);
         }
 
@@ -220,6 +225,11 @@ namespace Rosetta.Translation
             if (this.lastBody == null)
             {
                 throw new InvalidOperationException("This conditional translation unit has been created without final ELSE support!");
+            }
+
+            if (statement as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;
             }
 
             this.lastBody.AddStatement(statement);

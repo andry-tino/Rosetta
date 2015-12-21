@@ -163,40 +163,24 @@ namespace Rosetta.Translation
             // Translating members first
             foreach (ITranslationUnit translationUnit in this.memberDeclarations)
             {
-                if (translationUnit as NestedElementTranslationUnit != null)
-                {
-                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
-                }
                 writer.WriteLine("{0}{1}", translationUnit.Translate(), Lexems.Semicolon);
             }
 
             // Then constructors
             foreach (ITranslationUnit translationUnit in this.constructorDeclarations)
             {
-                if (translationUnit as NestedElementTranslationUnit != null)
-                {
-                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
-                }
                 writer.WriteLine(translationUnit.Translate());
             }
 
             // Then properties
             foreach (ITranslationUnit translationUnit in this.propertyDeclarations)
             {
-                if (translationUnit as NestedElementTranslationUnit != null)
-                {
-                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
-                }
                 writer.WriteLine(translationUnit.Translate());
             }
 
             // Finally methods
             foreach (ITranslationUnit translationUnit in this.methodDeclarations)
             {
-                if (translationUnit as NestedElementTranslationUnit != null)
-                {
-                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
-                }
                 writer.WriteLine(translationUnit.Translate());
             }
 
@@ -221,6 +205,11 @@ namespace Rosetta.Translation
                 throw new ArgumentNullException(nameof(translationUnit));
             }
 
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
             ((List<ITranslationUnit>)this.memberDeclarations).Add(translationUnit);
         }
 
@@ -233,6 +222,11 @@ namespace Rosetta.Translation
             if (translationUnit == null)
             {
                 throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
             }
 
             ((List<ITranslationUnit>)this.propertyDeclarations).Add(translationUnit);
@@ -249,6 +243,11 @@ namespace Rosetta.Translation
                 throw new ArgumentNullException(nameof(translationUnit));
             }
 
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
             ((List<ITranslationUnit>)this.constructorDeclarations).Add(translationUnit);
         }
 
@@ -261,6 +260,11 @@ namespace Rosetta.Translation
             if (translationUnit == null)
             {
                 throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
             }
 
             ((List<ITranslationUnit>)this.methodDeclarations).Add(translationUnit);
