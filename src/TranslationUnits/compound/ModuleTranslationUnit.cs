@@ -99,16 +99,11 @@ namespace Rosetta.Translation
             // We render classes first
             foreach (ITranslationUnit translationUnit in this.classes)
             {
-                if (translationUnit as NestedElementTranslationUnit != null)
-                {
-                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
-                }
-
                 // Classes need injection for observing indentation
-                if (translationUnit as ITranslationInjector != null)
-                {
-                    ((ITranslationInjector)translationUnit).InjectedTranslationUnitBefore = IdentifierTranslationUnit.Create(Lexems.ExportKeyword);
-                }
+                //if (translationUnit as ITranslationInjector != null)
+                //{
+                //    ((ITranslationInjector)translationUnit).InjectedTranslationUnitBefore = IdentifierTranslationUnit.Create(Lexems.ExportKeyword);
+                //}
 
                 writer.WriteLine(translationUnit.Translate());
             }
@@ -116,10 +111,6 @@ namespace Rosetta.Translation
             // Then, interfaces
             foreach (ITranslationUnit translationUnit in this.interfaces)
             {
-                if (translationUnit as NestedElementTranslationUnit != null)
-                {
-                    ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
-                }
                 writer.WriteLine("{0} {1}",
                     Lexems.ExportKeyword,
                     translationUnit.Translate());
@@ -144,6 +135,17 @@ namespace Rosetta.Translation
                 throw new ArgumentNullException(nameof(translationUnit));
             }
 
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
+            // Classes need injection for observing indentation
+            if (translationUnit as ITranslationInjector != null)
+            {
+                ((ITranslationInjector)translationUnit).InjectedTranslationUnitBefore = IdentifierTranslationUnit.Create(Lexems.ExportKeyword);
+            }
+
             ((List<ITranslationUnit>)this.classes).Add(translationUnit);
         }
 
@@ -156,6 +158,11 @@ namespace Rosetta.Translation
             if (translationUnit == null)
             {
                 throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
             }
 
             ((List<ITranslationUnit>)this.interfaces).Add(translationUnit);

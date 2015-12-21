@@ -142,6 +142,8 @@ namespace Rosetta.Translation
             // like in `public void MyMethod() { /* something */ }`
             //                                 +- This bracket   +
             //                                                   |- And this!
+            //
+            // Spaces must be propagated across multiple lines
             var escapedProcessedString = string.Format(EscapeInputFormat(format), arg);
             var preprocessedString = preprocessor(escapedProcessedString);
             var lines = GetAllLinesInString(preprocessedString);
