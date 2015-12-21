@@ -132,7 +132,7 @@ namespace Rosetta.Translation
         /// Ensures that compound <see cref="ITranslationUnit"/> will increment added unit's nesting level.
         /// </summary>
         /// <param name="translationUnit">The translation unit to add.</param>
-        protected virtual void AddTranslationUnit(ITranslationUnit translationUnit)
+        protected virtual void AddTranslationUnit(ITranslationUnit translationUnit) // TODO: POSSIBLE REASON OF PROBLEMS
         {
             if (translationUnit as NestedElementTranslationUnit != null)
             {
