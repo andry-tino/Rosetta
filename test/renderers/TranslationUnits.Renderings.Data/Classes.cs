@@ -109,5 +109,30 @@ namespace Rosetta.Translation.Renderings.Data
 
             return translationUnit.Translate();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("ClassWithSimpleMethods.ts")]
+        public string ClassWithSimpleMethods()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
+                VisibilityToken.Public, "ClassWithEmptyMethods", null)
+                as ClassDeclarationTranslationUnit;
+
+            var method1 = translationUnit.AddEmptyMethod("Method1");
+            var method2 = translationUnit.AddEmptyMethod("Method2");
+            var method3 = translationUnit.AddEmptyMethod("Method3");
+
+            method1.AddVariable("int", "var1");
+            method1.AddVariable("int", "var2");
+            method2.AddVariable("string", "var1");
+            method3.AddVariable("string", "var1");
+            method3.AddVariable("int", "var2");
+            method3.AddVariable("string", "var3");
+
+            return translationUnit.Translate();
+        }
     }
 }
