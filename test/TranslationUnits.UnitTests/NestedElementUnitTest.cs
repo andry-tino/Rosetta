@@ -35,6 +35,8 @@ namespace Rosetta.Translation.UnitTests
 
             Assert.IsInstanceOfType(translationUnit.Formatter, typeof(WhiteSpaceFormatter), 
                 string.Format("Default formatter should be of type {0}!", typeof(WhiteSpaceFormatter).Name));
+            Assert.IsTrue(translationUnit.Formatter.GetType() == typeof(WhiteSpaceInvariantFormatter), 
+                string.Format("Default formatter should be of type {0}!", typeof(WhiteSpaceInvariantFormatter).Name));
         }
 
         /// <summary>
@@ -52,6 +54,8 @@ namespace Rosetta.Translation.UnitTests
             Assert.IsNotNull(formatter, "Returned formatter cannot be null!");
             Assert.IsInstanceOfType(formatter, typeof(WhiteSpaceFormatter),
                 string.Format("Default formatter should be of type {0}!", typeof(WhiteSpaceFormatter).Name));
+            Assert.IsTrue(formatter.GetType() == typeof(WhiteSpaceInvariantFormatter), 
+                string.Format("Default formatter should be of type {0}!", typeof(WhiteSpaceInvariantFormatter).Name));
         }
 
         /// <summary>
