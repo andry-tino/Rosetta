@@ -51,6 +51,7 @@
     <Compile Include="compound\statements\ConditionalStatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StetementsGroupTranslationUnit.cs" />
+    <Compile Include="formatters\WhiteSpaceInvariantFormatter.cs" />
     <Compile Include="ITranslationInjector.cs" />
     <Compile Include="MemberTranslationUnit.cs" />
     <Compile Include="compound\MethodDeclarationTranslationUnit.cs" />

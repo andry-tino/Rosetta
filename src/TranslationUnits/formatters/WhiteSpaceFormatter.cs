@@ -8,11 +8,11 @@ namespace Rosetta.Translation
     using System;
 
     /// <summary>
-    /// Formats by adding tabs.
+    /// Formats by adding whitespaces.
     /// </summary>
     public class WhiteSpaceFormatter : IFormatter
     {
-        private string spaceBefore;
+        protected string spaceBefore;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WhiteSpaceFormatter"/> class.
@@ -28,7 +28,7 @@ namespace Rosetta.Translation
 
             this.IndentationLevel = indentationLevel;
             this.SpaceSize = spaceSize;
-            this.InitializeSpaceBefore();
+            this.spaceBefore = null; // To be initialized later
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Rosetta.Translation
         public int IndentationLevel
         {
             get;
-            private set;
+            protected set;
         }
 
         /// <summary>
@@ -46,7 +46,23 @@ namespace Rosetta.Translation
         public int SpaceSize
         {
             get;
-            private set;
+            protected set;
+        }
+
+        /// <summary>
+        /// Gets the space to append before.
+        /// </summary>
+        protected string SpaceBefore
+        {
+            get
+            {
+                if (this.spaceBefore == null)
+                {
+                    this.InitializeSpaceBefore();
+                }
+
+                return this.spaceBefore;
+            }
         }
 
         /// <summary>
@@ -61,10 +77,10 @@ namespace Rosetta.Translation
                 throw new ArgumentNullException(nameof(line));
             }
 
-            return this.spaceBefore + line;
+            return this.SpaceBefore + line;
         }
 
-        private void InitializeSpaceBefore()
+        protected virtual void InitializeSpaceBefore()
         {
             string space = string.Empty;
             for (int i = 0; i < this.SpaceSize; i++)

@@ -47,7 +47,7 @@ namespace Rosetta.Translation
             {
                 if (this.formatter == null)
                 {
-                    this.formatter = new WhiteSpaceFormatter();
+                    this.formatter = new WhiteSpaceInvariantFormatter();
                 }
 
                 return this.formatter;
@@ -73,7 +73,7 @@ namespace Rosetta.Translation
                 if (this.formatterProvider == null)
                 {
                     this.formatterProvider = 
-                        indentationLevel => new WhiteSpaceFormatter(indentationLevel);
+                        indentationLevel => new WhiteSpaceInvariantFormatter(indentationLevel);
                 }
 
                 return this.formatterProvider;
