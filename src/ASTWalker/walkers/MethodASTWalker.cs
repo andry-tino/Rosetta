@@ -79,8 +79,6 @@ namespace Rosetta.AST
             return this.methodDeclaration;
         }
 
-        // TODO: MUST DO: Use statement AST walker for each statement. Here we just override the statement visit method and then rely on the statement AST walker for the rest.
-
         // TODO: Better design, create ASTWalkerBase which inherits from CSharpSyntaxWalker.
         // Make all ASTWalker(s) inherit from it and provide virtual methods for statements in order to provide only one
         // method for statement visit.
@@ -91,9 +89,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitEmptyStatement(EmptyStatementSyntax node)
         {
-            base.VisitEmptyStatement(node);
             this.VisitStatement(node);
         }
 
@@ -101,9 +102,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitBreakStatement(BreakStatementSyntax node)
         {
-            base.VisitBreakStatement(node);
             this.VisitStatement(node);
         }
 
@@ -111,9 +115,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitCheckedStatement(CheckedStatementSyntax node)
         {
-            base.VisitCheckedStatement(node);
             this.VisitStatement(node);
         }
 
@@ -121,9 +128,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitContinueStatement(ContinueStatementSyntax node)
         {
-            base.VisitContinueStatement(node);
             this.VisitStatement(node);
         }
 
@@ -131,9 +141,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitDoStatement(DoStatementSyntax node)
         {
-            base.VisitDoStatement(node);
             this.VisitStatement(node);
         }
 
@@ -141,10 +154,13 @@ namespace Rosetta.AST
         /// TODO: Remove this, expressions are evaluated in the context of single statements.
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitExpressionStatement(ExpressionStatementSyntax node)
         {
-            base.VisitExpressionStatement(node);
-
+            // TODO: Remove it
             // Create the translation unit using the builder
             //ITranslationUnit expressionTranslationUnit = new ExpressionTranslationUnitBuilder(node.Expression).Build();
             //if (expressionTranslationUnit != null)
@@ -159,9 +175,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitFixedStatement(FixedStatementSyntax node)
         {
-            base.VisitFixedStatement(node);
             this.VisitStatement(node);
         }
 
@@ -169,9 +188,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitForEachStatement(ForEachStatementSyntax node)
         {
-            base.VisitForEachStatement(node);
             this.VisitStatement(node);
         }
 
@@ -179,9 +201,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitForStatement(ForStatementSyntax node)
         {
-            base.VisitForStatement(node);
             this.VisitStatement(node);
         }
 
@@ -189,9 +214,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitGotoStatement(GotoStatementSyntax node)
         {
-            base.VisitGotoStatement(node);
             this.VisitStatement(node);
         }
 
@@ -199,9 +227,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitIfStatement(IfStatementSyntax node)
         {
-            base.VisitIfStatement(node);
             this.VisitStatement(node);
         }
 
@@ -209,9 +240,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitLabeledStatement(LabeledStatementSyntax node)
         {
-            base.VisitLabeledStatement(node);
             this.VisitStatement(node);
         }
 
@@ -219,10 +253,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
         {
-            base.VisitLocalDeclarationStatement(node);
-
             // TODO: Remove and use generic approach
             var variableDeclaration = new VariableDeclaration(node.Declaration);
             ExpressionSyntax expression = variableDeclaration.Expressions[0]; // This can contain null, so need to act accordingly
@@ -240,9 +276,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitLockStatement(LockStatementSyntax node)
         {
-            base.VisitLockStatement(node);
             this.VisitStatement(node);
         }
 
@@ -250,9 +289,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitReturnStatement(ReturnStatementSyntax node)
         {
-            base.VisitReturnStatement(node);
             this.VisitStatement(node);
         }
 
@@ -260,9 +302,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitSwitchStatement(SwitchStatementSyntax node)
         {
-            base.VisitSwitchStatement(node);
             this.VisitStatement(node);
         }
 
@@ -270,9 +315,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitThrowStatement(ThrowStatementSyntax node)
         {
-            base.VisitThrowStatement(node);
             this.VisitStatement(node);
         }
 
@@ -280,9 +328,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitTryStatement(TryStatementSyntax node)
         {
-            base.VisitTryStatement(node);
             this.VisitStatement(node);
         }
 
@@ -290,18 +341,25 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitUnsafeStatement(UnsafeStatementSyntax node)
         {
-            throw new NotSupportedException("We do not support translation of unsafe statements!");
+            this.VisitStatement(node);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitUsingStatement(UsingStatementSyntax node)
         {
-            base.VisitUsingStatement(node);
             this.VisitStatement(node);
         }
 
@@ -309,9 +367,12 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitWhileStatement(WhileStatementSyntax node)
         {
-            base.VisitWhileStatement(node);
             this.VisitStatement(node);
         }
 
@@ -319,9 +380,13 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitYieldStatement(YieldStatementSyntax node)
         {
-            throw new NotSupportedException("We do not support translation of yield statements!");
+            this.VisitStatement(node);
         }
 
         #endregion

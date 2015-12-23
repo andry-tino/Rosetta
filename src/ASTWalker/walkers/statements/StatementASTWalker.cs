@@ -64,15 +64,16 @@ namespace Rosetta.AST
 
         #region CSharpSyntaxWalker overrides
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public override void VisitIfStatement(IfStatementSyntax node)
         {
-            base.VisitIfStatement(node);
+            this.VisitIfStatementCore(node);
+            this.InvokeIfStatementVisited(this, new WalkerEventArgs());
 
-            //if (node.Parent == this.node)
-            //{
-                this.VisitIfStatementCore(node);
-                this.InvokeIfStatementVisited(this, new WalkerEventArgs());
-            //}
+            base.VisitIfStatement(node);
         }
 
         protected virtual void VisitIfStatementCore(IfStatementSyntax node)

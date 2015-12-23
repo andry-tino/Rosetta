@@ -86,14 +86,14 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
-            base.VisitFieldDeclaration(node);
-
             var fieldDeclaration = new FieldDeclaration(node);
             var fieldDeclarationTranslationUnit = FieldDeclarationTranslationUnit.Create(fieldDeclaration.Visibility, 
                 IdentifierTranslationUnit.Create(fieldDeclaration.Type), IdentifierTranslationUnit.Create(fieldDeclaration.Name));
             this.classDeclaration.AddMemberDeclaration(fieldDeclarationTranslationUnit);
 
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
+
+            base.VisitFieldDeclaration(node);
         }
 
         /// <summary>
@@ -102,8 +102,8 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
-            base.VisitPropertyDeclaration(node);
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
+            base.VisitPropertyDeclaration(node);
         }
 
         /// <summary>
@@ -112,18 +112,20 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
-            base.VisitVariableDeclaration(node);
             this.InvokeVariableDeclarationVisited(this, new WalkerEventArgs());
+            base.VisitVariableDeclaration(node);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// This will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            base.VisitMethodDeclaration(node);
-
             var methodWalker = MethodASTWalker.Create(node);
             var translationUnit = methodWalker.Walk();
             this.classDeclaration.AddMethodDeclaration(translationUnit);
@@ -137,8 +139,8 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
-            base.VisitConstructorDeclaration(node);
             this.InvokeConstructorDeclarationVisited(this, new WalkerEventArgs());
+            base.VisitConstructorDeclaration(node);
         }
 
         #endregion

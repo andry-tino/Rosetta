@@ -70,10 +70,16 @@ namespace Rosetta.AST
 
         #region CSharpSyntaxWalker overrides
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <remarks>
+        /// This will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            base.VisitClassDeclaration(node);
-
             var classWalker = ClassASTWalker.Create(node);
             var translationUnit = classWalker.Walk();
             this.module.AddClass(translationUnit);
@@ -81,10 +87,14 @@ namespace Rosetta.AST
             this.InvokeClassDeclarationVisited(this, new WalkerEventArgs());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
-            base.VisitInterfaceDeclaration(node);
             this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
+            base.VisitInterfaceDeclaration(node);
         }
 
         #endregion
