@@ -1,11 +1,12 @@
 ﻿/// <summary>
-/// IndendationHandlingTest.cs
+/// NestingLevelHandlingTest.cs
 /// Andrea Tino - 2015
 /// </summary>
 
 namespace Rosetta.Translation.UnitTests
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Rosetta.Translation;
@@ -104,7 +105,7 @@ namespace Rosetta.Translation.UnitTests
         }
 
         /// <summary>
-        /// Class used for testing
+        /// Class used for testing.
         /// </summary>
         private class NestedTranslationUnit : NestedElementTranslationUnit, ITranslationUnit
         {
@@ -125,7 +126,7 @@ namespace Rosetta.Translation.UnitTests
         }
 
         /// <summary>
-        /// Class used for testing
+        /// Class used for testing.
         /// </summary>
         private class NestedTranslationUnit2 : NestedElementTranslationUnit
         {
