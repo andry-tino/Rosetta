@@ -49,6 +49,7 @@
     <Compile Include="compound\expressions\UnaryExpressionTranslationUnit.cs" />
     <Compile Include="compound\ModuleTranslationUnit.cs" />
     <Compile Include="compound\statements\ConditionalStatementTranslationUnit.cs" />
+    <Compile Include="compound\statements\LocalDeclarationStatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StetementsGroupTranslationUnit.cs" />
     <Compile Include="formatters\WhiteSpaceInvariantFormatter.cs" />

@@ -20,6 +20,9 @@ namespace Rosetta.AST
     {
         protected CSharpSyntaxNode node;
         
+        /// <summary>
+        /// Derives should fill this.
+        /// </summary>
         protected StatementTranslationUnit statement;
 
         /// <summary>
@@ -73,7 +76,10 @@ namespace Rosetta.AST
             this.VisitIfStatementCore(node);
             this.InvokeIfStatementVisited(this, new WalkerEventArgs());
 
-            base.VisitIfStatement(node);
+            if (this.ShouldWalkInto)
+            {
+                base.VisitIfStatement(node);
+            }
         }
 
         protected virtual void VisitIfStatementCore(IfStatementSyntax node)
@@ -83,6 +89,15 @@ namespace Rosetta.AST
         #endregion
 
         #region Walk events
+
+        /// <summary>
+        /// Overrides should use this in order to instruct the class whether it is necessary to walk
+        /// into every node by calling the base `Visit` method.
+        /// </summary>
+        protected virtual bool ShouldWalkInto
+        {
+            get { return true; }
+        }
 
         /// <summary>
         /// 

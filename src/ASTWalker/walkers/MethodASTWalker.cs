@@ -259,17 +259,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
         {
-            // TODO: Remove and use generic approach
-            var variableDeclaration = new VariableDeclaration(node.Declaration);
-            ExpressionSyntax expression = variableDeclaration.Expressions[0]; // This can contain null, so need to act accordingly
-            ITranslationUnit expressionTranslationUnit = expression == null ? null : new ExpressionTranslationUnitBuilder(expression).Build();
-            var variableDeclarationTranslationUnit = VariableDeclarationTranslationUnit.Create(
-                IdentifierTranslationUnit.Create(variableDeclaration.Type), 
-                IdentifierTranslationUnit.Create(variableDeclaration.Names[0]), 
-                expressionTranslationUnit);
-            this.methodDeclaration.AddStatement(variableDeclarationTranslationUnit);
-
-            //this.VisitStatement(node);
+            this.VisitStatement(node);
         }
 
         /// <summary>

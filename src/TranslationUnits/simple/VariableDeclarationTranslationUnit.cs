@@ -11,7 +11,7 @@ namespace Rosetta.Translation
     using System.Collections.Generic;
 
     /// <summary>
-    /// Class describing a method signature (no body).
+    /// Class describing a variable declaration.
     /// </summary>
     public class VariableDeclarationTranslationUnit : NestedElementTranslationUnit, ITranslationUnit
     {

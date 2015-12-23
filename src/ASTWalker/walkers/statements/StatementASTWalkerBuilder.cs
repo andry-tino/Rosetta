@@ -63,7 +63,7 @@ namespace Rosetta.AST
                     return null;
 
                 case SyntaxKind.LocalDeclarationStatement:
-                    return null;
+                    return LocalDeclarationStatementASTWalker.Create(this.node);
 
                 case SyntaxKind.ReturnStatement:
                 case SyntaxKind.SwitchStatement:
@@ -74,6 +74,7 @@ namespace Rosetta.AST
                 case SyntaxKind.WhileStatement:
                     return null;
 
+                // Unsupported stuff
                 case SyntaxKind.UnsafeStatement:
                 case SyntaxKind.LockStatement:
                 case SyntaxKind.YieldBreakStatement:
@@ -81,7 +82,7 @@ namespace Rosetta.AST
                     throw new UnsupportedSyntaxException(this.node);
             }
 
-            return null;
+            throw new InvalidOperationException("Building path reached an invalid non decidible state!");
         }
     }
 }
