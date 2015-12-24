@@ -68,7 +68,7 @@ namespace Rosetta.AST
         #region CSharpSyntaxWalker overrides
 
         /// <summary>
-        /// 
+        /// TODO: Remove
         /// </summary>
         /// <param name="node"></param>
         public override void VisitIfStatement(IfStatementSyntax node)
@@ -82,6 +82,7 @@ namespace Rosetta.AST
             }
         }
 
+        // TODO: Remove
         protected virtual void VisitIfStatementCore(IfStatementSyntax node)
         {
         }
@@ -93,6 +94,7 @@ namespace Rosetta.AST
         /// <summary>
         /// Overrides should use this in order to instruct the class whether it is necessary to walk
         /// into every node by calling the base `Visit` method.
+        /// TODO: Remove
         /// </summary>
         protected virtual bool ShouldWalkInto
         {

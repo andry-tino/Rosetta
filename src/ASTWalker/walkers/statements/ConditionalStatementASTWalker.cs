@@ -20,8 +20,6 @@ namespace Rosetta.AST
     /// </summary>
     public class ConditionalStatementASTWalker : StatementASTWalker
     {
-        private int ifBlockCursor;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConditionalStatementASTWalker"/> class.
         /// </summary>
@@ -38,8 +36,7 @@ namespace Rosetta.AST
             ConditionalStatement helper = new ConditionalStatement(statementSyntaxNode);
 
             this.statement = ConditionalStatementTranslationUnit.Create(helper.BlocksNumber, helper.HasElseBlock);
-
-            this.ifBlockCursor = 0;
+            this.VisitNode(statementSyntaxNode, 0);
         }
 
         /// <summary>
@@ -52,24 +49,39 @@ namespace Rosetta.AST
             return new ConditionalStatementASTWalker(node);
         }
 
-        #region StatementASTWalker overrides
-
-        // TODO: Create BlockASTWalkers to handle statements in if bodies
-
         /// <summary>
-        /// 
+        /// TODO: Remove
         /// </summary>
-        /// <param name="node"></param>
-        protected override void VisitIfStatementCore(IfStatementSyntax node)
+        protected override bool ShouldWalkInto
         {
-            this.Statement.SetTestExpression(LiteralTranslationUnit<bool>.Create(true), this.ifBlockCursor);
-            this.Statement.AddStatementInConditionalBlock(StetementsGroupTranslationUnit.Create(), this.ifBlockCursor);
-
-            // Update the cursor
-            this.ifBlockCursor++;
+            get
+            {
+                return false;
+            }
         }
 
-        #endregion
+        /// <summary>
+        /// In charge of executing a fixed visit of this node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="index"></param>
+        private void VisitNode(IfStatementSyntax node, int index)
+        {
+            // Handling expression
+            this.Statement.SetTestExpression(
+                new ExpressionTranslationUnitBuilder(node.Condition).Build(), 
+                index);
+
+            // Handling body
+            // TODO: Use Block AST Walker
+            this.Statement.AddStatementInConditionalBlock(StatementsGroupTranslationUnit.Create(), index);
+
+            // To the next node
+            if (node.Else != null && node.Else.Statement as IfStatementSyntax != null)
+            {
+                this.VisitNode(node.Else.Statement as IfStatementSyntax, ++index);
+            }
+        }
 
         /// <summary>
         /// Gets the <see cref="ConditionalStatementTranslationUnit"/> associated to the AST walker.

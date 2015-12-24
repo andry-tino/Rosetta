@@ -116,8 +116,13 @@ namespace Rosetta.AST.Helpers
             {
                 case SyntaxKind.NumericLiteralToken:
                     return LiteralTranslationUnit<int>.Create((int)token.Value);
+
                 case SyntaxKind.StringLiteralToken:
                     return LiteralTranslationUnit<string>.Create((string)token.Value);
+
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
+                    return LiteralTranslationUnit<bool>.Create((bool)token.Value);
             }
 
             return null;

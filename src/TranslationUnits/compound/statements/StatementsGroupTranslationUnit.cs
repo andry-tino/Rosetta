@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ConditionalStatementTranslationUnit.cs
+/// StatementsGroupTranslationUnit.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -12,23 +12,23 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing a group of statements.
     /// </summary>
-    public class StetementsGroupTranslationUnit : NestedElementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class StatementsGroupTranslationUnit : NestedElementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
         private IEnumerable<ITranslationUnit> statements;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StetementsGroupTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="StatementsGroupTranslationUnit"/> class.
         /// </summary>
-        protected StetementsGroupTranslationUnit()
+        protected StatementsGroupTranslationUnit()
             : this(AutomaticNestingLevel)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StetementsGroupTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="StatementsGroupTranslationUnit"/> class.
         /// </summary>
         /// <param name="nestingLevel"></param>
-        protected StetementsGroupTranslationUnit(int nestingLevel)
+        protected StatementsGroupTranslationUnit(int nestingLevel)
             : base(nestingLevel)
         {
             this.statements = new List<ITranslationUnit>();
@@ -38,9 +38,9 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         /// <returns></returns>
-        public static StetementsGroupTranslationUnit Create()
+        public static StatementsGroupTranslationUnit Create()
         {
-            return new StetementsGroupTranslationUnit(AutomaticNestingLevel);
+            return new StatementsGroupTranslationUnit(AutomaticNestingLevel);
         }
 
         /// <summary>
@@ -87,6 +87,7 @@ namespace Rosetta.Translation
             {
                 throw new ArgumentNullException(nameof(statement));
             }
+
             if (statement as NestedElementTranslationUnit != null)
             {
                 ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;

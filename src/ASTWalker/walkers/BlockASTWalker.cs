@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// MethodASTWalker.cs
+/// BlockASTWalker.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -8,61 +8,50 @@ namespace Rosetta.AST
     using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Symbols;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
-    using Microsoft.CodeAnalysis.Text;
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    /// Walks a method AST node.
+    /// Walks a block AST node.
+    /// TODO: Attention, <see cref="MethodASTWalker"/> has great part of the logic is in common.
     /// </summary>
-    public class MethodASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class BlockASTWalker : CSharpSyntaxWalker, IASTWalker
     {
         // Protected for testability
         protected CSharpSyntaxNode node;
 
         // Protected for testability
-        protected MethodDeclarationTranslationUnit methodDeclaration;
+        protected StatementsGroupTranslationUnit statementsGroup;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MethodASTWalker"/> class.
+        /// Initializes a new instance of the <see cref="BlockASTWalker"/> class.
         /// </summary>
-        protected MethodASTWalker(CSharpSyntaxNode node)
+        protected BlockASTWalker(CSharpSyntaxNode node)
         {
-            var methodDeclarationSyntaxNode = node as MethodDeclarationSyntax;
-            if (methodDeclarationSyntaxNode == null)
+            var namespaceSyntaxNode = node as BlockSyntax;
+            if (namespaceSyntaxNode == null)
             {
                 throw new ArgumentException(
-                    string.Format("Specified node is not of type {0}", 
-                    typeof(MethodDeclarationSyntax).Name));
+                    string.Format("Specified node is not of type {0}",
+                    typeof(BlockSyntax).Name));
             }
 
+            // No helper needed for this walker
             this.node = node;
-            MethodDeclaration methodHelper = new MethodDeclaration(methodDeclarationSyntaxNode);
 
-            this.methodDeclaration = MethodDeclarationTranslationUnit.Create(
-                methodHelper.Visibility,
-                IdentifierTranslationUnit.Create(methodHelper.ReturnType),
-                IdentifierTranslationUnit.Create(methodHelper.Name));
-
-            foreach (TypedIdentifier parameter in methodHelper.Parameters)
-            {
-                this.methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    IdentifierTranslationUnit.Create(parameter.TypeName), 
-                    IdentifierTranslationUnit.Create(parameter.IdentifierName)));
-            }
+            this.statementsGroup = StatementsGroupTranslationUnit.Create();
         }
 
         /// <summary>
-        /// Factory method for class <see cref="MethodASTWalker"/>.
+        /// Factory method for class <see cref="BlockASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <returns></returns>
-        public static MethodASTWalker Create(CSharpSyntaxNode node)
+        public static BlockASTWalker Create(CSharpSyntaxNode node)
         {
-            return new MethodASTWalker(node);
+            return new BlockASTWalker(node);
         }
 
         /// <summary>
@@ -76,12 +65,8 @@ namespace Rosetta.AST
             this.Visit(node);
 
             // Returning root
-            return this.methodDeclaration;
+            return this.statementsGroup;
         }
-
-        // TODO: Better design, create ASTWalkerBase which inherits from CSharpSyntaxWalker.
-        // Make all ASTWalker(s) inherit from it and provide virtual methods for statements in order to provide only one
-        // method for statement visit.
 
         #region CSharpSyntaxWalker overrides
 
@@ -365,7 +350,7 @@ namespace Rosetta.AST
             IASTWalker walker = new StatementASTWalkerBuilder(node).Build();
             ITranslationUnit statementTranslationUnit = walker.Walk();
 
-            this.methodDeclaration.AddStatement(statementTranslationUnit);
+            this.statementsGroup.AddStatement(statementTranslationUnit);
 
             this.InvokeStatementVisited(this, new WalkerEventArgs());
         }

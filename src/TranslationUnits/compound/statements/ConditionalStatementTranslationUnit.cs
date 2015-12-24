@@ -38,7 +38,7 @@ namespace Rosetta.Translation
         /// </code>
         /// We can have N bodies.
         /// </summary>
-        private StetementsGroupTranslationUnit[] bodies;
+        private StatementsGroupTranslationUnit[] bodies;
         /// <summary>
         /// Contains all bodies:
         /// <code>
@@ -51,7 +51,7 @@ namespace Rosetta.Translation
         /// </code>
         /// Total bodies is N + 1 in case we have final ELSE clause.
         /// </summary>
-        private StetementsGroupTranslationUnit lastBody;
+        private StatementsGroupTranslationUnit lastBody;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConditionalStatementTranslationUnit"/> class.
@@ -84,8 +84,8 @@ namespace Rosetta.Translation
             return new ConditionalStatementTranslationUnit(AutomaticNestingLevel)
             {
                 testExpressions = new ITranslationUnit[blocksNumber],
-                bodies = new StetementsGroupTranslationUnit[blocksNumber],
-                lastBody = hasFinalElse ? StetementsGroupTranslationUnit.Create() : null
+                bodies = new StatementsGroupTranslationUnit[blocksNumber],
+                lastBody = hasFinalElse ? StatementsGroupTranslationUnit.Create() : null
             };
         }
 
@@ -196,7 +196,7 @@ namespace Rosetta.Translation
 
             if (this.bodies[index] == null)
             {
-                this.bodies[index] = StetementsGroupTranslationUnit.Create();
+                this.bodies[index] = StatementsGroupTranslationUnit.Create();
             }
 
             if (statement as NestedElementTranslationUnit != null)
