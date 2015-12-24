@@ -16,16 +16,19 @@ namespace Rosetta.Translation
     /// </summary>
     public class FormatWriter
     {
+        private FormatOptions options;
         private IFormatter formatter;
         private StringWriter writer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormatWriter"/> class.
         /// </summary>
-        public FormatWriter()
+        /// <param name="options"></param>
+        public FormatWriter(FormatOptions options = null)
         {
             this.formatter = null;
             this.writer = new StringWriter();
+            this.options = options ?? new FormatOptions();
         }
 
         /// <summary>
@@ -154,6 +157,39 @@ namespace Rosetta.Translation
             return writer.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            var output = this.writer.ToString();
+
+            if (!options.ShouldWriteLastBlankLine)
+            {
+                output = RemoveLastBlank(output);
+            }
+
+            return output;
+        }
+        
+        private static string RemoveLastBlank(string source)
+        {
+            var lines = GetAllLinesInString(source);
+
+            if (lines.Length <= 1)
+            {
+                return source;
+            }
+
+            if (lines[lines.Length - 1].Length > 0)
+            {
+                return source;
+            }
+
+            return AllLinesIntoOneString(lines, lines.Length - 1);
+        }
+
         private static string[] GetAllLinesInString(string source)
         {
             return source.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
@@ -161,22 +197,18 @@ namespace Rosetta.Translation
 
         private static string AllLinesIntoOneString(string[] lines)
         {
+            return AllLinesIntoOneString(lines, lines.Length);
+        }
+
+        private static string AllLinesIntoOneString(string[] lines, int limit)
+        {
             string output = string.Empty;
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < limit; i++)
             {
-                output += lines[i] + (i == lines.Length - 1 ? string.Empty : Environment.NewLine);
+                output += lines[i] + (i == limit - 1 ? string.Empty : Environment.NewLine);
             }
 
             return output;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return this.writer.ToString();
         }
 
         /// <summary>
