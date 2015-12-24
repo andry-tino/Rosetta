@@ -62,8 +62,6 @@ namespace Rosetta.AST
 
         /// <summary>
         /// In charge of executing a fixed visit of this node.
-        /// 
-        /// TODO: Attention, we are not handling the case where the if has no block, but just one statement.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="index"></param>
@@ -75,11 +73,11 @@ namespace Rosetta.AST
                 index);
 
             // Handling body
-            // TODO: Use Block AST Walker
-            IASTWalker blockWalker = BlockASTWalker.Create(node.Statement);
-            ITranslationUnit blockTranslationUnit = blockWalker.Walk();
-
-            this.Statement.AddStatementInConditionalBlock(blockTranslationUnit, index);
+            IASTWalker walker = (node.Statement as BlockSyntax != null) ? 
+                BlockASTWalker.Create(node.Statement) : 
+                new StatementASTWalkerBuilder(node.Statement).Build();
+            ITranslationUnit translationUnit = walker.Walk();
+            this.Statement.AddStatementInConditionalBlock(translationUnit, index);
 
             // TODO: Remember to call the event
 

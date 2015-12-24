@@ -177,7 +177,7 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="statement"></param>
+        /// <param name="statement">Can be a block or a statement.</param>
         /// <param name="index"></param>
         public void AddStatementInConditionalBlock(ITranslationUnit statement, int index)
         {
@@ -210,7 +210,7 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="statement"></param>
+        /// <param name="statement">Can be a block or a statement.</param>
         public void AddStatementInElseBlock(ITranslationUnit statement)
         {
             if (statement == null)
