@@ -88,10 +88,8 @@ namespace Rosetta.Translation
                 throw new ArgumentNullException(nameof(statement));
             }
 
-            if (statement as NestedElementTranslationUnit != null)
-            {
-                ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;
-            }
+            // Group of statements does not add one more nesting level, so we do not need to
+            // increase the nesting level for each added unit.
 
             ((List<ITranslationUnit>)this.statements).Add(statement);
         }
