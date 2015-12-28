@@ -30,7 +30,9 @@ namespace Rosetta.AST
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassASTWalker"/> class.
         /// </summary>
-        protected ClassASTWalker(CSharpSyntaxNode node)
+        /// <param name="node"></param>
+        /// <param name="classDeclaration"></param>
+        protected ClassASTWalker(CSharpSyntaxNode node, ClassDeclarationTranslationUnit classDeclaration)
         {
             var classDeclarationSyntaxNode = node as ClassDeclarationSyntax;
             if (classDeclarationSyntaxNode == null)
@@ -40,18 +42,31 @@ namespace Rosetta.AST
                     typeof(ClassDeclarationSyntax).Name));
             }
 
-            this.node = node;
-            ClassDeclaration classHelper = new ClassDeclaration(classDeclarationSyntaxNode);
-
-            this.classDeclaration = ClassDeclarationTranslationUnit.Create(
-                classHelper.Visibility,
-                IdentifierTranslationUnit.Create(classHelper.Name),
-                classHelper.BaseClass == null ? null : IdentifierTranslationUnit.Create(classHelper.BaseClass.Name));
-
-            foreach (BaseTypeReference implementedInterface in classHelper.ImplementedInterfaces)
+            if (classDeclaration == null)
             {
-                this.classDeclaration.AddImplementedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
+                throw new ArgumentNullException(nameof(classDeclaration));
             }
+
+            this.node = node;
+            this.classDeclaration = classDeclaration;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ClassASTWalker"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ClassASTWalker(ClassASTWalker other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
+            this.node = other.node;
+            this.classDeclaration = other.classDeclaration;
         }
 
         /// <summary>
@@ -61,7 +76,19 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static ClassASTWalker Create(CSharpSyntaxNode node)
         {
-            return new ClassASTWalker(node);
+            ClassDeclaration classHelper = new ClassDeclaration(node as ClassDeclarationSyntax);
+
+            var classDeclaration = ClassDeclarationTranslationUnit.Create(
+                classHelper.Visibility,
+                IdentifierTranslationUnit.Create(classHelper.Name),
+                classHelper.BaseClass == null ? null : IdentifierTranslationUnit.Create(classHelper.BaseClass.Name));
+
+            foreach (BaseTypeReference implementedInterface in classHelper.ImplementedInterfaces)
+            {
+                classDeclaration.AddImplementedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
+            }
+
+            return new ClassASTWalker(node, classDeclaration);
         }
 
         /// <summary>

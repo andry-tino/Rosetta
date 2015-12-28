@@ -135,7 +135,6 @@
     <Compile Include="walkers\statements\LocalDeclarationStatementASTWalker.cs" />
     <Compile Include="walkers\statements\StatementASTWalker.cs" />
     <Compile Include="walkers\statements\StatementASTWalkerBuilder.cs" />
-    <Compile Include="WalkerTranslationUnitMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

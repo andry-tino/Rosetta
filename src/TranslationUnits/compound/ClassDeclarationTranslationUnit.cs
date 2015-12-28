@@ -12,17 +12,20 @@ namespace Rosetta.Translation
     /// <summary>
     /// Interface for describing compound translation elements.
     /// </summary>
+    /// <remarks>
+    /// Internal members protected for testability.
+    /// </remarks>
     public class ClassDeclarationTranslationUnit : ScopedElementTranslationUnit, 
         ITranslationUnit, ICompoundTranslationUnit, ITranslationInjector
     {
         // Inner units
-        private IEnumerable<ITranslationUnit> memberDeclarations;
-        private IEnumerable<ITranslationUnit> constructorDeclarations;
-        private IEnumerable<ITranslationUnit> propertyDeclarations;
-        private IEnumerable<ITranslationUnit> methodDeclarations;
+        protected IEnumerable<ITranslationUnit> memberDeclarations;
+        protected IEnumerable<ITranslationUnit> constructorDeclarations;
+        protected IEnumerable<ITranslationUnit> propertyDeclarations;
+        protected IEnumerable<ITranslationUnit> methodDeclarations;
 
         // Injected units
-        private ITranslationUnit injectedBefore;
+        protected ITranslationUnit injectedBefore;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDeclarationTranslationUnit"/> class.
@@ -40,10 +43,31 @@ namespace Rosetta.Translation
 
             this.injectedBefore = null;
         }
-        
-        private ITranslationUnit Name { get; set; }
-        private ITranslationUnit BaseClassName { get; set; }
-        private IEnumerable<ITranslationUnit> Interfaces { get; set; }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ClassDeclarationTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ClassDeclarationTranslationUnit(ClassDeclarationTranslationUnit other)
+        {
+            this.Name = other.Name;
+            this.BaseClassName = other.BaseClassName;
+            this.Interfaces = other.Interfaces;
+
+            this.memberDeclarations = other.memberDeclarations;
+            this.constructorDeclarations = other.constructorDeclarations;
+            this.propertyDeclarations = other.propertyDeclarations;
+            this.methodDeclarations = other.methodDeclarations;
+
+            this.injectedBefore = other.injectedBefore;
+        }
+
+        protected ITranslationUnit Name { get; set; }
+        protected ITranslationUnit BaseClassName { get; set; }
+        protected IEnumerable<ITranslationUnit> Interfaces { get; set; }
 
         /// <summary>
         /// 

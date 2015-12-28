@@ -28,7 +28,9 @@ namespace Rosetta.AST
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockASTWalker"/> class.
         /// </summary>
-        protected BlockASTWalker(CSharpSyntaxNode node)
+        /// <param name="node"></param>
+        /// <param name="statementsGroup"></param>
+        protected BlockASTWalker(CSharpSyntaxNode node, StatementsGroupTranslationUnit statementsGroup)
         {
             var namespaceSyntaxNode = node as BlockSyntax;
             if (namespaceSyntaxNode == null)
@@ -38,10 +40,28 @@ namespace Rosetta.AST
                     typeof(BlockSyntax).Name));
             }
 
-            // No helper needed for this walker
+            if (statementsGroup == null)
+            {
+                throw new ArgumentNullException(nameof(statementsGroup));
+            }
+            
             this.node = node;
+            this.statementsGroup = statementsGroup;
+        }
 
-            this.statementsGroup = StatementsGroupTranslationUnit.Create();
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="BlockASTWalker"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        public BlockASTWalker(BlockASTWalker other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
+            this.node = other.node;
+            this.statementsGroup = other.statementsGroup;
         }
 
         /// <summary>
@@ -51,7 +71,10 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static BlockASTWalker Create(CSharpSyntaxNode node)
         {
-            return new BlockASTWalker(node);
+            // No helper needed for this walker
+            var statementsGroup = StatementsGroupTranslationUnit.Create();
+
+            return new BlockASTWalker(node, statementsGroup);
         }
 
         /// <summary>

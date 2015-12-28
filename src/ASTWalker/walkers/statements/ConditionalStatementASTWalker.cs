@@ -23,7 +23,10 @@ namespace Rosetta.AST
         /// <summary>
         /// Initializes a new instance of the <see cref="ConditionalStatementASTWalker"/> class.
         /// </summary>
-        protected ConditionalStatementASTWalker(CSharpSyntaxNode node) : base(node)
+        /// <param name="node"></param>
+        /// <param name="conditionalStatement"></param>
+        protected ConditionalStatementASTWalker(CSharpSyntaxNode node, ConditionalStatementTranslationUnit conditionalStatement) 
+            : base(node)
         {
             var statementSyntaxNode = node as IfStatementSyntax;
             if (statementSyntaxNode == null)
@@ -33,10 +36,25 @@ namespace Rosetta.AST
                     typeof(IfStatementSyntax).Name));
             }
 
-            ConditionalStatement helper = new ConditionalStatement(statementSyntaxNode);
+            if (conditionalStatement == null)
+            {
+                throw new ArgumentNullException(nameof(conditionalStatement));
+            }
 
-            this.statement = ConditionalStatementTranslationUnit.Create(helper.BlocksNumber, helper.HasElseBlock);
+            // Node assigned in base, no need to assign it here
+            this.statement = conditionalStatement;
+
+            // Going through parts in the statement and filling the translation unit with initial data
             this.VisitNode(statementSyntaxNode, 0);
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ConditionalStatementASTWalker"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        public ConditionalStatementASTWalker(ConditionalStatementASTWalker other)
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -46,7 +64,11 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static ConditionalStatementASTWalker Create(CSharpSyntaxNode node)
         {
-            return new ConditionalStatementASTWalker(node);
+            ConditionalStatement helper = new ConditionalStatement(node as IfStatementSyntax);
+
+            var statement = ConditionalStatementTranslationUnit.Create(helper.BlocksNumber, helper.HasElseBlock);
+
+            return new ConditionalStatementASTWalker(node, statement);
         }
 
         /// <summary>
@@ -67,7 +89,7 @@ namespace Rosetta.AST
         /// <param name="index"></param>
         private void VisitNode(IfStatementSyntax node, int index)
         {
-            // Handling expression
+            // Handling conditional expression
             this.Statement.SetTestExpression(
                 new ExpressionTranslationUnitBuilder(node.Condition).Build(), 
                 index);

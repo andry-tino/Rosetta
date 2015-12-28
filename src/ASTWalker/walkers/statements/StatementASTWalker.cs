@@ -28,6 +28,7 @@ namespace Rosetta.AST
         /// <summary>
         /// Initializes a new instance of the <see cref="StatementASTWalker"/> class.
         /// </summary>
+        /// <param name="node"></param>
         protected StatementASTWalker(CSharpSyntaxNode node)
         {
             var statementSyntaxNode = node as StatementSyntax;
@@ -40,6 +41,21 @@ namespace Rosetta.AST
 
             this.node = node;
             this.statement = null;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="StatementASTWalker"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        public StatementASTWalker(StatementASTWalker other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
+            this.node = other.node;
+            this.statement = other.statement;
         }
 
         /// <summary>

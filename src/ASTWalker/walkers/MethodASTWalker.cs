@@ -29,7 +29,9 @@ namespace Rosetta.AST
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodASTWalker"/> class.
         /// </summary>
-        protected MethodASTWalker(CSharpSyntaxNode node)
+        /// <param name="node"></param>
+        /// <param name="methodDeclaration"></param>
+        protected MethodASTWalker(CSharpSyntaxNode node, MethodDeclarationTranslationUnit methodDeclaration)
         {
             var methodDeclarationSyntaxNode = node as MethodDeclarationSyntax;
             if (methodDeclarationSyntaxNode == null)
@@ -39,20 +41,31 @@ namespace Rosetta.AST
                     typeof(MethodDeclarationSyntax).Name));
             }
 
-            this.node = node;
-            MethodDeclaration methodHelper = new MethodDeclaration(methodDeclarationSyntaxNode);
-
-            this.methodDeclaration = MethodDeclarationTranslationUnit.Create(
-                methodHelper.Visibility,
-                IdentifierTranslationUnit.Create(methodHelper.ReturnType),
-                IdentifierTranslationUnit.Create(methodHelper.Name));
-
-            foreach (TypedIdentifier parameter in methodHelper.Parameters)
+            if (methodDeclaration == null)
             {
-                this.methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    IdentifierTranslationUnit.Create(parameter.TypeName), 
-                    IdentifierTranslationUnit.Create(parameter.IdentifierName)));
+                throw new ArgumentNullException(nameof(methodDeclaration));
             }
+
+            this.node = node;
+            this.methodDeclaration = methodDeclaration;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="MethodASTWalker"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public MethodASTWalker(MethodASTWalker other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
+            this.node = other.node;
+            this.methodDeclaration = other.methodDeclaration;
         }
 
         /// <summary>
@@ -62,7 +75,21 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static MethodASTWalker Create(CSharpSyntaxNode node)
         {
-            return new MethodASTWalker(node);
+            MethodDeclaration helper = new MethodDeclaration(node as MethodDeclarationSyntax);
+
+            var methodDeclaration = MethodDeclarationTranslationUnit.Create(
+                helper.Visibility,
+                IdentifierTranslationUnit.Create(helper.ReturnType),
+                IdentifierTranslationUnit.Create(helper.Name));
+
+            foreach (TypedIdentifier parameter in helper.Parameters)
+            {
+                methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                    IdentifierTranslationUnit.Create(parameter.TypeName),
+                    IdentifierTranslationUnit.Create(parameter.IdentifierName)));
+            }
+
+            return new MethodASTWalker(node, methodDeclaration);
         }
 
         /// <summary>

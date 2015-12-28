@@ -24,7 +24,10 @@ namespace Rosetta.AST
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalDeclarationStatementASTWalker"/> class.
         /// </summary>
-        protected LocalDeclarationStatementASTWalker(CSharpSyntaxNode node) : base(node)
+        /// <param name="node"></param>
+        /// <param name="statement"></param>
+        protected LocalDeclarationStatementASTWalker(CSharpSyntaxNode node, LocalDeclarationStatementTranslationUnit localDeclarationStatement) 
+            : base(node)
         {
             var declarationSyntaxNode = node as LocalDeclarationStatementSyntax;
             if (declarationSyntaxNode == null)
@@ -33,18 +36,23 @@ namespace Rosetta.AST
                     string.Format("Specified node is not of type {0}",
                     typeof(LocalDeclarationStatementSyntax).Name));
             }
-            
-            var variableDeclaration = new VariableDeclaration(declarationSyntaxNode.Declaration);
 
-            ExpressionSyntax expression = variableDeclaration.Expressions[0]; // This can contain null, so need to act accordingly
-            ITranslationUnit expressionTranslationUnit = expression == null ? null : new ExpressionTranslationUnitBuilder(expression).Build();
+            if (localDeclarationStatement == null)
+            {
+                throw new ArgumentNullException(nameof(localDeclarationStatement));
+            }
 
-            var variableDeclarationTranslationUnit = VariableDeclarationTranslationUnit.Create(
-                IdentifierTranslationUnit.Create(variableDeclaration.Type),
-                IdentifierTranslationUnit.Create(variableDeclaration.Names[0]),
-                expressionTranslationUnit);
+            // Node assigned in base, no need to assign it here
+            this.statement = localDeclarationStatement;
+        }
 
-            this.statement = LocalDeclarationStatementTranslationUnit.Create(variableDeclarationTranslationUnit);
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="LocalDeclarationStatementASTWalker"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        public LocalDeclarationStatementASTWalker(LocalDeclarationStatementASTWalker other)
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -54,7 +62,19 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static LocalDeclarationStatementASTWalker Create(CSharpSyntaxNode node)
         {
-            return new LocalDeclarationStatementASTWalker(node);
+            var variableDeclaration = new VariableDeclaration((node as LocalDeclarationStatementSyntax).Declaration);
+
+            ExpressionSyntax expression = variableDeclaration.Expressions[0]; // This can contain null, so need to act accordingly
+            ITranslationUnit expressionTranslationUnit = expression == null ? null : new ExpressionTranslationUnitBuilder(expression).Build();
+
+            var variableDeclarationTranslationUnit = VariableDeclarationTranslationUnit.Create(
+                IdentifierTranslationUnit.Create(variableDeclaration.Type),
+                IdentifierTranslationUnit.Create(variableDeclaration.Names[0]),
+                expressionTranslationUnit);
+
+            var statement = LocalDeclarationStatementTranslationUnit.Create(variableDeclarationTranslationUnit);
+
+            return new LocalDeclarationStatementASTWalker(node, statement);
         }
 
         protected override bool ShouldWalkInto

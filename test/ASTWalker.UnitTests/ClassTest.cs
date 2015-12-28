@@ -8,7 +8,17 @@ namespace Rosetta.AST.UnitTests
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Symbols;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using Microsoft.CodeAnalysis.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    
+    using Rosetta.Translation;
+    using Rosetta.Tests.Data;
+    using Rosetta.Tests.Utils;
+    using Rosetta.AST.UnitTests.Mocks;
 
     /// <summary>
     /// Tests for <see cref="ClassASTWalker"/> class.
@@ -30,8 +40,38 @@ namespace Rosetta.AST.UnitTests
         /// 
         /// </summary>
         [TestMethod]
-        public void TestSomething()
+        public void FieldMembers()
         {
+            string source = @"
+                public class MyClass {
+                    private int myInt;
+                    private string MyString;
+                }
+            ";
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ClassDeclarationSyntax));
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = MockedClassASTWalker.Create(classDeclarationNode);
+
+            // Getting the translation unit
+            astWalker.Walk();
+
+            // Checking
+            Assert.IsNotNull(astWalker.ClassDeclaration);
+
+            // Checking members
+            Assert.IsNotNull(astWalker.ClassDeclaration.MemberDeclarations);
+            Assert.IsTrue(astWalker.ClassDeclaration.MemberDeclarations.Count() > 0);
+            Assert.AreEqual(2, astWalker.ClassDeclaration.MemberDeclarations.Count());
+
+            Assert.IsInstanceOfType(astWalker.ClassDeclaration.MemberDeclarations.ElementAt(0), typeof(FieldDeclarationTranslationUnit));
+            Assert.IsInstanceOfType(astWalker.ClassDeclaration.MemberDeclarations.ElementAt(1), typeof(FieldDeclarationTranslationUnit));
         }
     }
 }

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ClassTest.cs" />
     <Compile Include="mocks\MockedClassASTWalker.cs" />
+    <Compile Include="mocks\MockedClassDeclarationTranslationUnit.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -133,6 +134,10 @@
     <ProjectReference Include="..\resources\TestData\TestData.csproj">
       <Project>{c9710df8-1539-4ac0-a62b-f6f917485796}</Project>
       <Name>TestData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\resources\TestUtils\TestUtils.csproj">
+      <Project>{0678abb3-50ce-453f-8eb5-1f21f10061b3}</Project>
+      <Name>TestUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -10,27 +10,27 @@ namespace Rosetta.AST.UnitTests.Mocks
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.Translation;
+    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Mock for <see cref="ClassASTWalker"/>.
     /// </summary>
-    internal class MockedClassASTWalker : ClassASTWalker
+    public class MockedClassASTWalker : ClassASTWalker
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MockedClassASTWalker"/> class.
-        /// </summary>
-        /// <param name="node"></param>
-        public MockedClassASTWalker(CSharpSyntaxNode node) 
-            : base(node)
+        protected MockedClassASTWalker(ClassASTWalker original) 
+            : base(original)
         {
+            this.classDeclaration = MockedClassDeclarationTranslationUnit.Create(this.classDeclaration);
         }
 
-        /// <summary>
-        /// Gets the underlying <see cref="ITranslationUnit"/> for class declaration.
-        /// </summary>
-        public ITranslationUnit ClassDeclarationTranslationUnit
+        public new static MockedClassASTWalker Create(CSharpSyntaxNode node)
         {
-            get { return this.classDeclaration; }
+            return new MockedClassASTWalker(ClassASTWalker.Create(node));
+        }
+        
+        public MockedClassDeclarationTranslationUnit ClassDeclaration
+        {
+            get { return this.classDeclaration as MockedClassDeclarationTranslationUnit; }
         }
     }
 }

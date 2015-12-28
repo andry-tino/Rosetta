@@ -82,7 +82,9 @@ namespace Rosetta.Translation
             // The body, we render them as a list of semicolon/newline separated elements
             foreach (ITranslationUnit statement in this.statements)
             {
-                writer.WriteLine("{0}{1}", statement.Translate(), Lexems.Semicolon);
+                writer.WriteLine("{0}{1}", 
+                    statement.Translate(),
+                    ShouldRenderSemicolon(statement) ? Lexems.Semicolon : string.Empty);
             }
 
             // Closing declaration
@@ -113,5 +115,14 @@ namespace Rosetta.Translation
         }
 
         #endregion
+
+        private static bool ShouldRenderSemicolon(ITranslationUnit statement)
+        {
+            var type = statement.GetType();
+
+            var shouldNotRenderSemicolon = type == typeof(ConditionalStatementTranslationUnit);
+
+            return !shouldNotRenderSemicolon;
+        }
     }
 }

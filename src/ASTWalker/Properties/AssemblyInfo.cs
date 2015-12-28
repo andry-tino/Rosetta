@@ -21,6 +21,7 @@ using System.Runtime.CompilerServices;
 
 // Setting visibility for unit tests
 [assembly: InternalsVisibleTo("Rosetta.ASTWalker.Helpers.UnitTests")]
+[assembly: InternalsVisibleTo("Rosetta.ASTWalker.UnitTests")]
 
 // Version information for an assembly consists of the following four values:
 //

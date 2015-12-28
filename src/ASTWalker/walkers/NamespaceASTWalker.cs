@@ -27,7 +27,9 @@ namespace Rosetta.AST
         /// <summary>
         /// Initializes a new instance of the <see cref="NamespaceASTWalker"/> class.
         /// </summary>
-        protected NamespaceASTWalker(CSharpSyntaxNode node)
+        /// <param name="node"></param>
+        /// <param name="module"></param>
+        protected NamespaceASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module)
         {
             var namespaceSyntaxNode = node as NamespaceDeclarationSyntax;
             if (namespaceSyntaxNode == null)
@@ -37,11 +39,28 @@ namespace Rosetta.AST
                     typeof(NamespaceDeclarationSyntax).Name));
             }
 
-            this.node = node;
-            NamespaceDeclaration namespaceHelper = new NamespaceDeclaration(namespaceSyntaxNode);
+            if (module == null)
+            {
+                throw new ArgumentNullException(nameof(module));
+            }
 
-            this.module = ModuleTranslationUnit.Create(
-                IdentifierTranslationUnit.Create(namespaceHelper.Name));
+            this.node = node;
+            this.module = module;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="NamespaceASTWalker"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        public NamespaceASTWalker(NamespaceASTWalker other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
+            this.node = other.node;
+            this.module = other.module;
         }
 
         /// <summary>
@@ -51,7 +70,12 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static NamespaceASTWalker Create(CSharpSyntaxNode node)
         {
-            return new NamespaceASTWalker(node);
+            NamespaceDeclaration helper = new NamespaceDeclaration(node as NamespaceDeclarationSyntax);
+
+            var module = ModuleTranslationUnit.Create(
+                IdentifierTranslationUnit.Create(helper.Name));
+
+            return new NamespaceASTWalker(node, module);
         }
 
         /// <summary>
