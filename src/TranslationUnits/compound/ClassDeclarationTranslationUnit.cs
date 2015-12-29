@@ -51,7 +51,8 @@ namespace Rosetta.Translation
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public ClassDeclarationTranslationUnit(ClassDeclarationTranslationUnit other)
+        public ClassDeclarationTranslationUnit(ClassDeclarationTranslationUnit other) 
+            : base(other)
         {
             this.Name = other.Name;
             this.BaseClassName = other.BaseClassName;

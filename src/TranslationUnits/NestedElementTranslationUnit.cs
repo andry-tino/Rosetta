@@ -39,6 +39,20 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Copy initializes a new instance of the <see cref="NestedElementTranslationUnit"/>.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        protected NestedElementTranslationUnit(NestedElementTranslationUnit other)
+        {
+            this.nestingLevel = other.nestingLevel;
+            this.formatter = other.formatter;
+            this.formatterProvider = other.formatterProvider;
+        }
+
+        /// <summary>
         /// Gets the formatter currently used.
         /// </summary>
         public IFormatter Formatter

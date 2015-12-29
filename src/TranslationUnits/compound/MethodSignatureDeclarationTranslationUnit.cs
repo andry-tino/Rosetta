@@ -40,6 +40,20 @@ namespace Rosetta.Translation
             this.arguments = new List<ITranslationUnit>();
         }
 
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public MethodSignatureDeclarationTranslationUnit(MethodSignatureDeclarationTranslationUnit other) 
+            : base((MemberTranslationUnit)other)
+        {
+            this.returnType = other.returnType;
+            this.arguments = other.arguments;
+        }
+
         protected ITranslationUnit ReturnType
         {
             get { return this.returnType ?? IdentifierTranslationUnit.Void; }

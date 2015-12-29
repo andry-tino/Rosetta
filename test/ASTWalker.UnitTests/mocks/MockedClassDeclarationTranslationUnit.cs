@@ -9,7 +9,6 @@ namespace Rosetta.AST.UnitTests.Mocks
     using System.Collections.Generic;
 
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Mock for <see cref="ClassASTWalker"/>.

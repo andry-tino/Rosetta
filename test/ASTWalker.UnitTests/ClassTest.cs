@@ -35,17 +35,14 @@ namespace Rosetta.AST.UnitTests
         public static void CleanUp()
         {
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         [TestMethod]
         public void FieldMembers()
         {
             string source = @"
                 public class MyClass {
                     private int myInt;
-                    private string MyString;
+                    public string MyString;
                 }
             ";
 
@@ -53,7 +50,7 @@ namespace Rosetta.AST.UnitTests
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
             Source.ProgramRoot = tree;
 
-            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ClassDeclarationSyntax));
+            SyntaxNode node = new NodeLocator(tree).LocateFirst(typeof(ClassDeclarationSyntax));
             ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
 
             // Creating the walker
@@ -72,6 +69,44 @@ namespace Rosetta.AST.UnitTests
 
             Assert.IsInstanceOfType(astWalker.ClassDeclaration.MemberDeclarations.ElementAt(0), typeof(FieldDeclarationTranslationUnit));
             Assert.IsInstanceOfType(astWalker.ClassDeclaration.MemberDeclarations.ElementAt(1), typeof(FieldDeclarationTranslationUnit));
+        }
+
+        [TestMethod]
+        public void Methods()
+        {
+            string source = @"
+                public class MyClass {
+                    private void Method1() {
+                    }
+
+                    protected void Method2() {
+                    }
+                }
+            ";
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateFirst(typeof(ClassDeclarationSyntax));
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = MockedClassASTWalker.Create(classDeclarationNode);
+
+            // Getting the translation unit
+            astWalker.Walk();
+
+            // Checking
+            Assert.IsNotNull(astWalker.ClassDeclaration);
+
+            // Checking members
+            Assert.IsNotNull(astWalker.ClassDeclaration.MethodDeclarations);
+            Assert.IsTrue(astWalker.ClassDeclaration.MethodDeclarations.Count() > 0);
+            Assert.AreEqual(2, astWalker.ClassDeclaration.MethodDeclarations.Count());
+
+            Assert.IsInstanceOfType(astWalker.ClassDeclaration.MethodDeclarations.ElementAt(0), typeof(MethodDeclarationTranslationUnit));
+            Assert.IsInstanceOfType(astWalker.ClassDeclaration.MethodDeclarations.ElementAt(1), typeof(MethodDeclarationTranslationUnit));
         }
     }
 }

@@ -36,5 +36,18 @@ namespace Rosetta.Translation
         {
             this.Name = name;
         }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="MemberTranslationUnit"/>.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        protected MemberTranslationUnit(MemberTranslationUnit other) 
+            : base(other)
+        {
+            this.Name = other.Name;
+        }
     }
 }

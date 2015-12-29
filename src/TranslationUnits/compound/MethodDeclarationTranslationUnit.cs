@@ -16,7 +16,8 @@ namespace Rosetta.Translation
     public class MethodDeclarationTranslationUnit : MethodSignatureDeclarationTranslationUnit
     {
         // TODO: Use StatementsGroupTranslationUnit
-        private IEnumerable<ITranslationUnit> statements;
+        // Protected for testability
+        protected IEnumerable<ITranslationUnit> statements;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
@@ -24,6 +25,19 @@ namespace Rosetta.Translation
         protected MethodDeclarationTranslationUnit() : base(IdentifierTranslationUnit.Empty, VisibilityToken.None)
         {
             this.statements = new List<ITranslationUnit>();
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public MethodDeclarationTranslationUnit(MethodDeclarationTranslationUnit other)
+            : base(other)
+        {
+            this.statements = other.statements;
         }
 
         /// <summary>

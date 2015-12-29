@@ -13,12 +13,15 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing modules.
     /// </summary>
+    /// <remarks>
+    /// Internal members protected for testability.
+    /// </remarks>
     public class ModuleTranslationUnit : NestedElementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
-        private IEnumerable<ITranslationUnit> classes;
-        private IEnumerable<ITranslationUnit> interfaces;
+        protected IEnumerable<ITranslationUnit> classes;
+        protected IEnumerable<ITranslationUnit> interfaces;
 
-        private ITranslationUnit name;
+        protected ITranslationUnit name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModuleTranslationUnit"/> class.
@@ -49,6 +52,22 @@ namespace Rosetta.Translation
             this.interfaces = new List<ITranslationUnit>();
 
             this.name = name;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ModuleTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ModuleTranslationUnit(ModuleTranslationUnit other) 
+            : base()
+        {
+            this.classes = other.classes;
+            this.interfaces = other.interfaces;
+
+            this.name = other.name;
         }
 
         /// <summary>

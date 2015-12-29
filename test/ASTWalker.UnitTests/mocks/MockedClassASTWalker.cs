@@ -9,9 +9,6 @@ namespace Rosetta.AST.UnitTests.Mocks
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
-    using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
-
     /// <summary>
     /// Mock for <see cref="ClassASTWalker"/>.
     /// </summary>
@@ -20,6 +17,7 @@ namespace Rosetta.AST.UnitTests.Mocks
         protected MockedClassASTWalker(ClassASTWalker original) 
             : base(original)
         {
+            // Reassigning since base class operated on it
             this.classDeclaration = MockedClassDeclarationTranslationUnit.Create(this.classDeclaration);
         }
 

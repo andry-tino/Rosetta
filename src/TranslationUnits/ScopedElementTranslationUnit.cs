@@ -43,5 +43,18 @@ namespace Rosetta.Translation
         {
             this.Visibility = visibility;
         }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        protected ScopedElementTranslationUnit(ScopedElementTranslationUnit other) 
+            : base(other)
+        {
+            this.Visibility = other.Visibility;
+        }
     }
 }
