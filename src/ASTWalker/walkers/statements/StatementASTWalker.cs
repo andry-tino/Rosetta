@@ -47,6 +47,9 @@ namespace Rosetta.AST
         /// Copy initializes a new instance of the <see cref="StatementASTWalker"/> class.
         /// </summary>
         /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
         public StatementASTWalker(StatementASTWalker other)
         {
             if (other == null)

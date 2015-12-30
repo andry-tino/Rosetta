@@ -10,7 +10,7 @@ namespace Rosetta.AST.UnitTests.Mocks
     using Microsoft.CodeAnalysis.CSharp;
 
     /// <summary>
-    /// Mock for <see cref="ClassASTWalker"/>.
+    /// Mock for <see cref="NamespaceASTWalker"/>.
     /// </summary>
     public class MockedNamespaceASTWalker : NamespaceASTWalker
     {

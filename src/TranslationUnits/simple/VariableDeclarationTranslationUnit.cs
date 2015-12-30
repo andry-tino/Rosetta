@@ -13,11 +13,14 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing a variable declaration.
     /// </summary>
+    /// <remarks>
+    /// Internal members protected for testability.
+    /// </remarks>
     public class VariableDeclarationTranslationUnit : NestedElementTranslationUnit, ITranslationUnit
     {
-        private ITranslationUnit type; // Can be null
-        private ITranslationUnit[] names;
-        private ITranslationUnit[] expressions; // Can be null
+        protected ITranslationUnit type; // Can be null
+        protected ITranslationUnit[] names;
+        protected ITranslationUnit[] expressions; // Can be null
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VariableDeclarationTranslationUnit"/> class.
@@ -36,6 +39,21 @@ namespace Rosetta.Translation
             this.type = null;
             this.names = null;
             this.expressions = null;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="VariableDeclarationTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public VariableDeclarationTranslationUnit(VariableDeclarationTranslationUnit other) 
+            : base(other)
+        {
+            this.type = other.type;
+            this.names = other.names;
+            this.expressions = other.expressions;
         }
 
         /// <summary>

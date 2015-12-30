@@ -35,6 +35,18 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Copy initializes a new instance of the <see cref="StatementTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        protected StatementTranslationUnit(StatementTranslationUnit other)
+            : base(other)
+        {
+        }
+
+        /// <summary>
         /// TODO: Consider making abstract.
         /// </summary>
         public virtual IEnumerable<ITranslationUnit> InnerUnits

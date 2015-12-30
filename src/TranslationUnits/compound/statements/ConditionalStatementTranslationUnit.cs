@@ -12,6 +12,9 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing conditional statements.
     /// </summary>
+    /// <remarks>
+    /// Internal members protected for testability.
+    /// </remarks>
     public class ConditionalStatementTranslationUnit : StatementTranslationUnit
     {
         /// <summary>
@@ -24,7 +27,7 @@ namespace Rosetta.Translation
         /// </code>
         /// N is the number of test expressions.
         /// </summary>
-        private ITranslationUnit[] testExpressions;
+        protected ITranslationUnit[] testExpressions;
         /// <summary>
         /// Contains all bodies:
         /// <code>
@@ -38,7 +41,7 @@ namespace Rosetta.Translation
         /// </code>
         /// We can have N bodies and they can be blocks or single statements.
         /// </summary>
-        private ITranslationUnit[] bodies;
+        protected ITranslationUnit[] bodies;
         /// <summary>
         /// Contains all bodies:
         /// <code>
@@ -51,9 +54,9 @@ namespace Rosetta.Translation
         /// </code>
         /// Total bodies is N + 1 in case we have final ELSE clause and it can be a block or a single statement.
         /// </summary>
-        private ITranslationUnit lastBody;
+        protected ITranslationUnit lastBody;
 
-        private bool hasFinalElse;
+        protected bool hasFinalElse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConditionalStatementTranslationUnit"/> class.
@@ -74,6 +77,22 @@ namespace Rosetta.Translation
             this.bodies = null;
             this.lastBody = null;
             this.hasFinalElse = false;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ConditionalStatementTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        protected ConditionalStatementTranslationUnit(ConditionalStatementTranslationUnit other) 
+            : base(other)
+        {
+            this.testExpressions = other.testExpressions;
+            this.bodies = other.bodies;
+            this.lastBody = other.lastBody;
+            this.hasFinalElse = other.hasFinalElse;
         }
 
         /// <summary>

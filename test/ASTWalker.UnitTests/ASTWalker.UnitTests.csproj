@@ -51,10 +51,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ClassTest.cs" />
+    <Compile Include="mocks\MockedConditionalStatementASTWalker.cs" />
+    <Compile Include="mocks\MockedConditionalStatementTranslationUnit.cs" />
+    <Compile Include="mocks\MockedLocalDeclarationStatementTranslationUnit.cs" />
     <Compile Include="mocks\MockedMethodASTWalker.cs" />
     <Compile Include="mocks\MockedMethodDeclarationTranslationUnit.cs" />
     <Compile Include="mocks\MockedModuleTranslationUnit.cs" />
     <Compile Include="mocks\MockedNamespaceASTWalker.cs" />
+    <Compile Include="mocks\MockedLocalDeclarationStatementASTWalker.cs" />
+    <Compile Include="mocks\MockedVariableDeclarationTranslationUnit.cs" />
+    <Compile Include="MultipleLevelsTest.cs" />
     <Compile Include="NamespaceTest.cs" />
     <Compile Include="StatementTest.Conditional.cs" />
     <Compile Include="MethodTest.cs" />

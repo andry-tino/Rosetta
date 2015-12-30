@@ -13,10 +13,11 @@ namespace Rosetta.Translation
     /// </summary>
     /// <remarks>
     /// Acts like a decorator for <see cref="VariableDeclarationTranslationUnit"/>.
+    /// Internal members protected for testability.
     /// </remarks>
     public class LocalDeclarationStatementTranslationUnit : StatementTranslationUnit
     {
-        private VariableDeclarationTranslationUnit variableDeclaration;
+        protected VariableDeclarationTranslationUnit variableDeclaration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalDeclarationStatementTranslationUnit"/> class.
@@ -34,6 +35,19 @@ namespace Rosetta.Translation
             : base(nestingLevel)
         {
             this.variableDeclaration = null;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="LocalDeclarationStatementTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public LocalDeclarationStatementTranslationUnit(LocalDeclarationStatementTranslationUnit other)
+            : base(other)
+        {
+            this.variableDeclaration = other.variableDeclaration;
         }
 
         /// <summary>

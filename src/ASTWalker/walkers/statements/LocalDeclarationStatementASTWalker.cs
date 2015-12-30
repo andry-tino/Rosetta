@@ -50,6 +50,9 @@ namespace Rosetta.AST
         /// Copy initializes a new instance of the <see cref="LocalDeclarationStatementASTWalker"/> class.
         /// </summary>
         /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
         public LocalDeclarationStatementASTWalker(LocalDeclarationStatementASTWalker other)
             : base(other)
         {
@@ -86,11 +89,14 @@ namespace Rosetta.AST
         }
 
         /// <summary>
-        /// Gets the <see cref="ConditionalStatementTranslationUnit"/> associated to the AST walker.
+        /// Gets the <see cref="LocalDeclarationStatementTranslationUnit"/> associated to the AST walker.
         /// </summary>
-        private ConditionalStatementTranslationUnit Statement
+        /// <remarks>
+        /// Protected for testability.
+        /// </remarks>
+        protected LocalDeclarationStatementTranslationUnit Statement
         {
-            get { return this.statement as ConditionalStatementTranslationUnit; }
+            get { return this.statement as LocalDeclarationStatementTranslationUnit; }
         }
     }
 }

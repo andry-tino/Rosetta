@@ -52,6 +52,9 @@ namespace Rosetta.AST
         /// Copy initializes a new instance of the <see cref="ConditionalStatementASTWalker"/> class.
         /// </summary>
         /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
         public ConditionalStatementASTWalker(ConditionalStatementASTWalker other)
             : base(other)
         {
@@ -124,7 +127,7 @@ namespace Rosetta.AST
         /// <summary>
         /// Gets the <see cref="ConditionalStatementTranslationUnit"/> associated to the AST walker.
         /// </summary>
-        private ConditionalStatementTranslationUnit Statement
+        protected ConditionalStatementTranslationUnit Statement
         {
             get { return this.statement as ConditionalStatementTranslationUnit; }
         }

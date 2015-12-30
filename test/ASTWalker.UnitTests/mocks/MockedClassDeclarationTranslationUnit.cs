@@ -11,7 +11,7 @@ namespace Rosetta.AST.UnitTests.Mocks
     using Rosetta.Translation;
 
     /// <summary>
-    /// Mock for <see cref="ClassASTWalker"/>.
+    /// Mock for <see cref="ClassDeclarationTranslationUnit"/>.
     /// </summary>
     public class MockedClassDeclarationTranslationUnit : ClassDeclarationTranslationUnit
     {
