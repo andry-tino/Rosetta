@@ -225,14 +225,14 @@ namespace Rosetta.Translation.Renderings.Data
 
             foreach (var statement in bodyStatements)
             {
-                translationUnit.AddStatementInConditionalBlock(statement, 0);
+                translationUnit.SetStatementInConditionalBlock(statement, 0);
             }
 
             if (elseStatements != null)
             {
                 foreach (var statement in elseStatements)
                 {
-                    translationUnit.AddStatementInElseBlock(statement);
+                    translationUnit.SetStatementInElseBlock(statement);
                 }
             }
 

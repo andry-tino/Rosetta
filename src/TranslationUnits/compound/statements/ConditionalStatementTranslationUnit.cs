@@ -36,9 +36,9 @@ namespace Rosetta.Translation
         ///     <body-3>
         /// } else {...}
         /// </code>
-        /// We can have N bodies.
+        /// We can have N bodies and they can be blocks or single statements.
         /// </summary>
-        private StatementsGroupTranslationUnit[] bodies;
+        private ITranslationUnit[] bodies;
         /// <summary>
         /// Contains all bodies:
         /// <code>
@@ -49,9 +49,11 @@ namespace Rosetta.Translation
         ///     <last-body>
         /// }
         /// </code>
-        /// Total bodies is N + 1 in case we have final ELSE clause.
+        /// Total bodies is N + 1 in case we have final ELSE clause and it can be a block or a single statement.
         /// </summary>
-        private StatementsGroupTranslationUnit lastBody;
+        private ITranslationUnit lastBody;
+
+        private bool hasFinalElse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConditionalStatementTranslationUnit"/> class.
@@ -71,6 +73,7 @@ namespace Rosetta.Translation
             this.testExpressions = null;
             this.bodies = null;
             this.lastBody = null;
+            this.hasFinalElse = false;
         }
 
         /// <summary>
@@ -84,8 +87,9 @@ namespace Rosetta.Translation
             return new ConditionalStatementTranslationUnit(AutomaticNestingLevel)
             {
                 testExpressions = new ITranslationUnit[blocksNumber],
-                bodies = new StatementsGroupTranslationUnit[blocksNumber],
-                lastBody = hasFinalElse ? StatementsGroupTranslationUnit.Create() : null
+                bodies = new ITranslationUnit[blocksNumber],
+                lastBody = null,
+                hasFinalElse = hasFinalElse
             };
         }
 
@@ -130,7 +134,7 @@ namespace Rosetta.Translation
                     Lexems.CloseCurlyBracket);
             }
 
-            if (this.lastBody != null)
+            if (this.hasFinalElse)
             {
                 // Opening
                 writer.WriteLine("{0}",
@@ -179,50 +183,38 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="statement">Can be a block or a statement.</param>
         /// <param name="index"></param>
-        public void AddStatementInConditionalBlock(ITranslationUnit statement, int index)
+        public void SetStatementInConditionalBlock(ITranslationUnit statement, int index)
         {
             if (statement == null)
             {
                 throw new ArgumentNullException(nameof(statement));
-            }
-            if (statement as NestedElementTranslationUnit != null)
-            {
-                ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;
             }
             if (index < 0 || index >= this.bodies.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            if (this.bodies[index] == null)
-            {
-                this.bodies[index] = StatementsGroupTranslationUnit.Create();
-            }
-
             if (statement as NestedElementTranslationUnit != null)
             {
                 ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;
             }
 
-            this.bodies[index].AddStatement(statement);
+            this.bodies[index] = statement;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="statement">Can be a block or a statement.</param>
-        public void AddStatementInElseBlock(ITranslationUnit statement)
+        public void SetStatementInElseBlock(ITranslationUnit statement)
         {
             if (statement == null)
             {
                 throw new ArgumentNullException(nameof(statement));
             }
-            if (statement as NestedElementTranslationUnit != null)
-            {
-                ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;
-            }
 
-            if (this.lastBody == null)
+            // TODO: Ad unit test for this
+            if (!this.hasFinalElse)
             {
                 throw new InvalidOperationException("This conditional translation unit has been created without final ELSE support!");
             }
@@ -232,7 +224,7 @@ namespace Rosetta.Translation
                 ((NestedElementTranslationUnit)statement).NestingLevel = this.NestingLevel + 1;
             }
 
-            this.lastBody.AddStatement(statement);
+            this.lastBody = statement;
         }
 
         #endregion

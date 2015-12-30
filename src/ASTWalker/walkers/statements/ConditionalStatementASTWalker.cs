@@ -99,14 +99,25 @@ namespace Rosetta.AST
                 BlockASTWalker.Create(node.Statement) : 
                 new StatementASTWalkerBuilder(node.Statement).Build();
             ITranslationUnit translationUnit = walker.Walk();
-            this.Statement.AddStatementInConditionalBlock(translationUnit, index);
+            this.Statement.SetStatementInConditionalBlock(translationUnit, index);
 
-            // TODO: Remember to call the event
+            // TODO: Remember to call the event for node traversal
 
-            // To the next node
-            if (node.Else != null && node.Else.Statement as IfStatementSyntax != null)
+            if (node.Else != null && node.Else.Statement != null)
             {
-                this.VisitNode(node.Else.Statement as IfStatementSyntax, ++index);
+                if (node.Else.Statement as IfStatementSyntax != null)
+                {
+                    // To the next node
+                    this.VisitNode(node.Else.Statement as IfStatementSyntax, ++index);
+                }
+                else
+                {
+                    walker = (node.Statement as BlockSyntax != null) ?
+                        BlockASTWalker.Create(node.Statement) :
+                        new StatementASTWalkerBuilder(node.Statement).Build();
+                    translationUnit = walker.Walk();
+                    this.Statement.SetStatementInElseBlock(translationUnit);
+                }
             }
         }
 
