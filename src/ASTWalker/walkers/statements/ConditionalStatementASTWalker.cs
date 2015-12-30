@@ -115,9 +115,9 @@ namespace Rosetta.AST
                 }
                 else
                 {
-                    walker = (node.Statement as BlockSyntax != null) ?
-                        BlockASTWalker.Create(node.Statement) :
-                        new StatementASTWalkerBuilder(node.Statement).Build();
+                    walker = (node.Else.Statement as BlockSyntax != null) ?
+                        BlockASTWalker.Create(node.Else.Statement) :
+                        new StatementASTWalkerBuilder(node.Else.Statement).Build();
                     translationUnit = walker.Walk();
                     this.Statement.SetStatementInElseBlock(translationUnit);
                 }
