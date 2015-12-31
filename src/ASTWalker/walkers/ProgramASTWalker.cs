@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// NamespaceASTWalker.cs
+/// ProgramASTWalker.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -14,48 +14,48 @@ namespace Rosetta.AST
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    /// Walks a namespace AST node.
+    /// Walks a program AST node.
     /// </summary>
-    public class NamespaceASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class ProgramASTWalker : CSharpSyntaxWalker, IASTWalker
     {
         // Protected for testability
         protected CSharpSyntaxNode node;
 
         // Protected for testability
-        protected ModuleTranslationUnit module;
+        protected ProgramTranslationUnit program;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NamespaceASTWalker"/> class.
+        /// Initializes a new instance of the <see cref="ProgramASTWalker"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="module"></param>
-        protected NamespaceASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module)
+        protected ProgramASTWalker(CSharpSyntaxNode node, ProgramTranslationUnit program)
         {
-            var namespaceSyntaxNode = node as NamespaceDeclarationSyntax;
-            if (namespaceSyntaxNode == null)
+            var programSyntaxNode = node as CompilationUnitSyntax;
+            if (programSyntaxNode == null)
             {
                 throw new ArgumentException(
                     string.Format("Specified node is not of type {0}",
-                    typeof(NamespaceDeclarationSyntax).Name));
+                    typeof(CompilationUnitSyntax).Name));
             }
 
-            if (module == null)
+            if (program == null)
             {
-                throw new ArgumentNullException(nameof(module));
+                throw new ArgumentNullException(nameof(program));
             }
 
             this.node = node;
-            this.module = module;
+            this.program = program;
         }
 
         /// <summary>
-        /// Copy initializes a new instance of the <see cref="NamespaceASTWalker"/> class.
+        /// Copy initializes a new instance of the <see cref="ProgramASTWalker"/> class.
         /// </summary>
         /// <param name="other"></param>
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public NamespaceASTWalker(NamespaceASTWalker other)
+        public ProgramASTWalker(ProgramASTWalker other)
         {
             if (other == null)
             {
@@ -63,22 +63,21 @@ namespace Rosetta.AST
             }
 
             this.node = other.node;
-            this.module = other.module;
+            this.program = other.program;
         }
 
         /// <summary>
-        /// Factory method for class <see cref="NamespaceASTWalker"/>.
+        /// Factory method for class <see cref="ProgramASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <returns></returns>
-        public static NamespaceASTWalker Create(CSharpSyntaxNode node)
+        public static ProgramASTWalker Create(CSharpSyntaxNode node)
         {
-            NamespaceDeclaration helper = new NamespaceDeclaration(node as NamespaceDeclarationSyntax);
+            // No helper needed for this walker
 
-            var module = ModuleTranslationUnit.Create(
-                IdentifierTranslationUnit.Create(helper.Name));
+            var program = ProgramTranslationUnit.Create();
 
-            return new NamespaceASTWalker(node, module);
+            return new ProgramASTWalker(node, program);
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace Rosetta.AST
             this.Visit(node);
 
             // Returning root
-            return this.module;
+            return this.program;
         }
 
         #region CSharpSyntaxWalker overrides
@@ -109,7 +108,7 @@ namespace Rosetta.AST
         {
             var classWalker = ClassASTWalker.Create(node);
             var translationUnit = classWalker.Walk();
-            this.module.AddClass(translationUnit);
+            this.program.AddContent(translationUnit);
 
             this.InvokeClassDeclarationVisited(this, new WalkerEventArgs());
         }

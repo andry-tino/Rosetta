@@ -59,9 +59,12 @@
     <Compile Include="mocks\MockedModuleTranslationUnit.cs" />
     <Compile Include="mocks\MockedNamespaceASTWalker.cs" />
     <Compile Include="mocks\MockedLocalDeclarationStatementASTWalker.cs" />
+    <Compile Include="mocks\MockedProgramASTWalker.cs" />
+    <Compile Include="mocks\MockedProgramTranslationUnit.cs" />
     <Compile Include="mocks\MockedVariableDeclarationTranslationUnit.cs" />
     <Compile Include="MultipleLevelsTest.cs" />
     <Compile Include="NamespaceTest.cs" />
+    <Compile Include="ProgramTest.cs" />
     <Compile Include="StatementTest.Conditional.cs" />
     <Compile Include="MethodTest.cs" />
     <Compile Include="mocks\MockedClassASTWalker.cs" />

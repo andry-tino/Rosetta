@@ -13,10 +13,12 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing methods.
     /// </summary>
+    /// <remarks>
+    /// Internal members protected for testability.
+    /// </remarks>
     public class MethodDeclarationTranslationUnit : MethodSignatureDeclarationTranslationUnit
     {
         // TODO: Use StatementsGroupTranslationUnit
-        // Protected for testability
         protected IEnumerable<ITranslationUnit> statements;
 
         /// <summary>
