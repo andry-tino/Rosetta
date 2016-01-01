@@ -17,7 +17,11 @@ namespace Rosetta.Translation
     /// </remarks>
     public class ProgramTranslationUnit : ITranslationUnit, ICompoundTranslationUnit
     {
-        protected const int NestingLevel = 0;
+        /// <summary>
+        /// We might want to indent stuff in the program root node, however by default we do not do that.
+        /// By using -1 we will cause all inner units to have nesting level 0.
+        /// </summary>
+        protected const int NestingLevel = -1;
 
         protected IEnumerable<ITranslationUnit> content;
 
