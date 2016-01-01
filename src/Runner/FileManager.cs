@@ -69,6 +69,78 @@ namespace Rosetta.Runner
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="output"></param>
+        /// <param name="path"></param>
+        public static void WriteToFile(string output, string path)
+        {
+            File.WriteAllText(path, output);
+        }
+
+        #region Utilities
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string ApplicationExecutingPath
+        {
+            get
+            {
+                // To get the location the assembly is executing from
+                string executingPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
+                return Path.GetDirectoryName(executingPath);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string ApplicationAssemblyPath
+        {
+            get
+            {
+                // To get the location the assembly normally resides on disk or the install directory
+                string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
+
+                return Path.GetDirectoryName(assemblyPath);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsDirectoryPathCorrect(string path)
+        {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
+            return Directory.Exists(path);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsFilePathCorrect(string path)
+        {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
+            return File.Exists(path);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
         private IEnumerable<string> CSharpFiles
         {
             get

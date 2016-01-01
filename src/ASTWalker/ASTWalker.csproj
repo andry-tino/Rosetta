@@ -115,6 +115,7 @@
     <Compile Include="helpers\Helper.cs" />
     <Compile Include="helpers\statements\ConditionalStatement.cs" />
     <Compile Include="helpers\types\TypedIdentifier.cs" />
+    <Compile Include="ProgramWrapper.cs" />
     <Compile Include="utilities\VisibilityUtilities.cs" />
     <Compile Include="walkers\BlockASTWalker.cs" />
     <Compile Include="walkers\ClassASTWalker.cs" />

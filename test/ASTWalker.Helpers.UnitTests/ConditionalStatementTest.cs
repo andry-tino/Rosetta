@@ -6,8 +6,6 @@
 namespace Rosetta.ASTWalker.Helpers.UnitTests
 {
     using System;
-    using System.Linq;
-    using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
