@@ -191,5 +191,25 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         public const string FalseKeyword = "false";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string NumberType = "number";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string StringType = "string";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string BooleanType = "boolean";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string AnyType = "any";
     }
 }

@@ -21,30 +21,30 @@ namespace Rosetta.Translation
         {
             if (type == typeof(string).Name)
             {
-                return "string";
+                return Lexems.StringType;
             }
 
             if (type == typeof(int).Name)
             {
-                return "number";
+                return Lexems.NumberType;
             }
             if (type == typeof(double).Name)
             {
-                return "number";
+                return Lexems.NumberType;
             }
             if (type == typeof(float).Name)
             {
-                return "number";
+                return Lexems.NumberType;
             }
 
             if (type == typeof(bool).Name)
             {
-                return "boolean";
+                return Lexems.BooleanType;
             }
 
             if (type == typeof(object).Name)
             {
-                return "any";
+                return Lexems.AnyType;
             }
 
             // No match, thus we return the input type with no change

@@ -46,7 +46,7 @@ namespace Rosetta.Translation
         /// </summary>
         public static TypeIdentifierTranslationUnit Number
         {
-            get { return Create("number"); }
+            get { return Create(Lexems.NumberType); }
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Rosetta.Translation
         /// </summary>
         public static TypeIdentifierTranslationUnit String
         {
-            get { return Create("string"); }
+            get { return Create(Lexems.StringType); }
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Rosetta.Translation
         /// </summary>
         public static TypeIdentifierTranslationUnit Boolean
         {
-            get { return Create("boolean"); }
+            get { return Create(Lexems.BooleanType); }
         }
 
         /// <summary>

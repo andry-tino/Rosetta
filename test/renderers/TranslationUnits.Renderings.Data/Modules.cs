@@ -40,16 +40,16 @@ namespace Rosetta.Translation.Renderings.Data
             var classTranslationUnit = moduleTranslationUnit.AddClass("MyClass", "MyBaseClass");
 
             var method1 = classTranslationUnit.AddMethod(null, "Method1");
-            var method2 = classTranslationUnit.AddMethod("string", "Method2");
-            var method3 = classTranslationUnit.AddMethod("int", "Method3");
+            var method2 = classTranslationUnit.AddMethod(Lexems.StringType, "Method2");
+            var method3 = classTranslationUnit.AddMethod(Lexems.NumberType, "Method3");
             var method4 = classTranslationUnit.AddMethod(null, "Method4");
 
             method1.AddVariable(null, "var1");
-            method1.AddVariable("string", "var1");
+            method1.AddVariable(Lexems.StringType, "var1");
             method2.AddVariable(null, "var1");
-            method1.AddVariable("int", "var2");
-            method1.AddVariable("string", "var3");
-            method3.AddVariable("int", "var1");
+            method1.AddVariable(Lexems.NumberType, "var2");
+            method1.AddVariable(Lexems.StringType, "var3");
+            method3.AddVariable(Lexems.NumberType, "var1");
             method4.AddVariable(null, "var1");
 
             return moduleTranslationUnit.Translate();

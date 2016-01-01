@@ -90,7 +90,7 @@ namespace Rosetta.Translation.Renderings.Data
         public static VariableDeclarationTranslationUnit AddVariable(this MethodDeclarationTranslationUnit translationUnit, string type, string name)
         {
             var variableDeclaration = VariableDeclarationTranslationUnit.Create(
-                type != null ? TypeIdentifierTranslationUnit.Create("int") : null, IdentifierTranslationUnit.Create(name));
+                type != null ? TypeIdentifierTranslationUnit.Number : null, IdentifierTranslationUnit.Create(name));
             translationUnit.AddStatement(variableDeclaration);
             return variableDeclaration;
         }

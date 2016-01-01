@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethodWithReturn()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Public, "string", "EmptyMethodWithReturn");
+                VisibilityToken.Public, Lexems.StringType, "EmptyMethodWithReturn");
 
             return translationUnit.Translate();
         }
@@ -52,8 +52,8 @@ namespace Rosetta.Translation.Renderings.Data
                 null,
                 "SimpleMethod",
                 new ITranslationUnit[] {
-                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("int", "variable1"),
-                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("string", "variable2"),
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.NumberType, "variable1"),
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.StringType, "variable2"),
                     TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(null, "variable3")
                 });
 

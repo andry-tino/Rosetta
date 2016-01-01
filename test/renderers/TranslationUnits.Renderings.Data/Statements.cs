@@ -27,9 +27,9 @@ namespace Rosetta.Translation.Renderings.Data
                     TranslationUnitBuilder.BuildLiteralTranslationUnit(true),
                     new ITranslationUnit[]
                     {
-                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("int", "variable1",
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.NumberType, "variable1",
                         TranslationUnitBuilder.BuildExpressionTranslationUnit(OperatorToken.Addition, 12, 23)),
-                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("int", "variable2",
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.NumberType, "variable2",
                         TranslationUnitBuilder.BuildLiteralTranslationUnit(14))
                     });
 
@@ -43,14 +43,14 @@ namespace Rosetta.Translation.Renderings.Data
                     TranslationUnitBuilder.BuildLiteralTranslationUnit(true),
                     new ITranslationUnit[]
                     {
-                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("int", "variable1",
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.NumberType, "variable1",
                         TranslationUnitBuilder.BuildExpressionTranslationUnit(OperatorToken.Subtraction, 1, 2)),
-                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("string", "variable2",
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.StringType, "variable2",
                         TranslationUnitBuilder.BuildLiteralTranslationUnit("Hello"))
                     },
                     new ITranslationUnit[]
                     {
-                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit("int", "variable1",
+                    TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.NumberType, "variable1",
                         TranslationUnitBuilder.BuildExpressionTranslationUnit(OperatorToken.Multiplication, 100, 21))
                     });
 

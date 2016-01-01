@@ -118,7 +118,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string ClassWithSimpleMethods()
         {
             var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "ClassWithEmptyMethods", null)
+                VisibilityToken.Public, "ClassWithSimpleMethods", null)
                 as ClassDeclarationTranslationUnit;
 
             var method1 = translationUnit.AddEmptyMethod("Method1");
