@@ -6,6 +6,7 @@
 namespace Rosetta.Runner
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.IO;
 
@@ -18,10 +19,12 @@ namespace Rosetta.Runner
     /// </summary>
     internal class Program
     {
-        static string FilePath = null;             // File to convert
+        static string FilePath = null;         // File to convert
         static string OutputFolder = null;     // The output folder path for destination files
         static bool Verbose = false;           // Verbosity
         static bool Help = false;              // Show help message
+
+        static FileManager FileManager;
 
         /// <summary>
         /// Entry point
@@ -66,12 +69,20 @@ namespace Rosetta.Runner
                 // Setting output folder
                 OutputFolder = GetOutputFolder(OutputFolder);
 
+                // Initializing the file manager
+                FileManager = new FileManager(OutputFolder);
+                FileManager.FileConversionProvider = PerformConversion;
+
                 // We start by considering whether the user specified a file to convert
                 if (FilePath != null)
                 {
                     ConvertFile();
                     return;
                 }
+
+                // If we get to here, then basically nothing happens, the user needs to specify options
+                Console.WriteLine("No options specified.");
+                ShowHelp(options);
             }
             catch (Exception e)
             {
@@ -82,18 +93,13 @@ namespace Rosetta.Runner
 
         private static void ConvertFile()
         {
-            // Check file path
-            if (!FileManager.IsFilePathCorrect(FilePath))
+            FileManager.AddFile(FilePath);
+            var writtenFiles = FileManager.WriteAllFilesToDestination();
+
+            foreach (var file in writtenFiles)
             {
-                throw new InvalidOperationException("File path is not correct!");
+                Console.WriteLine("Wrote file {0}", file);
             }
-
-            string source = File.ReadAllText(FilePath);
-
-            string output = PerformConversion(source);
-            WriteToFile(output);
-
-            Console.WriteLine("Wrote file {0}", FilePath);
         }
 
         #region Helpers
@@ -103,11 +109,6 @@ namespace Rosetta.Runner
             var program = new ProgramWrapper(source);
 
             return program.Output;
-        }
-
-        private static void WriteToFile(string output)
-        {
-            FileManager.WriteToFile(output, FilePath);
         }
 
         private static string GetOutputFolder(string userInput)
