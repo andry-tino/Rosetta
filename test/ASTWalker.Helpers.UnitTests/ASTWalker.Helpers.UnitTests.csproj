@@ -117,6 +117,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ClassDeclarationTest.cs" />
+    <Compile Include="ConditionalStatementTest.cs" />
     <Compile Include="MethodDeclarationTest.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
