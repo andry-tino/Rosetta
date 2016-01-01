@@ -137,16 +137,6 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
-        public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
-        {
-            this.InvokeVariableDeclarationVisited(this, new WalkerEventArgs());
-            base.VisitVariableDeclaration(node);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         /// <remarks>
         /// This will cause an AST walker to be created, thus we don't need to go further deeper in the
         /// tree by visiting the node.
@@ -187,11 +177,6 @@ namespace Rosetta.AST
         /// <summary>
         /// 
         /// </summary>
-        public event WalkerEvent VariableDeclarationVisited;
-
-        /// <summary>
-        /// 
-        /// </summary>
         public event WalkerEvent MethodDeclarationVisited;
 
         /// <summary>
@@ -214,14 +199,6 @@ namespace Rosetta.AST
             if (this.PropertyDeclarationVisited != null)
             {
                 this.PropertyDeclarationVisited(sender, e);
-            }
-        }
-
-        private void InvokeVariableDeclarationVisited(object sender, WalkerEventArgs e)
-        {
-            if (this.VariableDeclarationVisited != null)
-            {
-                this.VariableDeclarationVisited(sender, e);
             }
         }
 
