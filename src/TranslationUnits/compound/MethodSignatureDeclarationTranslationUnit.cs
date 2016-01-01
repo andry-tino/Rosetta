@@ -7,7 +7,6 @@ namespace Rosetta.Translation
 {
     using System;
     using System.Linq;
-    using System.IO;
     using System.Collections.Generic;
 
     /// <summary>
@@ -16,8 +15,7 @@ namespace Rosetta.Translation
     public class MethodSignatureDeclarationTranslationUnit : MemberTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
         private ITranslationUnit returnType;
-
-        // Inner units
+        
         private IEnumerable<ITranslationUnit> arguments;
 
         /// <summary>

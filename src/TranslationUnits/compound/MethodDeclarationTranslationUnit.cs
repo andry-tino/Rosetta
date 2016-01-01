@@ -7,7 +7,6 @@ namespace Rosetta.Translation
 {
     using System;
     using System.Linq;
-    using System.IO;
     using System.Collections.Generic;
 
     /// <summary>
@@ -49,7 +48,8 @@ namespace Rosetta.Translation
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public new static MethodDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
+        public new static MethodDeclarationTranslationUnit Create(
+            VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
         {
             if (name == null)
             {
@@ -132,7 +132,7 @@ namespace Rosetta.Translation
 
         #endregion
 
-        private static bool ShouldRenderSemicolon(ITranslationUnit statement)
+        protected static bool ShouldRenderSemicolon(ITranslationUnit statement)
         {
             var type = statement.GetType();
 
