@@ -63,7 +63,7 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             MethodDeclarationTranslationUnit translationUnit =  MethodDeclarationTranslationUnit.Create(
-                visibility, returnType == null ? null : IdentifierTranslationUnit.Create(returnType),
+                visibility, returnType == null ? null : TypeIdentifierTranslationUnit.Create(returnType),
                 IdentifierTranslationUnit.Create(name));
 
             if (statements != null)
@@ -96,7 +96,7 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             return FieldDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
+                visibility, TypeIdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Rosetta.Translation.Renderings.Data
         public static ITranslationUnit BuildVariableDeclarationTranslationUnit(string type, string name, ITranslationUnit expression = null)
         {
             return VariableDeclarationTranslationUnit.Create(
-                type == null ? null : IdentifierTranslationUnit.Create(type), 
+                type == null ? null : TypeIdentifierTranslationUnit.Create(type), 
                 IdentifierTranslationUnit.Create(name),
                 expression);
         }
@@ -181,7 +181,7 @@ namespace Rosetta.Translation.Renderings.Data
         public static ITranslationUnit BuildExpressionTranslationUnit(string type, string variableName)
         {
             return CastExpressionTranslationUnit.Create(
-                IdentifierTranslationUnit.Create(type), 
+                TypeIdentifierTranslationUnit.Create(type), 
                 IdentifierTranslationUnit.Create(variableName));
         }
 

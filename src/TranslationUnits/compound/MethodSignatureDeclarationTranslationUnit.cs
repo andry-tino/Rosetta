@@ -56,7 +56,7 @@ namespace Rosetta.Translation
 
         protected ITranslationUnit ReturnType
         {
-            get { return this.returnType ?? IdentifierTranslationUnit.Void; }
+            get { return this.returnType ?? TypeIdentifierTranslationUnit.Void; }
             set { this.returnType = value; }
         }
 

@@ -79,13 +79,13 @@ namespace Rosetta.AST
 
             var methodDeclaration = MethodDeclarationTranslationUnit.Create(
                 helper.Visibility,
-                IdentifierTranslationUnit.Create(helper.ReturnType),
+                TypeIdentifierTranslationUnit.Create(helper.ReturnType),
                 IdentifierTranslationUnit.Create(helper.Name));
 
             foreach (TypedIdentifier parameter in helper.Parameters)
             {
                 methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    IdentifierTranslationUnit.Create(parameter.TypeName),
+                    TypeIdentifierTranslationUnit.Create(parameter.TypeName),
                     IdentifierTranslationUnit.Create(parameter.IdentifierName)));
             }
 

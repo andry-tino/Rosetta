@@ -117,6 +117,23 @@ namespace Rosetta.AST
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <remarks>
+        /// This will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
+        public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
+        {
+            var namespaceWalker = NamespaceASTWalker.Create(node);
+            var translationUnit = namespaceWalker.Walk();
+            this.program.AddContent(translationUnit);
+
+            this.InvokeNamespaceDeclarationVisited(this, new WalkerEventArgs());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
             this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
@@ -134,6 +151,11 @@ namespace Rosetta.AST
         /// <summary>
         /// 
         /// </summary>
+        public event WalkerEvent NamespaceDeclarationVisited;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public event WalkerEvent InterfaceDeclarationVisited;
 
         #endregion
@@ -143,6 +165,14 @@ namespace Rosetta.AST
             if (this.ClassDeclarationVisited != null)
             {
                 this.ClassDeclarationVisited(sender, e);
+            }
+        }
+
+        private void InvokeNamespaceDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.NamespaceDeclarationVisited != null)
+            {
+                this.NamespaceDeclarationVisited(sender, e);
             }
         }
 

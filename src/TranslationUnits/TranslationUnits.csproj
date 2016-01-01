@@ -71,11 +71,13 @@
     <Compile Include="simple\FieldDeclarationTranslationUnit.cs" />
     <Compile Include="simple\IdentifierTranslationUnit.cs" />
     <Compile Include="simple\LiteralTranslationUnit.cs" />
+    <Compile Include="simple\TypeIdentifierTranslationUnit.cs" />
     <Compile Include="simple\VariableDeclarationTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\OperatorToken.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="utilities\FormatOptions.cs" />
+    <Compile Include="utilities\TypesMapping.cs" />
     <Compile Include="utilities\VisibilityToken.cs" />
     <Compile Include="utilities\CodePerfect.cs" />
     <Compile Include="utilities\FormatWriter.cs" />

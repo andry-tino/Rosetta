@@ -42,23 +42,6 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public static IdentifierTranslationUnit Void
-        {
-            get { return Create(Lexems.VoidReturnType); }
-        }
-
-        /// <summary>
-        /// The nesting level.
-        /// </summary>
-        public int NestingLevel
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>

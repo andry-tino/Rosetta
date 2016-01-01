@@ -115,7 +115,7 @@ namespace Rosetta.AST
         {
             var fieldDeclaration = new FieldDeclaration(node);
             var fieldDeclarationTranslationUnit = FieldDeclarationTranslationUnit.Create(fieldDeclaration.Visibility, 
-                IdentifierTranslationUnit.Create(fieldDeclaration.Type), IdentifierTranslationUnit.Create(fieldDeclaration.Name));
+                TypeIdentifierTranslationUnit.Create(fieldDeclaration.Type), IdentifierTranslationUnit.Create(fieldDeclaration.Name));
             this.classDeclaration.AddMemberDeclaration(fieldDeclarationTranslationUnit);
 
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());

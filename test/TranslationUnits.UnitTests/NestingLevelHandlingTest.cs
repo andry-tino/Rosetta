@@ -87,7 +87,7 @@ namespace Rosetta.Translation.UnitTests
             TestInitialNestingLevel(translationUnit);
 
             var nestedTranslationUnit = VariableDeclarationTranslationUnit.Create(
-                IdentifierTranslationUnit.Create("int"),
+                TypeIdentifierTranslationUnit.Create("int"),
                 IdentifierTranslationUnit.Create("var1"));
 
             translationUnit.AddStatement(nestedTranslationUnit);

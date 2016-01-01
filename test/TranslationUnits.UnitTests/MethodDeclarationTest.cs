@@ -30,7 +30,7 @@ namespace Rosetta.Translation.UnitTests
         {
             VisibilityToken visibility = VisibilityToken.Public;
             ITranslationUnit translationUnit = MethodDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
+                visibility, TypeIdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
 
             string typescript = translationUnit.Translate();
             new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
@@ -46,7 +46,7 @@ namespace Rosetta.Translation.UnitTests
         {
             VisibilityToken visibility = VisibilityToken.Private;
             ITranslationUnit translationUnit = MethodDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
+                visibility, TypeIdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
 
             string typescript = translationUnit.Translate();
             new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
@@ -62,7 +62,7 @@ namespace Rosetta.Translation.UnitTests
         {
             VisibilityToken visibility = VisibilityToken.None;
             ITranslationUnit translationUnit = MethodDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
+                visibility, TypeIdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create("SampleMethod"));
 
             string typescript = translationUnit.Translate();
             new Utils.FileWriter(TestSuite.Context).WriteToFile(typescript,
