@@ -91,6 +91,123 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
             }
         }
 
+        /// <summary>
+        /// Tests that we can successfully retrieve the method parameters when there are no parameters.
+        /// </summary>
+        [TestMethod]
+        public void MethodWithNoParameters()
+        {
+            var source = @"
+                class Class1 {
+                    public void Method1() { }
+                }
+            ";
+
+            var syntaxTree = CSharpSyntaxTree.ParseText(source);
+            var semanticModel = CSharpCompilation.Create("Class").AddReferences(
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
+                syntaxTree).GetSemanticModel(syntaxTree);
+
+            SyntaxNode node = new NodeLocator(syntaxTree).LocateFirst(typeof(MethodDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(MethodDeclarationSyntax).Name));
+
+            MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;
+            MethodDeclaration methodDeclaration = new MethodDeclaration(methodDeclarationNode);
+
+            Assert.IsNotNull(methodDeclaration.Parameters, "Expecting list of parameters not to be null!");
+            Assert.AreEqual(0, methodDeclaration.Parameters.Count(), "Expecting no parameters!");
+        }
+
+        /// <summary>
+        /// Tests that we can successfully retrieve the method parameters.
+        /// </summary>
+        [TestMethod]
+        public void MethodWithParameters()
+        {
+            var source = @"
+                class Class1 {
+                    public void Method1(int param1) { }
+                    public void Method2(int param1, string param2) { }
+                    public void Method3(int param1, string param2, object param3) { }
+                    public void Method4(int param1, string param2, object param3, bool param4) { }
+                }
+            ";
+
+            var syntaxTree = CSharpSyntaxTree.ParseText(source);
+            var semanticModel = CSharpCompilation.Create("Class").AddReferences(
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
+                syntaxTree).GetSemanticModel(syntaxTree);
+
+            IEnumerable<SyntaxNode> nodes = new NodeLocator(syntaxTree).LocateAll(
+                typeof(MethodDeclarationSyntax));
+
+            foreach (SyntaxNode node in nodes)
+            {
+                Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                    typeof(MethodDeclarationSyntax).Name));
+                MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;
+
+                MethodDeclaration methodDeclaration = new MethodDeclaration(methodDeclarationNode);
+                Assert.IsNotNull(methodDeclaration.Parameters, "Expecting list of parameters not to be null!");
+                Assert.IsTrue(methodDeclaration.Parameters.Count() > 0, "Expecting parameters!");
+            }
+
+            // 1 parameter
+            MethodDeclaration method1Declaration = new MethodDeclaration(nodes.ElementAt(0) as MethodDeclarationSyntax);
+            Assert.AreEqual(1, method1Declaration.Parameters.Count(), "Expecting different number of paramters!");
+
+            // 2 parameters
+            MethodDeclaration method2Declaration = new MethodDeclaration(nodes.ElementAt(1) as MethodDeclarationSyntax);
+            Assert.AreEqual(2, method2Declaration.Parameters.Count(), "Expecting different number of paramters!");
+
+            // 3 parameters
+            MethodDeclaration method3Declaration = new MethodDeclaration(nodes.ElementAt(2) as MethodDeclarationSyntax);
+            Assert.AreEqual(3, method3Declaration.Parameters.Count(), "Expecting different number of paramters!");
+
+            // 4 parameters
+            MethodDeclaration method4Declaration = new MethodDeclaration(nodes.ElementAt(3) as MethodDeclarationSyntax);
+            Assert.AreEqual(4, method4Declaration.Parameters.Count(), "Expecting different number of paramters!");
+        }
+
+        /// <summary>
+        /// Tests that we can successfully retrieve the method parameters' type.
+        /// </summary>
+        [TestMethod]
+        public void MethodParametersAreOfCorrectType()
+        {
+            var source = @"
+                class Class1 {
+                    public void Method1(int param1) { }
+                    public void Method2(int param1, string param2) { }
+                    public void Method3(int param1, string param2, object param3) { }
+                    public void Method4(int param1, string param2, object param3, bool param4) { }
+                }
+            ";
+
+            var syntaxTree = CSharpSyntaxTree.ParseText(source);
+            var semanticModel = CSharpCompilation.Create("Class").AddReferences(
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
+                syntaxTree).GetSemanticModel(syntaxTree);
+
+            IEnumerable<SyntaxNode> nodes = new NodeLocator(syntaxTree).LocateAll(
+                typeof(MethodDeclarationSyntax));
+
+            foreach (SyntaxNode node in nodes)
+            {
+                Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                    typeof(MethodDeclarationSyntax).Name));
+                MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;
+
+                MethodDeclaration methodDeclaration = new MethodDeclaration(methodDeclarationNode);
+
+                foreach (var param in methodDeclaration.Parameters)
+                {
+                    Assert.IsInstanceOfType(param, typeof(TypedIdentifier), "Wrong parameter type!");
+                }
+            }
+        }
+
         #region Helpers
 
         private static void TestRetrieveMethodName(MethodDeclarationSyntax methodDeclarationNode, string expected)
