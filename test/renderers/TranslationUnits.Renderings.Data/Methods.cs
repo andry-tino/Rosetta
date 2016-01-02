@@ -59,5 +59,61 @@ namespace Rosetta.Translation.Renderings.Data
 
             return translationUnit.Translate();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("EmptyMethod1Argument.ts")]
+        public string RenderEmptyMethod1Argument()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
+                VisibilityToken.Public, null, "EmptyMethod1Argument") as MethodDeclarationTranslationUnit;
+
+            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1"), null, false));
+
+            return translationUnit.Translate();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("EmptyMethod2Arguments.ts")]
+        public string RenderEmptyMethod2Arguments()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
+                VisibilityToken.Public, null, "EmptyMethod2Arguments") as MethodDeclarationTranslationUnit;
+
+            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1"), null, false));
+            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.String, IdentifierTranslationUnit.Create("param2"), null, false));
+
+            return translationUnit.Translate();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("EmptyMethodManyArguments.ts")]
+        public string RenderEmptyMethodManyArguments()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
+                VisibilityToken.Public, null, "EmptyMethodManyArguments") as MethodDeclarationTranslationUnit;
+
+            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1"), null, false));
+            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.String, IdentifierTranslationUnit.Create("param2"), null, false));
+            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Boolean, IdentifierTranslationUnit.Create("param3"), null, false));
+            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Any, IdentifierTranslationUnit.Create("param4"), null, false));
+
+            return translationUnit.Translate();
+        }
     }
 }

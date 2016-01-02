@@ -14,11 +14,14 @@ namespace Rosetta.Translation
     /// </summary>
     public class ConstructorDeclarationTranslationUnit : MethodDeclarationTranslationUnit
     {
-        private IEnumerable<ITranslationUnit> initializers;
+        protected IEnumerable<ITranslationUnit> initializers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstructorDeclarationTranslationUnit"/> class.
         /// </summary>
+        /// <remarks>
+        /// Internal members protected for testability.
+        /// </remarks>
         protected ConstructorDeclarationTranslationUnit() : base()
         {
             this.initializers = new List<ITranslationUnit>();
@@ -34,6 +37,7 @@ namespace Rosetta.Translation
         public ConstructorDeclarationTranslationUnit(ConstructorDeclarationTranslationUnit other)
             : base(other)
         {
+            this.initializers = other.initializers;
         }
 
         /// <summary>

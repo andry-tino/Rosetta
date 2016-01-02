@@ -22,6 +22,9 @@ namespace Rosetta.Translation
         protected ITranslationUnit[] names;
         protected ITranslationUnit[] expressions; // Can be null
 
+        // This unit is also responsible for declaring variables as parameters/arguments
+        protected bool shouldRenderDeclarationKeyword;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="VariableDeclarationTranslationUnit"/> class.
         /// </summary>
@@ -39,6 +42,8 @@ namespace Rosetta.Translation
             this.type = null;
             this.names = null;
             this.expressions = null;
+
+            this.shouldRenderDeclarationKeyword = true;
         }
 
         /// <summary>
@@ -54,6 +59,8 @@ namespace Rosetta.Translation
             this.type = other.type;
             this.names = other.names;
             this.expressions = other.expressions;
+
+            this.shouldRenderDeclarationKeyword = other.shouldRenderDeclarationKeyword;
         }
 
         /// <summary>
@@ -63,7 +70,9 @@ namespace Rosetta.Translation
         /// <param name="name"></param>
         /// <param name="expressions"></param>
         /// <returns></returns>
-        public static VariableDeclarationTranslationUnit Create(ITranslationUnit type, ITranslationUnit[] names, ITranslationUnit[] expressions = null)
+        public static VariableDeclarationTranslationUnit Create(
+            ITranslationUnit type, ITranslationUnit[] names, ITranslationUnit[] expressions = null, 
+            bool shouldRenderDeclarationKeyword = true)
         {
             if (names == null)
             {
@@ -82,7 +91,8 @@ namespace Rosetta.Translation
             {
                 names = names,
                 type = type,
-                expressions = expressions
+                expressions = expressions,
+                shouldRenderDeclarationKeyword = shouldRenderDeclarationKeyword
             };
         }
 
@@ -93,7 +103,9 @@ namespace Rosetta.Translation
         /// <param name="name"></param>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public static VariableDeclarationTranslationUnit Create(ITranslationUnit type, ITranslationUnit name, ITranslationUnit expression = null)
+        public static VariableDeclarationTranslationUnit Create(
+            ITranslationUnit type, ITranslationUnit name, ITranslationUnit expression = null, 
+            bool shouldRenderDeclarationKeyword = true)
         {
             if (name == null)
             {
@@ -104,7 +116,8 @@ namespace Rosetta.Translation
             {
                 names = new ITranslationUnit[] { name },
                 type = type,
-                expressions = expression == null ? null : new ITranslationUnit[] { expression }
+                expressions = expression == null ? null : new ITranslationUnit[] { expression },
+                shouldRenderDeclarationKeyword = shouldRenderDeclarationKeyword
             };
         }
 
@@ -124,20 +137,20 @@ namespace Rosetta.Translation
             {
                 if (this.Expression == null)
                 {
-                    // var <name> : <type>
-                    writer.Write("{0} {1} {2} {3}",
+                    // [var ]<name> : <type>
+                    writer.Write("{0}{1} {2} {3}",
                         text => ClassDeclarationCodePerfect.RefineDeclaration(text),
-                        Lexems.VariableDeclaratorKeyword,
+                        this.shouldRenderDeclarationKeyword ? Lexems.VariableDeclaratorKeyword + " " : string.Empty,
                         this.names[0].Translate(),
                         Lexems.Colon,
                         this.type.Translate());
                 }
                 else
                 {
-                    // var <name> : <type> = <expression>
-                    writer.Write("{0} {1} {2} {3} {4} {5}",
+                    // [var ]<name> : <type> = <expression>
+                    writer.Write("{0}{1} {2} {3} {4} {5}",
                         text => ClassDeclarationCodePerfect.RefineDeclaration(text),
-                        Lexems.VariableDeclaratorKeyword,
+                        this.shouldRenderDeclarationKeyword ? Lexems.VariableDeclaratorKeyword + " " : string.Empty,
                         this.names[0].Translate(),
                         Lexems.Colon,
                         this.type.Translate(),

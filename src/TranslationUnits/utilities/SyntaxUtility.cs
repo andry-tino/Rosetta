@@ -51,7 +51,7 @@ namespace Rosetta.Translation
         public static string ToBracketEnclosedList(IEnumerable<string> items, bool includeSeparatorAtLast = false)
         {
             return string.Format("{1}{0}{2}", 
-                ToTokenSeparatedList(items, Lexems.Comma, includeSeparatorAtLast), 
+                ToTokenSeparatedList(items, Lexems.Comma + " ", includeSeparatorAtLast), 
                 Lexems.OpenRoundBracket, 
                 Lexems.CloseRoundBracket);
         }

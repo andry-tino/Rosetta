@@ -66,6 +66,14 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static TypeIdentifierTranslationUnit Any
+        {
+            get { return Create(Lexems.AnyType); }
+        }
+
+        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
