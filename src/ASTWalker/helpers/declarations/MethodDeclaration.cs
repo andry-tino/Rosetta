@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     using Rosetta.Translation;
 
     /// <summary>
-    /// Helper for accessing class in AST
+    /// Helper for accessing methods in AST
     /// </summary>
     internal class MethodDeclaration : Helper
     {

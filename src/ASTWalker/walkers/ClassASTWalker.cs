@@ -156,8 +156,11 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
+            var constructorWalker = ConstructorASTWalker.Create(node);
+            var translationUnit = constructorWalker.Walk();
+            this.classDeclaration.AddConstructorDeclaration(translationUnit);
+
             this.InvokeConstructorDeclarationVisited(this, new WalkerEventArgs());
-            base.VisitConstructorDeclaration(node);
         }
 
         #endregion
