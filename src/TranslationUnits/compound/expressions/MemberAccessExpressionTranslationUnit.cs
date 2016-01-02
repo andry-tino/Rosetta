@@ -11,7 +11,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing member access syntaxes.
     /// </summary>
-    public class MemberAccessExpressionTranslationUnit : ExpressionTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class MemberAccessExpressionTranslationUnit : ExpressionTranslationUnit, ICompoundTranslationUnit
     {
         private ITranslationUnit member;
         private MemberAccessMethod accessMethod;
@@ -70,7 +70,7 @@ namespace Rosetta.Translation
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
-        public string Translate()
+        public override string Translate()
         {
             FormatWriter writer = new FormatWriter()
             {

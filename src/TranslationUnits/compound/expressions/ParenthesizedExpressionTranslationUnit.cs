@@ -11,7 +11,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing parenthesis wrapped expressions.
     /// </summary>
-    public class ParenthesizedExpressionTranslationUnit : ExpressionTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class ParenthesizedExpressionTranslationUnit : ExpressionTranslationUnit, ICompoundTranslationUnit
     {
         private ITranslationUnit body;
 
@@ -67,7 +67,7 @@ namespace Rosetta.Translation
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
-        public string Translate()
+        public override string Translate()
         {
             FormatWriter writer = new FormatWriter()
             {

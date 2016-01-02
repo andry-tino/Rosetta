@@ -11,7 +11,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing binary expressions.
     /// </summary>
-    public class BinaryExpressionTranslationUnit : ExpressionTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class BinaryExpressionTranslationUnit : ExpressionTranslationUnit, ICompoundTranslationUnit
     {
         private OperatorToken operatorToken;
         private ITranslationUnit leftOperand;
@@ -78,7 +78,7 @@ namespace Rosetta.Translation
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
-        public string Translate()
+        public override string Translate()
         {
             FormatWriter writer = new FormatWriter()
             {

@@ -10,7 +10,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing expressions.
     /// </summary>
-    public class ExpressionTranslationUnit : NestedElementTranslationUnit
+    public class ExpressionTranslationUnit : NestedElementTranslationUnit, ITranslationUnit
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpressionTranslationUnit"/> class.
@@ -27,6 +27,15 @@ namespace Rosetta.Translation
         protected ExpressionTranslationUnit(int nestingLevel)
             : base(nestingLevel)
         {
+        }
+
+        /// <summary>
+        /// Override this.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string Translate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

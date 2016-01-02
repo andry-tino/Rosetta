@@ -165,6 +165,16 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string ReturnKeyword = "return";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ThrowKeyword = "throw";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string VariableDeclaratorKeyword = "var";
 
         /// <summary>

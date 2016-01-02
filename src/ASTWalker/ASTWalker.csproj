@@ -114,7 +114,9 @@
     <Compile Include="helpers\expressions\LiteralExpression.cs" />
     <Compile Include="helpers\expressions\ParenthesizedExpression.cs" />
     <Compile Include="helpers\Helper.cs" />
+    <Compile Include="helpers\statements\ReturnStatement.cs" />
     <Compile Include="helpers\statements\ConditionalStatement.cs" />
+    <Compile Include="helpers\statements\ThrowStatement.cs" />
     <Compile Include="helpers\types\Parameter.cs" />
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="utilities\VisibilityUtilities.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="walkers\NamespaceASTWalker.cs" />
     <Compile Include="walkers\ProgramASTWalker.cs" />
     <Compile Include="walkers\statements\ConditionalStatementASTWalker.cs" />
+    <Compile Include="walkers\statements\ExpressionStatementASTWalker.cs" />
     <Compile Include="walkers\statements\KeywordStatementASTWalker.cs" />
     <Compile Include="walkers\statements\LocalDeclarationStatementASTWalker.cs" />
     <Compile Include="walkers\statements\StatementASTWalker.cs" />

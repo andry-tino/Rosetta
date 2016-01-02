@@ -11,7 +11,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing cast expressions.
     /// </summary>
-    public class CastExpressionTranslationUnit : ExpressionTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
+    public class CastExpressionTranslationUnit : ExpressionTranslationUnit, ICompoundTranslationUnit
     {
         private ITranslationUnit type;
         private ITranslationUnit body;
@@ -74,7 +74,7 @@ namespace Rosetta.Translation
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
-        public string Translate()
+        public override string Translate()
         {
             FormatWriter writer = new FormatWriter()
             {

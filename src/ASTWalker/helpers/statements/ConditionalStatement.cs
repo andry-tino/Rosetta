@@ -11,7 +11,7 @@ namespace Rosetta.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     /// <summary>
-    /// Helper for accessing parenthesized expressions in AST.
+    /// Helper for accessing conditional statements.
     /// </summary>
     internal class ConditionalStatement : Helper
     {
