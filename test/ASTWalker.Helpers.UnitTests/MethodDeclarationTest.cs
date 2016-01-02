@@ -203,7 +203,8 @@ namespace Rosetta.ASTWalker.Helpers.UnitTests
 
                 foreach (var param in methodDeclaration.Parameters)
                 {
-                    Assert.IsInstanceOfType(param, typeof(TypedIdentifier), "Wrong parameter type!");
+                    Assert.IsNotNull(param, "Parameter should not be null!");
+                    Assert.IsInstanceOfType(param, typeof(Parameter), "Wrong parameter type!");
                 }
             }
         }

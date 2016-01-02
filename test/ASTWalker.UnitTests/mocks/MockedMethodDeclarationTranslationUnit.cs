@@ -29,5 +29,15 @@ namespace Rosetta.AST.UnitTests.Mocks
         {
             get { return this.statements; }
         }
+
+        public new IEnumerable<ITranslationUnit> Arguments
+        {
+            get { return this.arguments; }
+        }
+
+        public new ITranslationUnit ReturnType
+        {
+            get { return this.returnType; }
+        }
     }
 }

@@ -1,39 +1,40 @@
 ﻿/// <summary>
-/// TypedIdentifier.cs
+/// Parameter.cs
 /// Andrea Tino - 2015
 /// </summary>
 
 namespace Rosetta.AST.Helpers
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     /// <summary>
-    /// Helper for accessing type references in AST.
+    /// Helper for accessing parameter references in AST.
     /// </summary>
-    internal class TypedIdentifier : Helper
+    internal class Parameter : Helper
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TypedIdentifier"/> class.
+        /// Initializes a new instance of the <see cref="Parameter"/> class.
         /// </summary>
-        /// <param name="parameterSyntaxNode"></param>
-        public TypedIdentifier(ParameterSyntax parameterSyntaxNode)
-            : this(parameterSyntaxNode, null)
+        /// <param name="syntaxNode"></param>
+        public Parameter(ParameterSyntax syntaxNode)
+            : this(syntaxNode, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TypedIdentifier"/> class.
+        /// Initializes a new instance of the <see cref="Parameter"/> class.
         /// </summary>
-        /// <param name="parameterSyntaxNode"></param>
+        /// <param name="syntaxNode"></param>
         /// <param name="kind"></param>
         /// <remarks>
         /// When providing the semantic model, some properites will be devised from that.
         /// </remarks>
-        public TypedIdentifier(ParameterSyntax parameterSyntaxNode, SemanticModel semanticModel)
-            : base(parameterSyntaxNode, semanticModel)
+        public Parameter(ParameterSyntax syntaxNode, SemanticModel semanticModel)
+            : base(syntaxNode, semanticModel)
         {
         }
 
@@ -60,6 +61,14 @@ namespace Rosetta.AST.Helpers
                     simpleNameSyntaxNode.Identifier.ValueText :
                     this.ParameterSyntaxNode.Type.ToString();
             }
+        }
+
+        /// <summary>
+        /// Gets the equals expression if any.
+        /// </summary>
+        public IEnumerable<object> EqualsExpression
+        {
+            get { return null; }
         }
 
         private ParameterSyntax ParameterSyntaxNode

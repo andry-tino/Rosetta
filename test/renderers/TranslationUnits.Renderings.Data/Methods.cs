@@ -69,9 +69,9 @@ namespace Rosetta.Translation.Renderings.Data
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
                 VisibilityToken.Public, null, "EmptyMethod1Argument") as MethodDeclarationTranslationUnit;
-
-            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1"), null, false));
+            
+            translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
 
             return translationUnit.Translate();
         }
@@ -85,11 +85,11 @@ namespace Rosetta.Translation.Renderings.Data
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
                 VisibilityToken.Public, null, "EmptyMethod2Arguments") as MethodDeclarationTranslationUnit;
-
-            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1"), null, false));
-            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.String, IdentifierTranslationUnit.Create("param2"), null, false));
+            
+            translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
+            translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.String, IdentifierTranslationUnit.Create("param2")));
 
             return translationUnit.Translate();
         }
@@ -103,15 +103,15 @@ namespace Rosetta.Translation.Renderings.Data
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
                 VisibilityToken.Public, null, "EmptyMethodManyArguments") as MethodDeclarationTranslationUnit;
-
-            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1"), null, false));
-            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.String, IdentifierTranslationUnit.Create("param2"), null, false));
-            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.Boolean, IdentifierTranslationUnit.Create("param3"), null, false));
-            translationUnit.AddArgument(VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.Any, IdentifierTranslationUnit.Create("param4"), null, false));
+            
+            translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
+            translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.String, IdentifierTranslationUnit.Create("param2")));
+            translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Boolean, IdentifierTranslationUnit.Create("param3")));
+            translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Any, IdentifierTranslationUnit.Create("param4")));
 
             return translationUnit.Translate();
         }

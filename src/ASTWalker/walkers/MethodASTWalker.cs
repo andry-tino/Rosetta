@@ -82,7 +82,7 @@ namespace Rosetta.AST
                 TypeIdentifierTranslationUnit.Create(helper.ReturnType),
                 IdentifierTranslationUnit.Create(helper.Name));
 
-            foreach (TypedIdentifier parameter in helper.Parameters)
+            foreach (Parameter parameter in helper.Parameters)
             {
                 methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                     TypeIdentifierTranslationUnit.Create(parameter.TypeName),

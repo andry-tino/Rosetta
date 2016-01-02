@@ -47,7 +47,7 @@ namespace Rosetta.Translation
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public new static ConstructorDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name)
+        public static ConstructorDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name)
         {
             if (name == null)
             {

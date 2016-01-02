@@ -12,11 +12,14 @@ namespace Rosetta.Translation
     /// <summary>
     /// Class describing a method signature (no body).
     /// </summary>
+    /// <remarks>
+    /// Internal members protected for testability.
+    /// </remarks>
     public class MethodSignatureDeclarationTranslationUnit : MemberTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
-        private ITranslationUnit returnType;
+        protected ITranslationUnit returnType;
         
-        private IEnumerable<ITranslationUnit> arguments;
+        protected IEnumerable<ITranslationUnit> arguments;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.

@@ -9,11 +9,11 @@ namespace Rosetta.Translation
 
     /// <summary>
     /// Translation unit for rendering arguments in methods, functions.
+    /// Acts like a wrapper to <see cref="VariableDeclarationTranslationUnit"/>.
     /// </summary>
     public class ArgumentDefinitionTranslationUnit : ITranslationUnit
     {
-        private ITranslationUnit typeName;
-        private ITranslationUnit name;
+        private VariableDeclarationTranslationUnit variableDeclaration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArgumentDefinitionTranslationUnit"/> class.
@@ -22,8 +22,7 @@ namespace Rosetta.Translation
         /// <param name="name"></param>
         private ArgumentDefinitionTranslationUnit(ITranslationUnit typeName, ITranslationUnit name)
         {
-            this.typeName = typeName;
-            this.name = name;
+            this.variableDeclaration = VariableDeclarationTranslationUnit.Create(typeName, name, null, false);
         }
 
         /// <summary>
@@ -52,7 +51,8 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public string Translate()
         {
-            return string.Format("{0} {1}", this.typeName.Translate(), this.name.Translate());
+            return string.Format("{0}", 
+                this.variableDeclaration.Translate());
         }
     }
 }

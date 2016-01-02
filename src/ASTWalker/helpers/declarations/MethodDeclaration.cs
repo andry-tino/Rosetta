@@ -20,7 +20,7 @@ namespace Rosetta.AST.Helpers
     internal class MethodDeclaration : Helper
     {
         // Cached values
-        private IEnumerable<TypedIdentifier> parameters;
+        private IEnumerable<Parameter> parameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclaration"/> class.
@@ -75,14 +75,14 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the list of parameters.
         /// </summary>
-        public IEnumerable<TypedIdentifier> Parameters
+        public IEnumerable<Parameter> Parameters
         {
             get
             {
                 if (this.parameters == null)
                 {
                     this.parameters = this.MethodDeclarationSyntaxNode.ParameterList.Parameters.Select(
-                        (ParameterSyntax p) => new TypedIdentifier(p)).ToList();
+                        (ParameterSyntax p) => new Parameter(p)).ToList();
                 }
 
                 return this.parameters;
