@@ -24,11 +24,23 @@ namespace Rosetta.Translation
                 return Lexems.StringType;
             }
 
+            if (type == "int")
+            {
+                return Lexems.NumberType;
+            }
             if (type == typeof(int).Name)
             {
                 return Lexems.NumberType;
             }
+            if (type == "double")
+            {
+                return Lexems.NumberType;
+            }
             if (type == typeof(double).Name)
+            {
+                return Lexems.NumberType;
+            }
+            if (type == "float")
             {
                 return Lexems.NumberType;
             }
