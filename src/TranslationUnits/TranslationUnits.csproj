@@ -51,6 +51,7 @@
     <Compile Include="compound\ModuleTranslationUnit.cs" />
     <Compile Include="compound\ProgramTranslationUnit.cs" />
     <Compile Include="compound\statements\ConditionalStatementTranslationUnit.cs" />
+    <Compile Include="compound\statements\KeywordStatementTranslationUnit.cs" />
     <Compile Include="compound\statements\LocalDeclarationStatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementsGroupTranslationUnit.cs" />

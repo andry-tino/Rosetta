@@ -16,6 +16,8 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         public class Statements
         {
+            #region Conditional
+
             /// <summary>
             /// 
             /// </summary>
@@ -56,6 +58,34 @@ namespace Rosetta.Translation.Renderings.Data
 
                 return translationUnit.Translate();
             }
+
+            #endregion
+
+            #region Keyword
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("BreakStatement.ts")]
+            public string RenderBreakStatement()
+            {
+                ITranslationUnit translationUnit = TranslationUnitBuilder.BuildBreakStatementTranslationUnit();
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("ContinueStatement.ts")]
+            public string RenderContinueStatement()
+            {
+                ITranslationUnit translationUnit = TranslationUnitBuilder.BuildContinueStatementTranslationUnit();
+                return translationUnit.Translate();
+            }
+
+            #endregion
         }
     }
 }

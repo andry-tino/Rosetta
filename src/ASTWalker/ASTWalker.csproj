@@ -136,6 +136,7 @@
     <Compile Include="walkers\NamespaceASTWalker.cs" />
     <Compile Include="walkers\ProgramASTWalker.cs" />
     <Compile Include="walkers\statements\ConditionalStatementASTWalker.cs" />
+    <Compile Include="walkers\statements\KeywordStatementASTWalker.cs" />
     <Compile Include="walkers\statements\LocalDeclarationStatementASTWalker.cs" />
     <Compile Include="walkers\statements\StatementASTWalker.cs" />
     <Compile Include="walkers\statements\StatementASTWalkerBuilder.cs" />

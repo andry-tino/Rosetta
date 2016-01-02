@@ -42,8 +42,10 @@ namespace Rosetta.AST
             switch (this.node.Kind())
             {
                 case SyntaxKind.BreakStatement:
-                case SyntaxKind.CheckedStatement:
                 case SyntaxKind.ContinueStatement:
+                    return KeywordStatementASTWalker.Create(this.node);
+
+                case SyntaxKind.CheckedStatement:
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.EmptyStatement:
                 case SyntaxKind.ExpressionStatement:
@@ -66,6 +68,8 @@ namespace Rosetta.AST
                     return LocalDeclarationStatementASTWalker.Create(this.node);
 
                 case SyntaxKind.ReturnStatement:
+                    return null;
+
                 case SyntaxKind.SwitchStatement:
                 case SyntaxKind.ThrowStatement:
                 case SyntaxKind.TryStatement:

@@ -267,6 +267,24 @@ namespace Rosetta.Translation.Renderings.Data
             return translationUnit;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static ITranslationUnit BuildBreakStatementTranslationUnit()
+        {
+            return KeywordStatementTranslationUnit.Break;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static ITranslationUnit BuildContinueStatementTranslationUnit()
+        {
+            return KeywordStatementTranslationUnit.Continue;
+        }
+
         #endregion
     }
 }
