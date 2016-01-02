@@ -55,6 +55,17 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
+        /// Gets render methods for <see cref="Constructors"/>.
+        /// </summary>
+        public static Type ConstructorsMethodsProvider
+        {
+            get
+            {
+                return typeof(Constructors);
+            }
+        }
+
+        /// <summary>
         /// Gets render methods for <see cref="Members"/>.
         /// </summary>
         public static Type MembersMethodsProvider

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes.cs" />
+    <Compile Include="Constructors.cs" />
     <Compile Include="Expressions.cs" />
     <Compile Include="Members.cs" />
     <Compile Include="Methods.cs" />
