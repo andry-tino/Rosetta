@@ -87,6 +87,9 @@ namespace Rosetta.Runner
             catch (Exception e)
             {
                 Console.WriteLine("An error occurred: {0}!", e.Message);
+#if DEBUG
+                Console.WriteLine(e.StackTrace);
+#endif
                 return;
             }
         }
