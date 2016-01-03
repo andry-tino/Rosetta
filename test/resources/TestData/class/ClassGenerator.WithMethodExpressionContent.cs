@@ -38,6 +38,31 @@ namespace Rosetta.Tests
                                 int initVariable1 = 1 + 4;
                                 int initVariable2 = 2 * 4 + (3 / 2);
                             }}
+
+                            private void Method3() {{
+                                bool initVariable1 = !false;
+                                bool initVariable2 = !true;
+                            }}
+
+                            private void Method4() {{
+                                int initVariable1 = 1++;
+                                int initVariable2 = ++1;
+                                int initVariable1 = 1--;
+                                int initVariable2 = --1;
+                            }}
+
+                            private void Method5() {{
+                                int initVariable1 = (1);
+                            }}
+
+                            private void Method6() {{
+                                bool initVariable1 = true == false;
+                                bool initVariable2 = true != false;
+                                bool initVariable3 = 1 == 2;
+                                bool initVariable4 = 1 != 2;
+                                bool initVariable5 = ""hello"" == ""Hello"";
+                                bool initVariable6 = ""hello"" != ""Hello"";
+                            }}
                         }}
                     }}",
                 this.Name);

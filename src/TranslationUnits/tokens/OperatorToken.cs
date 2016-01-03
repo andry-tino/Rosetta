@@ -45,6 +45,21 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        Equals,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NotEquals,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LogicalNot,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Undefined
     }
 }

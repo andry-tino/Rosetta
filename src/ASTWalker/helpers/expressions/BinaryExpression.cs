@@ -53,6 +53,10 @@ namespace Rosetta.AST.Helpers
                         return OperatorToken.Multiplication;
                     case SyntaxKind.DivideExpression:
                         return OperatorToken.Divide;
+                    case SyntaxKind.EqualsExpression:
+                        return OperatorToken.Equals;
+                    case SyntaxKind.NotEqualsExpression:
+                        return OperatorToken.NotEquals;
                 }
 
                 return OperatorToken.Undefined;

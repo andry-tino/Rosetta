@@ -13,7 +13,9 @@ namespace Rosetta.AST.Helpers
     using Rosetta.Translation;
 
     /// <summary>
-    /// Builder responsible for creating the correct <see cref="ITranslationUnit"/> from an expression syntax node.
+    /// Builder responsible for creating the correct <see cref="ITranslationUnit"/> 
+    /// from an expression syntax node.
+    /// This is the main entry point for whatever AST walker which needs to create an expression.
     /// </summary>
     internal sealed class ExpressionTranslationUnitBuilder
     {
@@ -42,12 +44,30 @@ namespace Rosetta.AST.Helpers
                 case SyntaxKind.MultiplyExpression:
                 case SyntaxKind.DivideExpression:
                 case SyntaxKind.SubtractExpression:
+                case SyntaxKind.EqualsExpression:
+                case SyntaxKind.NotEqualsExpression:
                     var binaryExpression = this.node as BinaryExpressionSyntax;
                     if (binaryExpression == null)
                     {
                         throw new InvalidCastException("Unable to correctly cast expected binary expression to binary expression!");
                     }
                     return BuildBinaryExpressionTranslationUnit(binaryExpression);
+
+                // Unary expressions
+                case SyntaxKind.PostIncrementExpression:
+                case SyntaxKind.PreIncrementExpression:
+                case SyntaxKind.PostDecrementExpression:
+                case SyntaxKind.PreDecrementExpression:
+                case SyntaxKind.LogicalNotExpression:
+                    var prefixUnaryExpression = this.node as PrefixUnaryExpressionSyntax;
+                    var postfixUnaryExpression = this.node as PostfixUnaryExpressionSyntax;
+                    if (prefixUnaryExpression == null && postfixUnaryExpression == null)
+                    {
+                        throw new InvalidCastException("Unable to correctly cast expected unary expression to unary expression!");
+                    }
+                    return prefixUnaryExpression != null ? 
+                        BuildUnaryExpressionTranslationUnit(prefixUnaryExpression) : 
+                        BuildUnaryExpressionTranslationUnit(postfixUnaryExpression);
 
                 // Literal expressions
                 case SyntaxKind.NumericLiteralExpression:
@@ -94,6 +114,12 @@ namespace Rosetta.AST.Helpers
                 case SyntaxKind.SubtractExpression:
                     token = OperatorToken.Subtraction;
                     break;
+                case SyntaxKind.EqualsExpression:
+                    token = OperatorToken.Equals;
+                    break;
+                case SyntaxKind.NotEqualsExpression:
+                    token = OperatorToken.NotEquals;
+                    break;
             }
 
             if (token == OperatorToken.Undefined)
@@ -106,6 +132,59 @@ namespace Rosetta.AST.Helpers
             ITranslationUnit rightHandOperand = new ExpressionTranslationUnitBuilder(binaryExpressionHelper.RightHandOperand).Build();
 
             return BinaryExpressionTranslationUnit.Create(leftHandOperand, rightHandOperand, token);
+        }
+
+        private static ITranslationUnit BuildUnaryExpressionTranslationUnit(PrefixUnaryExpressionSyntax expression)
+        {
+            OperatorToken token = OperatorToken.Undefined;
+
+            switch (expression.Kind())
+            {
+                case SyntaxKind.PreIncrementExpression:
+                    token = OperatorToken.Increment;
+                    break;
+                case SyntaxKind.PreDecrementExpression:
+                    token = OperatorToken.Decrement;
+                    break;
+                case SyntaxKind.LogicalNotExpression:
+                    token = OperatorToken.LogicalNot;
+                    break;
+            }
+
+            if (token == OperatorToken.Undefined)
+            {
+                throw new InvalidOperationException("Unary operator could not be detected!");
+            }
+
+            UnaryExpression unaryExpressionHelper = new UnaryExpression(expression);
+            ITranslationUnit operand = new ExpressionTranslationUnitBuilder(unaryExpressionHelper.Operand).Build();
+
+            return UnaryExpressionTranslationUnit.Create(operand, token, UnaryExpressionTranslationUnit.UnaryPosition.Prefix);
+        }
+
+        private static ITranslationUnit BuildUnaryExpressionTranslationUnit(PostfixUnaryExpressionSyntax expression)
+        {
+            OperatorToken token = OperatorToken.Undefined;
+
+            switch (expression.Kind())
+            {
+                case SyntaxKind.PostIncrementExpression:
+                    token = OperatorToken.Increment;
+                    break;
+                case SyntaxKind.PostDecrementExpression:
+                    token = OperatorToken.Decrement;
+                    break;
+            }
+
+            if (token == OperatorToken.Undefined)
+            {
+                throw new InvalidOperationException("Unary operator could not be detected!");
+            }
+
+            UnaryExpression unaryExpressionHelper = new UnaryExpression(expression);
+            ITranslationUnit operand = new ExpressionTranslationUnitBuilder(unaryExpressionHelper.Operand).Build();
+
+            return UnaryExpressionTranslationUnit.Create(operand, token, UnaryExpressionTranslationUnit.UnaryPosition.Postfix);
         }
 
         private static ITranslationUnit BuildLiteralExpressionTranslationUnit(LiteralExpressionSyntax expression)

@@ -113,6 +113,7 @@
     <Compile Include="helpers\expressions\ExpressionTranslationUnitBuilder.cs" />
     <Compile Include="helpers\expressions\LiteralExpression.cs" />
     <Compile Include="helpers\expressions\ParenthesizedExpression.cs" />
+    <Compile Include="helpers\expressions\UnaryExpression.cs" />
     <Compile Include="helpers\Helper.cs" />
     <Compile Include="helpers\statements\ReturnStatement.cs" />
     <Compile Include="helpers\statements\ConditionalStatement.cs" />

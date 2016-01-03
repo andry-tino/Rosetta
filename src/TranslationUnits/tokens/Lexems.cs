@@ -85,6 +85,21 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string LogicalEquals = "==";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string LogicalNotEquals = "!=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string LogicalNot = "!";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string EqualsSign = "=";
 
         /// <summary>

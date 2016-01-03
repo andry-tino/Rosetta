@@ -67,6 +67,12 @@ namespace Rosetta.Translation
                     return Lexems.PlusPlus;
                 case OperatorToken.Decrement:
                     return Lexems.MinusMinus;
+                case OperatorToken.Equals:
+                    return Lexems.LogicalEquals;
+                case OperatorToken.NotEquals:
+                    return Lexems.LogicalNotEquals;
+                case OperatorToken.LogicalNot:
+                    return Lexems.LogicalNot;
                 default:
                     return string.Empty;
             }
