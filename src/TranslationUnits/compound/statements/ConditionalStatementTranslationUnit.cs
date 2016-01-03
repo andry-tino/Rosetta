@@ -185,7 +185,7 @@ namespace Rosetta.Translation
             {
                 throw new ArgumentNullException(nameof(testExpression));
             }
-            if (testExpression as ExpressionTranslationUnit != null)
+            if (testExpression as ExpressionTranslationUnit == null)
             {
                 throw new ArgumentException(nameof(testExpression), "Expected an expression!");
             }
