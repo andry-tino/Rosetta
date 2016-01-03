@@ -45,6 +45,18 @@ namespace Rosetta.Tests
                                     string initVariable3 = ""Hello"";
                                 }}
                             }}
+
+                            public bool Method3() {{
+                                return true;
+                            }}
+
+                            public bool Method4() {{
+                                return false;
+                            }}
+
+                            public void Method5() {{
+                                throw null;
+                            }}
                         }}
                     }}",
                 this.Name);

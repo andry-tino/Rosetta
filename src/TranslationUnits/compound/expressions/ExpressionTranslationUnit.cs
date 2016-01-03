@@ -9,6 +9,7 @@ namespace Rosetta.Translation
 
     /// <summary>
     /// Class describing expressions.
+    /// TODO: Remove inherit from <see cref="NestedElementTranslationUnit"/>.
     /// </summary>
     public class ExpressionTranslationUnit : NestedElementTranslationUnit, ITranslationUnit
     {

@@ -16,8 +16,6 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         public class Statements
         {
-            #region Conditional
-
             /// <summary>
             /// 
             /// </summary>
@@ -58,11 +56,16 @@ namespace Rosetta.Translation.Renderings.Data
 
                 return translationUnit.Translate();
             }
+        }
+    }
 
-            #endregion
-
-            #region Keyword
-
+    namespace KeywordStatements
+    {
+        /// <summary>
+        /// Conditional statements.
+        /// </summary>
+        public class Statements
+        {
             /// <summary>
             /// 
             /// </summary>
@@ -84,8 +87,39 @@ namespace Rosetta.Translation.Renderings.Data
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildContinueStatementTranslationUnit();
                 return translationUnit.Translate();
             }
+        }
+    }
 
-            #endregion
+    namespace ExpressionStatements
+    {
+        /// <summary>
+        /// Conditional statements.
+        /// </summary>
+        public class Statements
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("ReturnStatement.ts")]
+            public string RenderReturnStatement()
+            {
+                ITranslationUnit translationUnit = TranslationUnitBuilder.BuildReturnStatementTranslationUnit(
+                    TranslationUnitBuilder.BuildLiteralTranslationUnit(true));
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("ThrowStatement.ts")]
+            public string RenderThrowStatement()
+            {
+                ITranslationUnit translationUnit = TranslationUnitBuilder.BuildThrowStatementTranslationUnit(
+                    TranslationUnitBuilder.BuildNullLiteralTranslationUnit());
+                return translationUnit.Translate();
+            }
         }
     }
 }

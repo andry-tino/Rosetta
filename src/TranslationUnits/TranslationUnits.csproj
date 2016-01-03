@@ -73,7 +73,7 @@
     <Compile Include="simple\ArgumentDefinitionTranslationUnit.cs" />
     <Compile Include="simple\FieldDeclarationTranslationUnit.cs" />
     <Compile Include="simple\IdentifierTranslationUnit.cs" />
-    <Compile Include="simple\LiteralTranslationUnit.cs" />
+    <Compile Include="compound\expressions\LiteralTranslationUnit.cs" />
     <Compile Include="simple\TypeIdentifierTranslationUnit.cs" />
     <Compile Include="simple\VariableDeclarationTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />

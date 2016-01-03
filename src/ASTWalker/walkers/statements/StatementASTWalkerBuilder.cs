@@ -68,10 +68,10 @@ namespace Rosetta.AST
                     return LocalDeclarationStatementASTWalker.Create(this.node);
 
                 case SyntaxKind.ReturnStatement:
-                    return null;
+                case SyntaxKind.ThrowStatement:
+                    return ExpressionStatementASTWalker.Create(this.node);
 
                 case SyntaxKind.SwitchStatement:
-                case SyntaxKind.ThrowStatement:
                 case SyntaxKind.TryStatement:
                 case SyntaxKind.UncheckedStatement:
                 case SyntaxKind.UsingStatement:

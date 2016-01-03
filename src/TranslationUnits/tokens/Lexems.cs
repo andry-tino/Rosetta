@@ -230,6 +230,11 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string NullKeyword = "null";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string NumberType = "number";
 
         /// <summary>

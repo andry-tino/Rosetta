@@ -10,15 +10,15 @@ namespace Rosetta.Translation
     /// <summary>
     /// Translation unit for literals.
     /// </summary>
-    public class LiteralTranslationUnit<T> : ITranslationUnit
+    public class LiteralTranslationUnit<T> : ExpressionTranslationUnit
     {
-        private T literalValue;
+        protected T literalValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LiteralTranslationUnit(T)"/> class.
         /// </summary>
         /// <param name="name"></param>
-        private LiteralTranslationUnit(T value)
+        protected LiteralTranslationUnit(T value)
         {
             this.literalValue = value;
         }
@@ -37,7 +37,7 @@ namespace Rosetta.Translation
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
-        public string Translate()
+        public override string Translate()
         {
             string value = this.literalValue.ToString();
 
@@ -52,6 +52,46 @@ namespace Rosetta.Translation
             {
                 value = string.Format("{0}", bool.Parse(value) ? Lexems.TrueKeyword : Lexems.FalseKeyword);
             }
+
+            return value;
+        }
+    }
+
+    /// <summary>
+    /// Translation unit for literals when we want to directly assign them.
+    /// </summary>
+    public class LiteralTranslationUnit : LiteralTranslationUnit<string>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LiteralTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        private LiteralTranslationUnit(string value) :
+            base(value)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public new static LiteralTranslationUnit Create(string value)
+        {
+            return new LiteralTranslationUnit(value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static LiteralTranslationUnit Null
+        {
+            get { return Create(Lexems.NullKeyword); }
+        }
+
+        public override string Translate()
+        {
+            string value = string.Format("{0}", this.literalValue);
 
             return value;
         }

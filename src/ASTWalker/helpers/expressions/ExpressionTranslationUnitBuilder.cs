@@ -91,6 +91,11 @@ namespace Rosetta.AST.Helpers
                         throw new InvalidCastException("Unable to correctly cast expected parenthesized expression to parenthesized expression!");
                     }
                     return BuildParenthesizedExpressionTranslationUnit(parenthesizedExpression);
+
+                // Instance expressions
+                case SyntaxKind.ThisExpression:
+                case SyntaxKind.BaseExpression:
+                    return null;
             }
 
             return null;
@@ -199,9 +204,15 @@ namespace Rosetta.AST.Helpers
                 case SyntaxKind.StringLiteralToken:
                     return LiteralTranslationUnit<string>.Create((string)token.Value);
 
+                case SyntaxKind.CharacterLiteralExpression:
+                    return null;
+
                 case SyntaxKind.TrueKeyword:
                 case SyntaxKind.FalseKeyword:
                     return LiteralTranslationUnit<bool>.Create((bool)token.Value);
+
+                case SyntaxKind.NullKeyword:
+                    return LiteralTranslationUnit.Null;
             }
 
             return null;

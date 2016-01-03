@@ -30,6 +30,51 @@ namespace Rosetta.Translation.Renderings.Data
         }
     }
 
+    namespace LiteralExpressions
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public class Expressions
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("LiteralExpression.Integer.ts")]
+            public string LiteralExpressionInteger()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildLiteralTranslationUnit(1);
+
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("LiteralExpression.Boolean.ts")]
+            public string LiteralExpressionBoolean()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildLiteralTranslationUnit(true);
+
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("LiteralExpression.Null.ts")]
+            public string LiteralExpressionNull()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildNullLiteralTranslationUnit();
+
+                return translationUnit.Translate();
+            }
+        }
+    }
+
     namespace UnaryExpressions
     {
         /// <summary>

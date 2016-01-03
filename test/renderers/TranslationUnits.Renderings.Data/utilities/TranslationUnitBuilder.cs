@@ -160,6 +160,16 @@ namespace Rosetta.Translation.Renderings.Data
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildNullLiteralTranslationUnit()
+        {
+            return LiteralTranslationUnit.Null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -283,6 +293,24 @@ namespace Rosetta.Translation.Renderings.Data
         public static ITranslationUnit BuildContinueStatementTranslationUnit()
         {
             return KeywordStatementTranslationUnit.Continue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static ITranslationUnit BuildReturnStatementTranslationUnit(ITranslationUnit expression)
+        {
+            return ExpressionStatementTranslationUnit.CreateReturn(expression as ExpressionTranslationUnit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static ITranslationUnit BuildThrowStatementTranslationUnit(ITranslationUnit expression)
+        {
+            return ExpressionStatementTranslationUnit.CreateThrow(expression as ExpressionTranslationUnit);
         }
 
         #endregion
