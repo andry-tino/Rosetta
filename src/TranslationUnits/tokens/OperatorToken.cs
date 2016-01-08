@@ -20,7 +20,17 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        AdditionAssignment,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Subtraction,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SubtractionAssignment,
 
         /// <summary>
         /// 
@@ -30,7 +40,27 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        MultiplicationAssignment,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Divide,
+
+        // <summary>
+        /// 
+        /// </summary>
+        DivideAssignment,
+
+        // <summary>
+        /// 
+        /// </summary>
+        Modulo,
+
+        // <summary>
+        /// 
+        /// </summary>
+        ModuloAssignment,
 
         /// <summary>
         /// 
@@ -46,6 +76,61 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         Equals,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LogicalEquals,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        And,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AndAssignment,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Or,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        OrAssignment,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Xor,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        XorAssignment,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LeftShift,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LeftShiftAssignment,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RightShift,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RightShiftAssignment,
 
         /// <summary>
         /// 

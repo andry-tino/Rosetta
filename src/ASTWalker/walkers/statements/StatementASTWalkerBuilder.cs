@@ -10,6 +10,8 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Helpers;
+
     /// <summary>
     /// Builds the appropriate statement AST walker.
     /// </summary>
@@ -48,7 +50,8 @@ namespace Rosetta.AST
                 case SyntaxKind.CheckedStatement:
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.EmptyStatement:
-                case SyntaxKind.ExpressionStatement:
+                    return null;
+
                 case SyntaxKind.FixedStatement:
                 case SyntaxKind.ForEachStatement:
                 case SyntaxKind.ForStatement:
@@ -67,6 +70,7 @@ namespace Rosetta.AST
                 case SyntaxKind.LocalDeclarationStatement:
                     return LocalDeclarationStatementASTWalker.Create(this.node);
 
+                case SyntaxKind.ExpressionStatement:
                 case SyntaxKind.ReturnStatement:
                 case SyntaxKind.ThrowStatement:
                     return ExpressionStatementASTWalker.Create(this.node);
@@ -87,6 +91,14 @@ namespace Rosetta.AST
             }
 
             throw new InvalidOperationException("Building path reached an invalid non decidible state!");
+        }
+
+        private IASTWalker BuildExpressionStatementTranslationUnit(CSharpSyntaxNode node)
+        {
+            var expressionStatementNode = node as ExpressionStatementSyntax;
+            var expressionTranslationUnit = new ExpressionTranslationUnitBuilder(expressionStatementNode.Expression).Build();
+
+            return null;
         }
     }
 }

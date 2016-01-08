@@ -30,6 +30,8 @@ namespace Rosetta.Tests
                     {{
                         class {0}
                         {{
+                            private int member1;
+
                             public void Method1() {{
                                 if (true) {{
                                     string initVariable1 = ""Hello"";
@@ -56,6 +58,10 @@ namespace Rosetta.Tests
 
                             public void Method5() {{
                                 throw null;
+                            }}
+
+                            public void Method6() {{
+                                this.member1 = 1;
                             }}
                         }}
                     }}",

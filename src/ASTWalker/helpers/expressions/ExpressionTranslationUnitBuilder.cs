@@ -83,6 +83,14 @@ namespace Rosetta.AST.Helpers
                     }
                     return BuildLiteralExpressionTranslationUnit(literalExpression);
 
+                case SyntaxKind.IdentifierName:
+                    var identifierNameExpression = this.node as IdentifierNameSyntax;
+                    if (identifierNameExpression == null)
+                    {
+                        throw new InvalidCastException("Unable to correctly cast expected identifier name expression to identifer name expression!");
+                    }
+                    return BuildIdentifierNameExpressionTranslationUnit(identifierNameExpression);
+
                 // Parenthetical
                 case SyntaxKind.ParenthesizedExpression:
                     var parenthesizedExpression = this.node as ParenthesizedExpressionSyntax;
@@ -92,10 +100,33 @@ namespace Rosetta.AST.Helpers
                     }
                     return BuildParenthesizedExpressionTranslationUnit(parenthesizedExpression);
 
-                // Instance expressions
-                case SyntaxKind.ThisExpression:
-                case SyntaxKind.BaseExpression:
-                    return null;
+                // Member access expressions
+                case SyntaxKind.SimpleMemberAccessExpression:
+                    var memberAccessExpression = this.node as MemberAccessExpressionSyntax;
+                    if (memberAccessExpression == null)
+                    {
+                        throw new InvalidCastException("Unable to correctly cast expected member access expression to member access expression!");
+                    }
+                    return BuildMemberAccessExpressionTranslationUnit(memberAccessExpression);
+
+                // Assignment expressions
+                case SyntaxKind.AddAssignmentExpression:
+                case SyntaxKind.AndAssignmentExpression:
+                case SyntaxKind.DivideAssignmentExpression:
+                case SyntaxKind.ExclusiveOrAssignmentExpression:
+                case SyntaxKind.LeftShiftAssignmentExpression:
+                case SyntaxKind.ModuloAssignmentExpression:
+                case SyntaxKind.MultiplyAssignmentExpression:
+                case SyntaxKind.OrAssignmentExpression:
+                case SyntaxKind.RightShiftAssignmentExpression:
+                case SyntaxKind.SubtractAssignmentExpression:
+                case SyntaxKind.SimpleAssignmentExpression:
+                    var assignmentExpression = this.node as AssignmentExpressionSyntax;
+                    if (assignmentExpression == null)
+                    {
+                        throw new InvalidCastException("Unable to correctly cast expected assignment expression to assignment expression!");
+                    }
+                    return BuildAssignmentExpressionTranslationUnit(assignmentExpression);
             }
 
             return null;
@@ -120,7 +151,7 @@ namespace Rosetta.AST.Helpers
                     token = OperatorToken.Subtraction;
                     break;
                 case SyntaxKind.EqualsExpression:
-                    token = OperatorToken.Equals;
+                    token = OperatorToken.LogicalEquals;
                     break;
                 case SyntaxKind.NotEqualsExpression:
                     token = OperatorToken.NotEquals;
@@ -224,6 +255,47 @@ namespace Rosetta.AST.Helpers
 
             return ParenthesizedExpressionTranslationUnit.Create(
                 new ExpressionTranslationUnitBuilder(parenthesizedExpressionHelper.Expression).Build());
+        }
+
+        private static ITranslationUnit BuildMemberAccessExpressionTranslationUnit(MemberAccessExpressionSyntax expression)
+        {
+            var thisExpression = expression.Expression as ThisExpressionSyntax;
+            var baseExpression = expression.Expression as BaseExpressionSyntax;
+
+            var helper = new MemberAccessExpression(expression);
+
+            if (thisExpression != null)
+            {
+                return MemberAccessExpressionTranslationUnit.Create(
+                    IdentifierTranslationUnit.Create(helper.MemberName),
+                    MemberAccessExpressionTranslationUnit.MemberAccessMethod.This);
+            }
+
+            if (baseExpression != null)
+            {
+                return MemberAccessExpressionTranslationUnit.Create(
+                    IdentifierTranslationUnit.Create(helper.MemberName),
+                    MemberAccessExpressionTranslationUnit.MemberAccessMethod.Base);
+            }
+
+            return null;
+        }
+
+        private static ITranslationUnit BuildAssignmentExpressionTranslationUnit(AssignmentExpressionSyntax expression)
+        {
+            var helper = new AssignmentExpression(expression);
+
+            return AssignmentExpressionTranslationUnit.Create(
+                new ExpressionTranslationUnitBuilder(helper.LeftHand).Build(), 
+                new ExpressionTranslationUnitBuilder(helper.RightHand).Build(), 
+                helper.Operator);
+        }
+
+        private static ITranslationUnit BuildIdentifierNameExpressionTranslationUnit(IdentifierNameSyntax expression)
+        {
+            var helper = new IdentifierExpression(expression);
+
+            return IdentifierTranslationUnit.Create(helper.Identifier);
         }
     }
 }

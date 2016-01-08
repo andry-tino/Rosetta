@@ -31,14 +31,16 @@ namespace Rosetta.AST
         {
             var returnSyntaxNode = node as ReturnStatementSyntax;
             var throwSyntaxNode = node as ThrowStatementSyntax;
+            var expressionSyntaxNode = node as ExpressionStatementSyntax;
 
-            if (returnSyntaxNode == null && throwSyntaxNode == null)
+            if (returnSyntaxNode == null && throwSyntaxNode == null && expressionSyntaxNode == null)
             {
                 throw new ArgumentException(
-                    string.Format("Specified node ({0}) is not one of these types: {1}, {2}!",
+                    string.Format("Specified node ({0}) is not one of these types: {1}, {2}, {3}!",
                     node.GetType().Name,
                     typeof(ReturnStatementSyntax).Name,
-                    typeof(ThrowStatementSyntax).Name));
+                    typeof(ThrowStatementSyntax).Name),
+                    typeof(ExpressionStatementSyntax).Name);
             }
 
             if (expressionStatement == null)
@@ -82,6 +84,12 @@ namespace Rosetta.AST
                 var helper = new ThrowStatement(node as ThrowStatementSyntax);
                 var expression = new ExpressionTranslationUnitBuilder(helper.Expression).Build();
                 statement = ExpressionStatementTranslationUnit.CreateThrow(expression as ExpressionTranslationUnit);
+            }
+            else if (node as ExpressionStatementSyntax != null)
+            {
+                var helper = new ExpressionStatement(node as ExpressionStatementSyntax);
+                var expression = new ExpressionTranslationUnitBuilder(helper.Expression).Build();
+                statement = ExpressionStatementTranslationUnit.Create(expression as ExpressionTranslationUnit);
             }
             else
             {

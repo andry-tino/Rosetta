@@ -110,7 +110,17 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string PlusAssign = "+=";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string Minus = "-";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string MinusAssign = "-=";
 
         /// <summary>
         /// 
@@ -120,7 +130,77 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string TimesAssign = "*=";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string Divide = "/";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string DivideAssign = "/=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Modulo = "%";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ModuloAssign = "%=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string And = "&";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string AndAssign = "&=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Or = "|";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string OrAssign = "|=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Xor = "^";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string XorAssign = "^=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string LeftShift = "<<";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string LeftShiftAssign = "<<=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string RightShift = ">>";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string RightShiftAssign = ">>=";
 
         /// <summary>
         /// 

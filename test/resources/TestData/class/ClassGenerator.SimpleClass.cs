@@ -37,7 +37,6 @@ namespace Rosetta.Tests
                         {{
                             static void Main(string[] args)
                             {{
-                                Console.WriteLine(""Hello, World!"");
                             }}
                         }}
                     }}",

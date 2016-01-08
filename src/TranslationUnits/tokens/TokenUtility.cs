@@ -57,22 +57,48 @@ namespace Rosetta.Translation
             {
                 case OperatorToken.Addition:
                     return Lexems.Plus;
+                case OperatorToken.AdditionAssignment:
+                    return Lexems.PlusAssign;
                 case OperatorToken.Subtraction:
                     return Lexems.Minus;
+                case OperatorToken.SubtractionAssignment:
+                    return Lexems.MinusAssign;
                 case OperatorToken.Multiplication:
                     return Lexems.Times;
+                case OperatorToken.MultiplicationAssignment:
+                    return Lexems.TimesAssign;
                 case OperatorToken.Divide:
                     return Lexems.Divide;
+                case OperatorToken.DivideAssignment:
+                    return Lexems.DivideAssign;
                 case OperatorToken.Increment:
                     return Lexems.PlusPlus;
                 case OperatorToken.Decrement:
                     return Lexems.MinusMinus;
-                case OperatorToken.Equals:
+                case OperatorToken.Modulo:
+                    return Lexems.Modulo;
+                case OperatorToken.ModuloAssignment:
+                    return Lexems.ModuloAssign;
+                case OperatorToken.And:
+                    return Lexems.And;
+                case OperatorToken.AndAssignment:
+                    return Lexems.AndAssign;
+                case OperatorToken.Or:
+                    return Lexems.Or;
+                case OperatorToken.OrAssignment:
+                    return Lexems.OrAssign;
+                case OperatorToken.Xor:
+                    return Lexems.Xor;
+                case OperatorToken.XorAssignment:
+                    return Lexems.XorAssign;
+                case OperatorToken.LogicalEquals:
                     return Lexems.LogicalEquals;
                 case OperatorToken.NotEquals:
                     return Lexems.LogicalNotEquals;
                 case OperatorToken.LogicalNot:
                     return Lexems.LogicalNot;
+                case OperatorToken.Equals:
+                    return Lexems.EqualsSign;
                 default:
                     return string.Empty;
             }

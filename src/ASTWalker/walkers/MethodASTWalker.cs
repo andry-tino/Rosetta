@@ -385,6 +385,19 @@ namespace Rosetta.AST
             this.VisitStatement(node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <remarks>
+        /// Statements will cause an AST walker to be created, thus we don't need to go further deeper in the
+        /// tree by visiting the node.
+        /// </remarks>
+        public override void VisitExpressionStatement(ExpressionStatementSyntax node)
+        {
+            this.VisitStatement(node);
+        }
+
         #endregion
 
         private void VisitStatement(StatementSyntax node)

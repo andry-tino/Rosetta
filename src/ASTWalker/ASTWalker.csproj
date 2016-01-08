@@ -109,12 +109,16 @@
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
     <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
     <Compile Include="helpers\declarations\VariableDeclaration.cs" />
+    <Compile Include="helpers\expressions\AssignmentExpression.cs" />
     <Compile Include="helpers\expressions\BinaryExpression.cs" />
     <Compile Include="helpers\expressions\ExpressionTranslationUnitBuilder.cs" />
+    <Compile Include="helpers\expressions\IdentifierExpression.cs" />
     <Compile Include="helpers\expressions\LiteralExpression.cs" />
+    <Compile Include="helpers\expressions\MemberAccessExpression.cs" />
     <Compile Include="helpers\expressions\ParenthesizedExpression.cs" />
     <Compile Include="helpers\expressions\UnaryExpression.cs" />
     <Compile Include="helpers\Helper.cs" />
+    <Compile Include="helpers\statements\ExpressionStatement.cs" />
     <Compile Include="helpers\statements\ReturnStatement.cs" />
     <Compile Include="helpers\statements\ConditionalStatement.cs" />
     <Compile Include="helpers\statements\ThrowStatement.cs" />

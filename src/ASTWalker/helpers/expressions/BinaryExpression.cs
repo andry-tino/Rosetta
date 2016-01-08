@@ -37,7 +37,7 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
-        /// Gets the name of the variable.
+        /// Gets the operator.
         /// </summary>
         public OperatorToken Operator
         {
@@ -54,7 +54,7 @@ namespace Rosetta.AST.Helpers
                     case SyntaxKind.DivideExpression:
                         return OperatorToken.Divide;
                     case SyntaxKind.EqualsExpression:
-                        return OperatorToken.Equals;
+                        return OperatorToken.LogicalEquals;
                     case SyntaxKind.NotEqualsExpression:
                         return OperatorToken.NotEquals;
                 }

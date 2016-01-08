@@ -63,6 +63,15 @@ namespace Rosetta.Tests
                                 bool initVariable5 = ""hello"" == ""Hello"";
                                 bool initVariable6 = ""hello"" != ""Hello"";
                             }}
+
+                            private void Method7() {{
+                                bool initVariable1 = true;
+                                initVariable1 = false;
+                                int initVariable2 = 1;
+                                initVariable2 = 0;
+                                bool initVariable3 = ""hello"";
+                                initVariable3 = ""hello!"";
+                            }}
                         }}
                     }}",
                 this.Name);
