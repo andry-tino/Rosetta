@@ -30,6 +30,10 @@ namespace Rosetta.Tests
                     {{
                         class {0}
                         {{
+                            public {0}() {{
+                                string initVariable1 = ""Hello"";
+                            }}
+
                             public void Method1() {{
                                 string initVariable1 = ""Hello"";
                             }}
