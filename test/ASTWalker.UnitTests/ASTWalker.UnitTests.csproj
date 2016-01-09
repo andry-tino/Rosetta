@@ -51,8 +51,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ClassTest.cs" />
+    <Compile Include="ConstructorTest.cs" />
     <Compile Include="mocks\MockedConditionalStatementASTWalker.cs" />
     <Compile Include="mocks\MockedConditionalStatementTranslationUnit.cs" />
+    <Compile Include="mocks\MockedConstructorASTWalker.cs" />
+    <Compile Include="mocks\MockedConstructorDeclarationTranslationUnit.cs" />
     <Compile Include="mocks\MockedLocalDeclarationStatementTranslationUnit.cs" />
     <Compile Include="mocks\MockedMethodASTWalker.cs" />
     <Compile Include="mocks\MockedMethodDeclarationTranslationUnit.cs" />
