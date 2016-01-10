@@ -81,6 +81,48 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <param name="visibility"></param>
+        /// <param name="returnType"></param>
+        /// <param name="name"></param>
+        /// <param name="getStatements"></param>
+        /// <param name="setStatements"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildPropertyTranslationUnit(VisibilityToken visibility, string returnType, string name, ITranslationUnit[] getStatements = null, ITranslationUnit[] setStatements = null)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (returnType == null)
+            {
+                throw new ArgumentNullException(nameof(returnType));
+            }
+
+            PropertyDeclarationTranslationUnit translationUnit = PropertyDeclarationTranslationUnit.Create(
+                visibility, TypeIdentifierTranslationUnit.Create(returnType), IdentifierTranslationUnit.Create(name), true, true);
+
+            if (getStatements != null)
+            {
+                foreach (ITranslationUnit statement in getStatements)
+                {
+                    translationUnit.AddStatementToGetAccessor(statement);
+                }
+            }
+
+            if (setStatements != null)
+            {
+                foreach (ITranslationUnit statement in setStatements)
+                {
+                    translationUnit.AddStatementToSetAccessor(statement);
+                }
+            }
+
+            return translationUnit;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <param name="statements"></param>
         /// <returns></returns>

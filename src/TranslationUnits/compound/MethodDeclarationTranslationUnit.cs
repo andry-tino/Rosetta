@@ -87,6 +87,7 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
+            // TODO: Handle case of no visibility specified
             writer.WriteLine("{0} {1} {2}{3} {4}", 
                 TokenUtility.ToString(this.Visibility), 
                 this.ReturnType.Translate(), 

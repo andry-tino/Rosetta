@@ -55,6 +55,17 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
+        /// Gets render methods for <see cref="Properties"/>.
+        /// </summary>
+        public static Type PropertiesMethodsProvider
+        {
+            get
+            {
+                return typeof(Properties);
+            }
+        }
+
+        /// <summary>
         /// Gets render methods for <see cref="Constructors"/>.
         /// </summary>
         public static Type ConstructorsMethodsProvider

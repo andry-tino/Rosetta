@@ -280,6 +280,16 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string GetKeyword = "get";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string SetKeyword = "set";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string BaseKeyword = "super";
 
         /// <summary>

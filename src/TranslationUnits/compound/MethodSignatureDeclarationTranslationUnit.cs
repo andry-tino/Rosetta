@@ -22,7 +22,7 @@ namespace Rosetta.Translation
         protected IEnumerable<ITranslationUnit> arguments;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="MethodSignatureDeclarationTranslationUnit"/> class.
         /// </summary>
         protected MethodSignatureDeclarationTranslationUnit() 
             : this(IdentifierTranslationUnit.Empty, VisibilityToken.None)
@@ -30,7 +30,7 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
+        /// Initializes a new instance of the <see cref="MethodSignatureDeclarationTranslationUnit"/> class.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="visibility"></param>
