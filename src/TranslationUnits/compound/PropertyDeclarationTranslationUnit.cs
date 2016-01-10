@@ -19,11 +19,11 @@ namespace Rosetta.Translation
     {
         private const string ValueSetParameterName = "value";
 
-        // TODO: Use StatementsGroupTranslationUnit
-        protected IEnumerable<ITranslationUnit> getStatements;
-        protected IEnumerable<ITranslationUnit> setStatements;
+        // Statements groups
+        protected ITranslationUnit getStatements;
+        protected ITranslationUnit setStatements;
 
-        protected ITranslationUnit returnType;
+        protected ITranslationUnit type;
 
         protected bool hasGet;
         protected bool hasSet;
@@ -45,10 +45,11 @@ namespace Rosetta.Translation
         protected PropertyDeclarationTranslationUnit(ITranslationUnit name, ITranslationUnit returnType, VisibilityToken visibility) 
             : base(name, visibility)
         {
-            this.getStatements = new List<ITranslationUnit>();
-            this.setStatements = new List<ITranslationUnit>();
+            // We create empty groups
+            this.getStatements = StatementsGroupTranslationUnit.Create();
+            this.setStatements = StatementsGroupTranslationUnit.Create();
 
-            this.returnType = returnType;
+            this.type = returnType;
 
             this.hasGet = true;
             this.hasSet = true;
@@ -66,7 +67,7 @@ namespace Rosetta.Translation
         {
             this.getStatements = other.getStatements;
             this.setStatements = other.setStatements;
-            this.returnType = other.returnType;
+            this.type = other.type;
             this.hasGet = other.hasGet;
             this.hasSet = other.hasSet;
         }
@@ -75,28 +76,28 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         /// <param name="visibility"></param>
-        /// <param name="returnType"></param>
+        /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="hasGet"></param>
         /// <param name="hasSet"></param>
         /// <returns></returns>
-        public new static PropertyDeclarationTranslationUnit Create(
-            VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name, bool hasGet = true, bool hasSet = true)
+        public static PropertyDeclarationTranslationUnit Create(
+            VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name, bool hasGet = true, bool hasSet = true)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (returnType == null)
+            if (type == null)
             {
-                throw new ArgumentNullException(nameof(returnType));
+                throw new ArgumentNullException(nameof(type));
             }
 
             return new PropertyDeclarationTranslationUnit()
             {
                 Visibility = visibility,
                 Name = name,
-                returnType = returnType
+                type = type
             };
         }
 
@@ -132,10 +133,11 @@ namespace Rosetta.Translation
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket + Lexems.CloseRoundBracket,
                     Lexems.Colon,
-                    this.returnType.Translate(),
+                    this.type.Translate(),
                     Lexems.OpenCurlyBracket);
 
-                TranslateBody(writer, this.getStatements);
+                writer.WriteLine("{0}", 
+                    this.getStatements.Translate());
 
                 // Closing declaration
                 writer.WriteLine("{0}", Lexems.CloseCurlyBracket);
@@ -144,7 +146,7 @@ namespace Rosetta.Translation
             if (this.hasSet)
             {
                 var valueParameter = ArgumentDefinitionTranslationUnit.Create(
-                    this.returnType, IdentifierTranslationUnit.Create("value"));
+                    this.type, IdentifierTranslationUnit.Create("value"));
 
                 // Opening declaration: [<visibility>] set <name>(value : <type>) {
                 writer.WriteLine("{0}{1} {2}{3}{4}{5} {6}",
@@ -156,7 +158,8 @@ namespace Rosetta.Translation
                     Lexems.CloseRoundBracket,
                     Lexems.OpenCurlyBracket);
 
-                TranslateBody(writer, this.setStatements);
+                writer.WriteLine("{0}",
+                    this.setStatements.Translate());
 
                 // Closing declaration
                 writer.WriteLine("{0}", Lexems.CloseCurlyBracket);
@@ -165,24 +168,13 @@ namespace Rosetta.Translation
             return writer.ToString();
         }
 
-        private static void TranslateBody(FormatWriter writer, IEnumerable<ITranslationUnit> statements)
-        {
-            // The body, we render them as a list of semicolon/newline separated elements
-            foreach (ITranslationUnit statement in statements)
-            {
-                writer.WriteLine("{0}{1}",
-                    statement.Translate(),
-                    ShouldRenderSemicolon(statement) ? Lexems.Semicolon : string.Empty);
-            }
-        }
-
         #region Compound translation unit methods
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="translationUnit"></param>
-        public void AddStatementToGetAccessor(ITranslationUnit translationUnit)
+        public void SetGetAccessor(ITranslationUnit translationUnit)
         {
             if (translationUnit == null)
             {
@@ -194,14 +186,14 @@ namespace Rosetta.Translation
                 ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
             }
 
-            ((List<ITranslationUnit>)this.getStatements).Add(translationUnit);
+            this.getStatements = translationUnit;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="translationUnit"></param>
-        public void AddStatementToSetAccessor(ITranslationUnit translationUnit)
+        public void SetSetAccessor(ITranslationUnit translationUnit)
         {
             if (translationUnit == null)
             {
@@ -213,7 +205,7 @@ namespace Rosetta.Translation
                 ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
             }
 
-            ((List<ITranslationUnit>)this.setStatements).Add(translationUnit);
+            this.setStatements = translationUnit;
         }
 
         #endregion

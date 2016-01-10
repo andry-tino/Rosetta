@@ -120,7 +120,7 @@ namespace Rosetta.AST
 
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
 
-            base.VisitFieldDeclaration(node);
+            base.VisitFieldDeclaration(node); // Remove?
         }
 
         /// <summary>
@@ -129,8 +129,11 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
+            var propertyWalker = PropertyASTWalker.Create(node);
+            var translationUnit = propertyWalker.Walk();
+            this.classDeclaration.AddPropertyDeclaration(translationUnit);
+
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
-            base.VisitPropertyDeclaration(node);
         }
 
         /// <summary>

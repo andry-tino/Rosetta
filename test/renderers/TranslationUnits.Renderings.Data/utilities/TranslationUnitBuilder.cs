@@ -99,21 +99,25 @@ namespace Rosetta.Translation.Renderings.Data
 
             PropertyDeclarationTranslationUnit translationUnit = PropertyDeclarationTranslationUnit.Create(
                 visibility, TypeIdentifierTranslationUnit.Create(returnType), IdentifierTranslationUnit.Create(name), true, true);
-
+            
             if (getStatements != null)
             {
+                var statementsGroup = StatementsGroupTranslationUnit.Create();
                 foreach (ITranslationUnit statement in getStatements)
                 {
-                    translationUnit.AddStatementToGetAccessor(statement);
+                    statementsGroup.AddStatement(statement);
                 }
+                translationUnit.SetGetAccessor(statementsGroup);
             }
 
             if (setStatements != null)
             {
+                var statementsGroup = StatementsGroupTranslationUnit.Create();
                 foreach (ITranslationUnit statement in setStatements)
                 {
-                    translationUnit.AddStatementToSetAccessor(statement);
+                    statementsGroup.AddStatement(statement);
                 }
+                translationUnit.SetSetAccessor(statementsGroup);
             }
 
             return translationUnit;

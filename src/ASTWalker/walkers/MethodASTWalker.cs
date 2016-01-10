@@ -110,6 +110,8 @@ namespace Rosetta.AST
         // Make all ASTWalker(s) inherit from it and provide virtual methods for statements in order to provide only one
         // method for statement visit.
 
+        // TODO: Evaluate the possibility to use BlockASTWalker.
+
         #region CSharpSyntaxWalker overrides
 
         /// <summary>

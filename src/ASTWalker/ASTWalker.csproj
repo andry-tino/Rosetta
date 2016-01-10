@@ -108,6 +108,7 @@
     <Compile Include="helpers\declarations\FieldDeclaration.cs" />
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
     <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
+    <Compile Include="helpers\declarations\PropertyDeclaration.cs" />
     <Compile Include="helpers\declarations\VariableDeclaration.cs" />
     <Compile Include="helpers\expressions\AssignmentExpression.cs" />
     <Compile Include="helpers\expressions\BinaryExpression.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="walkers\MethodASTWalker.cs" />
     <Compile Include="walkers\NamespaceASTWalker.cs" />
     <Compile Include="walkers\ProgramASTWalker.cs" />
+    <Compile Include="walkers\PropertyASTWalker.cs" />
     <Compile Include="walkers\statements\ConditionalStatementASTWalker.cs" />
     <Compile Include="walkers\statements\ExpressionStatementASTWalker.cs" />
     <Compile Include="walkers\statements\KeywordStatementASTWalker.cs" />

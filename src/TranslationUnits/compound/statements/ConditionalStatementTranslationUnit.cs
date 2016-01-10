@@ -232,7 +232,7 @@ namespace Rosetta.Translation
                 throw new ArgumentNullException(nameof(statement));
             }
 
-            // TODO: Ad unit test for this
+            // TODO: Add unit test for this
             if (!this.hasFinalElse)
             {
                 throw new InvalidOperationException("This conditional translation unit has been created without final ELSE support!");
