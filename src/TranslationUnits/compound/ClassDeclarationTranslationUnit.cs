@@ -191,16 +191,39 @@ namespace Rosetta.Translation
                 writer.WriteLine("{0}{1}", translationUnit.Translate(), Lexems.Semicolon);
             }
 
+            // Adding a newline
+            if (this.memberDeclarations.Count() > 0 && (
+                this.constructorDeclarations.Count() > 0 || 
+                this.propertyDeclarations.Count() > 0 ||
+                this.methodDeclarations.Count() > 0))
+            {
+                writer.WriteLine(string.Empty);
+            }
+
             // Then constructors
             foreach (ITranslationUnit translationUnit in this.constructorDeclarations)
             {
                 writer.WriteLine(translationUnit.Translate());
             }
 
+            // Adding a newline
+            if (this.constructorDeclarations.Count() > 0 && (
+                this.propertyDeclarations.Count() > 0 ||
+                this.methodDeclarations.Count() > 0))
+            {
+                writer.WriteLine(string.Empty);
+            }
+
             // Then properties
             foreach (ITranslationUnit translationUnit in this.propertyDeclarations)
             {
                 writer.WriteLine(translationUnit.Translate());
+            }
+
+            // Adding a newline
+            if (this.propertyDeclarations.Count() > 0 && this.methodDeclarations.Count() > 0)
+            {
+                writer.WriteLine(string.Empty);
             }
 
             // Finally methods

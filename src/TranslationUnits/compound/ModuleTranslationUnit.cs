@@ -116,23 +116,30 @@ namespace Rosetta.Translation
                 Lexems.OpenCurlyBracket);
 
             // We render classes first
+            var lastClass = this.classes.Count() > 0 ? this.classes.Last() : null;
             foreach (ITranslationUnit translationUnit in this.classes)
             {
-                // Classes need injection for observing indentation
-                //if (translationUnit as ITranslationInjector != null)
-                //{
-                //    ((ITranslationInjector)translationUnit).InjectedTranslationUnitBefore = IdentifierTranslationUnit.Create(Lexems.ExportKeyword);
-                //}
-
                 writer.WriteLine(translationUnit.Translate());
+
+                if ((object)translationUnit != (object)lastClass)
+                {
+                    writer.WriteLine(string.Empty);
+                }
             }
 
             // Then, interfaces
+            var lastInterface = this.interfaces.Count() > 0 ? this.interfaces.Last() : null;
             foreach (ITranslationUnit translationUnit in this.interfaces)
             {
+                // TODO: Handle with injection like in classes
                 writer.WriteLine("{0} {1}",
                     Lexems.ExportKeyword,
                     translationUnit.Translate());
+
+                if ((object)translationUnit != (object)lastInterface)
+                {
+                    writer.WriteLine(string.Empty);
+                }
             }
 
             // Closing declaration
