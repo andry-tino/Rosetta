@@ -47,6 +47,18 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visibilityToken"></param>
+        /// <returns></returns>
+        public static string EmitOptionalVisibility(this VisibilityToken visibilityToken)
+        {
+            return visibilityToken == VisibilityToken.None ? 
+                string.Empty :
+                string.Format("{0} ", ToString(visibilityToken));
+        }
+
+        /// <summary>
         /// Converts the operator into the appropriate TypeScript token.
         /// </summary>
         /// <param name="operatorToken">The visibility.</param>

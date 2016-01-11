@@ -86,13 +86,14 @@ namespace Rosetta.Translation
                 Formatter = this.Formatter
             };
 
-            // Opening declaration
+            // Opening declaration: [<visibility>] <method-name>(<params>) : <type> {
             // TODO: Handle case of no visibility specified
-            writer.WriteLine("{0} {1} {2}{3} {4}", 
-                TokenUtility.ToString(this.Visibility), 
-                this.ReturnType.Translate(), 
-                this.Name.Translate(), 
+            writer.WriteLine("{0}{1}{2} {3} {4} {5}", 
+                TokenUtility.EmitOptionalVisibility(this.Visibility),
+                this.Name.Translate(),
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
+                Lexems.Colon,
+                this.ReturnType.Translate(), 
                 Lexems.OpenCurlyBracket);
 
             // Statements

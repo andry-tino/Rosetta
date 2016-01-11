@@ -111,12 +111,14 @@ namespace Rosetta.Translation
                 Formatter = this.Formatter
             };
 
-            // Opening declaration
-            writer.WriteLine("{0} {1} {2}{3}",
-                TokenUtility.ToString(this.Visibility),
-                this.ReturnType.Translate(),
+            // Opening declaration: [<visibility>] <method-name>(<params>) : <type>
+            writer.WriteLine("{0}{1}{2} {3} {4}",
+                TokenUtility.EmitOptionalVisibility(this.Visibility),
                 this.Name.Translate(),
-                SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())));
+                SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())),
+                Lexems.Colon,
+                this.ReturnType.Translate()
+                );
 
             return writer.ToString();
         }

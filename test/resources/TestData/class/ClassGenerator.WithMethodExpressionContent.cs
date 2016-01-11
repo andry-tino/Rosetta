@@ -38,7 +38,7 @@ namespace Rosetta.Tests
                                 string initVariable1 = ""Hello"";
                             }}
 
-                            private void Method2() {{
+                            void Method2() {{
                                 int initVariable1 = 1 + 4;
                                 int initVariable2 = 2 * 4 + (3 / 2);
                             }}
@@ -59,7 +59,7 @@ namespace Rosetta.Tests
                                 int initVariable1 = (1);
                             }}
 
-                            private void Method6() {{
+                            void Method6() {{
                                 bool initVariable1 = true == false;
                                 bool initVariable2 = true != false;
                                 bool initVariable3 = 1 == 2;
