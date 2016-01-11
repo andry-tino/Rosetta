@@ -49,11 +49,19 @@ namespace Rosetta.Translation
                 return Lexems.NumberType;
             }
 
+            if (type == "bool")
+            {
+                return Lexems.BooleanType;
+            }
             if (type == typeof(bool).Name)
             {
                 return Lexems.BooleanType;
             }
 
+            if (type == "object")
+            {
+                return Lexems.AnyType;
+            }
             if (type == typeof(object).Name)
             {
                 return Lexems.AnyType;
