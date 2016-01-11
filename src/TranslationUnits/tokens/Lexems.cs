@@ -230,6 +230,11 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string ConstructorKeyword = "constructor";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string ExtendsKeyword = "extends";
 
         /// <summary>

@@ -84,10 +84,10 @@ namespace Rosetta.Translation
                 Formatter = this.Formatter
             };
 
-            // Opening declaration: <visibility> <class-name>(<params>) {
+            // Opening declaration: <visibility> constructor(<params>) {
             writer.WriteLine("{0}{1}{2} {3}",
                 TokenUtility.EmitOptionalVisibility(this.Visibility),
-                this.Name.Translate(),
+                Lexems.ConstructorKeyword,
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.OpenCurlyBracket);
 
