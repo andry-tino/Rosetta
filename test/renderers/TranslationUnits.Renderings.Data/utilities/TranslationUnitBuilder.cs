@@ -51,6 +51,23 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <param name="visibility"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildInterfaceTranslationUnit(VisibilityToken visibility, string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return InterfaceDeclarationTranslationUnit.Create(
+                visibility, IdentifierTranslationUnit.Create(name));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visibility"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <param name="statements"></param>
@@ -75,6 +92,25 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             return translationUnit;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visibility"></param>
+        /// <param name="returnType"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildMethodSignatureTranslationUnit(VisibilityToken visibility, string returnType, string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return MethodSignatureDeclarationTranslationUnit.Create(
+                visibility, returnType == null ? null : TypeIdentifierTranslationUnit.Create(returnType),
+                IdentifierTranslationUnit.Create(name));
         }
 
         /// <summary>

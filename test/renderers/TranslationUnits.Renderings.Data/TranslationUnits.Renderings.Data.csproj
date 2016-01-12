@@ -43,8 +43,10 @@
     <Compile Include="Classes.cs" />
     <Compile Include="Constructors.cs" />
     <Compile Include="Expressions.cs" />
+    <Compile Include="Interfaces.cs" />
     <Compile Include="Members.cs" />
     <Compile Include="Methods.cs" />
+    <Compile Include="MethodSignatures.cs" />
     <Compile Include="MixedExpressions.cs" />
     <Compile Include="Modules.cs" />
     <Compile Include="Properties.cs" />

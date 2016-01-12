@@ -44,6 +44,17 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
+        /// Gets render methods for <see cref="Interfaces"/>.
+        /// </summary>
+        public static Type InterfacesMethodsProvider
+        {
+            get
+            {
+                return typeof(Interfaces);
+            }
+        }
+
+        /// <summary>
         /// Gets render methods for <see cref="Methods"/>.
         /// </summary>
         public static Type MethodsMethodsProvider
@@ -51,6 +62,17 @@ namespace Rosetta.Translation.Renderings
             get
             {
                 return typeof(Methods);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="MethodSignatures"/>.
+        /// </summary>
+        public static Type MethodSignaturesMethodsProvider
+        {
+            get
+            {
+                return typeof(MethodSignatures);
             }
         }
 

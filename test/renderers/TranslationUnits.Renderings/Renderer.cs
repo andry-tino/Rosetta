@@ -34,7 +34,9 @@ namespace Rosetta.Translation.Renderings
                 {
                     DataProvider.ModulesMethodsProvider,
                     DataProvider.ClassesMethodsProvider,
+                    DataProvider.InterfacesMethodsProvider,
                     DataProvider.MethodsMethodsProvider,
+                    DataProvider.MethodSignaturesMethodsProvider,
                     DataProvider.PropertiesMethodsProvider,
                     DataProvider.ConstructorsMethodsProvider,
                     DataProvider.MembersMethodsProvider,

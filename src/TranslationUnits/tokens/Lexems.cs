@@ -225,6 +225,16 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string ClassKeyword = "class";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string InterfaceKeyword = "interface";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string VoidReturnType = "void";
 
         /// <summary>

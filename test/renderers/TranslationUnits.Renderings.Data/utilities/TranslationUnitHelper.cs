@@ -55,6 +55,16 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <param name="translationUnit"></param>
+        /// <param name="interfaceName"></param>
+        public static void AddExtendedInterface(this InterfaceDeclarationTranslationUnit translationUnit, string interfaceName)
+        {
+            translationUnit.AddExtendedInterface(IdentifierTranslationUnit.Create(interfaceName));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -79,6 +89,20 @@ namespace Rosetta.Translation.Renderings.Data
                 VisibilityToken.Public, TypeIdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create(method));
             translationUnit.AddMethodDeclaration(methodDeclaration);
             return methodDeclaration;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        /// <param name="signature"></param>
+        /// <returns></returns>
+        public static MethodSignatureDeclarationTranslationUnit AddSignature(this InterfaceDeclarationTranslationUnit translationUnit, string signature)
+        {
+            var methodSignatureDeclaration = MethodSignatureDeclarationTranslationUnit.Create(
+                VisibilityToken.Public, TypeIdentifierTranslationUnit.Void, IdentifierTranslationUnit.Create(signature));
+            translationUnit.AddSignature(methodSignatureDeclaration);
+            return methodSignatureDeclaration;
         }
 
         /// <summary>

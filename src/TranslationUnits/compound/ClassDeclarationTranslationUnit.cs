@@ -162,24 +162,26 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
-            string classVisibility = TokenUtility.ToString(this.Visibility);
+            string classVisibility = TokenUtility.EmitOptionalVisibility(this.Visibility);
             string baseList = this.BuildClassInheritanceAndInterfaceImplementationList();
 
             if (this.injectedBefore == null)
             {
-                writer.WriteLine("{0} class {1} {2} {3}",
+                writer.WriteLine("{0}{1} {2} {3} {4}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
                 classVisibility,
+                Lexems.ClassKeyword,
                 this.Name.Translate(),
                 baseList,
                 Lexems.OpenCurlyBracket);
             }
             else
             {
-                writer.WriteLine("{0} {1} class {2} {3} {4}",
+                writer.WriteLine("{0} {1}{2} {3} {4} {5}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
                 this.injectedBefore.Translate(),
                 classVisibility,
+                Lexems.ClassKeyword,
                 this.Name.Translate(),
                 baseList,
                 Lexems.OpenCurlyBracket);
