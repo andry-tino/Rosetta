@@ -33,6 +33,7 @@ namespace Rosetta.AST.Helpers
 
         /// <summary>
         /// Gets the collection of extended interfaces. Same as <see cref="BaseTypes"/>.
+        /// TODO: Duplicate code in <see cref="ClassDeclaration"/>! Extract!
         /// </summary>
         /// <remarks>
         /// Value is cached.
@@ -43,9 +44,16 @@ namespace Rosetta.AST.Helpers
             {
                 if (this.interfaces == null)
                 {
-                    this.interfaces = null;
+                    this.interfaces = new List<BaseTypeReference>();
+                    foreach (BaseTypeReference baseType in this.BaseTypes)
+                    {
+                        if (baseType.Kind == TypeKind.Interface)
+                        {
+                            ((List<BaseTypeReference>)this.interfaces).Add(baseType);
+                        }
+                    }
                 }
-                
+
                 return this.interfaces;
             }
         }

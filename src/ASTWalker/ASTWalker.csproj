@@ -141,6 +141,7 @@
     <Compile Include="Types.cs" />
     <Compile Include="WalkerEventArgs.cs" />
     <Compile Include="walkers\ConstructorASTWalker.cs" />
+    <Compile Include="walkers\InterfaceASTWalker.cs" />
     <Compile Include="walkers\MethodASTWalker.cs" />
     <Compile Include="walkers\NamespaceASTWalker.cs" />
     <Compile Include="walkers\ProgramASTWalker.cs" />

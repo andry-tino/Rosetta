@@ -161,5 +161,109 @@ namespace Rosetta.AST.Renderings.Data
             ITranslationUnit translationUnit = astWalker.Walk();
             return translationUnit.Translate();
         }
+
+        [RenderingResource("InterfaceWithMethods.ts")]
+        public string RenderInterfaceWithMethods()
+        {
+            string source = @"
+                public interface Interface1 {
+                    void Method1(int param1);
+                    int Method2(int param1, string param2);
+                    string Method3(int param1, string param2, bool param3);
+                    void Method4(int param1, string param2, bool param3, double param4);
+                }
+            ";
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(InterfaceDeclarationSyntax));
+            InterfaceDeclarationSyntax interfaceDeclarationNode = node as InterfaceDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = InterfaceASTWalker.Create(interfaceDeclarationNode);
+
+            // Getting the translation unit
+            ITranslationUnit translationUnit = astWalker.Walk();
+            return translationUnit.Translate();
+        }
+
+        [RenderingResource("InterfaceWithProperties.ts")]
+        public string RenderInterfaceWithProperties()
+        {
+            string source = @"
+                public interface Interface1 {
+                    int Property1 { get; set; }
+                    string Property2 { get; set; }
+                }
+            ";
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(InterfaceDeclarationSyntax));
+            InterfaceDeclarationSyntax interfaceDeclarationNode = node as InterfaceDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = InterfaceASTWalker.Create(interfaceDeclarationNode);
+
+            // Getting the translation unit
+            ITranslationUnit translationUnit = astWalker.Walk();
+            return translationUnit.Translate();
+        }
+
+        [RenderingResource("InterfaceWithGetterProperties.ts")]
+        public string RenderInterfaceWithGetterProperties()
+        {
+            string source = @"
+                public interface Interface1 {
+                    int Property1 { get; }
+                    string Property2 { get; }
+                }
+            ";
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(InterfaceDeclarationSyntax));
+            InterfaceDeclarationSyntax interfaceDeclarationNode = node as InterfaceDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = InterfaceASTWalker.Create(interfaceDeclarationNode);
+
+            // Getting the translation unit
+            ITranslationUnit translationUnit = astWalker.Walk();
+            return translationUnit.Translate();
+        }
+
+        [RenderingResource("InterfaceWithMethodsAndProperties.ts")]
+        public string RenderInterfaceWithMethodsAndProperties()
+        {
+            string source = @"
+                public interface Interface1 {
+                    string Method3(int param1, string param2, bool param3);
+                    void Method4(int param1, string param2, bool param3, double param4);
+                    int Property1 { get; }
+                    string Property2 { get; }
+                }
+            ";
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(InterfaceDeclarationSyntax));
+            InterfaceDeclarationSyntax interfaceDeclarationNode = node as InterfaceDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = InterfaceASTWalker.Create(interfaceDeclarationNode);
+
+            // Getting the translation unit
+            ITranslationUnit translationUnit = astWalker.Walk();
+            return translationUnit.Translate();
+        }
     }
 }
