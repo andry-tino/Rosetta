@@ -162,11 +162,37 @@ namespace Rosetta.AST.Renderings.Data
             return translationUnit.Translate();
         }
 
+        [RenderingResource("InterfaceWithExtendedInterfaces.ts")]
+        public string RenderInterfaceWithExtendedInterfaces()
+        {
+            string source = @"
+                interface IInterface2 { }
+                interface IInterface3 { }
+                interface IInterface4 { }
+                public interface IInterface1 : IInterface2, IInterface3, IInterface4 {
+                }
+            ";
+
+            // Getting the AST node
+            CSharpSyntaxTree tree = ASTExtractor.Extract(source);
+            Source.ProgramRoot = tree;
+
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(InterfaceDeclarationSyntax));
+            InterfaceDeclarationSyntax interfaceDeclarationNode = node as InterfaceDeclarationSyntax;
+
+            // Creating the walker
+            var astWalker = InterfaceASTWalker.Create(interfaceDeclarationNode);
+
+            // Getting the translation unit
+            ITranslationUnit translationUnit = astWalker.Walk();
+            return translationUnit.Translate();
+        }
+
         [RenderingResource("InterfaceWithMethods.ts")]
         public string RenderInterfaceWithMethods()
         {
             string source = @"
-                public interface Interface1 {
+                public interface IInterface1 {
                     void Method1(int param1);
                     int Method2(int param1, string param2);
                     string Method3(int param1, string param2, bool param3);
@@ -193,7 +219,7 @@ namespace Rosetta.AST.Renderings.Data
         public string RenderInterfaceWithProperties()
         {
             string source = @"
-                public interface Interface1 {
+                public interface IInterface1 {
                     int Property1 { get; set; }
                     string Property2 { get; set; }
                 }
@@ -218,7 +244,7 @@ namespace Rosetta.AST.Renderings.Data
         public string RenderInterfaceWithGetterProperties()
         {
             string source = @"
-                public interface Interface1 {
+                public interface IInterface1 {
                     int Property1 { get; }
                     string Property2 { get; }
                 }
@@ -243,7 +269,7 @@ namespace Rosetta.AST.Renderings.Data
         public string RenderInterfaceWithMethodsAndProperties()
         {
             string source = @"
-                public interface Interface1 {
+                public interface IInterface1 {
                     string Method3(int param1, string param2, bool param3);
                     void Method4(int param1, string param2, bool param3, double param4);
                     int Property1 { get; }

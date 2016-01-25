@@ -9,6 +9,7 @@ param(
 write-output "Running renderer...";
 write-output "Workspace path is: $WorkspacePath";
 
+# Handling output folders, if they already exist, remove them and all their content (TODO)
 $RenderPathTranslationUnits = "$OutputPath\TranslationUnits.Renderings";
 $RenderPathAST = "$OutputPath\ASTWalker.Renderings";
 new-item "$RenderPathTranslationUnits" -type directory | out-null;
@@ -37,7 +38,7 @@ if ($PrintRenderedFiles)
   }
 }
 
-# Running renderers for Translation units
+# Running renderers for AST walkers
 $Result = & $RendererExecPathAST "$RenderPathAST";
 if ($LASTEXITCODE -gt 0)
 {
