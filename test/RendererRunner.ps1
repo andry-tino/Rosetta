@@ -1,17 +1,27 @@
 # Runs the renderer in order to generate output files
 
 param(
+  # Path to `Rosetta` folder
   [parameter(mandatory = $true)] [string] $WorkspacePath,
+  # Path to folder hosting output files
   [parameter(mandatory = $true)] [string] $OutputPath,
+  # If `true` forces all translated files to be emitted in shell
   [bool] $PrintRenderedFiles = $true
 );
-
-write-output "Running renderer...";
-write-output "Workspace path is: $WorkspacePath";
 
 # Handling output folders, if they already exist, remove them and all their content (TODO)
 $RenderPathTranslationUnits = "$OutputPath\TranslationUnits.Renderings";
 $RenderPathAST = "$OutputPath\ASTWalker.Renderings";
+
+if (test-path $RenderPathTranslationUnits)
+{
+	remove-item $RenderPathTranslationUnits -recurse
+}
+if (test-path $RenderPathAST)
+{
+	remove-item $RenderPathAST -recurse
+}
+
 new-item "$RenderPathTranslationUnits" -type directory | out-null;
 new-item "$RenderPathAST" -type directory | out-null;
 
