@@ -68,12 +68,12 @@ namespace Rosetta.Runner
 
         public string VerboseOption
         {
-            get { return string.Format("{0}|{1}=", VerboseArgumentName, VerboseArgumentChar); }
+            get { return string.Format("{0}|{1}", VerboseArgumentName, VerboseArgumentChar); }
         }
 
         public string HelpOption
         {
-            get { return string.Format("{0}|{1}=", HelpArgumentName, HelpArgumentChar); }
+            get { return string.Format("{0}|{1}", HelpArgumentName, HelpArgumentChar); }
         }
 
         /// <summary>
@@ -168,12 +168,17 @@ namespace Rosetta.Runner
             }
             catch (Exception e)
             {
-                Console.WriteLine("An error occurred: {0}!", e.Message);
-#if DEBUG
-                Console.WriteLine(e.StackTrace);
-#endif
+                this.HandleError(e);
                 return;
             }
+        }
+
+        protected virtual void HandleError(Exception e)
+        {
+            Console.WriteLine("An error occurred: {0}!", e.Message);
+#if DEBUG
+            Console.WriteLine(e.StackTrace);
+#endif
         }
 
         private static string PerformConversion(string source)

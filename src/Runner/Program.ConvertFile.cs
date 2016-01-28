@@ -17,16 +17,13 @@ namespace Rosetta.Runner
     /// </summary>
     internal partial class Program
     {
-        private void ConvertFile()
+        protected virtual void ConvertFile()
         {
             this.InitializeForFileConversion();
             this.PrepareFiles();
             this.EmitFiles();
         }
-
-        /// <summary>
-        /// Protected virtual for testability.
-        /// </summary>
+        
         protected virtual void InitializeForFileConversion()
         {
             // Setting output folder
@@ -36,18 +33,12 @@ namespace Rosetta.Runner
             this.fileManager = new FileManager(this.outputFolder);
             this.fileManager.FileConversionProvider = PerformConversion;
         }
-
-        /// <summary>
-        /// Protected virtual for testability.
-        /// </summary>
+        
         protected virtual void PrepareFiles()
         {
             fileManager.AddFile(filePath, fileName);
         }
-
-        /// <summary>
-        /// Protected virtual for testability.
-        /// </summary>
+        
         protected virtual void EmitFiles()
         {
             var writtenFiles = fileManager.WriteAllFilesToDestination();

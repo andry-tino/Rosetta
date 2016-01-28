@@ -31,6 +31,21 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// <summary>
         /// 
         /// </summary>
+        public bool ErrorHandled { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ProjectConversionRoutineRun { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool FileConversionRoutineRun { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string FilePath
         {
             get { return this.filePath; }
@@ -82,6 +97,23 @@ namespace Rosetta.Runner.UnitTests.Mocks
         public FileManager FileManager
         {
             get { return this.fileManager; }
+        }
+
+        protected override void HandleError(Exception e)
+        {
+            this.ErrorHandled = true;
+        }
+
+        protected override void ConvertFile()
+        {
+            this.FileConversionRoutineRun = true;
+            base.ConvertFile();
+        }
+
+        protected override void ConvertProject()
+        {
+            this.ProjectConversionRoutineRun = true;
+            base.ConvertProject();
         }
 
         protected override void EmitFiles()

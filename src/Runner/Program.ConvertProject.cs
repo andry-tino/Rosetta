@@ -17,7 +17,7 @@ namespace Rosetta.Runner
     /// </summary>
     internal partial class Program
     {
-        private void ConvertProject()
+        protected virtual void ConvertProject()
         {
             
         }
