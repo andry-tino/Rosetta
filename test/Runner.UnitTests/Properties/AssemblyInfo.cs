@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Runner")]
-[assembly: AssemblyDescription("Main runner entry point for Rosetta.")]
+[assembly: AssemblyTitle("Runner.UnitTests")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Andrea Tino")]
-[assembly: AssemblyProduct("Runner")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("Andrea Tino")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Runner.UnitTests")]
+[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -19,11 +19,8 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Setting visibility for unit tests
-[assembly: InternalsVisibleTo("Rosetta.Runner.UnitTests")]
-
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("869d1b89-8513-4733-9f5a-17a22c7b165b")]
+[assembly: Guid("0660fa9f-4536-446c-9c3b-a00e7113bcae")]
 
 // Version information for an assembly consists of the following four values:
 //

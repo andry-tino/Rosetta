@@ -101,8 +101,9 @@ namespace Rosetta.Runner
         /// <summary>
         /// Adds a file.
         /// </summary>
-        /// <param name="filePath"></param>
-        public void AddFile(string filePath)
+        /// <param name="filePath">The path to the file.</param>
+        /// <param name="newName">The name to give to the output file.</param>
+        public void AddFile(string filePath, string newName = null)
         {
             if (filePath == null)
             {
@@ -117,6 +118,7 @@ namespace Rosetta.Runner
             ((List<FileEntry>)this.fileEntries).Add(new FileEntry()
                 {
                     FilePath = filePath,
+                    NewName = newName,
                     FileConversion = string.Empty
                 });
         }
@@ -143,7 +145,7 @@ namespace Rosetta.Runner
 
             foreach (var entry in this.fileEntries)
             {
-                var destinationFilePath = GetDestinationFilePath(entry.FilePath);
+                var destinationFilePath = GetDestinationFilePath(entry.FilePath, entry.NewName);
                 WriteToFile(entry.FileConversion, destinationFilePath);
                 writtenFiles.Add(destinationFilePath);
             }
@@ -221,6 +223,16 @@ namespace Rosetta.Runner
             return File.Exists(path);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string ExtractDirectoryPathFromFilePath(string path)
+        {
+            return new FileInfo(path).DirectoryName;
+        }
+
         private static IEnumerable<string> GetAllFiles(string path)
         {
             if (path == null || path == string.Empty)
@@ -251,17 +263,26 @@ namespace Rosetta.Runner
         public delegate string ConversionProvider(string source);
 
         /// <summary>
-        /// 
+        /// The file entry.
         /// </summary>
         public sealed class FileEntry
         {
             /// <summary>
-            /// 
+            /// The path to the C# file. This should include the file name with CS extension.
             /// </summary>
             public string FilePath { get; set; }
 
             /// <summary>
-            /// 
+            /// The new name to assign to the file when emitting it. If this paramter is not specified, the 
+            /// emitted file will have the same name as <see cref="FilePath"/> but TS extension. If this
+            /// property is not left <code>null</code>, then the file name will have
+            /// the value specified in <see cref="NewName"/>, and the extension will be overwritten as well.
+            /// Thus <see cref="NewName"/> is expected to include the extension if any is wanted.
+            /// </summary>
+            public string NewName { get; set; }
+
+            /// <summary>
+            /// The TypeScript code conversion.
             /// </summary>
             public string FileConversion { get; set; }
         }
@@ -274,9 +295,16 @@ namespace Rosetta.Runner
         /// </summary>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        private string GetDestinationFilePath(string filepath)
+        private string GetDestinationFilePath(string filepath, string newName = null)
         {
-            return Path.Combine(directory, Path.GetFileName(Path.ChangeExtension(filepath, "ts")));
+            const string extension = "ts";
+
+            if (newName == null)
+            {
+                return Path.Combine(directory, Path.GetFileName(Path.ChangeExtension(filepath, extension)));
+            }
+
+            return Path.Combine(directory, newName);
         }
     }
 }

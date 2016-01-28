@@ -17,31 +17,94 @@ namespace Rosetta.Runner
     /// <summary>
     /// Main program.
     /// </summary>
-    internal class Program
+    /// <remarks>
+    /// Members protected for testability.
+    /// </remarks>
+    internal partial class Program
     {
-        static string FilePath = null;         // File to convert
-        static string OutputFolder = null;     // The output folder path for destination files
-        static bool Verbose = false;           // Verbosity
-        static bool Help = false;              // Show help message
+        protected static Program instance;
 
-        static FileManager FileManager;
+        protected string filePath = null;         // File to convert
+        protected string projectPath = null;      // Project to convert
+        protected string outputFolder = null;     // The output folder path for destination files
+        protected string fileName = null;         // The output file name
+        protected bool verbose = false;           // Verbosity
+        protected bool help = false;              // Show help message
+
+        protected FileManager fileManager;
+
+        public const string FileArgumentName        = "file";
+        public const string FileArgumentChar        = "f";
+        public const string ProjectArgumentName     = "project";
+        public const string ProjectArgumentChar     = "p";
+        public const string OutputArgumentName      = "output";
+        public const string OutputArgumentChar      = "o";
+        public const string FileNameArgumentName    = "filename";
+        public const string FileNameArgumentChar    = "n";
+        public const string VerboseArgumentName     = "verbose";
+        public const string VerboseArgumentChar     = "v";
+        public const string HelpArgumentName        = "help";
+        public const string HelpArgumentChar        = "h";
+
+        public string FileOption
+        {
+            get { return string.Format("{0}|{1}=", FileArgumentName, FileArgumentChar); }
+        }
+
+        public string ProjectOption
+        {
+            get { return string.Format("{0}|{1}=", ProjectArgumentName, ProjectArgumentChar); }
+        }
+
+        public string OutputOption
+        {
+            get { return string.Format("{0}|{1}=", OutputArgumentName, OutputArgumentChar); }
+        }
+
+        public string FileNameOption
+        {
+            get { return string.Format("{0}|{1}=", FileNameArgumentName, FileNameArgumentChar); }
+        }
+
+        public string VerboseOption
+        {
+            get { return string.Format("{0}|{1}=", VerboseArgumentName, VerboseArgumentChar); }
+        }
+
+        public string HelpOption
+        {
+            get { return string.Format("{0}|{1}=", HelpArgumentName, HelpArgumentChar); }
+        }
 
         /// <summary>
-        /// Entry point
+        /// Entry point.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            instance = new Program(args);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Program"/> class.
+        /// </summary>
+        /// <param name="args"></param>
+        public Program(string[] args)
+        {
             var options = new OptionSet()
             {
-                { "f|file=", "The C# {FILE} to convert into TypeScript.",
-                  value => FilePath = value },
-                { "o|output=", "The {OUTPUT} folder path where to save files.",
-                  value => OutputFolder = value },
-                { "v|verbose", "Increase debug message {VERBOSE} level.",
-                  value => Verbose = value != null },
-                { "h|help",  "Show this message and exit.",
-                  value => Help = value != null },
+                { FileOption, "The path to the C# {FILE} to convert into TypeScript.",
+                  value => this.filePath = value },
+                { ProjectOption, "The path to the C# {PROJECT} to convert into TypeScript project.",
+                  value => this.filePath = value },
+                { OutputOption, "The {OUTPUT} folder path where Rosetta will emit all output files.",
+                  value => this.outputFolder = value },
+                { FileNameOption, "The {FILENAME} to use for output file. Valid only when {FILE} is specified.",
+                  value => this.fileName = value },
+                { VerboseOption, "Increase debug message {VERBOSE} level.",
+                  value => this.verbose = value != null },
+                { HelpOption,  "Show this message and exit.",
+                  value => this.help = value != null },
             };
 
             List<string> extra;
@@ -57,32 +120,51 @@ namespace Rosetta.Runner
                 return;
             }
 
-            // Priority to help
-            if (Help)
+            // If user provided no input arguments, show help
+            if (args.Length == 0)
             {
-                ShowHelp(options);
+                Console.Write("No input provided!");
+                this.ShowHelp(options);
+
+                return;
+            }
+
+            this.Run(options);
+        }
+
+        /// <summary>
+        /// Runs the main logic.
+        /// </summary>
+        /// <param name="options"></param>
+        private void Run(OptionSet options)
+        {
+            // Priority to help
+            if (help)
+            {
+                this.ShowHelp(options);
                 return;
             }
 
             try
             {
-                // Setting output folder
-                OutputFolder = GetOutputFolder(OutputFolder);
-
-                // Initializing the file manager
-                FileManager = new FileManager(OutputFolder);
-                FileManager.FileConversionProvider = PerformConversion;
-
                 // We start by considering whether the user specified a file to convert
-                if (FilePath != null)
+                // TODO: Option for not using any parameter to pass the file path
+                if (this.filePath != null)
                 {
-                    ConvertFile();
+                    this.ConvertFile();
+                    return;
+                }
+
+                // Then we evaluate project
+                if (this.projectPath != null)
+                {
+                    this.ConvertProject();
                     return;
                 }
 
                 // If we get to here, then basically nothing happens, the user needs to specify options
                 Console.WriteLine("No options specified.");
-                ShowHelp(options);
+                this.ShowHelp(options);
             }
             catch (Exception e)
             {
@@ -94,19 +176,6 @@ namespace Rosetta.Runner
             }
         }
 
-        private static void ConvertFile()
-        {
-            FileManager.AddFile(FilePath);
-            var writtenFiles = FileManager.WriteAllFilesToDestination();
-
-            foreach (var file in writtenFiles)
-            {
-                Console.WriteLine("Wrote file {0}", file);
-            }
-        }
-
-        #region Helpers
-
         private static string PerformConversion(string source)
         {
             var program = new ProgramWrapper(source);
@@ -114,25 +183,9 @@ namespace Rosetta.Runner
             return program.Output;
         }
 
-        private static string GetOutputFolder(string userInput)
-        {
-            if (userInput != null)
-            {
-                // User provided a path: check the path is all right
-                if (FileManager.IsDirectoryPathCorrect(userInput))
-                {
-                    return userInput;
-                }
+        #region Helpers
 
-                // Wrong path
-                throw new InvalidOperationException("Invalid path provided!");
-            }
-
-            // User did not provide a path, we get the current path
-            return FileManager.ApplicationExecutingPath;
-        }
-
-        private static void ShowHelp(OptionSet options)
+        protected virtual void ShowHelp(OptionSet options)
         {
             Console.WriteLine("Usage: Rosetta [OPTIONS]+ message");
             Console.WriteLine("Converts C# files into TypeScript.");
