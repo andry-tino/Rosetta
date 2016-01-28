@@ -4,7 +4,7 @@
 param(
   [parameter(mandatory = $true)] [string] $MSTestPath,
   [parameter(mandatory = $true)] [string] $WorkspacePath,
-  [string[]] $TestAssemblies = @('ASTWalker.UnitTests', 'TranslationUnits.UnitTests')
+  [string[]] $TestAssemblies = @('ASTWalker.UnitTests', 'ASTWalker.Helpers.UnitTests', 'TranslationUnits.UnitTests', 'Runner.UnitTests')
 );
 
 foreach ($TestAssembly in $TestAssemblies)
