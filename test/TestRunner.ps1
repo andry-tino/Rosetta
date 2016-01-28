@@ -1,6 +1,8 @@
 # Test runner to be executed after building Rosetta
 # This script expects to have defined a few things
 
+# ATTENTION: Not used at the moment!
+
 param(
   [parameter(mandatory = $true)] [string] $MSTestPath,
   [parameter(mandatory = $true)] [string] $WorkspacePath,
