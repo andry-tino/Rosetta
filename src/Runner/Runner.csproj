@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="exceptions\ConflictingOptionsException.cs" />
+    <Compile Include="exceptions\DefaultOptionException.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="external\MonoOptions.cs" />
     <Compile Include="Program.ConvertFile.cs" />

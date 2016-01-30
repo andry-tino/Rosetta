@@ -24,6 +24,11 @@ namespace Rosetta.Runner.UnitTests.Mocks
         }
 
         /// <summary>
+        /// Gets the <see cref="OptionException"/> thrown, if any.
+        /// </summary>
+        public OptionException ThrownOptionException { get; private set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public bool HelpContentDisplayed { get; private set; }
@@ -42,6 +47,11 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// 
         /// </summary>
         public bool FileConversionRoutineRun { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool MainRunRoutineRun { get; private set; }
 
         /// <summary>
         /// 
@@ -99,9 +109,20 @@ namespace Rosetta.Runner.UnitTests.Mocks
             get { return this.fileManager; }
         }
 
+        protected override void Run(OptionSet options)
+        {
+            this.MainRunRoutineRun = true;
+            base.Run(options);
+        }
+
         protected override void HandleError(Exception e)
         {
             this.ErrorHandled = true;
+        }
+
+        protected override void HandleOptionException(OptionException e)
+        {
+            this.ThrownOptionException = e;
         }
 
         protected override void ConvertFile()

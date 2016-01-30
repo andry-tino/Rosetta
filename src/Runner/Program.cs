@@ -11,6 +11,7 @@ namespace Rosetta.Runner
     using System.IO;
 
     using Rosetta.AST;
+    using Rosetta.Runner.Exceptions;
 
     using Mono.Options;
 
@@ -32,6 +33,8 @@ namespace Rosetta.Runner
         protected bool help = false;              // Show help message
 
         protected FileManager fileManager;
+
+        public const string UnnamedArgumentName = "unnamed";
 
         public const string FileArgumentName        = "file";
         public const string FileArgumentChar        = "f";
@@ -111,12 +114,11 @@ namespace Rosetta.Runner
             try
             {
                 extra = options.Parse(args);
+                this.HandleExtraParameters(extra);
             }
             catch (OptionException e)
             {
-                Console.Write("An error occurred: ");
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Try using option `--help' for more information.");
+                this.HandleOptionException(e);
                 return;
             }
 
@@ -136,7 +138,7 @@ namespace Rosetta.Runner
         /// Runs the main logic.
         /// </summary>
         /// <param name="options"></param>
-        private void Run(OptionSet options)
+        protected virtual void Run(OptionSet options)
         {
             // Priority to help
             if (help)
@@ -179,6 +181,43 @@ namespace Rosetta.Runner
 #if DEBUG
             Console.WriteLine(e.StackTrace);
 #endif
+        }
+
+        protected virtual void HandleOptionException(OptionException e)
+        {
+            Console.Write("An error occurred while reading input: ");
+            Console.WriteLine(e.Message);
+            Console.WriteLine("Try using option `--help' for more information.");
+        }
+
+        protected virtual void HandleExtraParameters(IEnumerable<string> extra)
+        {
+            int count = extra.Count();
+
+            if (count == 0)
+            {
+                return;
+            }
+
+            // An extra parameter is allowed: implicit [file=]
+            // However if more unhandled parameters are found, this is an error
+            if (count > 1)
+            {
+                throw new OptionException("Cannot handle more than one unnamed parameter!", 
+                    "Default parameters", new DefaultOptionException(extra.ToArray()));
+            }
+
+            // Also, if parameter --file has been specified together with one unnamed 
+            // parameter, we will throw an exception indicatring the conflict
+            if (this.filePath != null)
+            {
+                throw new OptionException("Conflict occurred when processing input: " + 
+                    "an unnamed parameter and a file-path parameter have been both specified.", 
+                    FileArgumentName, new ConflictingOptionsException(UnnamedArgumentName, FileArgumentName));
+            }
+
+            // If everything is fine, just apply to file-path
+            this.filePath = extra.ElementAt(0);
         }
 
         private static string PerformConversion(string source)

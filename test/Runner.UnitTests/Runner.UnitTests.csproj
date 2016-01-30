@@ -51,9 +51,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="mocks\MockedProgram.cs" />
-    <Compile Include="ProgramUnitTest.cs" />
+    <Compile Include="InputParametersUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestSuite.cs" />
+    <Compile Include="utilities\AssertUtils.cs" />
+    <Compile Include="utilities\ParameterUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Runner\Runner.csproj">
