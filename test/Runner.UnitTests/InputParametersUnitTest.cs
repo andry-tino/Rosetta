@@ -26,6 +26,20 @@ namespace Rosetta.Runner.UnitTests
         {
         }
 
+        #region General
+
+        [TestMethod]
+        public void WhenCalledWithNoParameterThenNoFeasibleRunIsNotified()
+        {
+            var program = new MockedProgram(new string[] { });
+
+            Assert.AreEqual(true, program.NoFeasibleExecutionRoutineRun, "User should be notified about not feasible execution!");
+            Assert.AreEqual(true, program.HelpContentDisplayed, "Help content should have been displayed!");
+            program.AssertProgramNotRun();
+        }
+
+        #endregion
+
         #region Parameter Help
 
         [TestMethod]

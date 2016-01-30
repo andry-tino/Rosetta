@@ -41,6 +41,11 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// <summary>
         /// 
         /// </summary>
+        public bool NoFeasibleExecutionRoutineRun { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool ProjectConversionRoutineRun { get; private set; }
 
         /// <summary>
@@ -109,10 +114,16 @@ namespace Rosetta.Runner.UnitTests.Mocks
             get { return this.fileManager; }
         }
 
-        protected override void Run(OptionSet options)
+        protected override void Run()
         {
             this.MainRunRoutineRun = true;
-            base.Run(options);
+            base.Run();
+        }
+
+        protected override void HandleNoFeasibleExecution()
+        {
+            this.NoFeasibleExecutionRoutineRun = true;
+            base.HandleNoFeasibleExecution();
         }
 
         protected override void HandleError(Exception e)
@@ -147,7 +158,7 @@ namespace Rosetta.Runner.UnitTests.Mocks
             // Do nothing
         }
 
-        protected override void ShowHelp(OptionSet options)
+        protected override void ShowHelp()
         {
             this.HelpContentDisplayed = true;
         }

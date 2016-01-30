@@ -25,6 +25,8 @@ namespace Rosetta.Runner
     {
         protected static Program instance;
 
+        protected OptionSet options;
+
         protected string filePath = null;         // File to convert
         protected string projectPath = null;      // Project to convert
         protected string outputFolder = null;     // The output folder path for destination files
@@ -94,7 +96,7 @@ namespace Rosetta.Runner
         /// <param name="args"></param>
         public Program(string[] args)
         {
-            var options = new OptionSet()
+            this.options = new OptionSet()
             {
                 { FileOption, "The path to the C# {FILE} to convert into TypeScript.",
                   value => this.filePath = value },
@@ -113,7 +115,7 @@ namespace Rosetta.Runner
             List<string> extra;
             try
             {
-                extra = options.Parse(args);
+                extra = this.options.Parse(args);
                 this.HandleExtraParameters(extra);
             }
             catch (OptionException e)
@@ -126,31 +128,29 @@ namespace Rosetta.Runner
             if (args.Length == 0)
             {
                 Console.Write("No input provided!");
-                this.ShowHelp(options);
+                this.ShowHelp();
 
                 return;
             }
 
-            this.Run(options);
+            this.Run();
         }
 
         /// <summary>
         /// Runs the main logic.
         /// </summary>
-        /// <param name="options"></param>
-        protected virtual void Run(OptionSet options)
+        protected virtual void Run()
         {
             // Priority to help
             if (help)
             {
-                this.ShowHelp(options);
+                this.ShowHelp();
                 return;
             }
 
             try
             {
                 // We start by considering whether the user specified a file to convert
-                // TODO: Option for not using any parameter to pass the file path
                 if (this.filePath != null)
                 {
                     this.ConvertFile();
@@ -165,8 +165,7 @@ namespace Rosetta.Runner
                 }
 
                 // If we get to here, then basically nothing happens, the user needs to specify options
-                Console.WriteLine("No options specified.");
-                this.ShowHelp(options);
+                this.HandleNoFeasibleExecution();
             }
             catch (Exception e)
             {
@@ -188,6 +187,12 @@ namespace Rosetta.Runner
             Console.Write("An error occurred while reading input: ");
             Console.WriteLine(e.Message);
             Console.WriteLine("Try using option `--help' for more information.");
+        }
+
+        protected virtual void HandleNoFeasibleExecution()
+        {
+            Console.WriteLine("A file or a project to convert should be specified!");
+            this.ShowHelp();
         }
 
         protected virtual void HandleExtraParameters(IEnumerable<string> extra)
@@ -229,13 +234,13 @@ namespace Rosetta.Runner
 
         #region Helpers
 
-        protected virtual void ShowHelp(OptionSet options)
+        protected virtual void ShowHelp()
         {
             Console.WriteLine("Usage: Rosetta [OPTIONS]+ message");
             Console.WriteLine("Converts C# files into TypeScript.");
             Console.WriteLine();
             Console.WriteLine("Options:");
-            options.WriteOptionDescriptions(Console.Out);
+            this.options.WriteOptionDescriptions(Console.Out);
         }
 
         #endregion
