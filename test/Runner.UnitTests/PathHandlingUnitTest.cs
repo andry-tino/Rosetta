@@ -155,6 +155,8 @@ namespace Rosetta.Runner.UnitTests
             });
 
             Assert.AreEqual(true, program.ErrorHandled, "Error should have been handled!");
+            Assert.IsNotNull(program.ThrownProgramException, "Program expected to emit exception!");
+            Assert.IsInstanceOfType(program.ThrownProgramException, typeof(FileNotFoundException));
         }
 
         #endregion

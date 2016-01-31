@@ -110,9 +110,9 @@ namespace Rosetta.Runner
                 throw new ArgumentNullException(nameof(filePath));
             }
 
-            if (!IsFilePathCorrect(filePath))
+            if (!FileExists(filePath))
             {
-                throw new ArgumentException("Invalid path!", nameof(filePath));
+                throw new FileNotFoundException("Invalid path!", nameof(filePath));
             }
 
             ((List<FileEntry>)this.fileEntries).Add(new FileEntry()
@@ -237,6 +237,16 @@ namespace Rosetta.Runner
 
             return Directory.Exists(
                 new FileInfo(path).DirectoryName);
+        }
+
+        /// <summary>
+        /// Check that the file exists.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool FileExists(string path)
+        {
+            return File.Exists(path);
         }
 
         /// <summary>

@@ -30,6 +30,11 @@ namespace Rosetta.Runner.UnitTests.Mocks
         public OptionException ThrownOptionException { get; private set; }
 
         /// <summary>
+        /// Gets the <see cref="Exception"/> thrown by the program, if any.
+        /// </summary>
+        public Exception ThrownProgramException { get; private set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public bool HelpContentDisplayed { get; private set; }
@@ -130,6 +135,7 @@ namespace Rosetta.Runner.UnitTests.Mocks
         protected override void HandleError(Exception e)
         {
             this.ErrorHandled = true;
+            this.ThrownProgramException = e;
         }
 
         protected override void HandleOptionException(OptionException e)
