@@ -50,7 +50,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="mocks\CustomizableMockedProgram.cs" />
     <Compile Include="mocks\MockedProgram.cs" />
+    <Compile Include="mocks\MockedProgramBase.cs" />
     <Compile Include="InputParametersUnitTest.cs" />
     <Compile Include="PathHandlingUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -160,7 +160,23 @@ namespace Rosetta.Runner.UnitTests
                 value
             });
             
-            Assert.AreEqual(value, program.FilePath, "File conversion routine was expected to be run!");
+            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FilePath, 
+                "File conversion routine was expected to be run!");
+        }
+
+        [TestMethod]
+        public void FileShortParameterValueIsStored()
+        {
+            var value = "file";
+
+            var program = new MockedProgram(new string[]
+            {
+                ParameterUtils.FileArgumentShortParameter,
+                value
+            });
+
+            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FilePath, 
+                "File conversion routine was expected to be run!");
         }
 
         [TestMethod]
@@ -173,7 +189,8 @@ namespace Rosetta.Runner.UnitTests
                 value
             });
 
-            Assert.AreEqual(value, program.FilePath, "File conversion routine was expected to be run!");
+            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FilePath, 
+                "File conversion routine was expected to be run!");
         }
 
         [TestMethod]
@@ -239,13 +256,30 @@ namespace Rosetta.Runner.UnitTests
         [TestMethod]
         public void OutputParameterValueIsStored()
         {
-            var value = PathUtils.GetTestFolderAbsolutePath();
+            var value = PathUtils.TestFolderAbsolutePath;
 
             var program = new MockedProgram(new string[]
             {
                 ParameterUtils.FileArgumentParameter,
                 "file1",
                 ParameterUtils.OutputArgumentParameter,
+                value
+            });
+
+            Assert.IsNotNull(program.OutputFolder, "Expecting output flder path!");
+            Assert.AreEqual(value, program.OutputFolder, "Not matching output folder path!");
+        }
+
+        [TestMethod]
+        public void OutputShortParameterValueIsStored()
+        {
+            var value = PathUtils.TestFolderAbsolutePath;
+
+            var program = new MockedProgram(new string[]
+            {
+                ParameterUtils.FileArgumentParameter,
+                "file1",
+                ParameterUtils.OutputArgumentShortParameter,
                 value
             });
 

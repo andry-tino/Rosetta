@@ -27,7 +27,12 @@ namespace Rosetta.Runner
         protected virtual void InitializeForFileConversion()
         {
             // Setting output folder
+            // Making sure this gets translated into absolute path
             this.outputFolder = this.GetOutputFolderForFile(this.outputFolder);
+            
+            // Making sure we translate it into absolute path
+            // Attention: Path correctness is checked later
+            this.filePath = this.GetFilePath(this.filePath);
 
             // Initializing the file manager
             this.fileManager = new FileManager(this.outputFolder);
@@ -36,7 +41,9 @@ namespace Rosetta.Runner
         
         protected virtual void PrepareFiles()
         {
-            fileManager.AddFile(filePath, fileName);
+            // This will perform anothe file existing check, redundant as we 
+            // do it in initialization routine, but fine!
+            fileManager.AddFile(this.filePath, this.fileName);
         }
         
         protected virtual void EmitFiles()
@@ -56,8 +63,8 @@ namespace Rosetta.Runner
         /// 1. If no path specified: take the path of the input file.
         /// 2. Otherwise, a path is specified: use that.
         /// </summary>
-        /// <param name="userInput"></param>
-        /// <returns></returns>
+        /// <param name="userInput">The user input. Can be <code>null</code>.</param>
+        /// <returns>The absolute path to the output folder basing on user input.</returns>
         private string GetOutputFolderForFile(string userInput)
         {
             if (userInput != null)
@@ -65,7 +72,7 @@ namespace Rosetta.Runner
                 // User provided a path: check the path is all right
                 if (FileManager.IsDirectoryPathCorrect(userInput))
                 {
-                    return userInput;
+                    return FileManager.GetAbsolutePath(userInput);
                 }
 
                 // Wrong path
@@ -79,6 +86,18 @@ namespace Rosetta.Runner
             }
 
             throw new InvalidOperationException("Invalid path provided for input file!");
+        }
+
+        /// <summary>
+        /// Checks that the path is OK and also translates into absolute path.
+        /// </summary>
+        /// <param name="userInput">
+        /// The user input. At this point this is supposed not to be <code>null</code>.
+        /// </param>
+        /// <returns></returns>
+        private string GetFilePath(string userInput)
+        {
+            return FileManager.GetAbsolutePath(userInput);
         }
 
         #endregion

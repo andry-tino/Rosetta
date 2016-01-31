@@ -137,6 +137,14 @@ namespace Rosetta.Runner
         }
 
         /// <summary>
+        /// For testability.
+        /// </summary>
+        protected virtual void StartProgram()
+        {
+            this.Run();
+        }
+
+        /// <summary>
         /// Runs the main logic.
         /// </summary>
         protected virtual void Run()

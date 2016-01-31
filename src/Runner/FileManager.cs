@@ -209,6 +209,21 @@ namespace Rosetta.Runner
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GetAbsolutePath(string path)
+        {
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+
+            return Path.GetFullPath(path);
+        }
+
+        /// <summary>
         /// Checks that the folder where a file resides is a valid folder path.
         /// </summary>
         /// <param name="path">Path to the file to check.</param>
@@ -225,10 +240,10 @@ namespace Rosetta.Runner
         }
 
         /// <summary>
-        /// 
+        /// Extracts the folder path for the specified file.
         /// </summary>
         /// <param name="path"></param>
-        /// <returns></returns>
+        /// <returns>The absolute path to the directory.</returns>
         public static string ExtractDirectoryPathFromFilePath(string path)
         {
             return new FileInfo(path).DirectoryName;
