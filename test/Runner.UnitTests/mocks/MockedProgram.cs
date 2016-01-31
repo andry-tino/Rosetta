@@ -150,12 +150,12 @@ namespace Rosetta.Runner.UnitTests.Mocks
 
         protected override void EmitFiles()
         {
-            // Do nothing
+            // Do nothing, we do not want to proceed with actual translation
         }
 
         protected override void PrepareFiles()
         {
-            // Do nothing
+            // Do nothing, we do not want to proceed with actual translation
         }
 
         protected override void ShowHelp()

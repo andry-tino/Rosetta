@@ -209,10 +209,10 @@ namespace Rosetta.Runner
         }
 
         /// <summary>
-        /// 
+        /// Checks that the folder where a file resides is a valid folder path.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">Path to the file to check.</param>
+        /// <returns>A value indicating whether the path of the file is correct or not.</returns>
         public static bool IsFilePathCorrect(string path)
         {
             if (path == null)
@@ -220,7 +220,8 @@ namespace Rosetta.Runner
                 throw new ArgumentNullException(nameof(path));
             }
 
-            return File.Exists(path);
+            return Directory.Exists(
+                new FileInfo(path).DirectoryName);
         }
 
         /// <summary>

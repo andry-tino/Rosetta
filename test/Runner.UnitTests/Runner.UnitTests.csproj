@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="mocks\MockedProgram.cs" />
     <Compile Include="InputParametersUnitTest.cs" />
+    <Compile Include="PathHandlingUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="utilities\AssertUtils.cs" />

@@ -28,12 +28,15 @@ namespace Rosetta.Runner.UnitTests
 
         #region General
 
+        /// <summary>
+        /// This tests that passing no parameter causes runner not to execute the main routine.
+        /// </summary>
         [TestMethod]
-        public void WhenCalledWithNoParameterThenNoFeasibleRunIsNotified()
+        public void WhenCalledWithNoParameterThenMainRoutineIsNotRun()
         {
             var program = new MockedProgram(new string[] { });
 
-            Assert.AreEqual(true, program.NoFeasibleExecutionRoutineRun, "User should be notified about not feasible execution!");
+            Assert.AreEqual(false, program.NoFeasibleExecutionRoutineRun, "User should be notified about not feasible execution!");
             Assert.AreEqual(true, program.HelpContentDisplayed, "Help content should have been displayed!");
             program.AssertProgramNotRun();
         }
