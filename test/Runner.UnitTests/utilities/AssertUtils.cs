@@ -12,7 +12,7 @@ namespace Rosetta.Runner.UnitTests.Utils
     using Rosetta.Runner.UnitTests.Mocks;
 
     /// <summary>
-    /// Mock for <see cref="Program"/>.
+    /// Utils for asserting.
     /// </summary>
     internal static class AssertUtils
     {

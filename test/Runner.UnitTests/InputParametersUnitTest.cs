@@ -233,5 +233,26 @@ namespace Rosetta.Runner.UnitTests
         }
 
         #endregion
+
+        #region Parameter Output
+
+        [TestMethod]
+        public void OutputParameterValueIsStored()
+        {
+            var value = PathUtils.GetTestFolderAbsolutePath();
+
+            var program = new MockedProgram(new string[]
+            {
+                ParameterUtils.FileArgumentParameter,
+                "file1",
+                ParameterUtils.OutputArgumentParameter,
+                value
+            });
+
+            Assert.IsNotNull(program.OutputFolder, "Expecting output flder path!");
+            Assert.AreEqual(value, program.OutputFolder, "Not matching output folder path!");
+        }
+
+        #endregion
     }
 }

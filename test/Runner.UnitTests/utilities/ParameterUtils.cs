@@ -6,13 +6,11 @@
 namespace Rosetta.Runner.UnitTests.Utils
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Rosetta.Runner;
-    using Rosetta.Runner.UnitTests.Mocks;
 
     /// <summary>
-    /// Mock for <see cref="Program"/>.
+    /// Utils for parameter handling.
     /// </summary>
     internal static class ParameterUtils
     {

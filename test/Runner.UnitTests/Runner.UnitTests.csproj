@@ -57,6 +57,7 @@
     <Compile Include="TestSuite.cs" />
     <Compile Include="utilities\AssertUtils.cs" />
     <Compile Include="utilities\ParameterUtils.cs" />
+    <Compile Include="utilities\PathUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Runner\Runner.csproj">

@@ -47,9 +47,8 @@ namespace Rosetta.Runner.UnitTests
         [TestMethod]
         public void WhenNoOutputPathIsSpecifiedFilePathIsUsedWhenAbsolute()
         {
-            // We build an absolute path from a relative path to get a valid folder path
-            // In the end we get an absolut path we can pass to runner!
-            var value = Path.Combine(new FileInfo("file1").DirectoryName, "file1");
+            // In the end we get an absolute path we can pass to runner!
+            var value = PathUtils.GetTestFolderAbsolutePath();
 
             var program = new MockedProgram(new string[]
             {
