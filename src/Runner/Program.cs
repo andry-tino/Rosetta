@@ -25,6 +25,7 @@ namespace Rosetta.Runner
     {
         protected static Program instance;
 
+        protected string[] args;
         protected OptionSet options;
 
         protected string filePath = null;         // File to convert
@@ -88,6 +89,7 @@ namespace Rosetta.Runner
         static void Main(string[] args)
         {
             instance = new Program(args);
+            instance.Run();
         }
 
         /// <summary>
@@ -96,6 +98,7 @@ namespace Rosetta.Runner
         /// <param name="args"></param>
         public Program(string[] args)
         {
+            this.args = args;
             this.options = new OptionSet()
             {
                 { FileOption, "The path to the C# {FILE} to convert into TypeScript.",
@@ -111,11 +114,16 @@ namespace Rosetta.Runner
                 { HelpOption,  "Show this message and exit.",
                   value => this.help = value != null },
             };
+        }
 
+        /// <summary>
+        /// Starts the program.
+        /// </summary>
+        public void Run() {
             List<string> extra;
             try
             {
-                extra = this.options.Parse(args);
+                extra = this.options.Parse(this.args);
                 this.HandleExtraParameters(extra);
             }
             catch (OptionException e)
@@ -125,7 +133,7 @@ namespace Rosetta.Runner
             }
 
             // If user provided no input arguments, show help
-            if (args.Length == 0)
+            if (this.args.Length == 0)
             {
                 Console.Write("No input provided!");
                 this.ShowHelp();
@@ -133,21 +141,13 @@ namespace Rosetta.Runner
                 return;
             }
 
-            this.Run();
-        }
-
-        /// <summary>
-        /// For testability.
-        /// </summary>
-        protected virtual void StartProgram()
-        {
-            this.Run();
+            this.RunCore();
         }
 
         /// <summary>
         /// Runs the main logic.
         /// </summary>
-        protected virtual void Run()
+        protected virtual void RunCore()
         {
             // Priority to help
             if (help)

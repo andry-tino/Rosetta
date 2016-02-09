@@ -29,25 +29,8 @@ namespace Rosetta.Runner.UnitTests.Mocks
         public CustomizableMockedProgram(Action emitFilesRoutine, Action prepareFilesRoutine, string[] args)
             : base(args)
         {
-            // The base constructor will do its job, but will not run 
-            // the program giving us time to initialize internal variables
             this.prepareFilesRoutine = prepareFilesRoutine;
             this.emitFilesRoutine = emitFilesRoutine;
-
-            // Now we call the run routine
-            this.Run();
-        }
-
-        /// <summary>
-        /// This is needed to allow us to properly construct mocks when having parameters to pass.
-        /// The problem is that when calling the base class, then <see cref="Program.Run"/> is called,
-        /// and after that we can start the derived class constructor.
-        /// By using this approach, we prevent <see cref="Program"/> from calling <see cref="Program.Run"/>,
-        /// then we can execute our ocnstructor, and then we call <see cref="Program.Run"/> ourselves!
-        /// </summary>
-        protected override void StartProgram()
-        {
-            // Do nothing
         }
 
         protected override void EmitFiles()

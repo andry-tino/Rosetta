@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-/// <summary>
+﻿/// <summary>
 /// PathUtils.cs
 /// Andrea Tino - 2015
 /// </summary>
@@ -13,6 +7,7 @@ namespace Rosetta.Runner.UnitTests.Utils
 {
     using System;
     using System.IO;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
     /// Utils for path handling.
@@ -20,17 +15,26 @@ namespace Rosetta.Runner.UnitTests.Utils
     internal static class PathUtils
     {
         /// <summary>
-        /// Utility method to get a valid rooted path to a folder which does 
-        /// not really exist in the filesystem.
+        /// Utility method to get the path of the test folder where 
+        /// test files and executables have been deployed.
         /// </summary>
-        /// <returns></returns>
-        public static string TestFolderAbsolutePath
+        /// <returns>The absolute path to test deployment folder.</returns>
+        public static string GetTestDeploymentFolder(this TestContext testContext)
         {
-            get
-            {
-                // Builds an absolute path from a relative path to get a valid folder path
-                return Path.Combine(new FileInfo("file1").DirectoryName, "file1");
-            }
+            return Path.GetFullPath(testContext.DeploymentDirectory);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="testContext"></param>
+        /// <returns></returns>
+        public static string GetTestDeploymentFolderRelativeToExecutionFolder(this TestContext testContext)
+        {
+            Uri executionPath = new Uri(ApplicationExecutingPath);
+            Uri deploymentPath = new Uri(testContext.DeploymentDirectory);
+            
+            return executionPath.MakeRelativeUri(deploymentPath).OriginalString;
         }
 
         /// <summary>

@@ -27,6 +27,7 @@ namespace Rosetta.Runner
         protected virtual void InitializeForFileConversion()
         {
             // Setting output folder
+            // TODO: Move this in shared part as also the routine for converting projects will need to do this
             // Making sure this gets translated into absolute path
             this.outputFolder = this.GetOutputFolderForFile(this.outputFolder);
             
@@ -76,7 +77,8 @@ namespace Rosetta.Runner
                 }
 
                 // Wrong path
-                throw new InvalidOperationException("Invalid path provided for output folder!");
+                throw new InvalidOperationException("Invalid path provided for output folder!", 
+                    new DirectoryNotFoundException(string.Format("Directory {0} not found", userInput)));
             }
 
             // User did not provide a path, we get the path of the input file
@@ -85,7 +87,8 @@ namespace Rosetta.Runner
                 return FileManager.ExtractDirectoryPathFromFilePath(this.filePath);
             }
 
-            throw new InvalidOperationException("Invalid path provided for input file!");
+            throw new InvalidOperationException("Invalid path provided for input file for extracting output directory!",
+                new FileNotFoundException("File not found", filePath));
         }
 
         /// <summary>
