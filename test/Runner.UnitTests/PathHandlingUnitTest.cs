@@ -25,27 +25,17 @@ namespace Rosetta.Runner.UnitTests
     [TestClass]
     public class PathHandlingUnitTest
     {
-        private static ResourceUtils testResources;
         private static TestContext testContext;
-
-        private static string TestResource1 = "file1.cs";
-
+        
         [ClassInitialize]
         public static void Initialize(TestContext context)
         {
-            testResources = new ResourceUtils(context, new string[] 
-            {
-                TestResource1
-            });
-            testResources.Deploy();
-
             testContext = context;
         }
 
         [ClassCleanup]
         public static void CleanUp()
         {
-            testResources.Dispose();
         }
 
         #region Output path
@@ -136,7 +126,6 @@ namespace Rosetta.Runner.UnitTests
         /// Tests that providing a relative path for parameter `output` works fine.
         /// </summary>
         [TestMethod]
-        [Ignore]
         public void RelativeOutputPath()
         {
             // The execution path is different from the deployment path
@@ -190,7 +179,8 @@ namespace Rosetta.Runner.UnitTests
         [TestMethod]
         public void AbsoluteFilePath()
         {
-            string absoluteFilePath = Path.Combine(testContext.GetTestDeploymentFolder(), TestResource1);
+            string absoluteFilePath = Path.Combine(PathUtils.ApplicationExecutingPath,
+                TestObjects.EmptyFile);
 
             // This will not inhibit the prepare files routine
             var program = new CustomizableMockedProgram(() => { }, null, new string[]
@@ -212,19 +202,19 @@ namespace Rosetta.Runner.UnitTests
         /// we need to use a different mock which does not inhibit this stage.
         /// </remarks>
         [TestMethod]
-        [Ignore]
         public void RelativeFilePath()
         {
             // This will not inhibit the prepare files routine
             var program = new CustomizableMockedProgram(() => { }, null, new string[]
             {
                 ParameterUtils.FileArgumentParameter,
-                string.Format(@".\{0}", TestResource1) // Relative to execution
+                Path.Combine(".", TestObjects.EmptyFile)
             });
             program.Run();
 
             Assert.AreEqual(false, program.ErrorHandled, "No error expected!");
-            Assert.AreEqual(testResources.Files[0], program.FilePath, "Wrong acquired file path!");
+            Assert.AreEqual(Path.Combine(PathUtils.ApplicationExecutingPath, TestObjects.EmptyFile),
+                program.FilePath, "Wrong acquired file path!");
         }
 
         /// <summary>
@@ -241,7 +231,7 @@ namespace Rosetta.Runner.UnitTests
             var program = new CustomizableMockedProgram(() => { }, null, new string[]
             {
                 ParameterUtils.FileArgumentParameter,
-                "file1"
+                Path.Combine(".", TestObjects.NotExistingFile)
             });
             program.Run();
 

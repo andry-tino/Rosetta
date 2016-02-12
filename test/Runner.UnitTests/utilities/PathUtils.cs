@@ -25,6 +25,16 @@ namespace Rosetta.Runner.UnitTests.Utils
         }
 
         /// <summary>
+        /// Utility method to get the path of the test folder where 
+        /// tests are being executed.
+        /// </summary>
+        /// <returns>The absolute path to test execution folder.</returns>
+        public static string GetTestExecutionFolder(this TestContext testContext)
+        {
+            return Path.GetFullPath(testContext.TestRunDirectory);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="testContext"></param>

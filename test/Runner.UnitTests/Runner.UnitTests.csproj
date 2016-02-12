@@ -57,11 +57,14 @@
     <Compile Include="PathHandlingUnitTest.cs" />
     <Compile Include="ProgramUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="test-objects\EmptyFile.testobject.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Compile Include="TestSuite.cs" />
     <Compile Include="utilities\AssertUtils.cs" />
     <Compile Include="utilities\ParameterUtils.cs" />
     <Compile Include="utilities\PathUtils.cs" />
-    <Compile Include="utilities\ResourceUtils.cs" />
+    <Compile Include="utilities\TestObjects.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Runner\Runner.csproj">
