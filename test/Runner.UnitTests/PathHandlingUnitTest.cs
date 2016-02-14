@@ -92,7 +92,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 "file1",
                 ParameterUtils.OutputArgumentParameter,
-                "."
+                PathUtils.CurrentDirectoryWildcard
             });
             program.Run();
 
@@ -208,7 +208,7 @@ namespace Rosetta.Runner.UnitTests
             var program = new CustomizableMockedProgram(() => { }, null, new string[]
             {
                 ParameterUtils.FileArgumentParameter,
-                Path.Combine(".", TestObjects.EmptyFile)
+                Path.Combine(PathUtils.CurrentDirectoryWildcard, TestObjects.EmptyFile)
             });
             program.Run();
 
@@ -231,7 +231,7 @@ namespace Rosetta.Runner.UnitTests
             var program = new CustomizableMockedProgram(() => { }, null, new string[]
             {
                 ParameterUtils.FileArgumentParameter,
-                Path.Combine(".", TestObjects.NotExistingFile)
+                Path.Combine(PathUtils.CurrentDirectoryWildcard, TestObjects.NotExistingFile)
             });
             program.Run();
 

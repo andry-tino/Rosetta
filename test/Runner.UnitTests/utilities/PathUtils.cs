@@ -15,6 +15,14 @@ namespace Rosetta.Runner.UnitTests.Utils
     internal static class PathUtils
     {
         /// <summary>
+        /// Gets the cirrent directory wildcard.
+        /// </summary>
+        public static string CurrentDirectoryWildcard
+        {
+            get { return "."; }
+        }
+
+        /// <summary>
         /// Utility method to get the path of the test folder where 
         /// test files and executables have been deployed.
         /// </summary>
