@@ -2,9 +2,8 @@
 # This script expects to have defined a few things
 
 param(
-  [parameter(mandatory = $true)] [string] $MSTestPath,
+  [parameter(mandatory = $true)] [string] $VSTestConsolePath,
   [parameter(mandatory = $true)] [string] $WorkspacePath,
-  [string] $OutputPath = $WorkspacePath,
   [string[]] $TestAssemblies = @(
 	'ASTWalker.UnitTests\bin\Debug\Rosetta.ASTWalker.UnitTests.dll', 
 	'ASTWalker.Helpers.UnitTests\bin\Debug\Rosetta.ASTWalker.Helpers.UnitTests.dll', 
@@ -13,21 +12,21 @@ param(
   )
 );
 
-# Save the trx file in the workspace
-$ResultsFilePath = join-path -Path $OutputPath -ChildPath 'Rosetta.TestResults.trx';
-$ResultsFile = "/resultsfile:""$ResultsFilePath""";
+$RunSettingsPath = join-path -Path $WorkspacePath -ChildPath 'test' | 
+				   join-path -ChildPath 'Default.runsettings';
+$RunSettings = "/Settings:""$RunSettingsPath""";
 
 $Options = @();
 foreach ($TestAssembly in $TestAssemblies)
 {
   $PathToTestAssembly = join-path -Path $WorkspacePath -ChildPath 'test' | 
 						join-path -ChildPath $TestAssembly;
-  $Options += "/testcontainer:""$PathToTestAssembly""";
+  $Options += $PathToTestAssembly;
 }
 
-$Options += $ResultsFile;
+$Options += $RunSettings;
 
 # Testing
-& $MSTestPath $Options;
+& $VSTestConsolePath $Options;
 
 exit $LASTEXITCODE;

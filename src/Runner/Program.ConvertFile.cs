@@ -23,17 +23,19 @@ namespace Rosetta.Runner
             this.PrepareFiles();
             this.EmitFiles();
         }
-        
+
+        // TODO: Move this in shared part as also the routine for converting projects will need to do this
         protected virtual void InitializeForFileConversion()
         {
-            // Setting output folder
-            // TODO: Move this in shared part as also the routine for converting projects will need to do this
-            // Making sure this gets translated into absolute path
-            this.outputFolder = this.GetOutputFolderForFile(this.outputFolder);
-            
             // Making sure we translate it into absolute path
             // Attention: Path correctness is checked later
+            // Important: File path must be converted into absolute now 
+            // as the calculation for output folder relies on this!
             this.filePath = this.GetFilePath(this.filePath);
+
+            // Setting output folder
+            // Making sure this gets translated into absolute path
+            this.outputFolder = this.GetOutputFolderForFile(this.outputFolder);
 
             // Initializing the file manager
             this.fileManager = new FileManager(this.outputFolder);
@@ -82,7 +84,8 @@ namespace Rosetta.Runner
             }
 
             // User did not provide a path, we get the path of the input file
-            if (FileManager.IsFilePathCorrect(this.filePath))
+            // Attention, the path mught be relative
+            if (FileManager.IsDirectoryWhereFileResidesCorrect(this.filePath))
             {
                 return FileManager.ExtractDirectoryPathFromFilePath(this.filePath);
             }

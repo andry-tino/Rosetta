@@ -17,6 +17,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationUnits", "src\TranslationUnits\TranslationUnits.csproj", "{851A3ACD-A1C2-40CD-8BA0-0296EEDBF025}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2683807F-29C3-4ED2-90F5-B342DB0A8B04}"
+	ProjectSection(SolutionItems) = preProject
+		test\Default.runsettings = test\Default.runsettings
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker.UnitTests", "test\ASTWalker.UnitTests\ASTWalker.UnitTests.csproj", "{E1E7E1AA-FC1B-49AC-9F99-7D2AD20FD193}"
 EndProject

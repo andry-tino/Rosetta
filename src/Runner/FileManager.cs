@@ -228,7 +228,7 @@ namespace Rosetta.Runner
         /// </summary>
         /// <param name="path">Path to the file to check.</param>
         /// <returns>A value indicating whether the path of the file is correct or not.</returns>
-        public static bool IsFilePathCorrect(string path)
+        public static bool IsDirectoryWhereFileResidesCorrect(string path)
         {
             if (path == null)
             {
