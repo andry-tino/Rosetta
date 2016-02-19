@@ -49,10 +49,16 @@ namespace Rosetta.Runner.UnitTests.Utils
         /// <returns></returns>
         public static string GetTestDeploymentFolderRelativeToExecutionFolder(this TestContext testContext)
         {
-            Uri executionPath = new Uri(ApplicationExecutingPath);
-            Uri deploymentPath = new Uri(testContext.DeploymentDirectory);
-            
-            return executionPath.MakeRelativeUri(deploymentPath).OriginalString;
+            Uri executionPath = new Uri(EnsureDirectoryPath(ApplicationExecutingPath));
+            Uri deploymentPath = new Uri(EnsureDirectoryPath(testContext.DeploymentDirectory));
+
+            string path = executionPath.MakeRelativeUri(deploymentPath).OriginalString;
+
+            // Path is URL encoded, spaces for example get encoded in `%20` which is not valid in
+            // Windows paths, we need to encode the string in a proper way
+            path = Uri.UnescapeDataString(path);
+
+            return path;
         }
 
         /// <summary>
@@ -74,7 +80,7 @@ namespace Rosetta.Runner.UnitTests.Utils
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static string GetAbsolutePath(string path)
+        public static string GetAbsolutePath(this string path)
         {
             if (Path.IsPathRooted(path))
             {
@@ -82,6 +88,38 @@ namespace Rosetta.Runner.UnitTests.Utils
             }
 
             return Path.GetFullPath(path);
+        }
+
+        /// <summary>
+        /// Strips from the path the last character if it is a folder separator.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string StripLastFolderSeparatorFromPath(this string path)
+        {
+            if (path.Length <= 2)
+            {
+                return path;
+            }
+
+            if (path[path.Length - 1] == Path.DirectorySeparatorChar)
+            {
+                return path.Substring(0, path.Length - 1);
+            }
+
+            return path;
+        }
+
+        private static string EnsureDirectoryPath(string pathToDirectory)
+        {
+            string path = pathToDirectory;
+
+            if (!path.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                path += Path.DirectorySeparatorChar;
+            }
+
+            return path;
         }
     }
 }

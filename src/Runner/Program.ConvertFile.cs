@@ -73,9 +73,11 @@ namespace Rosetta.Runner
             if (userInput != null)
             {
                 // User provided a path: check the path is all right
-                if (FileManager.IsDirectoryPathCorrect(userInput))
+                // But since the path might be relative, we must ensure it is absolute
+                string userProvidedPath = FileManager.GetAbsolutePath(userInput);
+                if (FileManager.IsDirectoryPathCorrect(userProvidedPath))
                 {
-                    return FileManager.GetAbsolutePath(userInput);
+                    return userProvidedPath;
                 }
 
                 // Wrong path
@@ -84,7 +86,7 @@ namespace Rosetta.Runner
             }
 
             // User did not provide a path, we get the path of the input file
-            // Attention, the path mught be relative
+            // Attention, the path might be relative
             if (FileManager.IsDirectoryWhereFileResidesCorrect(this.filePath))
             {
                 return FileManager.ExtractDirectoryPathFromFilePath(this.filePath);

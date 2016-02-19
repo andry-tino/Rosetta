@@ -220,6 +220,7 @@ namespace Rosetta.Runner
                 return path;
             }
 
+            // The path does not need to exist
             return Path.GetFullPath(path);
         }
 
