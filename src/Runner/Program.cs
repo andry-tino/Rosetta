@@ -216,7 +216,6 @@ namespace Rosetta.Runner
             // However if more unhandled parameters are found, this is an error
             if (count > 1)
             {
-                System.Diagnostics.Debugger.Launch();
                 throw new OptionException("Cannot handle more than one unnamed parameter!", 
                     "Default parameters", new DefaultOptionException(extra.ToArray()));
             }
