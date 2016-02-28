@@ -37,7 +37,7 @@ if (test-path $OutputPath)
   remove-item $OutputPath -recurse
 }
 
-new-item "$OutputPath" -type directory | out-null;
+new-item $OutputPath -type directory | out-null;
 
 # Handling single files to translate
 foreach ($SourceEntry in $SourceFiles.GetEnumerator())
@@ -52,6 +52,5 @@ foreach ($SourceEntry in $SourceFiles.GetEnumerator())
   );
 
   # Calling Rosetta and providing the output file
-  Write-output "$Options"
   & $Rosetta $Options;
 }
