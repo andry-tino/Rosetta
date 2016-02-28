@@ -191,10 +191,6 @@ namespace Rosetta.Runner
             Console.WriteLine("An error occurred: {0}!", e.Message);
             Console.WriteLine(e.StackTrace);
 #endif
-
-#if DEBUGGER
-            System.Diagnostics.Debugger.Launch();
-#endif
         }
 
         protected virtual void HandleOptionException(OptionException e)
