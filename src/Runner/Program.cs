@@ -184,9 +184,16 @@ namespace Rosetta.Runner
 
         protected virtual void HandleError(Exception e)
         {
-            Console.WriteLine("An error occurred: {0}!", e.Message);
+            Console.WriteLine("An error occurred!");
+
 #if DEBUG
+            Console.WriteLine("Error details below:");
+            Console.WriteLine("An error occurred: {0}!", e.Message);
             Console.WriteLine(e.StackTrace);
+#endif
+
+#if DEBUGGER
+            System.Diagnostics.Debugger.Launch();
 #endif
         }
 
@@ -240,7 +247,7 @@ namespace Rosetta.Runner
             return program.Output;
         }
 
-        #region Helpers
+#region Helpers
 
         protected virtual void ShowHelp()
         {
@@ -251,6 +258,6 @@ namespace Rosetta.Runner
             this.options.WriteOptionDescriptions(Console.Out);
         }
 
-        #endregion
+#endregion
     }
 }
