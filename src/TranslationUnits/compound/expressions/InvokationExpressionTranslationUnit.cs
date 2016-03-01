@@ -14,7 +14,7 @@ namespace Rosetta.Translation
     /// </summary>
     public class InvokationExpressionTranslationUnit : ExpressionTranslationUnit, ICompoundTranslationUnit
     {
-        private ITranslationUnit invokee;
+        private ITranslationUnit expression;
         private IEnumerable<ITranslationUnit> arguments;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Rosetta.Translation
         protected InvokationExpressionTranslationUnit(int nestingLevel)
             : base(nestingLevel)
         {
-            this.invokee = null;
+            this.expression = null;
             this.arguments = new List<ITranslationUnit>();
         }
 
@@ -51,7 +51,7 @@ namespace Rosetta.Translation
 
             return new InvokationExpressionTranslationUnit(AutomaticNestingLevel)
             {
-                invokee = invokeeName
+                expression = invokeeName
             };
         }
 
@@ -77,9 +77,9 @@ namespace Rosetta.Translation
                 Formatter = this.Formatter
             };
 
-            // Invokation: <method-name>([<params>])
+            // Invokation: <expression>([<params>])
             writer.WriteLine("{0}{1}",
-                this.invokee.Translate(),
+                this.expression.Translate(),
                 SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate()))
                 );
 

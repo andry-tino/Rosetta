@@ -91,12 +91,20 @@ namespace Rosetta.AST.Helpers
                     }
                     return BuildIdentifierNameExpressionTranslationUnit(identifierNameExpression);
 
+                case SyntaxKind.InvocationExpression:
+                    var invokationExpression = this.node as InvocationExpressionSyntax;
+                    if (invokationExpression == null)
+                    {
+                        throw new InvalidCastException("Unable to correctly cast expected invokation expression to invokation expression!");
+                    }
+                    return BuildInvokationExpressionTranslationUnit(invokationExpression);
+
                 // TODO: Enable when object creation and invocation have been completed
                 //case SyntaxKind.ObjectCreationExpression:
                 //    var objectCreationExpression = this.node as ObjectCreationExpressionSyntax;
                 //    if (objectCreationExpression == null)
                 //    {
-                //        throw new InvalidCastException("Unable to correctly cast expected object creation expression to oject creation expression!");
+                //        throw new InvalidCastException("Unable to correctly cast expected object creation expression to object creation expression!");
                 //    }
                 //    return BuildObjectCreationExpressionTranslationUnit(objectCreationExpression);
 
@@ -298,6 +306,23 @@ namespace Rosetta.AST.Helpers
                 new ExpressionTranslationUnitBuilder(helper.LeftHand).Build(), 
                 new ExpressionTranslationUnitBuilder(helper.RightHand).Build(), 
                 helper.Operator);
+        }
+
+        private static ITranslationUnit BuildInvokationExpressionTranslationUnit(InvocationExpressionSyntax expression)
+        {
+            var helper = new InvokationExpression(expression);
+
+            var translationUnit =  InvokationExpressionTranslationUnit.Create(
+                new ExpressionTranslationUnitBuilder(helper.Expression).Build());
+
+            foreach (var argument in helper.Arguments)
+            {
+                var argumentTranslationUnit = new ExpressionTranslationUnitBuilder(argument.Expression).Build();
+
+                translationUnit.AddArgument(argumentTranslationUnit);
+            }
+
+            return translationUnit;
         }
 
         // TODO: Enable once invocation expressions have been completed
