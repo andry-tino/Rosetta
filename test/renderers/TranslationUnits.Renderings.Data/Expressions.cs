@@ -11,15 +11,8 @@ namespace Rosetta.Translation.Renderings.Data
 
     namespace BinaryExpressions
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public class Expressions
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
             [RenderingResource("BinaryExpression.IntegerSum.ts")]
             public string BinaryExpressionIntegerSum()
             {
@@ -32,15 +25,8 @@ namespace Rosetta.Translation.Renderings.Data
 
     namespace LiteralExpressions
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public class Expressions
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
             [RenderingResource("LiteralExpression.Integer.ts")]
             public string LiteralExpressionInteger()
             {
@@ -48,11 +34,7 @@ namespace Rosetta.Translation.Renderings.Data
 
                 return translationUnit.Translate();
             }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
+            
             [RenderingResource("LiteralExpression.Boolean.ts")]
             public string LiteralExpressionBoolean()
             {
@@ -60,11 +42,7 @@ namespace Rosetta.Translation.Renderings.Data
 
                 return translationUnit.Translate();
             }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
+            
             [RenderingResource("LiteralExpression.Null.ts")]
             public string LiteralExpressionNull()
             {
@@ -77,15 +55,8 @@ namespace Rosetta.Translation.Renderings.Data
 
     namespace UnaryExpressions
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public class Expressions
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
             [RenderingResource("UnaryExpression.PostfixIncrement.ts")]
             public string UnaryExpressionPostfixIncrement()
             {
@@ -93,11 +64,7 @@ namespace Rosetta.Translation.Renderings.Data
 
                 return translationUnit.Translate();
             }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
+            
             [RenderingResource("UnaryExpression.PrefixIncrement.ts")]
             public string UnaryExpressionPrefixIncrement()
             {
@@ -110,15 +77,8 @@ namespace Rosetta.Translation.Renderings.Data
 
     namespace CastExpressions
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public class Expressions
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
             [RenderingResource("CastExpression.NativeCast.ts")]
             public string CastExpressionNativeCast()
             {
@@ -129,17 +89,73 @@ namespace Rosetta.Translation.Renderings.Data
         }
     }
 
-    namespace ParenthesizedExpressions
+    namespace InvokationExpressions
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public class Expressions
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
+            [RenderingResource("InvokationExpressions.ParameterlessInvokationNull.ts")]
+            public string InvokationExpressionParameterlessInvokationNull()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(
+                    IdentifierTranslationUnit.Create("myMethod"), null);
+
+                return translationUnit.Translate();
+            }
+
+            [RenderingResource("InvokationExpressions.ParameterlessInvokation.ts")]
+            public string InvokationExpressionParameterlessInvokation()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(
+                    IdentifierTranslationUnit.Create("myMethod"), new ITranslationUnit[] { });
+
+                return translationUnit.Translate();
+            }
+
+            [RenderingResource("InvokationExpressions.OneParameter.ts")]
+            public string InvokationExpressionOneParameter()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(
+                    IdentifierTranslationUnit.Create("myMethod"), new ITranslationUnit[] 
+                    {
+                        TranslationUnitBuilder.BuildLiteralTranslationUnit("string1")
+                    });
+
+                return translationUnit.Translate();
+            }
+
+            [RenderingResource("InvokationExpressions.TwoParameters.ts")]
+            public string InvokationExpressionTwoParameters()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(
+                    IdentifierTranslationUnit.Create("myMethod"), new ITranslationUnit[]
+                    {
+                        TranslationUnitBuilder.BuildLiteralTranslationUnit("string1"),
+                        TranslationUnitBuilder.BuildLiteralTranslationUnit(100)
+                    });
+
+                return translationUnit.Translate();
+            }
+
+            [RenderingResource("InvokationExpressions.ThreeParameters.ts")]
+            public string InvokationExpressionThreeParameters()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildExpressionTranslationUnit(
+                    IdentifierTranslationUnit.Create("myMethod"), new ITranslationUnit[]
+                    {
+                        TranslationUnitBuilder.BuildLiteralTranslationUnit("string1"),
+                        TranslationUnitBuilder.BuildLiteralTranslationUnit(100),
+                        TranslationUnitBuilder.BuildLiteralTranslationUnit("string2")
+                    });
+
+                return translationUnit.Translate();
+            }
+        }
+    }
+
+    namespace ParenthesizedExpressions
+    {
+        public class Expressions
+        {
             [RenderingResource("ParenthesizedExpressions.VariableWrapping.ts")]
             public string ParenthesizedExpressionVariableWrapping()
             {
@@ -152,15 +168,8 @@ namespace Rosetta.Translation.Renderings.Data
 
     namespace MemberAccessExpressions
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public class Expressions
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
             [RenderingResource("MemberAccessExpressions.This.ts")]
             public string MemberAccessExpressionThis()
             {
@@ -169,11 +178,7 @@ namespace Rosetta.Translation.Renderings.Data
 
                 return translationUnit.Translate();
             }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
+            
             [RenderingResource("MemberAccessExpressions.Base.ts")]
             public string MemberAccessExpressionBase()
             {
@@ -182,11 +187,7 @@ namespace Rosetta.Translation.Renderings.Data
 
                 return translationUnit.Translate();
             }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
+            
             [RenderingResource("MemberAccessExpressions.None.ts")]
             public string MemberAccessExpressionNone()
             {

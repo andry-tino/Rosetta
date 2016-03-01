@@ -320,6 +320,26 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
+        public static ITranslationUnit BuildExpressionTranslationUnit(ITranslationUnit invokeeName, ITranslationUnit[] arguments)
+        {
+            InvokationExpressionTranslationUnit translationUnit = InvokationExpressionTranslationUnit.Create(invokeeName);
+
+            if (arguments != null)
+            {
+                foreach (ITranslationUnit argument in arguments)
+                {
+                    translationUnit.AddArgument(argument);
+                }
+            }
+
+            return translationUnit;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public static ITranslationUnit BuildExpressionTranslationUnit(string memberName, 
             MemberAccessExpressionTranslationUnit.MemberAccessMethod accessMethod)
         {

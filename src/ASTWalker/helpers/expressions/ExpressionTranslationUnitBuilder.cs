@@ -91,6 +91,15 @@ namespace Rosetta.AST.Helpers
                     }
                     return BuildIdentifierNameExpressionTranslationUnit(identifierNameExpression);
 
+                // TODO: Enable when object creation and invocation have been completed
+                //case SyntaxKind.ObjectCreationExpression:
+                //    var objectCreationExpression = this.node as ObjectCreationExpressionSyntax;
+                //    if (objectCreationExpression == null)
+                //    {
+                //        throw new InvalidCastException("Unable to correctly cast expected object creation expression to oject creation expression!");
+                //    }
+                //    return BuildObjectCreationExpressionTranslationUnit(objectCreationExpression);
+
                 // Parenthetical
                 case SyntaxKind.ParenthesizedExpression:
                     var parenthesizedExpression = this.node as ParenthesizedExpressionSyntax;
@@ -129,7 +138,7 @@ namespace Rosetta.AST.Helpers
                     return BuildAssignmentExpressionTranslationUnit(assignmentExpression);
             }
 
-            return null;
+            throw new InvalidOperationException(string.Format("Cannot build an expression for node type {0}!", this.node.Kind()));
         }
 
         private static ITranslationUnit BuildBinaryExpressionTranslationUnit(BinaryExpressionSyntax expression)
@@ -246,7 +255,7 @@ namespace Rosetta.AST.Helpers
                     return LiteralTranslationUnit.Null;
             }
 
-            return null;
+            throw new InvalidOperationException(string.Format("Cannot build a literal expression for token type {0}!", token.Kind()));
         }
 
         private static ITranslationUnit BuildParenthesizedExpressionTranslationUnit(ParenthesizedExpressionSyntax expression)
@@ -278,7 +287,7 @@ namespace Rosetta.AST.Helpers
                     MemberAccessExpressionTranslationUnit.MemberAccessMethod.Base);
             }
 
-            return null;
+            throw new InvalidOperationException("Cannot build a member access expression as it is not a `this` expression, nor a `base` expression!");
         }
 
         private static ITranslationUnit BuildAssignmentExpressionTranslationUnit(AssignmentExpressionSyntax expression)
@@ -290,6 +299,14 @@ namespace Rosetta.AST.Helpers
                 new ExpressionTranslationUnitBuilder(helper.RightHand).Build(), 
                 helper.Operator);
         }
+
+        // TODO: Enable once invocation expressions have been completed
+        //private static ITranslationUnit BuildObjectCreationExpressionTranslationUnit(ObjectCreationExpressionSyntax expression)
+        //{
+        //    var helper = new IdentifierExpression(expression);
+
+        //    return IdentifierTranslationUnit.Create(helper.Identifier);
+        //}
 
         private static ITranslationUnit BuildIdentifierNameExpressionTranslationUnit(IdentifierNameSyntax expression)
         {

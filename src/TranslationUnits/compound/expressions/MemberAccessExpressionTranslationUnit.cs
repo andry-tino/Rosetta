@@ -115,7 +115,7 @@ namespace Rosetta.Translation
             }
         }
 
-        #region
+        #region Types
 
         /// <summary>
         /// Enumerates member access methods

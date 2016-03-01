@@ -14,6 +14,7 @@ namespace Rosetta.Translation.Renderings
     using CastExpressions = Rosetta.Translation.Renderings.Data.CastExpressions;
     using ParenthesizedExpressions = Rosetta.Translation.Renderings.Data.ParenthesizedExpressions;
     using MemberAccessExpressions = Rosetta.Translation.Renderings.Data.MemberAccessExpressions;
+    using InvokationExpressions = Rosetta.Translation.Renderings.Data.InvokationExpressions;
     using ConditionalStatements = Rosetta.Translation.Renderings.Data.ConditionalStatements;
 
     /// <summary>
@@ -161,6 +162,17 @@ namespace Rosetta.Translation.Renderings
             get
             {
                 return typeof(MemberAccessExpressions.Expressions);
+            }
+        }
+
+        /// <summary>
+        /// Gets render methods for <see cref="InvokationExpressions.Expressions"/>.
+        /// </summary>
+        public static Type InvokationExpressionsMethodsProvider
+        {
+            get
+            {
+                return typeof(InvokationExpressions.Expressions);
             }
         }
 
