@@ -28,5 +28,10 @@ namespace Rosetta.AST.Renderings
         {
             get { return typeof(Methods); }
         }
+
+        public static Type ConstructorsMethodstProvider
+        {
+            get { return typeof(Constructors); }
+        }
     }
 }

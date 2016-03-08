@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Methods.cs
+/// Constructors.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -21,36 +21,24 @@ namespace Rosetta.AST.Renderings.Data
     /// <summary>
     /// 
     /// </summary>
-    public class Methods
+    public class Constructors
     {
-        [RenderingResource("EmptyMethod.ts")]
-        public string RenderEmptyMethod()
+        [RenderingResource("EmptyConstructor.ts")]
+        public string RenderEmptyConstructor()
         {
             return GetTranslation(@"
                 public class Class1 {
-                    public void Method1() { }
+                    public Class1() { }
                 }
             ");
         }
 
-        [RenderingResource("EmptyMethodWithReturn.ts")]
-        public string RenderEmptyMethodWithReturn()
+        [RenderingResource("SimpleConstructorWithVariableDeclarations.ts")]
+        public string RenderSimpleConstructorWithVariableDeclarations()
         {
             return GetTranslation(@"
                 public class Class1 {
-                    public int Method1() { 
-                        return 0;
-                    }
-                }
-            ");
-        }
-
-        [RenderingResource("SimpleMethodWithVariableDeclarations.ts")]
-        public string RenderSimpleMethodWithVariableDeclarations()
-        {
-            return GetTranslation(@"
-                public class Class1 {
-                    public void Method1() { 
+                    public Class1() { 
                         string variable1;
                         int variable2;
                     }
@@ -58,42 +46,42 @@ namespace Rosetta.AST.Renderings.Data
             ");
         }
 
-        [RenderingResource("EmptyMethodWith1Argument.ts")]
-        public string RenderEmptyMethodWith1Argument()
+        [RenderingResource("EmptyConstructorWith1Argument.ts")]
+        public string RenderEmptyConstructorWith1Argument()
         {
             return GetTranslation(@"
                 public class Class1 {
-                    public void Method1(string param1) { }
+                    public Class1(string param1) { }
                 }
             ");
         }
 
-        [RenderingResource("EmptyMethodWith2Arguments.ts")]
-        public string RenderEmptyMethodWith2Arguments()
+        [RenderingResource("EmptyConstructorWith2Arguments.ts")]
+        public string RenderEmptyConstructorWith2Arguments()
         {
             return GetTranslation(@"
                 public class Class1 {
-                    public void Method1(string param1, int param2) { }
+                    public Class1(string param1, int param2) { }
                 }
             ");
         }
 
-        [RenderingResource("EmptyMethodWith3Arguments.ts")]
-        public string RenderEmptyMethodWith3Arguments()
+        [RenderingResource("EmptyConstructorWith3Arguments.ts")]
+        public string RenderEmptyConstructorWith3Arguments()
         {
             return GetTranslation(@"
                 public class Class1 {
-                    public void Method1(string param1, int param2, bool param3) { }
+                    public Class1(string param1, int param2, bool param3) { }
                 }
             ");
         }
 
-        [RenderingResource("EmptyMethodWithManyArguments.ts")]
-        public string RenderEmptyMethodWithManyArgument()
+        [RenderingResource("EmptyConstructorWithManyArguments.ts")]
+        public string RenderEmptyConstructorWithManyArgument()
         {
             return GetTranslation(@"
                 public class Class1 {
-                    public void Method1(string param1, int param2, bool param3, string param4, int param5) { }
+                    public Class1(string param1, int param2, bool param3, string param4, int param5) { }
                 }
             ");
         }
@@ -104,11 +92,11 @@ namespace Rosetta.AST.Renderings.Data
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
             Source.ProgramRoot = tree;
 
-            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
-            var methodDeclarationNode = node as MethodDeclarationSyntax;
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ConstructorDeclarationSyntax));
+            var constructorDeclarationNode = node as ConstructorDeclarationSyntax;
 
             // Creating the walker
-            var astWalker = MethodASTWalker.Create(methodDeclarationNode);
+            var astWalker = ConstructorASTWalker.Create(constructorDeclarationNode);
 
             // Getting the translation unit
             ITranslationUnit translationUnit = astWalker.Walk();

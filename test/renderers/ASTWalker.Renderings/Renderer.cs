@@ -34,7 +34,8 @@ namespace Rosetta.AST.Renderings
                 {
                     DataProvider.ClassesMethodsProvider,
                     DataProvider.InterfacesMethodstProvider,
-                    DataProvider.MethodsMethodstProvider
+                    DataProvider.MethodsMethodstProvider,
+                    DataProvider.ConstructorsMethodstProvider
                 };
             }
         }
