@@ -9,6 +9,9 @@ namespace Rosetta.Tests
 
     /// <summary>
     /// Generate classes.
+    /// 
+    /// TODO: Refactor this whole component in order to use CodeAnalysis 
+    /// and Roslyn to generate the C# code!
     /// </summary>
     internal partial class ClassGenerator
     {
