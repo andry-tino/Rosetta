@@ -14,26 +14,19 @@ namespace Rosetta.AST.Renderings
     /// </summary>
     internal static class DataProvider
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public static Type SimpleEntitiesProvider
+        public static Type ClassesMethodsProvider
         {
-            get
-            {
-                return typeof(SimpleEntities);
-            }
+            get { return typeof(Classes); }
+        }
+        
+        public static Type InterfacesMethodstProvider
+        {
+            get { return typeof(Interfaces); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public static Type SimpleEntitiesWithSimpleContentProvider
+        public static Type MethodsMethodstProvider
         {
-            get
-            {
-                return typeof(SimpleEntitiesWithSimpleContent);
-            }
+            get { return typeof(Methods); }
         }
     }
 }
