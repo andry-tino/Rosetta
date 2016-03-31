@@ -12,7 +12,7 @@ param(
   # The path to location where to create all demo files, defaults to current directory
   [string] $OutputPath = $null,
   # List of source files to translate
-  $SourceFiles = @{ 'Source001.cs' = 'source001.ts' },
+  $SourceFiles = @{ 'Source001.cs' = 'source001.ts'; 'Source002.cs' = 'source002.ts' },
   # List of directories containing projects to translate
   # TODO: Use this once translating projects is supported
   $SourceProjects = @{}
