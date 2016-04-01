@@ -16,6 +16,8 @@ namespace Rosetta.Translation.Renderings
     using MemberAccessExpressions = Rosetta.Translation.Renderings.Data.MemberAccessExpressions;
     using InvokationExpressions = Rosetta.Translation.Renderings.Data.InvokationExpressions;
     using ConditionalStatements = Rosetta.Translation.Renderings.Data.ConditionalStatements;
+    using KeywordStatements = Rosetta.Translation.Renderings.Data.KeywordStatements;
+    using ExpressionStatements = Rosetta.Translation.Renderings.Data.ExpressionStatements;
 
     /// <summary>
     /// 
@@ -188,13 +190,19 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
-        /// Gets render methods for <see cref="ConditionalStatements.Statements"/>.
+        /// Gets render methods for <see cref="ConditionalStatements.Statements"/>, 
+        /// <see cref="KeywordStatements.Statements"/> and <see cref="ExpressionStatements.Statements"/>.
         /// </summary>
-        public static Type StatementsMethodsProvider
+        public static Type[] StatementsMethodsProvider
         {
             get
             {
-                return typeof(ConditionalStatements.Statements);
+                return new Type[]
+                {
+                    typeof(ConditionalStatements.Statements),
+                    typeof(KeywordStatements.Statements),
+                    typeof(ExpressionStatements.Statements)
+                };
             }
         }
     }

@@ -80,6 +80,7 @@
     <Compile Include="compound\expressions\LiteralTranslationUnit.cs" />
     <Compile Include="simple\TypeIdentifierTranslationUnit.cs" />
     <Compile Include="simple\VariableDeclarationTranslationUnit.cs" />
+    <Compile Include="simple\VoidTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />
     <Compile Include="tokens\OperatorToken.cs" />
     <Compile Include="tokens\TokenUtility.cs" />

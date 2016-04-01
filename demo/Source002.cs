@@ -34,7 +34,7 @@ namespace Rosetta.Demo.Source001
 		{
 			if (message == null)
 			{
-				return "";
+				return;
 			}
 			
 			string messageBase = this.messageBase;

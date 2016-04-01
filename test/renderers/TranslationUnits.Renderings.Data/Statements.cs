@@ -113,11 +113,33 @@ namespace Rosetta.Translation.Renderings.Data
             /// 
             /// </summary>
             /// <returns></returns>
+            [RenderingResource("ReturnVoidStatement.ts")]
+            public string RenderReturnVoidStatement()
+            {
+                ITranslationUnit translationUnit = TranslationUnitBuilder.BuildReturnStatementTranslationUnit();
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
             [RenderingResource("ThrowStatement.ts")]
             public string RenderThrowStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildThrowStatementTranslationUnit(
                     TranslationUnitBuilder.BuildNullLiteralTranslationUnit());
+                return translationUnit.Translate();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            [RenderingResource("ThrowVoidStatement.ts")]
+            public string RenderThrowVoidStatement()
+            {
+                ITranslationUnit translationUnit = TranslationUnitBuilder.BuildThrowStatementTranslationUnit();
                 return translationUnit.Translate();
             }
         }

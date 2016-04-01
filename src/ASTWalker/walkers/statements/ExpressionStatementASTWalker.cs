@@ -73,18 +73,19 @@ namespace Rosetta.AST
         {
             ExpressionStatementTranslationUnit statement;
 
+            // Return statement
             if (node as ReturnStatementSyntax != null)
             {
                 var helper = new ReturnStatement(node as ReturnStatementSyntax);
-                var expression = new ExpressionTranslationUnitBuilder(helper.Expression).Build();
-                statement = ExpressionStatementTranslationUnit.CreateReturn(expression as ExpressionTranslationUnit);
+                statement = CreateReturnStatement(helper);
             }
+            // Throw statement
             else if (node as ThrowStatementSyntax != null)
             {
                 var helper = new ThrowStatement(node as ThrowStatementSyntax);
-                var expression = new ExpressionTranslationUnitBuilder(helper.Expression).Build();
-                statement = ExpressionStatementTranslationUnit.CreateThrow(expression as ExpressionTranslationUnit);
+                statement = CreateThrowStatement(helper);
             }
+            // Other
             else if (node as ExpressionStatementSyntax != null)
             {
                 var helper = new ExpressionStatement(node as ExpressionStatementSyntax);
@@ -97,6 +98,30 @@ namespace Rosetta.AST
             }
 
             return new ExpressionStatementASTWalker(node, statement);
+        }
+
+        private static ExpressionStatementTranslationUnit CreateReturnStatement(ReturnStatement helper)
+        {
+            if (helper.Expression == null)
+            {
+                // Void return
+                return ExpressionStatementTranslationUnit.CreateReturn();
+            }
+
+            var expression = new ExpressionTranslationUnitBuilder(helper.Expression).Build();
+            return ExpressionStatementTranslationUnit.CreateReturn(expression as ExpressionTranslationUnit);
+        }
+
+        private static ExpressionStatementTranslationUnit CreateThrowStatement(ThrowStatement helper)
+        {
+            if (helper.Expression == null)
+            {
+                // Void return
+                return ExpressionStatementTranslationUnit.CreateThrow();
+            }
+
+            var expression = new ExpressionTranslationUnitBuilder(helper.Expression).Build();
+            return ExpressionStatementTranslationUnit.CreateThrow(expression as ExpressionTranslationUnit);
         }
 
         protected override bool ShouldWalkInto

@@ -6,6 +6,7 @@
 namespace Rosetta.Translation.Renderings
 {
     using System;
+    using System.Linq;
 
     using Rosetta.Renderings.Utils;
 
@@ -46,9 +47,10 @@ namespace Rosetta.Translation.Renderings
                     DataProvider.ParenthesizedExpressionsMethodsProvider,
                     DataProvider.MemberAccessExpressionsMethodsProvider,
                     DataProvider.InvokationExpressionsMethodsProvider,
-                    DataProvider.MixedExpressionsMethodsProvider,
-                    DataProvider.StatementsMethodsProvider
-                };
+                    DataProvider.MixedExpressionsMethodsProvider
+                }
+                .Union(DataProvider.StatementsMethodsProvider)
+                .ToArray();
             }
         }
     }

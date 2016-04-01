@@ -410,9 +410,27 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <returns></returns>
+        public static ITranslationUnit BuildReturnStatementTranslationUnit()
+        {
+            return ExpressionStatementTranslationUnit.CreateReturn();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static ITranslationUnit BuildThrowStatementTranslationUnit(ITranslationUnit expression)
         {
             return ExpressionStatementTranslationUnit.CreateThrow(expression as ExpressionTranslationUnit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static ITranslationUnit BuildThrowStatementTranslationUnit()
+        {
+            return ExpressionStatementTranslationUnit.CreateThrow();
         }
 
         #endregion

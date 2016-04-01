@@ -58,20 +58,17 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public static ExpressionStatementTranslationUnit Create(ExpressionTranslationUnit expression, string keyword = null)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            ExpressionTranslationUnit realExpression = expression ?? ExpressionTranslationUnit.Create(VoidTranslationUnit.Create());
 
             return new ExpressionStatementTranslationUnit(AutomaticNestingLevel)
             {
-                expression = expression,
+                expression = realExpression,
                 keyword = keyword
             };
         }
 
         /// <summary>
-        /// 
+        /// Builds a return statement with the specified expression.
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
@@ -81,13 +78,31 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// 
+        /// Builds a void return statement.
+        /// </summary>
+        /// <returns></returns>
+        public static ExpressionStatementTranslationUnit CreateReturn()
+        {
+            return Create(null, Lexems.ReturnKeyword);
+        }
+
+        /// <summary>
+        /// Builds a throw statement with the specified expression.
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
         public static ExpressionStatementTranslationUnit CreateThrow(ExpressionTranslationUnit expression)
         {
             return Create(expression, Lexems.ThrowKeyword);
+        }
+
+        /// <summary>
+        /// Builds a void throw statement.
+        /// </summary>
+        /// <returns></returns>
+        public static ExpressionStatementTranslationUnit CreateThrow()
+        {
+            return Create(null, Lexems.ThrowKeyword);
         }
 
         /// <summary>
