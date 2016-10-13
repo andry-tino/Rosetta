@@ -33,6 +33,7 @@ namespace Rosetta.AST.Renderings
                 return new Type[]
                 {
                     DataProvider.ClassesMethodsProvider,
+                    DataProvider.ClassesDefinitionMethodsProvider,
                     DataProvider.InterfacesMethodstProvider,
                     DataProvider.MethodsMethodstProvider,
                     DataProvider.ConstructorsMethodstProvider

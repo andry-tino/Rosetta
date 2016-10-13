@@ -14,6 +14,7 @@ namespace Rosetta.AST
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Factories;
 
     /// <summary>
     /// Walks a constructor AST node.
@@ -77,20 +78,8 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static ConstructorASTWalker Create(CSharpSyntaxNode node)
         {
-            ConstructorDeclaration helper = new ConstructorDeclaration(node as ConstructorDeclarationSyntax);
-
-            var constructorDeclaration = ConstructorDeclarationTranslationUnit.Create(
-                helper.Visibility,
-                IdentifierTranslationUnit.Create(helper.Name));
-
-            foreach (Parameter parameter in helper.Parameters)
-            {
-                constructorDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    TypeIdentifierTranslationUnit.Create(parameter.TypeName),
-                    IdentifierTranslationUnit.Create(parameter.IdentifierName)));
-            }
-
-            return new ConstructorASTWalker(node, constructorDeclaration);
+            return new ConstructorASTWalker(node, 
+                new ConstructorDeclarationTranslationUnitFactory(node).Create() as ConstructorDeclarationTranslationUnit);
         }
 
         /// <summary>

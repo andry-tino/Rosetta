@@ -19,10 +19,9 @@ namespace Rosetta.AST.Renderings
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            // Prioritize argument, if none, use config, if none, use current directory
-            string outputDirectory = args.Length == 1 ?
-                args[0] :
-                (ConfigurationManager.AppSettings["OutputFolderPath"] ?? string.Empty);
+            string outputDirectory = args.Length == 1 ?                                     // Prioritize argument
+                args[0] :                                                                   // If none, use config
+                (ConfigurationManager.AppSettings["OutputFolderPath"] ?? string.Empty);     // Otherwise use current forlder
 
             if (outputDirectory == string.Empty)
             {

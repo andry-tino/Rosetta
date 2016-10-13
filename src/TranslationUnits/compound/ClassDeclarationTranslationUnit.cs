@@ -162,7 +162,7 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
-            string classVisibility = TokenUtility.EmitOptionalVisibility(this.Visibility);
+            string classVisibility = this.RenderedVisibilityModifier;
             string baseList = this.BuildClassInheritanceAndInterfaceImplementationList();
 
             if (this.injectedBefore == null)
@@ -321,6 +321,11 @@ namespace Rosetta.Translation
         }
 
         #endregion
+
+        protected virtual string RenderedVisibilityModifier
+        {
+            get { return TokenUtility.EmitOptionalVisibility(this.Visibility); }
+        }
 
         /// <summary>
         /// 

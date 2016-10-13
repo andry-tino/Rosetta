@@ -14,6 +14,7 @@ namespace Rosetta.AST
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Factories;
 
     /// <summary>
     /// Walks a method AST node.
@@ -75,21 +76,8 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static MethodASTWalker Create(CSharpSyntaxNode node)
         {
-            MethodDeclaration helper = new MethodDeclaration(node as MethodDeclarationSyntax);
-
-            var methodDeclaration = MethodDeclarationTranslationUnit.Create(
-                helper.Visibility,
-                TypeIdentifierTranslationUnit.Create(helper.ReturnType),
-                IdentifierTranslationUnit.Create(helper.Name));
-
-            foreach (Parameter parameter in helper.Parameters)
-            {
-                methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    TypeIdentifierTranslationUnit.Create(parameter.TypeName),
-                    IdentifierTranslationUnit.Create(parameter.IdentifierName)));
-            }
-
-            return new MethodASTWalker(node, methodDeclaration);
+            return new MethodASTWalker(node, 
+                new MethodDeclarationTranslationUnitFactory(node).Create() as MethodDeclarationTranslationUnit);
         }
 
         /// <summary>

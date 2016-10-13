@@ -14,6 +14,7 @@ namespace Rosetta.AST
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Factories;
 
     /// <summary>
     /// Walks a property AST node.
@@ -78,14 +79,7 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static PropertyASTWalker Create(CSharpSyntaxNode node)
         {
-            PropertyDeclaration helper = new PropertyDeclaration(node as PropertyDeclarationSyntax);
-
-            var propertyDeclaration = PropertyDeclarationTranslationUnit.Create(
-                helper.Visibility,
-                TypeIdentifierTranslationUnit.Create(helper.Type),
-                IdentifierTranslationUnit.Create(helper.Name),
-                helper.HasGet,
-                helper.HasSet);
+            var propertyDeclaration = new PropertyDeclarationTranslationUnitFactory(node).Create() as PropertyDeclarationTranslationUnit;
 
             return new PropertyASTWalker(node, propertyDeclaration);
         }

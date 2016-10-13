@@ -14,6 +14,8 @@ namespace Rosetta.Translation
     {
         /// <summary>
         /// The public TypeScript keyword.
+        /// 
+        /// TODO: Move to Lexems.
         /// </summary>
         public static string PublicVisibilityToken
         {
@@ -22,6 +24,8 @@ namespace Rosetta.Translation
 
         /// <summary>
         /// The private TypeScript keyword.
+        /// 
+        /// TODO: Move to Lexems.
         /// </summary>
         public static string PrivateVisibilityToken
         {
@@ -30,6 +34,8 @@ namespace Rosetta.Translation
 
         /// <summary>
         /// The protected TypeScript keyword.
+        /// 
+        /// TODO: Move to Lexems.
         /// </summary>
         public static string ProtectedVisibilityToken
         {

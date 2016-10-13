@@ -112,8 +112,10 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration: [<visibility>] <method-name>(<params>) : <type>
+            string classVisibility = this.RenderedVisibilityModifier;
+
             writer.WriteLine("{0}{1}{2} {3} {4}",
-                TokenUtility.EmitOptionalVisibility(this.Visibility),
+                classVisibility,
                 this.Name.Translate(),
                 SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())),
                 Lexems.Colon,
@@ -140,5 +142,10 @@ namespace Rosetta.Translation
         }
 
         #endregion
+
+        protected virtual string RenderedVisibilityModifier
+        {
+            get { return TokenUtility.EmitOptionalVisibility(this.Visibility); }
+        }
     }
 }

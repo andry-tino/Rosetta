@@ -105,6 +105,16 @@
     <Compile Include="ASTExtractor.cs" />
     <Compile Include="cs-ts-converters\VisibilityConverter.cs" />
     <Compile Include="exceptions\UnsupportedSyntaxException.cs" />
+    <Compile Include="factories\ClassDeclarationTranslationUnitFactory.cs" />
+    <Compile Include="factories\ClassDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="factories\ConstructorDeclarationTranslationUnitFactory.cs" />
+    <Compile Include="factories\ConstructorDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="factories\FieldDeclarationTranslationUnitFactory.cs" />
+    <Compile Include="factories\FieldDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="factories\MethodDeclarationTranslationUnitFactory.cs" />
+    <Compile Include="factories\MethodDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="factories\PropertyDeclarationTranslationUnitFactory.cs" />
+    <Compile Include="factories\PropertyDefinitionTranslationUnitFactory.cs" />
     <Compile Include="helpers\declarations\ConstructorDeclaration.cs" />
     <Compile Include="helpers\declarations\FieldDeclaration.cs" />
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
@@ -143,6 +153,7 @@
     <Compile Include="Types.cs" />
     <Compile Include="WalkerEventArgs.cs" />
     <Compile Include="walkers\ConstructorASTWalker.cs" />
+    <Compile Include="walkers\definition\ClassDefinitionASTWalker.cs" />
     <Compile Include="walkers\InterfaceASTWalker.cs" />
     <Compile Include="walkers\MethodASTWalker.cs" />
     <Compile Include="walkers\NamespaceASTWalker.cs" />

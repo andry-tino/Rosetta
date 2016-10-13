@@ -88,8 +88,10 @@ namespace Rosetta.Translation
 
             // Opening declaration: [<visibility>] <method-name>(<params>) : <type> {
             // TODO: Handle case of no visibility specified
-            writer.WriteLine("{0}{1}{2} {3} {4} {5}", 
-                TokenUtility.EmitOptionalVisibility(this.Visibility),
+            string classVisibility = this.RenderedVisibilityModifier;
+
+            writer.WriteLine("{0}{1}{2} {3} {4} {5}",
+                classVisibility,
                 this.Name.Translate(),
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.Colon,

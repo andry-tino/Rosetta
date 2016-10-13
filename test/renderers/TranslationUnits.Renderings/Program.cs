@@ -19,10 +19,10 @@ namespace Rosetta.Translation.Renderings
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            // Prioritize argument, if none, use config, if none, use current directory
-            string outputDirectory = args.Length == 1 ? 
-                args[0] : 
-                (ConfigurationManager.AppSettings["OutputFolderPath"] ?? string.Empty);
+            string outputDirectory = args.Length == 1 
+                ? args[0]                                                   // Prioritize argument
+                : (ConfigurationManager.AppSettings["OutputFolderPath"]     // If none, use config
+                    ?? string.Empty);                                       // Otherwise use current directory
 
             if (outputDirectory == string.Empty)
             {

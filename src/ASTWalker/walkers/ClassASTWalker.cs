@@ -14,6 +14,7 @@ namespace Rosetta.AST
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Factories;
 
     /// <summary>
     /// Walks a class AST node.
@@ -76,19 +77,8 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static ClassASTWalker Create(CSharpSyntaxNode node)
         {
-            ClassDeclaration classHelper = new ClassDeclaration(node as ClassDeclarationSyntax);
-
-            var classDeclaration = ClassDeclarationTranslationUnit.Create(
-                classHelper.Visibility,
-                IdentifierTranslationUnit.Create(classHelper.Name),
-                classHelper.BaseClass == null ? null : IdentifierTranslationUnit.Create(classHelper.BaseClass.Name));
-
-            foreach (BaseTypeReference implementedInterface in classHelper.ImplementedInterfaces)
-            {
-                classDeclaration.AddImplementedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
-            }
-
-            return new ClassASTWalker(node, classDeclaration);
+            return new ClassASTWalker(node, 
+                new ClassDeclarationTranslationUnitFactory(node).Create() as ClassDeclarationTranslationUnit);
         }
 
         /// <summary>
@@ -113,9 +103,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
-            var fieldDeclaration = new FieldDeclaration(node);
-            var fieldDeclarationTranslationUnit = FieldDeclarationTranslationUnit.Create(fieldDeclaration.Visibility, 
-                TypeIdentifierTranslationUnit.Create(fieldDeclaration.Type), IdentifierTranslationUnit.Create(fieldDeclaration.Name));
+            var fieldDeclarationTranslationUnit = new FieldDeclarationTranslationUnitFactory(node).Create();
             this.classDeclaration.AddMemberDeclaration(fieldDeclarationTranslationUnit);
 
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
@@ -192,7 +180,7 @@ namespace Rosetta.AST
 
         #endregion
 
-        private void InvokeFieldDeclarationVisited(object sender, WalkerEventArgs e)
+        protected void InvokeFieldDeclarationVisited(object sender, WalkerEventArgs e)
         {
             if (this.FieldDeclarationVisited != null)
             {
@@ -200,7 +188,7 @@ namespace Rosetta.AST
             }
         }
 
-        private void InvokePropertyDeclarationVisited(object sender, WalkerEventArgs e)
+        protected void InvokePropertyDeclarationVisited(object sender, WalkerEventArgs e)
         {
             if (this.PropertyDeclarationVisited != null)
             {
@@ -208,7 +196,7 @@ namespace Rosetta.AST
             }
         }
 
-        private void InvokeMethodDeclarationVisited(object sender, WalkerEventArgs e)
+        protected void InvokeMethodDeclarationVisited(object sender, WalkerEventArgs e)
         {
             if (this.MethodDeclarationVisited != null)
             {
@@ -216,7 +204,7 @@ namespace Rosetta.AST
             }
         }
 
-        private void InvokeConstructorDeclarationVisited(object sender, WalkerEventArgs e)
+        protected void InvokeConstructorDeclarationVisited(object sender, WalkerEventArgs e)
         {
             if (this.ConstructorDeclarationVisited != null)
             {

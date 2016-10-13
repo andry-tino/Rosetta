@@ -6,9 +6,6 @@
 namespace Rosetta.Translation
 {
     using System;
-    using System.Linq;
-    using System.IO;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Class describing a method signature (no body).
@@ -33,7 +30,7 @@ namespace Rosetta.Translation
         protected FieldDeclarationTranslationUnit(ITranslationUnit name, VisibilityToken visibility)
             : base(name, visibility)
         {
-            this.type = null;
+            this.Type = null;
         }
 
         /// <summary>
@@ -58,7 +55,7 @@ namespace Rosetta.Translation
             {
                 Visibility = visibility,
                 Name = name,
-                type = type
+                Type = type
             };
         }
 
@@ -82,6 +79,15 @@ namespace Rosetta.Translation
                 this.type.Translate());
 
             return writer.ToString();
+        }
+
+        /// <summary>
+        /// Gets or sets the type.
+        /// </summary>
+        protected ITranslationUnit Type
+        {
+            get { return this.type; }
+            set { this.type = value; }
         }
     }
 }
