@@ -25,7 +25,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
     /// </summary>
     public class Classes
     {
-        [RenderingResource("Definition.ClassWithMethodsWithParameters.d.ts")]
+        [RenderingResource("ClassWithMethodsWithParameters.d.ts")]
         public string RenderClassWithMethodsWithParameters()
         {
             return GetTranslation(@"
@@ -38,7 +38,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
             ");
         }
 
-        [RenderingResource("Definition.ClassWithConstructorsWithParameters.d.ts")]
+        [RenderingResource("ClassWithConstructorsWithParameters.d.ts")]
         public string RenderClassWithConstructorsWithParameters()
         {
             return GetTranslation(@"
@@ -51,7 +51,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
             ");
         }
 
-        [RenderingResource("Definition.ClassWithSimpleProperties.d.ts")]
+        [RenderingResource("ClassWithSimpleProperties.d.ts")]
         public string RenderClassWithSimpleProperty()
         {
             return GetTranslation(@"
@@ -64,6 +64,33 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
                     public int Property2 {
                         get { return 2; }
                     }
+
+                    public int Property3 {
+                        set { }
+                    }
+                }
+            ");
+        }
+
+        [RenderingResource("ClassWithSimpleMixedContent.d.ts")]
+        public string RenderClassWithSimpleMixedContent()
+        {
+            return GetTranslation(@"
+                public class Class1 {
+                    public Class1(int param1) { }
+
+                    public int Property1 {
+                        get { return 1; }
+                        set { }
+                    }
+
+                    public int Property2 {
+                        get { return 2; }
+                    }
+
+                    public void Method2(int param1, string param2) { }
+
+                    public void Method3(int param1, string param2, bool param3) { }
 
                     public int Property3 {
                         set { }
