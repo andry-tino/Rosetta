@@ -3,9 +3,11 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.Translation
+namespace Rosetta.ScriptSharp.Definition.Translation
 {
     using System;
+
+    using Rosetta.Translation;
 
     /// <summary>
     /// Interface for describing compound translation elements.

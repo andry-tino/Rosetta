@@ -1,11 +1,13 @@
 ﻿/// <summary>
 /// PropertyDefinitionTranslationUnit.cs
-/// Andrea Tino - 2015
+/// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.Translation
+namespace Rosetta.ScriptSharp.Definition.Translation
 {
     using System;
+
+    using Rosetta.Translation;
 
     /// <summary>
     /// Class describing properties.

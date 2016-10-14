@@ -1,11 +1,13 @@
 ﻿/// <summary>
 /// InterfaceDefinitionTranslationUnit.cs
-/// Andrea Tino - 2015
+/// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.Translation
+namespace Rosetta.ScriptSharp.Definition.Translation
 {
     using System;
+
+    using Rosetta.Translation;
 
     /// <summary>
     /// Translation unit for describing interfaces for definitions.

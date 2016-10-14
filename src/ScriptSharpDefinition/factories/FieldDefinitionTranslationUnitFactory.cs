@@ -3,14 +3,14 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.AST.Factories
+namespace Rosetta.ScriptSharp.Definition.AST.Factories
 {
     using System;
     using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Factories;
+    using Rosetta.ScriptSharp.Definition.Translation;
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Generic helper.

@@ -60,12 +60,6 @@
     <Compile Include="compound\statements\LocalDeclarationStatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementsGroupTranslationUnit.cs" />
-    <Compile Include="definition\ClassDefinitionTranslationUnit.cs" />
-    <Compile Include="definition\ConstructorDefinitionTranslationUnit.cs" />
-    <Compile Include="definition\FieldDefinitionTranslationUnit.cs" />
-    <Compile Include="definition\InterfaceDefinitionTranslationUnit.cs" />
-    <Compile Include="definition\MethodDefinitionTranslationUnit.cs" />
-    <Compile Include="definition\PropertyDefinitionTranslationUnit.cs" />
     <Compile Include="formatters\WhiteSpaceInvariantFormatter.cs" />
     <Compile Include="ITranslationInjector.cs" />
     <Compile Include="ITranslationUnitFactory.cs" />

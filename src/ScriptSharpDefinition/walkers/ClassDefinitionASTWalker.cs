@@ -3,15 +3,15 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.AST
+namespace Rosetta.ScriptSharp.Definition.AST
 {
     using System;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
-    using Rosetta.AST.Factories;
+    using Rosetta.AST;
+    using Rosetta.ScriptSharp.Definition.Translation;
+    using Rosetta.ScriptSharp.Definition.AST.Factories;
 
     /// <summary>
     /// Walks a class AST node but only those areas relevant to definition.
