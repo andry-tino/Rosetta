@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{63D01926-ED5C-4D41-83C9-F98E05201C53}</ProjectGuid>
+    <ProjectGuid>{D4B74C16-9185-4329-8A21-DB1AD280C2A9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.AST.Renderings.Data</RootNamespace>
-    <AssemblyName>Rosetta.ASTWalker.Renderings.Data</AssemblyName>
+    <RootNamespace>Rosetta.ScriptSharp.Definition.AST.Renderings.Data</RootNamespace>
+    <AssemblyName>Rosetta.ScriptSharpDefinition.ASTWalker.Renderings.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,23 +29,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Classes.cs" />
-    <Compile Include="Constructors.cs" />
-    <Compile Include="Interfaces.cs" />
-    <Compile Include="Methods.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.CodeAnalysis.Common.1.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
@@ -113,9 +96,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\src\ASTWalker\ASTWalker.csproj">
       <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
       <Name>ASTWalker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\ScriptSharpDefinition\ScriptSharpDefinition.csproj">
+      <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
+      <Name>ScriptSharpDefinition</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\TranslationUnits\TranslationUnits.csproj">
       <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>

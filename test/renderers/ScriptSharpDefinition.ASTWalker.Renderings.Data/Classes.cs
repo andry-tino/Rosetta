@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.AST.Renderings.Data.Definition
+namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,9 @@ namespace Rosetta.AST.Renderings.Data.Definition
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
 
+    using Rosetta.AST;
     using Rosetta.Renderings.Utils;
+    using Rosetta.ScriptSharp.Definition.AST;
     using Rosetta.Translation;
     using Rosetta.Tests.Data;
     using Rosetta.Tests.Utils;

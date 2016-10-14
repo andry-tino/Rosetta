@@ -19,11 +19,6 @@ namespace Rosetta.AST.Renderings
             get { return typeof(Classes); }
         }
 
-        public static Type ClassesDefinitionMethodsProvider
-        {
-            get { return typeof(Data.Definition.Classes); }
-        }
-
         public static Type InterfacesMethodstProvider
         {
             get { return typeof(Interfaces); }

@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.AST.Renderings
+namespace Rosetta.ScriptSharp.Definition.AST.Renderings
 {
     using System;
 
@@ -32,10 +32,7 @@ namespace Rosetta.AST.Renderings
             {
                 return new Type[]
                 {
-                    DataProvider.ClassesMethodsProvider,
-                    DataProvider.InterfacesMethodstProvider,
-                    DataProvider.MethodsMethodstProvider,
-                    DataProvider.ConstructorsMethodstProvider
+                    DataProvider.ClassesDefinitionMethodsProvider
                 };
             }
         }
