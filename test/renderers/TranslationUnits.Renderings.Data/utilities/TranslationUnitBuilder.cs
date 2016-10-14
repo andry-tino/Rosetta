@@ -163,18 +163,11 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <param name="visibility"></param>
-        /// <param name="name"></param>
         /// <param name="statements"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildConstructorTranslationUnit(VisibilityToken visibility, string name, ITranslationUnit[] statements = null)
+        public static ITranslationUnit BuildConstructorTranslationUnit(VisibilityToken visibility, ITranslationUnit[] statements = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            ConstructorDeclarationTranslationUnit translationUnit = ConstructorDeclarationTranslationUnit.Create(
-                visibility, IdentifierTranslationUnit.Create(name));
+            ConstructorDeclarationTranslationUnit translationUnit = ConstructorDeclarationTranslationUnit.Create(visibility);
 
             if (statements != null)
             {

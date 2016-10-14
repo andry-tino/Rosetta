@@ -205,7 +205,7 @@ namespace Rosetta.Translation
             // Then constructors
             foreach (ITranslationUnit translationUnit in this.constructorDeclarations)
             {
-                writer.WriteLine(translationUnit.Translate());
+                writer.WriteLine("{0}{1}", translationUnit.Translate(), this.RenderedConstructorDeclarationAfterSeparator);
             }
 
             // Adding a newline
@@ -328,6 +328,11 @@ namespace Rosetta.Translation
         }
 
         protected virtual string RenderedPropertyDeclarationAfterSeparator
+        {
+            get { return string.Empty; }
+        }
+
+        protected virtual string RenderedConstructorDeclarationAfterSeparator
         {
             get { return string.Empty; }
         }

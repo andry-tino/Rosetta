@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ConstructorDefinitionTranslationUnit.cs
+/// MethodDefinitionTranslationUnit.cs
 /// Andrea Tino - 2016
 /// </summary>
 
@@ -14,13 +14,24 @@ namespace Rosetta.ScriptSharp.Definition.Translation
     /// 
     /// TODO: Move to a separate project, this is specific to ScriptSharp.
     /// </summary>
-    public class ConstructorDefinitionTranslationUnit : ConstructorDeclarationTranslationUnit
+    public class ConstructorDefinitionTranslationUnit : MethodSignatureDeclarationTranslationUnit
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstructorDefinitionTranslationUnit"/> class.
         /// </summary>
         protected ConstructorDefinitionTranslationUnit() : base()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstructorDefinitionTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="visibility"></param>
+        protected ConstructorDefinitionTranslationUnit(VisibilityToken visibility)
+            : base(IdentifierTranslationUnit.Empty, visibility)
+        {
+            this.Name = IdentifierTranslationUnit.Create(Lexems.ConstructorKeyword);
         }
 
         /// <summary>
@@ -39,22 +50,25 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// 
         /// </summary>
         /// <param name="visibility"></param>
-        /// <param name="returnType"></param>
-        /// <param name="name"></param>
         /// <returns></returns>
-        public static ConstructorDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name)
+        public static ConstructorDefinitionTranslationUnit Create(VisibilityToken visibility)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             return new ConstructorDefinitionTranslationUnit()
             {
                 Visibility = visibility,
-                Name = name,
+                Name = IdentifierTranslationUnit.Create(Lexems.ConstructorKeyword),
                 ReturnType = null
             };
+        }
+
+        protected override string RenderedVisibilityModifier
+        {
+            get { return string.Empty; }
+        }
+
+        protected override bool ShouldRenderReturnType
+        {
+            get { return false; }
         }
     }
 }

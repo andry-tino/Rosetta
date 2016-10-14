@@ -114,13 +114,22 @@ namespace Rosetta.Translation
             // Opening declaration: [<visibility>] <method-name>(<params>) : <type>
             string classVisibility = this.RenderedVisibilityModifier;
 
-            writer.WriteLine("{0}{1}{2} {3} {4}",
-                classVisibility,
-                this.Name.Translate(),
-                SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())),
-                Lexems.Colon,
-                this.ReturnType.Translate()
-                );
+            if (this.ShouldRenderReturnType)
+            {
+                writer.WriteLine("{0}{1}{2} {3} {4}",
+                    classVisibility,
+                    this.Name.Translate(),
+                    SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())),
+                    Lexems.Colon,
+                    this.ReturnType.Translate());
+            }
+            else
+            {
+                writer.WriteLine("{0}{1}{2}",
+                    classVisibility,
+                    this.Name.Translate(),
+                    SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())));
+            }
 
             return writer.ToString();
         }
@@ -146,6 +155,11 @@ namespace Rosetta.Translation
         protected virtual string RenderedVisibilityModifier
         {
             get { return TokenUtility.EmitOptionalVisibility(this.Visibility); }
+        }
+
+        protected virtual bool ShouldRenderReturnType
+        {
+            get { return true; }
         }
     }
 }

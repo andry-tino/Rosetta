@@ -70,6 +70,11 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             get { return Lexems.Semicolon; }
         }
 
+        protected override string RenderedConstructorDeclarationAfterSeparator
+        {
+            get { return Lexems.Semicolon; }
+        }
+
         protected override string RenderedVisibilityModifier
         {
             get { return $"{Lexems.ExportKeyword}{Lexems.Whitespace}"; }

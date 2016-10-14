@@ -32,14 +32,13 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// Creates the translation unit.
         /// </summary>
         /// <remarks>
-        /// Must return a type inheriting from <see cref="ConstructorDeclarationTranslationUnit"/>.
+        /// Must return a type inheriting from <see cref="MethodSignatureDeclarationTranslationUnit"/>.
         /// </remarks>
         /// <param name="visibility"></param>
-        /// <param name="name"></param>
         /// <returns></returns>
-        protected override ITranslationUnit CreateTranslationUnit(VisibilityToken visibility, ITranslationUnit name)
+        protected override ITranslationUnit CreateTranslationUnit(VisibilityToken visibility)
         {
-            return ConstructorDefinitionTranslationUnit.Create(visibility, name);
+            return ConstructorDefinitionTranslationUnit.Create(visibility);
         }
     }
 }

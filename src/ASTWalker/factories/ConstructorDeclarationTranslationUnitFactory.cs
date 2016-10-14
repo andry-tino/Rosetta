@@ -41,9 +41,7 @@ namespace Rosetta.AST.Factories
         {
             ConstructorDeclaration helper = new ConstructorDeclaration(this.node as ConstructorDeclarationSyntax);
 
-            var constructorDeclaration = this.CreateTranslationUnit(
-                helper.Visibility,
-                IdentifierTranslationUnit.Create(helper.Name)) as ConstructorDeclarationTranslationUnit;
+            var constructorDeclaration = this.CreateTranslationUnit(helper.Visibility) as MethodSignatureDeclarationTranslationUnit;
 
             foreach (Parameter parameter in helper.Parameters)
             {
@@ -59,14 +57,13 @@ namespace Rosetta.AST.Factories
         /// Creates the translation unit.
         /// </summary>
         /// <remarks>
-        /// Must return a type inheriting from <see cref="ConstructorDeclarationTranslationUnit"/>.
+        /// Must return a type inheriting from <see cref="MethodSignatureDeclarationTranslationUnit"/>.
         /// </remarks>
         /// <param name="visibility"></param>
-        /// <param name="name"></param>
         /// <returns></returns>
-        protected virtual ITranslationUnit CreateTranslationUnit(VisibilityToken visibility, ITranslationUnit name)
+        protected virtual ITranslationUnit CreateTranslationUnit(VisibilityToken visibility)
         {
-            return ConstructorDeclarationTranslationUnit.Create(visibility, name);
+            return ConstructorDeclarationTranslationUnit.Create(visibility);
         }
     }
 }
