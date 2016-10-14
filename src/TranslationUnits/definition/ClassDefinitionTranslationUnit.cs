@@ -58,6 +58,16 @@ namespace Rosetta.Translation
             };
         }
 
+        protected override string RenderedMethodDeclarationAfterSeparator
+        {
+            get { return Lexems.Semicolon; }
+        }
+
+        protected override string RenderedPropertyDeclarationAfterSeparator
+        {
+            get { return Lexems.Semicolon; }
+        }
+
         protected override string RenderedVisibilityModifier
         {
             get { return $"{Lexems.ExportKeyword}{Lexems.Whitespace}"; }

@@ -219,7 +219,7 @@ namespace Rosetta.Translation
             // Then properties
             foreach (ITranslationUnit translationUnit in this.propertyDeclarations)
             {
-                writer.WriteLine(translationUnit.Translate());
+                writer.WriteLine("{0}{1}", translationUnit.Translate(), this.RenderedPropertyDeclarationAfterSeparator);
             }
 
             // Adding a newline
@@ -231,7 +231,7 @@ namespace Rosetta.Translation
             // Finally methods
             foreach (ITranslationUnit translationUnit in this.methodDeclarations)
             {
-                writer.WriteLine(translationUnit.Translate());
+                writer.WriteLine("{0}{1}", translationUnit.Translate(), this.RenderedMethodDeclarationAfterSeparator);
             }
 
             // Closing
@@ -321,6 +321,16 @@ namespace Rosetta.Translation
         }
 
         #endregion
+
+        protected virtual string RenderedMethodDeclarationAfterSeparator
+        {
+            get { return string.Empty; }
+        }
+
+        protected virtual string RenderedPropertyDeclarationAfterSeparator
+        {
+            get { return string.Empty; }
+        }
 
         protected virtual string RenderedVisibilityModifier
         {

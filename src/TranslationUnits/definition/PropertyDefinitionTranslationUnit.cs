@@ -104,13 +104,13 @@ namespace Rosetta.Translation
             {
                 // Opening declaration: [<visibility>] get <name>() : <type> {
                 // TODO: Handle case of no visibility specified
-                writer.WriteLine("{0}{1} {2}{3} {4} {5}",
-                    this.Visibility == VisibilityToken.None ? string.Empty : TokenUtility.ToString(this.Visibility) + " ",
+                writer.WriteLine("{0}{1}{2} {3} {4}{5}",
                     Lexems.GetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket + Lexems.CloseRoundBracket,
                     Lexems.Colon,
-                    this.type.Translate());
+                    this.type.Translate(),
+                    this.hasSet ? Lexems.Semicolon : string.Empty); // TODO: Find a better way for this
             }
 
             if (this.hasSet)
@@ -119,8 +119,7 @@ namespace Rosetta.Translation
                     this.type, IdentifierTranslationUnit.Create("value"));
 
                 // Opening declaration: [<visibility>] set <name>(value : <type>) {
-                writer.WriteLine("{0}{1} {2}{3}{4}{5}",
-                    this.Visibility == VisibilityToken.None ? string.Empty : TokenUtility.ToString(this.Visibility) + " ",
+                writer.WriteLine("{0}{1}{2}{3}{4}",
                     Lexems.SetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket,
