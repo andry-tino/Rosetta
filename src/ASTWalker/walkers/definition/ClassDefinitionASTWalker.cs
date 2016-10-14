@@ -73,7 +73,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
-            var propertyDefinitionTranslationUnit = new PropertyDeclarationTranslationUnitFactory(node).Create();
+            var propertyDefinitionTranslationUnit = new PropertyDefinitionTranslationUnitFactory(node).Create();
             this.classDeclaration.AddPropertyDeclaration(propertyDefinitionTranslationUnit);
             
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
