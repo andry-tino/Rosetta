@@ -6,7 +6,10 @@
 namespace Rosetta.Runner.UnitTests.Mocks
 {
     using System;
+
     using Mono.Options;
+
+    using Rosetta.Executable;
     using Rosetta.Runner;
 
     /// <summary>

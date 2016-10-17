@@ -8,10 +8,10 @@ namespace Rosetta.Runner
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using System.IO;
 
     using Rosetta.AST;
-    using Rosetta.Runner.Exceptions;
+    using Rosetta.Executable;
+    using Rosetta.Executable.Exceptions;
 
     using Mono.Options;
 

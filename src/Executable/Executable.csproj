@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{869D1B89-8513-4733-9F5A-17A22C7B165B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{2D805F02-16C6-4A45-9837-210C0F20B4A4}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.Runner</RootNamespace>
-    <AssemblyName>Rosetta.Runner</AssemblyName>
+    <RootNamespace>Rosetta.Executable</RootNamespace>
+    <AssemblyName>Rosetta.Executable</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,24 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.ConvertFile.cs" />
-    <Compile Include="Program.ConvertProject.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="exceptions\ConflictingOptionsException.cs" />
+    <Compile Include="exceptions\DefaultOptionException.cs" />
+    <Compile Include="external\MonoOptions.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ASTWalker\ASTWalker.csproj">
-      <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
-      <Name>ASTWalker</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Executable\Executable.csproj">
-      <Project>{2d805f02-16c6-4a45-9837-210c0f20b4a4}</Project>
-      <Name>Executable</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

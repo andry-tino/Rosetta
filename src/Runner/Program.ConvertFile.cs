@@ -6,12 +6,10 @@
 namespace Rosetta.Runner
 {
     using System;
-    using System.Linq;
-    using System.Collections.Generic;
     using System.IO;
-
-    using Rosetta.AST;
     
+    using Rosetta.Executable;
+
     /// <summary>
     /// Part of program responsible for translating one single file.
     /// </summary>

@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.Runner
+namespace Rosetta.Executable
 {
     using System;
     using System.Linq;
@@ -19,7 +19,7 @@ namespace Rosetta.Runner
     /// It simply allows us to specify which files to convert, how to convert 
     /// them and where to write output files.
     /// </remarks>
-    internal class FileManager : IEnumerable<FileManager.FileEntry>
+    public class FileManager : IEnumerable<FileManager.FileEntry>
     {
         // The paths of files to convert and conversions
         private IEnumerable<FileEntry> fileEntries;

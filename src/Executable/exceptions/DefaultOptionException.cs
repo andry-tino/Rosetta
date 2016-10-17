@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.Runner.Exceptions
+namespace Rosetta.Executable.Exceptions
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Rosetta.Runner.Exceptions
     /// <summary>
     /// Exception thrown when the unnamed option is not used properly.
     /// </summary>
-    internal class DefaultOptionException : Exception
+    public class DefaultOptionException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultOptionException"/> class.

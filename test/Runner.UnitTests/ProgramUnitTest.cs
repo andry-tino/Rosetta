@@ -8,7 +8,7 @@ namespace Rosetta.Runner.UnitTests
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using Rosetta.Runner.Exceptions;
+    using Rosetta.Executable.Exceptions;
     using Rosetta.Runner.UnitTests.Mocks;
     using Rosetta.Runner.UnitTests.Utils;
 

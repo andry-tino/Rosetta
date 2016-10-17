@@ -67,6 +67,10 @@
     <Compile Include="utilities\TestObjects.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Executable\Executable.csproj">
+      <Project>{2d805f02-16c6-4a45-9837-210c0f20b4a4}</Project>
+      <Name>Executable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Runner\Runner.csproj">
       <Project>{869d1b89-8513-4733-9f5a-17a22c7b165b}</Project>
       <Name>Runner</Name>
