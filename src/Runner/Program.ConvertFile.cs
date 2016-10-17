@@ -15,6 +15,8 @@ namespace Rosetta.Runner
     /// </summary>
     internal partial class Program
     {
+        private const string Extension = "ts";
+
         protected virtual void ConvertFile()
         {
             this.InitializeForFileConversion();
@@ -49,7 +51,7 @@ namespace Rosetta.Runner
         
         protected virtual void EmitFiles()
         {
-            var writtenFiles = fileManager.WriteAllFilesToDestination();
+            var writtenFiles = fileManager.WriteAllFilesToDestination(Extension);
 
             foreach (var file in writtenFiles)
             {

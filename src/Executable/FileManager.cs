@@ -137,15 +137,22 @@ namespace Rosetta.Executable
         /// <summary>
         /// Causes <see cref="ApplyConversion"/> to be called and all files to be written to <see cref="DirectoryPath"/>.
         /// </summary>
-        public IEnumerable<string> WriteAllFilesToDestination()
+        /// <param name="extension">The extension (without dot).</param>
+        /// <returns></returns>
+        public IEnumerable<string> WriteAllFilesToDestination(string extension)
         {
+            if (extension == null)
+            {
+                throw new ArgumentNullException(nameof(extension), "An extension must be specified!");
+            }
+
             var writtenFiles = new List<string>();
 
             this.ApplyConversion();
 
             foreach (var entry in this.fileEntries)
             {
-                var destinationFilePath = GetDestinationFilePath(entry.FilePath, entry.NewName);
+                var destinationFilePath = GetDestinationFilePath(entry.FilePath, extension, entry.NewName);
                 WriteToFile(entry.FileConversion, destinationFilePath);
                 writtenFiles.Add(destinationFilePath);
             }
@@ -322,10 +329,8 @@ namespace Rosetta.Executable
         /// </summary>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        private string GetDestinationFilePath(string filepath, string newName = null)
+        private string GetDestinationFilePath(string filepath, string extension, string newName = null)
         {
-            const string extension = "ts";
-
             if (newName == null)
             {
                 return Path.Combine(directory, Path.GetFileName(Path.ChangeExtension(filepath, extension)));
