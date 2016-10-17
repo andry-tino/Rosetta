@@ -1,23 +1,24 @@
 ﻿/// <summary>
-/// NamespaceASTWalker.cs
+/// NamespaceDefinitionASTWalker.cs
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.AST
+namespace Rosetta.ScriptSharp.Definition.AST
 {
     using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST;
+    using Rosetta.ScriptSharp.Definition.Translation;
+    using Rosetta.ScriptSharp.Definition.AST.Factories;
     using Rosetta.Translation;
-    using Rosetta.AST.Factories;
-    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Walks a namespace AST node.
     /// </summary>
-    public class NamespaceASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class NamespaceDefinitionASTWalker : NamespaceASTWalker
     {
         // Protected for testability
         protected CSharpSyntaxNode node;
@@ -26,56 +27,36 @@ namespace Rosetta.AST
         protected ModuleTranslationUnit module;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NamespaceASTWalker"/> class.
+        /// Initializes a new instance of the <see cref="NamespaceDefinitionASTWalker"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="module"></param>
-        protected NamespaceASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module)
+        protected NamespaceDefinitionASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module) 
+            : base(node, module)
         {
-            var namespaceSyntaxNode = node as NamespaceDeclarationSyntax;
-            if (namespaceSyntaxNode == null)
-            {
-                throw new ArgumentException(
-                    string.Format("Specified node is not of type {0}",
-                    typeof(NamespaceDeclarationSyntax).Name));
-            }
-
-            if (module == null)
-            {
-                throw new ArgumentNullException(nameof(module));
-            }
-
-            this.node = node;
-            this.module = module;
         }
 
         /// <summary>
-        /// Copy initializes a new instance of the <see cref="NamespaceASTWalker"/> class.
+        /// Copy initializes a new instance of the <see cref="NamespaceDefinitionASTWalker"/> class.
         /// </summary>
         /// <param name="other"></param>
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public NamespaceASTWalker(NamespaceASTWalker other)
+        public NamespaceDefinitionASTWalker(NamespaceDefinitionASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
-            this.module = other.module;
         }
 
         /// <summary>
-        /// Factory method for class <see cref="NamespaceASTWalker"/>.
+        /// Factory method for class <see cref="NamespaceDefinitionASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <returns></returns>
-        public static NamespaceASTWalker Create(CSharpSyntaxNode node)
+        public static NamespaceDefinitionASTWalker Create(CSharpSyntaxNode node)
         {
-            return new NamespaceASTWalker(node, 
-                new ModuleTranslationUnitFactory(node).Create() as ModuleTranslationUnit);
+            return new NamespaceDefinitionASTWalker(node,
+                new ModuleDefinitionTranslationUnitFactory(node).Create() as ModuleTranslationUnit);
         }
 
         /// <summary>
@@ -104,8 +85,8 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var classWalker = ClassASTWalker.Create(node);
-            var translationUnit = classWalker.Walk();
+            var classDefinitionWalker = ClassDefinitionASTWalker.Create(node);
+            var translationUnit = classDefinitionWalker.Walk();
             this.module.AddClass(translationUnit);
 
             this.InvokeClassDeclarationVisited(this, new WalkerEventArgs());
@@ -117,7 +98,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
-            this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
+            // We do not output interfaces for definitions
         }
 
         #endregion
@@ -129,11 +110,6 @@ namespace Rosetta.AST
         /// </summary>
         public event WalkerEvent ClassDeclarationVisited;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public event WalkerEvent InterfaceDeclarationVisited;
-
         #endregion
 
         private void InvokeClassDeclarationVisited(object sender, WalkerEventArgs e)
@@ -141,14 +117,6 @@ namespace Rosetta.AST
             if (this.ClassDeclarationVisited != null)
             {
                 this.ClassDeclarationVisited(sender, e);
-            }
-        }
-
-        private void InvokeInterfaceDeclarationVisited(object sender, WalkerEventArgs e)
-        {
-            if (this.InterfaceDeclarationVisited != null)
-            {
-                this.InterfaceDeclarationVisited(sender, e);
             }
         }
     }

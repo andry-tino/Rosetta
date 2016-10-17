@@ -100,6 +100,7 @@
     <Compile Include="factories\ConstructorDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\FieldDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\MethodDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="factories\ModuleDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\PropertyDefinitionTranslationUnitFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="translation\ClassDefinitionTranslationUnit.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="translation\MethodDefinitionTranslationUnit.cs" />
     <Compile Include="translation\PropertyDefinitionTranslationUnit.cs" />
     <Compile Include="walkers\ClassDefinitionASTWalker.cs" />
+    <Compile Include="walkers\NamespaceDefinitionASTWalker.cs" />
+    <Compile Include="walkers\ProgramDefinitionASTWalker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ASTWalker\ASTWalker.csproj">
