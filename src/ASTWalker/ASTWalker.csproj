@@ -110,6 +110,7 @@
     <Compile Include="factories\FieldDeclarationTranslationUnitFactory.cs" />
     <Compile Include="factories\MethodDeclarationTranslationUnitFactory.cs" />
     <Compile Include="factories\ModuleTranslationUnitFactory.cs" />
+    <Compile Include="factories\ProgramTranslationUnitFactory.cs" />
     <Compile Include="factories\PropertyDeclarationTranslationUnitFactory.cs" />
     <Compile Include="helpers\declarations\ConstructorDeclaration.cs" />
     <Compile Include="helpers\declarations\FieldDeclaration.cs" />

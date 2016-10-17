@@ -11,7 +11,7 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
+    using Rosetta.AST.Factories;
 
     /// <summary>
     /// Walks a program AST node.
@@ -73,11 +73,8 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static ProgramASTWalker Create(CSharpSyntaxNode node)
         {
-            // No helper needed for this walker
-
-            var program = ProgramTranslationUnit.Create();
-
-            return new ProgramASTWalker(node, program);
+            return new ProgramASTWalker(node, 
+                new ProgramTranslationUnitFactory(node).Create() as ProgramTranslationUnit);
         }
 
         /// <summary>

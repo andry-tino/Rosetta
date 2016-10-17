@@ -11,41 +11,22 @@ namespace Rosetta.ScriptSharp.Definition.AST
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.AST;
+    using Rosetta.ScriptSharp.Definition.AST.Factories;
     using Rosetta.Translation;
 
     /// <summary>
     /// Walks a program AST node.
     /// </summary>
-    public class ProgramDefinitionASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class ProgramDefinitionASTWalker : ProgramASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
-        // Protected for testability
-        protected ProgramTranslationUnit program;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramDefinitionASTWalker"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="module"></param>
-        protected ProgramDefinitionASTWalker(CSharpSyntaxNode node, ProgramTranslationUnit program)
+        protected ProgramDefinitionASTWalker(CSharpSyntaxNode node, ProgramTranslationUnit program) 
+            : base(node, program)
         {
-            var programSyntaxNode = node as CompilationUnitSyntax;
-            if (programSyntaxNode == null)
-            {
-                throw new ArgumentException(
-                    string.Format("Specified node is not of type {0}",
-                    typeof(CompilationUnitSyntax).Name));
-            }
-
-            if (program == null)
-            {
-                throw new ArgumentNullException(nameof(program));
-            }
-
-            this.node = node;
-            this.program = program;
         }
 
         /// <summary>
@@ -55,15 +36,9 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public ProgramDefinitionASTWalker(ProgramDefinitionASTWalker other)
+        public ProgramDefinitionASTWalker(ProgramDefinitionASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
-            this.program = other.program;
         }
 
         /// <summary>
@@ -73,10 +48,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <returns></returns>
         public static ProgramDefinitionASTWalker Create(CSharpSyntaxNode node)
         {
-            // No helper needed for this walker
-            var program = ProgramTranslationUnit.Create();
-
-            return new ProgramDefinitionASTWalker(node, program);
+            return new ProgramDefinitionASTWalker(node,
+                new ProgramDefinitionTranslationUnitFactory(node).Create() as ProgramTranslationUnit);
         }
 
         /// <summary>

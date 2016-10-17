@@ -20,12 +20,6 @@ namespace Rosetta.ScriptSharp.Definition.AST
     /// </summary>
     public class NamespaceDefinitionASTWalker : NamespaceASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
-        // Protected for testability
-        protected ModuleTranslationUnit module;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NamespaceDefinitionASTWalker"/> class.
         /// </summary>
@@ -59,20 +53,6 @@ namespace Rosetta.ScriptSharp.Definition.AST
                 new ModuleDefinitionTranslationUnitFactory(node).Create() as ModuleTranslationUnit);
         }
 
-        /// <summary>
-        /// Walk the whole tree starting from specified <see cref="CSharpSyntaxNode"/> and 
-        /// build the translation unit tree necessary for generating TypeScript output.
-        /// </summary>
-        /// <returns>The root of the translation unit tree.</returns>
-        public ITranslationUnit Walk()
-        {
-            // Visiting
-            this.Visit(node);
-
-            // Returning root
-            return this.module;
-        }
-
         #region CSharpSyntaxWalker overrides
 
         /// <summary>
@@ -102,22 +82,5 @@ namespace Rosetta.ScriptSharp.Definition.AST
         }
 
         #endregion
-
-        #region Walk events
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event WalkerEvent ClassDeclarationVisited;
-
-        #endregion
-
-        private void InvokeClassDeclarationVisited(object sender, WalkerEventArgs e)
-        {
-            if (this.ClassDeclarationVisited != null)
-            {
-                this.ClassDeclarationVisited(sender, e);
-            }
-        }
     }
 }

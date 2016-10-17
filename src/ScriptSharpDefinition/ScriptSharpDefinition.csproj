@@ -101,6 +101,7 @@
     <Compile Include="factories\FieldDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\MethodDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\ModuleDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="factories\ProgramDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\PropertyDefinitionTranslationUnitFactory.cs" />
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
