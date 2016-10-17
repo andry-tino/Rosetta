@@ -11,6 +11,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
     using Rosetta.Executable;
     using Rosetta.Executable.Exceptions;
+    using Rosetta.ScriptSharp.Definition.AST;
 
     using Mono.Options;
 
@@ -148,7 +149,6 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
             try
             {
-                // We start by considering whether the user specified a file to convert
                 if (this.filePath != null)
                 {
                     this.ConvertFile();
@@ -221,13 +221,9 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
         private static string PerformConversion(string source)
         {
-            // TODO: Enable once walkers are ready
+            var program = new ProgramWrapper(source);
 
-            //var program = new ProgramWrapper(source);
-
-            //return program.Output;
-
-            return "";
+            return program.Output;
         }
 
         #region Helpers
@@ -235,7 +231,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         protected virtual void ShowHelp()
         {
             Console.WriteLine("Usage: RosettaScriptSharpDefinition [OPTIONS]+ message");
-            Console.WriteLine("Generates TypeScript definitino files from C# files.");
+            Console.WriteLine("Generates TypeScript definition files from C# files.");
             Console.WriteLine();
             Console.WriteLine("Options:");
             this.options.WriteOptionDescriptions(Console.Out);
