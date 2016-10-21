@@ -6,7 +6,6 @@
 namespace Rosetta.AST
 {
     using System;
-    using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.Translation;
 
@@ -16,9 +15,9 @@ namespace Rosetta.AST
     public interface IASTWalker
     {
         /// <summary>
-        /// 
+        /// Performs the walking process.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An <see cref="ITranslationUnit"/> representing the translation unit generated out of the tree.</returns>
         ITranslationUnit Walk();
     }
 }

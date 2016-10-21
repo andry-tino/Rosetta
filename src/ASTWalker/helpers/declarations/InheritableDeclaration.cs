@@ -80,6 +80,7 @@ namespace Rosetta.AST.Helpers
                         {
                             if (baseType.Kind() == SyntaxKind.SimpleBaseType)
                             {
+                                // TODO: This requires a semantic model. Add case where semantic model is not available
                                 ITypeSymbol typeSymbol = this.SemanticModel.GetSymbolInfo(
                                     baseType.Type).Symbol as ITypeSymbol;
 

@@ -71,6 +71,17 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
+        /// Gets the collection of attributes for the class.
+        /// </summary>
+        public IEnumerable<AttributeSyntax> Attributes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
         /// Gets the collection of implemented interfaces.
         /// </summary>
         /// <remarks>

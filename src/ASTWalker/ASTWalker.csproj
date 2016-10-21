@@ -134,7 +134,11 @@
     <Compile Include="helpers\statements\ConditionalStatement.cs" />
     <Compile Include="helpers\statements\ThrowStatement.cs" />
     <Compile Include="helpers\simple\Parameter.cs" />
+    <Compile Include="IASTTransformer.cs" />
     <Compile Include="ProgramWrapper.cs" />
+    <Compile Include="transformers\ClassInDifferentNamespaceASTTransformer.cs" />
+    <Compile Include="transformers\ClassWithAttributeInDifferentNamespaceASTTransformer.cs" />
+    <Compile Include="utilities\MultiPurposeASTWalker.cs" />
     <Compile Include="utilities\VisibilityUtilities.cs" />
     <Compile Include="walkers\BlockASTWalker.cs" />
     <Compile Include="walkers\ClassASTWalker.cs" />

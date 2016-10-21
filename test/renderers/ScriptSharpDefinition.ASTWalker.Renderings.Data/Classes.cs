@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// Classes.cs
-/// Andrea Tino - 2015
+/// Andrea Tino - 2016
 /// </summary>
 
 namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data

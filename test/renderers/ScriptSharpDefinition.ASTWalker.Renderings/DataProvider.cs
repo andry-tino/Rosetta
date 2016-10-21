@@ -18,5 +18,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
         {
             get { return typeof(Classes); }
         }
+
+        public static Type ClassesWithScriptNamespaceDefinitionMethodsProvider
+        {
+            get { return typeof(ClassesWithScriptNamespace); }
+        }
     }
 }
