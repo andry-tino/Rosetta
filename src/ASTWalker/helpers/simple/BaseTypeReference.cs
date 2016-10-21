@@ -13,7 +13,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing base type references in AST.
     /// </summary>
-    internal class BaseTypeReference : Helper
+    public class BaseTypeReference : Helper
     {
         private Microsoft.CodeAnalysis.TypeKind? kind;
 

@@ -18,7 +18,7 @@ namespace Rosetta.AST.Helpers
     /// Helper for accessing constructors in AST.
     /// TODO: Evaluate possibility to inherit from <see cref="MetrhodDeclaration"/>.
     /// </summary>
-    internal class ConstructorDeclaration : Helper
+    public class ConstructorDeclaration : Helper
     {
         // Cached values
         private IEnumerable<Parameter> parameters;

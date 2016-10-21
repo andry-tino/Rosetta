@@ -17,7 +17,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing methods in AST
     /// </summary>
-    internal class MethodDeclaration : Helper
+    public class MethodDeclaration : Helper
     {
         // Cached values
         private IEnumerable<Parameter> parameters;

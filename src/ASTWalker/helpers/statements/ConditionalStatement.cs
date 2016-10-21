@@ -13,7 +13,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing conditional statements.
     /// </summary>
-    internal class ConditionalStatement : Helper
+    public class ConditionalStatement : Helper
     {
         // Cached values
         private bool? hasElseBlock;

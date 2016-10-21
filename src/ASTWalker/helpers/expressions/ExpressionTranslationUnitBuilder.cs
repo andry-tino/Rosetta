@@ -17,7 +17,7 @@ namespace Rosetta.AST.Helpers
     /// from an expression syntax node.
     /// This is the main entry point for whatever AST walker which needs to create an expression.
     /// </summary>
-    internal sealed class ExpressionTranslationUnitBuilder
+    public sealed class ExpressionTranslationUnitBuilder
     {
         private ExpressionSyntax node;
 

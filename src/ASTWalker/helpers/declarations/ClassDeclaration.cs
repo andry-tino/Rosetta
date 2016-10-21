@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing class in AST
     /// </summary>
-    internal class ClassDeclaration : InheritableDeclaration
+    public class ClassDeclaration : InheritableDeclaration
     {
         // Cached values
         private IEnumerable<BaseTypeReference> interfaces;

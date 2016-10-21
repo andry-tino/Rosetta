@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing identifier expressions in AST.
     /// </summary>
-    internal class IdentifierExpression : Helper
+    public class IdentifierExpression : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IdentifierExpression"/> class.

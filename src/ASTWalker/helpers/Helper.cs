@@ -13,7 +13,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Generic helper.
     /// </summary>
-    internal abstract class Helper
+    public abstract class Helper
     {
         protected CSharpSyntaxNode syntaxNode;
         private SemanticModel semanticModel;

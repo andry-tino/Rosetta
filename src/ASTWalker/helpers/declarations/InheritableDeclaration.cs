@@ -17,7 +17,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing classes and interfaces in AST.
     /// </summary>
-    internal abstract class InheritableDeclaration : Helper
+    public abstract class InheritableDeclaration : Helper
     {
         // Cached values
         private IEnumerable<BaseTypeReference> baseTypes;

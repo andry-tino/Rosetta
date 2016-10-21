@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing assignment expressions in AST.
     /// </summary>
-    internal class AssignmentExpression : Helper
+    public class AssignmentExpression : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AssignmentExpression"/> class.

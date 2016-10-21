@@ -17,7 +17,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing properties in AST
     /// </summary>
-    internal class PropertyDeclaration : Helper
+    public class PropertyDeclaration : Helper
     {
         // Cached values
         private bool? hasGet;

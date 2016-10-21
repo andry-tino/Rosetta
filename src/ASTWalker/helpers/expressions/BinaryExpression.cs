@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing binary expressions in AST.
     /// </summary>
-    internal class BinaryExpression : Helper
+    public class BinaryExpression : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BinaryExpression"/> class.

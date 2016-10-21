@@ -17,7 +17,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing interface in AST
     /// </summary>
-    internal class VariableDeclaration : Helper
+    public class VariableDeclaration : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VariableDeclaration"/> class.

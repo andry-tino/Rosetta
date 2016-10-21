@@ -17,7 +17,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing invocation expressions in AST.
     /// </summary>
-    internal class InvokationExpression : Helper
+    public class InvokationExpression : Helper
     {
         // Cached values
         private IEnumerable<Argument> arguments;

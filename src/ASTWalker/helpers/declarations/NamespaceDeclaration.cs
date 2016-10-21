@@ -12,7 +12,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing namespaces in AST.
     /// </summary>
-    internal class NamespaceDeclaration : Helper
+    public class NamespaceDeclaration : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NamespaceDeclaration"/> class.

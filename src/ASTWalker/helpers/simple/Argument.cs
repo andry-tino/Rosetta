@@ -14,7 +14,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing argument references in AST.
     /// </summary>
-    internal class Argument : Helper
+    public class Argument : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Argument"/> class.

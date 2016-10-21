@@ -11,7 +11,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Describes the type of base type.
     /// </summary>
-    internal enum TypeKind
+    public enum TypeKind
     {
         /// <summary>
         /// Base type is a class.
@@ -27,7 +27,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// 
     /// </summary>
-    internal static class TypeKindUtilities
+    public static class TypeKindUtilities
     {
         /// <summary>
         /// 

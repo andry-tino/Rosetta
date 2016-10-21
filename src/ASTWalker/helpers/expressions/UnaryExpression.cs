@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing unary expressions in AST.
     /// </summary>
-    internal class UnaryExpression : Helper
+    public class UnaryExpression : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnaryExpression"/> class.

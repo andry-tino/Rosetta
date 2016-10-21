@@ -14,7 +14,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing parameter references in AST.
     /// </summary>
-    internal class Parameter : Helper
+    public class Parameter : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Parameter"/> class.

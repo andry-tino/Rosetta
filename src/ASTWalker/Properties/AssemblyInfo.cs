@@ -19,10 +19,6 @@ using System.Runtime.CompilerServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Setting visibility for unit tests
-[assembly: InternalsVisibleTo("Rosetta.ASTWalker.Helpers.UnitTests")]
-[assembly: InternalsVisibleTo("Rosetta.ASTWalker.UnitTests")]
-
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version

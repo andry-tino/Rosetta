@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing member access expressions in AST.
     /// </summary>
-    internal class MemberAccessExpression : Helper
+    public class MemberAccessExpression : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberAccessExpression"/> class.

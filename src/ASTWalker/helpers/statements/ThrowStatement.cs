@@ -13,7 +13,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing throw statements.
     /// </summary>
-    internal class ThrowStatement : Helper
+    public class ThrowStatement : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ThrowStatement"/> class.

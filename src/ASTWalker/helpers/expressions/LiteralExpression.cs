@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing literal expressions in AST.
     /// </summary>
-    internal class LiteralExpression : Helper
+    public class LiteralExpression : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LiteralExpression"/> class.

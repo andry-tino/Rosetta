@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing parenthesized expressions in AST.
     /// </summary>
-    internal class ParenthesizedExpression : Helper
+    public class ParenthesizedExpression : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ParenthesizedExpression"/> class.

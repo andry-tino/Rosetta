@@ -13,7 +13,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing return statements.
     /// </summary>
-    internal class ReturnStatement : Helper
+    public class ReturnStatement : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ReturnStatement"/> class.

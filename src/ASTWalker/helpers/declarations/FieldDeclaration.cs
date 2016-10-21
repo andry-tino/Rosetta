@@ -17,7 +17,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing interface in AST
     /// </summary>
-    internal class FieldDeclaration : Helper
+    public class FieldDeclaration : Helper
     {
         // Acting as a decorated element
         private VariableDeclaration variableDeclaration;

@@ -13,7 +13,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing expression statements.
     /// </summary>
-    internal class ExpressionStatement : Helper
+    public class ExpressionStatement : Helper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpressionStatement"/> class.
