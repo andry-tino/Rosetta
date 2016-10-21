@@ -71,13 +71,13 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
-        /// Gets the collection of attributes for the class.
+        /// Gets the <see cref="Helper"/> though which it is possible to access to attributes.
         /// </summary>
-        public IEnumerable<AttributeSyntax> Attributes
+        public AttributeLists AttributeLists
         {
             get
             {
-                throw new NotImplementedException();
+                return new AttributeLists(this.syntaxNode as ClassDeclarationSyntax, this.SemanticModel);
             }
         }
 

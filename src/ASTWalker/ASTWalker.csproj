@@ -129,6 +129,9 @@
     <Compile Include="helpers\expressions\UnaryExpression.cs" />
     <Compile Include="helpers\Helper.cs" />
     <Compile Include="helpers\simple\Argument.cs" />
+    <Compile Include="helpers\simple\AttributeArgument.cs" />
+    <Compile Include="helpers\simple\AttributeDecoration.cs" />
+    <Compile Include="helpers\simple\AttributeLists.cs" />
     <Compile Include="helpers\statements\ExpressionStatement.cs" />
     <Compile Include="helpers\statements\ReturnStatement.cs" />
     <Compile Include="helpers\statements\ConditionalStatement.cs" />

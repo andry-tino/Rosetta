@@ -79,7 +79,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                 {
                     var couple = new KeyValuePair<ClassDeclarationSyntax, string>(
                         astNode as ClassDeclarationSyntax, 
-                        ""); // TODO: Get the value: (astNode as ClassDeclarationSyntax).AttributeLists[0].Attributes[0].ArgumentList.Arguments[0].GetText()
+                        "");// TODO: Use the helper
 
                     this.classDeclarations.Add(couple);
                 }
