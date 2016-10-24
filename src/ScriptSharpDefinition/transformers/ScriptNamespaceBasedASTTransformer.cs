@@ -10,17 +10,17 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
-    
+
+    using Rosetta.AST.Helpers;
     using Rosetta.AST.Transformers;
     using Rosetta.AST.Utilities;
+    using Rosetta.ScriptSharp.Definition.AST.Helpers;
 
     /// <summary>
     /// Base class for rearrangement of namespaces for classes basing on ScriptSharp's <code>ScriptNamespace</code> attribute.
     /// </summary>
     public class ScriptNamespaceBasedASTTransformer : ClassWithAttributeInDifferentNamespaceASTTransformer
     {
-        private const string scriptNamespaceFullName = "ScriptNamespace";
-
         private List<KeyValuePair<ClassDeclarationSyntax, string>> classDeclarations;
         private CSharpSyntaxNode node;
 
@@ -28,7 +28,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
         /// Initializes a new instance of the <see cref="ClassWithAttributeInDifferentNamespaceASTTransformer"/> class.
         /// </summary>
         public ScriptNamespaceBasedASTTransformer()
-            : base(string.Empty, scriptNamespaceFullName)
+            : base(string.Empty, ScriptNamespaceAttributeDecoration.ScriptNamespaceFullName)
         {
         }
 
@@ -72,14 +72,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                     {
                         return false;
                     }
-                    
-                    return IsScriptNamespaceAttributePresent(classNode.AttributeLists);
+
+                    var helper = new AttributeLists(classNode);
+                    return RetrieveScriptNamespaceAttribute(helper) != null;
                 },
                 delegate (SyntaxNode astNode)
                 {
+                    var classNode = astNode as ClassDeclarationSyntax;
+                    var helper = RetrieveScriptNamespaceAttribute(new AttributeLists(classNode));
+
                     var couple = new KeyValuePair<ClassDeclarationSyntax, string>(
                         astNode as ClassDeclarationSyntax, 
-                        "");// TODO: Use the helper
+                        helper.OverridenNamespace);
 
                     this.classDeclarations.Add(couple);
                 }
@@ -97,36 +101,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             this.node = null;
             this.classDeclarations = null;
         }
-
-        private static bool IsScriptNamespaceAttributePresent(SyntaxList<AttributeListSyntax> attributeLists)
+        
+        private static ScriptNamespaceAttributeDecoration RetrieveScriptNamespaceAttribute(AttributeLists helper)
         {
-            foreach (var attributeList in attributeLists)
+            foreach (var attribute in helper.Attributes)
             {
-                if (IsScriptNamespaceAttributePresent(attributeList))
+                if (ScriptNamespaceAttributeDecoration.IsScriptNamespaceAttributeDecoration(attribute))
                 {
-                    return true;
+                    return new ScriptNamespaceAttributeDecoration(attribute);
                 }
             }
 
-            return false;
-        }
-
-        private static bool IsScriptNamespaceAttributePresent(AttributeListSyntax attributes)
-        {
-            foreach (var attribute in attributes.Attributes)
-            {
-                if (IsAttributeNameCompatible(attribute.Name.ToString()))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static bool IsAttributeNameCompatible(string name)
-        {
-            return name.Contains("ScriptNamespace");
+            return null;
         }
     }
 }

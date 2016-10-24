@@ -103,6 +103,7 @@
     <Compile Include="factories\ModuleDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\ProgramDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\PropertyDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="helpers\ScriptNamespaceAttributeDecoration.cs" />
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="transformers\ScriptNamespaceBasedASTTransformer.cs" />

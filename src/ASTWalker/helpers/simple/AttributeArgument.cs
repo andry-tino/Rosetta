@@ -38,6 +38,21 @@ namespace Rosetta.AST.Helpers
         {
         }
 
+        /// <summary>
+        /// Gets the literal expression if any. Otherwise returns <code>null</code>.
+        /// </summary>
+        public LiteralExpression LiteralExpression
+        {
+            get
+            {
+                var literalExpression = this.AttributeArgumentSyntaxNode.Expression as LiteralExpressionSyntax;
+                
+                return literalExpression == null 
+                    ? null 
+                    : new LiteralExpression(literalExpression, this.SemanticModel);
+            }
+        }
+
         private AttributeArgumentSyntax AttributeArgumentSyntaxNode
         {
             get { return this.syntaxNode as AttributeArgumentSyntax; }
