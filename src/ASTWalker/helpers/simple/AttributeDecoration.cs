@@ -70,7 +70,18 @@ namespace Rosetta.AST.Helpers
             }
         }
 
-        private AttributeSyntax AttributeNode
+        /// <summary>
+        /// Gets the <see cref="AttributeListSyntax"/> where the <see cref="AttributeSyntax"/> belongs to.
+        /// </summary>
+        public AttributeListSyntax AttributeList
+        {
+            get { return this.AttributeNode.Parent as AttributeListSyntax; }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="AttributeSyntax"/> underlying the helper and representing the attribute in the AST.
+        /// </summary>
+        public AttributeSyntax AttributeNode
         {
             get { return (AttributeSyntax)this.syntaxNode; }
         }

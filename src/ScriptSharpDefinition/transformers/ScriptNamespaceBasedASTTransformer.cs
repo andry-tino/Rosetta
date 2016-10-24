@@ -21,8 +21,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
     /// </summary>
     public class ScriptNamespaceBasedASTTransformer : ClassWithAttributeInDifferentNamespaceASTTransformer
     {
-        private List<KeyValuePair<ClassDeclarationSyntax, string>> classDeclarations;
-        private CSharpSyntaxNode node;
+        // Temporary quantities
+        private List<TransformationInfo> transformationInfos;
+        private CompilationUnitSyntax node;
+        private CompilationUnitSyntax newNode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassWithAttributeInDifferentNamespaceASTTransformer"/> class.
@@ -46,18 +48,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
 
             this.Initialize(node);
 
-            var members = new SyntaxList<MemberDeclarationSyntax>();
-
-            var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.IdentifierName("MyNamespace"));
-            members.Add(@namespace);
-
-            CompilationUnitSyntax c = SyntaxFactory.CompilationUnit(
-                new SyntaxList<ExternAliasDirectiveSyntax>(), 
-                new SyntaxList<UsingDirectiveSyntax>(), 
-                new SyntaxList<AttributeListSyntax>(), 
-                members);
-
             this.RetrieveOverridenNamespaceNames();
+            this.ProcessOverridenNamespaceNames();
+
+            node = this.newNode;
 
             this.CleanUp();
         }
@@ -79,27 +73,77 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                 delegate (SyntaxNode astNode)
                 {
                     var classNode = astNode as ClassDeclarationSyntax;
-                    var helper = RetrieveScriptNamespaceAttribute(new AttributeLists(classNode));
+                    var scriptNamespaceAttributeHelper = RetrieveScriptNamespaceAttribute(new AttributeLists(classNode));
 
-                    var couple = new KeyValuePair<ClassDeclarationSyntax, string>(
-                        astNode as ClassDeclarationSyntax, 
-                        helper.OverridenNamespace);
+                    AttributeListSyntax scriptNamespaceAttributeListSyntax = scriptNamespaceAttributeHelper.AttributeDecoration.AttributeList; // The list where ScriptNamespace belongs to
+                    AttributeSyntax scriptNamespaceAttributeSyntax = scriptNamespaceAttributeHelper.AttributeDecoration.AttributeNode; // The ScriptNamespace attribute
 
-                    this.classDeclarations.Add(couple);
-                }
-                ).Start();
+                    // We create a new class node with the attribute removed
+                    SeparatedSyntaxList<AttributeSyntax> newAttributeListSyntaxAttributes = scriptNamespaceAttributeListSyntax.Attributes.Remove(scriptNamespaceAttributeSyntax);
+                    AttributeListSyntax newAttributeListSyntax = SyntaxFactory.AttributeList(newAttributeListSyntaxAttributes);
+
+                    SyntaxList<AttributeListSyntax> newAttributeLists = classNode.AttributeLists.Remove(scriptNamespaceAttributeListSyntax);
+                    newAttributeLists = newAttributeLists.Add(newAttributeListSyntax);
+
+                    ClassDeclarationSyntax newClassSyntax = classNode.RemoveNode(scriptNamespaceAttributeListSyntax, SyntaxRemoveOptions.KeepNoTrivia);
+                    newClassSyntax.WithAttributeLists(newAttributeLists);
+
+                    // Asserting that the overriden namespace has a proper value
+                    if (string.IsNullOrEmpty(scriptNamespaceAttributeHelper.OverridenNamespace) || 
+                        string.IsNullOrWhiteSpace(scriptNamespaceAttributeHelper.OverridenNamespace))
+                    {
+                        throw new InvalidOperationException("The ScriptNamespace attribute contains an overriden namespace value which is not acceptable!");
+                    }
+                    
+                    var info = new TransformationInfo()
+                    {
+                        OriginalClassNode = classNode,
+                        TransformedClassNode = newClassSyntax,
+                        OverridenNamespace = scriptNamespaceAttributeHelper.OverridenNamespace
+                    };
+
+                    this.transformationInfos.Add(info);
+                })
+                .Start();
+        }
+
+        private void ProcessOverridenNamespaceNames()
+        {
+            CompilationUnitSyntax newNode = this.node;
+
+            // Removing classes
+            var removableNodes = new List<ClassDeclarationSyntax>();
+            foreach (var info in this.transformationInfos)
+            {
+                removableNodes.Add(info.OriginalClassNode);
+            }
+
+            // Removing the classes in the array
+            // These classes will have another namespace assigned, this will work in case the program defines a namespace or not
+            newNode = newNode.RemoveNodes(removableNodes, SyntaxRemoveOptions.KeepNoTrivia);
+
+            // Adding classes in new namespaces
+            foreach (var info in this.transformationInfos)
+            {
+                var namespaceSyntax = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.IdentifierName(info.OverridenNamespace));
+                namespaceSyntax = namespaceSyntax.AddMembers(info.TransformedClassNode);
+
+                newNode = newNode.AddMembers(namespaceSyntax);
+            }
+
+            this.newNode = newNode;
         }
 
         private void Initialize(CSharpSyntaxNode node)
         {
-            this.node = node;
-            this.classDeclarations = new List<KeyValuePair<ClassDeclarationSyntax, string>>();
+            this.node = node as CompilationUnitSyntax;
+            this.transformationInfos = new List<TransformationInfo>();
         }
 
         private void CleanUp()
         {
             this.node = null;
-            this.classDeclarations = null;
+            this.transformationInfos = null;
         }
         
         private static ScriptNamespaceAttributeDecoration RetrieveScriptNamespaceAttribute(AttributeLists helper)
@@ -114,5 +158,30 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
 
             return null;
         }
+
+        #region Types
+
+        /// <summary>
+        /// A class for store basic tranformation info.
+        /// </summary>
+        private sealed class TransformationInfo
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            public ClassDeclarationSyntax OriginalClassNode { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public ClassDeclarationSyntax TransformedClassNode { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string OverridenNamespace { get; set; }
+        }
+
+        #endregion
     }
 }

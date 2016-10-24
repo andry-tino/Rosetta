@@ -27,7 +27,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
     public class ClassesWithScriptNamespace
     {
         [RenderingResource("ScriptNamespace.SingleClass.d.ts")]
-        public string RenderClassWithMethodsWithParameters()
+        public string RenderSingleClassWithScriptNamespace()
         {
             return GetTranslation(@"
                 [ScriptNamespace(""NewNamespace"")]
@@ -36,6 +36,39 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
                     public void Method2(int param1, string param2) { }
                     public void Method3(int param1, string param2, bool param3) { }
                     public void Method4(int param1, string param2, bool param3, double param4) { }
+                }
+            ");
+        }
+
+        [RenderingResource("ScriptNamespace.TwoClasses.d.ts")]
+        public string RenderTwoClassesWithScriptNamespace()
+        {
+            return GetTranslation(@"
+                [ScriptNamespace(""NewNamespace1"")]
+                public class Class1 {
+                    public void Method1(int param1) { }
+                    public void Method2(int param1, string param2) { }
+                }
+                [ScriptNamespace(""NewNamespace2"")]
+                public class Class2 {
+                    public void Method1(int param1) { }
+                    public void Method2(int param1, string param2) { }
+                }
+            ");
+        }
+
+        [RenderingResource("ScriptNamespace.TwoMixedClasses.d.ts")]
+        public string RenderTwoMixedClassesWithScriptNamespace()
+        {
+            return GetTranslation(@"
+                [ScriptNamespace(""NewNamespace1"")]
+                public class Class1 {
+                    public void Method1(int param1) { }
+                    public void Method2(int param1, string param2) { }
+                }
+                public class Class2 {
+                    public void Method1(int param1) { }
+                    public void Method2(int param1, string param2) { }
                 }
             ");
         }

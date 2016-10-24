@@ -80,6 +80,14 @@ namespace Rosetta.ScriptSharp.Definition.AST.Helpers
         }
 
         /// <summary>
+        /// Gets the decorated <see cref="AttributeDecoration"/.>
+        /// </summary>
+        public AttributeDecoration AttributeDecoration
+        {
+            get { return this.attribute; }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="attribute"></param>
