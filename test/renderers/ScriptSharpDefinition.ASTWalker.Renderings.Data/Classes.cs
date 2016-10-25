@@ -92,6 +92,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
 
                     public void Method3(int param1, string param2, bool param3) { }
 
+                    public int Method4(int param1, string param2, bool param3, string param4) { 
+                        return 3;
+                    }
+
                     public int Property3 {
                         set { }
                     }
