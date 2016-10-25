@@ -58,7 +58,11 @@ namespace Rosetta.AST.Helpers
         /// </remarks>
         public string Type
         {
-            get { return this.SemanticModel.GetSymbolInfo(this.VariableDeclarationSyntaxNode.Type).Symbol.Name; }
+            get
+            {
+                //return this.SemanticModel.GetSymbolInfo(this.VariableDeclarationSyntaxNode.Type).Symbol.Name;
+                return this.VariableDeclarationSyntaxNode.Type.ToString();
+            }
         }
 
         /// <summary>

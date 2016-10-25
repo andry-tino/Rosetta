@@ -10,6 +10,8 @@ namespace Rosetta.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Utilities;
+
     /// <summary>
     /// Helper for accessing base type references in AST.
     /// </summary>
@@ -75,14 +77,18 @@ namespace Rosetta.AST.Helpers
                     return this.kind.Value.ToTypeKind();
                 }
 
-                if (this.SemanticModel != null)
-                {
-                    return this.SemanticModel.GetTypeInfo(this.BaseTypeSyntaxNode).Type.TypeKind.ToTypeKind();
-                }
+                // TODO: Remove guess logic once semantic model is ready
+                return SemanticUtilities.GuessBaseTypeKindFromName(this.BaseTypeSyntaxNode).ToTypeKind();
 
-                throw new InvalidOperationException(
-                    string.Format("Cannot get property {0}! Object was constructed with minimal constructor!", 
-                    nameof(this.Kind)));
+                // TODO: Semnatic model is not working at the moment, activate when ready
+                //if (this.SemanticModel != null)
+                //{
+                //    return this.SemanticModel.GetTypeInfo(this.BaseTypeSyntaxNode).Type.TypeKind.ToTypeKind();
+                //}
+
+                //throw new InvalidOperationException(
+                //    string.Format("Cannot get property {0}! Object was constructed with minimal constructor!", 
+                //    nameof(this.Kind)));
             }
         }
 

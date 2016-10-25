@@ -7,11 +7,13 @@ namespace Rosetta.AST.Helpers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Roslyn = Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Utilities;
     using Rosetta.Translation;
 
     /// <summary>
@@ -76,28 +78,59 @@ namespace Rosetta.AST.Helpers
                     if (baselist != null)
                     {
                         SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.TypeDeclarationSyntaxNode.BaseList.Types;
-                        foreach (BaseTypeSyntax baseType in listSyntax)
+
+                        try
                         {
-                            if (baseType.Kind() == SyntaxKind.SimpleBaseType)
+                            foreach (BaseTypeSyntax baseType in listSyntax)
                             {
-                                ITypeSymbol typeSymbol = this.SemanticModel.GetSymbolInfo(
-                                    baseType.Type).Symbol as ITypeSymbol;
-
-                                if (typeSymbol == null)
+                                if (baseType.Kind() == SyntaxKind.SimpleBaseType)
                                 {
-                                    // TODO: This requires a semantic model. Add case where semantic model is not available
-                                    throw new InvalidOperationException("Base type evaluation failure due to missing semantic model");
-                                }
+                                    ITypeSymbol typeSymbol = this.SemanticModel.GetSymbolInfo(
+                                        baseType.Type).Symbol as ITypeSymbol;
 
-                                switch (typeSymbol.TypeKind)
+                                    if (typeSymbol == null)
+                                    {
+                                        // TODO: This requires a semantic model. Add case where semantic model is not available
+                                        throw new InvalidOperationException("Base type evaluation failure due to not sifficient semantic model");
+                                    }
+
+                                    switch (typeSymbol.TypeKind)
+                                    {
+                                        case Roslyn.TypeKind.Class:
+                                            ((List<BaseTypeReference>)this.baseTypes).Add(
+                                                new BaseTypeReference(baseType, Roslyn.TypeKind.Class));
+                                            break;
+                                        case Roslyn.TypeKind.Interface:
+                                            ((List<BaseTypeReference>)this.baseTypes).Add(
+                                                new BaseTypeReference(baseType, Roslyn.TypeKind.Interface));
+                                            break;
+                                        default:
+                                            // Not recognized, skip it
+                                            continue;
+                                    }
+                                }
+                            }
+                        }
+                        catch (InvalidOperationException)
+                        {
+                            // Semantic model is not good for separating class and interfaces, let's guess
+                            ((List<BaseTypeReference>)this.baseTypes).Clear();
+
+                            IEnumerable<BaseTypeSyntax> simpleBaseTypes = listSyntax.Where(
+                                delegate (BaseTypeSyntax node) { return node.Kind() == SyntaxKind.SimpleBaseType; });
+                            IEnumerable<SemanticUtilities.BaseTypeInfo> baseTypeInfos = SemanticUtilities.SeparateClassAndInterfacesBasedOnNames(simpleBaseTypes);
+
+                            foreach (var baseTypeInfo in baseTypeInfos)
+                            {
+                                switch (baseTypeInfo.Kind)
                                 {
                                     case Roslyn.TypeKind.Class:
                                         ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            new BaseTypeReference(baseType, Roslyn.TypeKind.Class));
+                                            new BaseTypeReference(baseTypeInfo.Node, Roslyn.TypeKind.Class));
                                         break;
                                     case Roslyn.TypeKind.Interface:
                                         ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            new BaseTypeReference(baseType, Roslyn.TypeKind.Interface));
+                                            new BaseTypeReference(baseTypeInfo.Node, Roslyn.TypeKind.Interface));
                                         break;
                                     default:
                                         // Not recognized, skip it
