@@ -57,6 +57,7 @@ namespace Rosetta.AST.Helpers
                     return VisibilityToken.None;
                 }
 
+                // TODO: Handle all modifiers
                 return this.FieldDeclarationSyntaxNode.Modifiers[0].GetVibilityToken();
             }
         }

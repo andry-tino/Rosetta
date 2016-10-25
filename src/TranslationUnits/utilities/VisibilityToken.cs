@@ -9,7 +9,12 @@ namespace Rosetta.Translation
 
     /// <summary>
     /// Enumerating all possible visibilities.
+    /// 
+    /// TODO: Rename into "Modifiers".
     /// </summary>
+    /// <remarks>
+    /// For getting the corresponding C# keyword, use extension <see cref="TokenUtility.ToString(VisibilityToken)"/>.
+    /// </remarks>
     [Flags]
     public enum VisibilityToken
     {

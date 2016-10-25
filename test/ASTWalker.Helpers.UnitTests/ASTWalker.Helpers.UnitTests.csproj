@@ -6,7 +6,7 @@
     <ProjectGuid>{6A5CB19D-99E7-4743-9D93-4EA7FB9A8145}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.ASTWalker.Helpers.UnitTests</RootNamespace>
+    <RootNamespace>Rosetta.AST.Helpers.UnitTests</RootNamespace>
     <AssemblyName>Rosetta.ASTWalker.Helpers.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -119,6 +119,7 @@
     <Compile Include="ClassDeclarationTest.cs" />
     <Compile Include="ConditionalStatementTest.cs" />
     <Compile Include="MethodDeclarationTest.cs" />
+    <Compile Include="ModifiersTest.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseTypeReferenceTest.cs" />
@@ -127,6 +128,10 @@
     <ProjectReference Include="..\..\src\ASTWalker\ASTWalker.csproj">
       <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
       <Name>ASTWalker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\TranslationUnits\TranslationUnits.csproj">
+      <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
+      <Name>TranslationUnits</Name>
     </ProjectReference>
     <ProjectReference Include="..\resources\TestData\TestData.csproj">
       <Project>{c9710df8-1539-4ac0-a62b-f6f917485796}</Project>

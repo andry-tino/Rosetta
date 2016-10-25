@@ -16,7 +16,9 @@ namespace Rosetta.AST.Utilities
     public static class VisibilityUtilities
     {
         /// <summary>
+        /// Gets the proper visibility token.
         /// 
+        /// TODO: Obsolete. Use <see cref="Rosetta.AST.Helpers.Modifiers"/> instead.
         /// </summary>
         /// <param name="syntaxToken"></param>
         /// <returns></returns>
@@ -32,6 +34,8 @@ namespace Rosetta.AST.Utilities
                     return VisibilityToken.Private;
                 case "protected":
                     return VisibilityToken.Protected;
+                case "internal":
+                    return VisibilityToken.Internal;
             }
 
             throw new InvalidOperationException("Not recognized visibility!");

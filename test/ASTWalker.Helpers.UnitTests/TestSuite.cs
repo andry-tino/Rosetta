@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.ASTWalker.Helpers.UnitTests
+namespace Rosetta.AST.Helpers.UnitTests
 {
     using System;
     using System.Collections.Generic;
