@@ -20,20 +20,18 @@ namespace Rosetta.AST
     /// Walks a class AST node.
     /// // TODO: Override class definition in order to create an inner class and remove the node!
     /// </summary>
-    public class ClassASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class ClassASTWalker : ASTWalker, IASTWalker
     {
         // Protected for testability
-        protected CSharpSyntaxNode node;
-
-        // Protected for testability
         protected ClassDeclarationTranslationUnit classDeclaration;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassASTWalker"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="classDeclaration"></param>
-        protected ClassASTWalker(CSharpSyntaxNode node, ClassDeclarationTranslationUnit classDeclaration)
+        protected ClassASTWalker(CSharpSyntaxNode node, ClassDeclarationTranslationUnit classDeclaration) 
+            : base(node)
         {
             var classDeclarationSyntaxNode = node as ClassDeclarationSyntax;
             if (classDeclarationSyntaxNode == null)
@@ -47,8 +45,7 @@ namespace Rosetta.AST
             {
                 throw new ArgumentNullException(nameof(classDeclaration));
             }
-
-            this.node = node;
+            
             this.classDeclaration = classDeclaration;
         }
 
@@ -59,14 +56,9 @@ namespace Rosetta.AST
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public ClassASTWalker(ClassASTWalker other)
+        public ClassASTWalker(ClassASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
             this.classDeclaration = other.classDeclaration;
         }
 
@@ -74,11 +66,15 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="ClassASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static ClassASTWalker Create(CSharpSyntaxNode node)
+        public static ClassASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
-            return new ClassASTWalker(node, 
-                new ClassDeclarationTranslationUnitFactory(node).Create() as ClassDeclarationTranslationUnit);
+            return new ClassASTWalker(node,
+                new ClassDeclarationTranslationUnitFactory(node).Create() as ClassDeclarationTranslationUnit)
+            {
+                Context = context
+            };
         }
 
         /// <summary>
@@ -117,7 +113,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
-            var propertyWalker = PropertyASTWalker.Create(node);
+            var propertyWalker = PropertyASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = propertyWalker.Walk();
             this.classDeclaration.AddPropertyDeclaration(translationUnit);
 
@@ -134,7 +130,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            var methodWalker = MethodASTWalker.Create(node);
+            var methodWalker = MethodASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = methodWalker.Walk();
             this.classDeclaration.AddMethodDeclaration(translationUnit);
 
@@ -147,7 +143,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
-            var constructorWalker = ConstructorASTWalker.Create(node);
+            var constructorWalker = ConstructorASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = constructorWalker.Walk();
             this.classDeclaration.AddConstructorDeclaration(translationUnit);
 
@@ -210,6 +206,14 @@ namespace Rosetta.AST
             {
                 this.ConstructorDeclarationVisited(sender, e);
             }
+        }
+
+        private ASTWalkerContext CreateWalkingContext()
+        {
+            return new ASTWalkerContext()
+            {
+                Originator = this
+            };
         }
     }
 }

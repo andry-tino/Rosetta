@@ -17,11 +17,8 @@ namespace Rosetta.AST
     /// Walks a block AST node.
     /// TODO: Attention, <see cref="MethodASTWalker"/> has great part of the logic is in common.
     /// </summary>
-    public class BlockASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class BlockASTWalker : ASTWalker, IASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
         // Protected for testability
         protected StatementsGroupTranslationUnit statementsGroup;
 
@@ -30,7 +27,8 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="statementsGroup"></param>
-        protected BlockASTWalker(CSharpSyntaxNode node, StatementsGroupTranslationUnit statementsGroup)
+        protected BlockASTWalker(CSharpSyntaxNode node, StatementsGroupTranslationUnit statementsGroup) 
+            : base(node)
         {
             var namespaceSyntaxNode = node as BlockSyntax;
             if (namespaceSyntaxNode == null)
@@ -44,8 +42,6 @@ namespace Rosetta.AST
             {
                 throw new ArgumentNullException(nameof(statementsGroup));
             }
-            
-            this.node = node;
             this.statementsGroup = statementsGroup;
         }
 
@@ -53,14 +49,9 @@ namespace Rosetta.AST
         /// Copy initializes a new instance of the <see cref="BlockASTWalker"/> class.
         /// </summary>
         /// <param name="other"></param>
-        public BlockASTWalker(BlockASTWalker other)
+        public BlockASTWalker(BlockASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
             this.statementsGroup = other.statementsGroup;
         }
 
@@ -68,13 +59,17 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="BlockASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static BlockASTWalker Create(CSharpSyntaxNode node)
+        public static BlockASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
             // No helper needed for this walker
             var statementsGroup = StatementsGroupTranslationUnit.Create();
 
-            return new BlockASTWalker(node, statementsGroup);
+            return new BlockASTWalker(node, statementsGroup)
+            {
+                Context = context
+            };
         }
 
         /// <summary>

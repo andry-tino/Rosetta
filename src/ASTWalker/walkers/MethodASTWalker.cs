@@ -19,11 +19,8 @@ namespace Rosetta.AST
     /// <summary>
     /// Walks a method AST node.
     /// </summary>
-    public class MethodASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class MethodASTWalker : ASTWalker, IASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
         // Protected for testability
         protected MethodDeclarationTranslationUnit methodDeclaration;
 
@@ -32,7 +29,8 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="methodDeclaration"></param>
-        protected MethodASTWalker(CSharpSyntaxNode node, MethodDeclarationTranslationUnit methodDeclaration)
+        protected MethodASTWalker(CSharpSyntaxNode node, MethodDeclarationTranslationUnit methodDeclaration) 
+            : base(node)
         {
             var methodDeclarationSyntaxNode = node as MethodDeclarationSyntax;
             if (methodDeclarationSyntaxNode == null)
@@ -46,8 +44,7 @@ namespace Rosetta.AST
             {
                 throw new ArgumentNullException(nameof(methodDeclaration));
             }
-
-            this.node = node;
+            
             this.methodDeclaration = methodDeclaration;
         }
 
@@ -58,14 +55,9 @@ namespace Rosetta.AST
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public MethodASTWalker(MethodASTWalker other)
+        public MethodASTWalker(MethodASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
             this.methodDeclaration = other.methodDeclaration;
         }
 
@@ -73,11 +65,15 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="MethodASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static MethodASTWalker Create(CSharpSyntaxNode node)
+        public static MethodASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
-            return new MethodASTWalker(node, 
-                new MethodDeclarationTranslationUnitFactory(node).Create() as MethodDeclarationTranslationUnit);
+            return new MethodASTWalker(node,
+                new MethodDeclarationTranslationUnitFactory(node).Create() as MethodDeclarationTranslationUnit)
+            {
+                Context = context
+            };
         }
 
         /// <summary>

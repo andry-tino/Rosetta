@@ -265,6 +265,11 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
+        public const string DeclareKeyword = "declare";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string BreakKeyword = "break";
 
         /// <summary>

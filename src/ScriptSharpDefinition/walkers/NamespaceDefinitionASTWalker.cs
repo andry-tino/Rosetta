@@ -46,11 +46,15 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// Factory method for class <see cref="NamespaceDefinitionASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static NamespaceDefinitionASTWalker Create(CSharpSyntaxNode node)
+        public static NamespaceDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
             return new NamespaceDefinitionASTWalker(node,
-                new ModuleDefinitionTranslationUnitFactory(node).Create() as ModuleTranslationUnit);
+                new ModuleDefinitionTranslationUnitFactory(node).Create() as ModuleTranslationUnit)
+            {
+                Context = context
+            };
         }
 
         #region CSharpSyntaxWalker overrides
@@ -65,7 +69,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var classDefinitionWalker = ClassDefinitionASTWalker.Create(node);
+            var classDefinitionWalker = ClassDefinitionASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = classDefinitionWalker.Walk();
             this.module.AddClass(translationUnit);
 
@@ -82,5 +86,36 @@ namespace Rosetta.ScriptSharp.Definition.AST
         }
 
         #endregion
+
+        protected override void OnContextChanged()
+        {
+            this.ApplyContextDependenciesToTranslationUnit();
+        }
+
+        private void ApplyContextDependenciesToTranslationUnit()
+        {
+            if (this.Context == null)
+            {
+                // When a context is not available, we consider the module defined at root level
+                this.ModuleDefinition.IsAtRootLevel = true;
+
+                return;
+            }
+
+            this.ModuleDefinition.IsAtRootLevel = this.Context.Originator.GetType() == typeof(ProgramDefinitionASTWalker);
+        }
+
+        private ModuleDefinitionTranslationUnit ModuleDefinition
+        {
+            get { return this.module as ModuleDefinitionTranslationUnit; }
+        }
+
+        private ASTWalkerContext CreateWalkingContext()
+        {
+            return new ASTWalkerContext()
+            {
+                Originator = this
+            };
+        }
     }
 }

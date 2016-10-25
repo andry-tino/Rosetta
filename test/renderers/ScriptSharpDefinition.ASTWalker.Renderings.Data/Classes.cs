@@ -105,11 +105,11 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
             Source.ProgramRoot = tree;
 
-            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ClassDeclarationSyntax));
-            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+            SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(CompilationUnitSyntax));
+            CompilationUnitSyntax compilationUnitNode = node as CompilationUnitSyntax;
 
             // Creating the walker
-            var astWalker = ClassDefinitionASTWalker.Create(classDeclarationNode);
+            var astWalker = ProgramDefinitionASTWalker.Create(compilationUnitNode);
 
             // Getting the translation unit
             ITranslationUnit translationUnit = astWalker.Walk();

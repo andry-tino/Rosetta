@@ -18,11 +18,8 @@ namespace Rosetta.AST
     /// <summary>
     /// Walks an interface AST node.
     /// </summary>
-    public class InterfaceASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class InterfaceASTWalker : ASTWalker, IASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
         // Protected for testability
         protected InterfaceDeclarationTranslationUnit interfaceDeclaration;
 
@@ -31,7 +28,8 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="interfaceDeclaration"></param>
-        protected InterfaceASTWalker(CSharpSyntaxNode node, InterfaceDeclarationTranslationUnit interfaceDeclaration)
+        protected InterfaceASTWalker(CSharpSyntaxNode node, InterfaceDeclarationTranslationUnit interfaceDeclaration) 
+            : base(node)
         {
             var interfaceDeclarationSyntaxNode = node as InterfaceDeclarationSyntax;
             if (interfaceDeclarationSyntaxNode == null)
@@ -46,7 +44,6 @@ namespace Rosetta.AST
                 throw new ArgumentNullException(nameof(interfaceDeclaration));
             }
 
-            this.node = node;
             this.interfaceDeclaration = interfaceDeclaration;
         }
 
@@ -57,14 +54,9 @@ namespace Rosetta.AST
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public InterfaceASTWalker(InterfaceASTWalker other)
+        public InterfaceASTWalker(InterfaceASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
             this.interfaceDeclaration = other.interfaceDeclaration;
         }
 
@@ -72,8 +64,9 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="InterfaceASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static InterfaceASTWalker Create(CSharpSyntaxNode node)
+        public static InterfaceASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
             InterfaceDeclaration helper = new InterfaceDeclaration(node as InterfaceDeclarationSyntax);
 
@@ -86,7 +79,10 @@ namespace Rosetta.AST
                 interfaceDeclaration.AddExtendedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
             }
 
-            return new InterfaceASTWalker(node, interfaceDeclaration);
+            return new InterfaceASTWalker(node, interfaceDeclaration)
+            {
+                Context = context
+            };
         }
 
         /// <summary>

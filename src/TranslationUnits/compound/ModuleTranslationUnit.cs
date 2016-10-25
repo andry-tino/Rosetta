@@ -97,6 +97,11 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the module is part, as a member, of a namespace or module or not.
+        /// </summary>
+        public bool IsAtRootLevel { get; set; }
+
+        /// <summary>
         /// Translate the unit into TypeScript.
         /// </summary>
         /// <returns></returns>
@@ -110,7 +115,7 @@ namespace Rosetta.Translation
             // Opening declaration
             writer.WriteLine("{0} {1} {2} {3}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
-                Lexems.ExportKeyword,
+                this.RenderedModuleAccessorKeyword,
                 Lexems.ModuleKeyword,
                 this.name.Translate(),
                 Lexems.OpenCurlyBracket);
@@ -195,5 +200,10 @@ namespace Rosetta.Translation
         }
 
         #endregion
+
+        protected virtual string RenderedModuleAccessorKeyword
+        {
+            get { return Lexems.ExportKeyword; }
+        }
     }
 }

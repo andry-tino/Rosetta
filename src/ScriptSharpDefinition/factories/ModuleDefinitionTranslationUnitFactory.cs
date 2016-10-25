@@ -27,5 +27,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             : base(node)
         {
         }
+
+        /// <summary>
+        /// Creates the translation unit.
+        /// </summary>
+        /// <remarks>
+        /// Must return a type inheriting from <see cref="ModuleTranslationUnit"/>.
+        /// </remarks>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected override ITranslationUnit CreateTranslationUnit(ITranslationUnit name)
+        {
+            return ModuleDefinitionTranslationUnit.Create(name);
+        }
     }
 }

@@ -16,11 +16,8 @@ namespace Rosetta.AST
     /// <summary>
     /// Walks a program AST node.
     /// </summary>
-    public class ProgramASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class ProgramASTWalker : ASTWalker, IASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
         // Protected for testability
         protected ProgramTranslationUnit program;
 
@@ -29,7 +26,8 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="module"></param>
-        protected ProgramASTWalker(CSharpSyntaxNode node, ProgramTranslationUnit program)
+        protected ProgramASTWalker(CSharpSyntaxNode node, ProgramTranslationUnit program) 
+            : base(node)
         {
             var programSyntaxNode = node as CompilationUnitSyntax;
             if (programSyntaxNode == null)
@@ -43,8 +41,7 @@ namespace Rosetta.AST
             {
                 throw new ArgumentNullException(nameof(program));
             }
-
-            this.node = node;
+            
             this.program = program;
         }
 
@@ -55,14 +52,9 @@ namespace Rosetta.AST
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public ProgramASTWalker(ProgramASTWalker other)
+        public ProgramASTWalker(ProgramASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
             this.program = other.program;
         }
 
@@ -70,11 +62,15 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="ProgramASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static ProgramASTWalker Create(CSharpSyntaxNode node)
+        public static ProgramASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
-            return new ProgramASTWalker(node, 
-                new ProgramTranslationUnitFactory(node).Create() as ProgramTranslationUnit);
+            return new ProgramASTWalker(node,
+                new ProgramTranslationUnitFactory(node).Create() as ProgramTranslationUnit)
+            {
+                Context = context
+            };
         }
 
         /// <summary>
@@ -103,7 +99,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var classWalker = ClassASTWalker.Create(node);
+            var classWalker = ClassASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = classWalker.Walk();
             this.program.AddContent(translationUnit);
 
@@ -120,7 +116,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
-            var namespaceWalker = NamespaceASTWalker.Create(node);
+            var namespaceWalker = NamespaceASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = namespaceWalker.Walk();
             this.program.AddContent(translationUnit);
 
@@ -133,6 +129,8 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
+            // TODO: Implement
+
             this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
         }
 
@@ -179,6 +177,14 @@ namespace Rosetta.AST
             {
                 this.InterfaceDeclarationVisited(sender, e);
             }
+        }
+
+        private ASTWalkerContext CreateWalkingContext()
+        {
+            return new ASTWalkerContext()
+            {
+                Originator = this
+            };
         }
     }
 }

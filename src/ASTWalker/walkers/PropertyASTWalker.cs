@@ -19,11 +19,8 @@ namespace Rosetta.AST
     /// <summary>
     /// Walks a property AST node.
     /// </summary>
-    public class PropertyASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class PropertyASTWalker : ASTWalker, IASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
         // Protected for testability
         protected PropertyDeclarationTranslationUnit propertyDeclaration;
 
@@ -32,7 +29,8 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="propertyDeclaration"></param>
-        protected PropertyASTWalker(CSharpSyntaxNode node, PropertyDeclarationTranslationUnit propertyDeclaration)
+        protected PropertyASTWalker(CSharpSyntaxNode node, PropertyDeclarationTranslationUnit propertyDeclaration) 
+            : base(node)
         {
             var propertyDeclarationSyntaxNode = node as PropertyDeclarationSyntax;
             if (propertyDeclarationSyntaxNode == null)
@@ -46,8 +44,7 @@ namespace Rosetta.AST
             {
                 throw new ArgumentNullException(nameof(propertyDeclaration));
             }
-
-            this.node = node;
+            
             this.propertyDeclaration = propertyDeclaration;
 
             // Going through accessors in the node and filling the translation unit with initial data
@@ -61,14 +58,9 @@ namespace Rosetta.AST
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public PropertyASTWalker(PropertyASTWalker other)
+        public PropertyASTWalker(PropertyASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
             this.propertyDeclaration = other.propertyDeclaration;
         }
 
@@ -76,12 +68,16 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="PropertyASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static PropertyASTWalker Create(CSharpSyntaxNode node)
+        public static PropertyASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
             var propertyDeclaration = new PropertyDeclarationTranslationUnitFactory(node).Create() as PropertyDeclarationTranslationUnit;
 
-            return new PropertyASTWalker(node, propertyDeclaration);
+            return new PropertyASTWalker(node, propertyDeclaration)
+            {
+                Context = context
+            };
         }
 
         /// <summary>

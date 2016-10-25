@@ -143,6 +143,8 @@
     <Compile Include="transformers\ClassWithAttributeInDifferentNamespaceASTTransformer.cs" />
     <Compile Include="utilities\MultiPurposeASTWalker.cs" />
     <Compile Include="utilities\VisibilityUtilities.cs" />
+    <Compile Include="walkers\ASTWalker.cs" />
+    <Compile Include="walkers\ASTWalkerContext.cs" />
     <Compile Include="walkers\BlockASTWalker.cs" />
     <Compile Include="walkers\ClassASTWalker.cs" />
     <Compile Include="helpers\declarations\ClassDeclaration.cs" />

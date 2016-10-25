@@ -21,11 +21,8 @@ namespace Rosetta.AST
     /// 
     /// TODO: Unify logic with method AST walker.
     /// </summary>
-    public class ConstructorASTWalker : CSharpSyntaxWalker, IASTWalker
+    public class ConstructorASTWalker : ASTWalker, IASTWalker
     {
-        // Protected for testability
-        protected CSharpSyntaxNode node;
-
         // Protected for testability
         protected ConstructorDeclarationTranslationUnit constructorDeclaration;
 
@@ -34,7 +31,8 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="methodDeclaration"></param>
-        protected ConstructorASTWalker(CSharpSyntaxNode node, ConstructorDeclarationTranslationUnit constructorDeclaration)
+        protected ConstructorASTWalker(CSharpSyntaxNode node, ConstructorDeclarationTranslationUnit constructorDeclaration) 
+            : base(node)
         {
             var constructorDeclarationSyntaxNode = node as ConstructorDeclarationSyntax;
             if (constructorDeclarationSyntaxNode == null)
@@ -48,8 +46,6 @@ namespace Rosetta.AST
             {
                 throw new ArgumentNullException(nameof(constructorDeclaration));
             }
-
-            this.node = node;
             this.constructorDeclaration = constructorDeclaration;
         }
 
@@ -60,14 +56,9 @@ namespace Rosetta.AST
         /// <remarks>
         /// For testability.
         /// </remarks>
-        public ConstructorASTWalker(ConstructorASTWalker other)
+        public ConstructorASTWalker(ConstructorASTWalker other) 
+            : base(other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException(nameof(other));
-            }
-
-            this.node = other.node;
             this.constructorDeclaration = other.constructorDeclaration;
         }
 
@@ -75,11 +66,15 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="ConstructorASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static ConstructorASTWalker Create(CSharpSyntaxNode node)
+        public static ConstructorASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
-            return new ConstructorASTWalker(node, 
-                new ConstructorDeclarationTranslationUnitFactory(node).Create() as ConstructorDeclarationTranslationUnit);
+            return new ConstructorASTWalker(node,
+                new ConstructorDeclarationTranslationUnitFactory(node).Create() as ConstructorDeclarationTranslationUnit)
+            {
+                Context = context
+            };
         }
 
         /// <summary>

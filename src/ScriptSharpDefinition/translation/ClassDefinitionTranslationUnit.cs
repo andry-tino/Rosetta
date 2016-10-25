@@ -24,6 +24,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// </summary>
         protected ClassDefinitionTranslationUnit() : base()
         {
+            this.IsAtRootLevel = false;
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             : base(other)
         {
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -77,7 +78,12 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
         protected override string RenderedVisibilityModifier
         {
-            get { return $"{Lexems.ExportKeyword}{Lexems.Whitespace}"; }
+            get
+            {
+                return this.IsAtRootLevel
+                    ? $"{Lexems.DeclareKeyword}{Lexems.Whitespace}"
+                    : string.Empty; // In this case, the containing structure will add the exposing keyword
+            }
         }
     }
 }

@@ -45,11 +45,15 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// Factory method for class <see cref="ProgramASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="ProgramDefinitionASTWalker"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static ProgramDefinitionASTWalker Create(CSharpSyntaxNode node)
+        public static ProgramDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
             return new ProgramDefinitionASTWalker(node,
-                new ProgramDefinitionTranslationUnitFactory(node).Create() as ProgramTranslationUnit);
+                new ProgramDefinitionTranslationUnitFactory(node).Create() as ProgramTranslationUnit)
+            {
+                Context = context
+            };
         }
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var classDefinitionWalker = ClassDefinitionASTWalker.Create(node);
+            var classDefinitionWalker = ClassDefinitionASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = classDefinitionWalker.Walk();
             this.program.AddContent(translationUnit);
 
@@ -95,7 +99,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </remarks>
         public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
-            var namespaceWalker = NamespaceDefinitionASTWalker.Create(node);
+            var namespaceWalker = NamespaceDefinitionASTWalker.Create(node, this.CreateWalkingContext());
             var translationUnit = namespaceWalker.Walk();
             this.program.AddContent(translationUnit);
 
@@ -141,6 +145,14 @@ namespace Rosetta.ScriptSharp.Definition.AST
             {
                 this.NamespaceDeclarationVisited(sender, e);
             }
+        }
+
+        private ASTWalkerContext CreateWalkingContext()
+        {
+            return new ASTWalkerContext()
+            {
+                Originator = this
+            };
         }
     }
 }

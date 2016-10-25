@@ -46,11 +46,15 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// Factory method for class <see cref="ClassASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static ClassDefinitionASTWalker Create(CSharpSyntaxNode node)
+        public static ClassDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
-            return new ClassDefinitionASTWalker(node, 
-                new ClassDefinitionTranslationUnitFactory(node).Create() as ClassDefinitionTranslationUnit);
+            return new ClassDefinitionASTWalker(node,
+                new ClassDefinitionTranslationUnitFactory(node).Create() as ClassDefinitionTranslationUnit)
+            {
+                Context = context
+            };
         }
 
         #region CSharpSyntaxWalker overrides
@@ -108,5 +112,28 @@ namespace Rosetta.ScriptSharp.Definition.AST
         }
 
         #endregion
+
+        protected override void OnContextChanged()
+        {
+            this.ApplyContextDependenciesToTranslationUnit();
+        }
+
+        private void ApplyContextDependenciesToTranslationUnit()
+        {
+            if (this.Context == null)
+            {
+                // When a context is not available, we consider the class defined at root level
+                this.ClassDefinition.IsAtRootLevel = true;
+
+                return;
+            }
+
+            this.ClassDefinition.IsAtRootLevel = this.Context.Originator.GetType() == typeof(ProgramDefinitionASTWalker);
+        }
+
+        private ClassDefinitionTranslationUnit ClassDefinition
+        {
+            get { return this.classDeclaration as ClassDefinitionTranslationUnit; }
+        }
     }
 }

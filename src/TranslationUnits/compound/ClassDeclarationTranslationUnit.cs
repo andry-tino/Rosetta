@@ -71,6 +71,11 @@ namespace Rosetta.Translation
         protected IEnumerable<ITranslationUnit> Interfaces { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the class is part, as a member, of a namespace or module or not.
+        /// </summary>
+        public bool IsAtRootLevel { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="visibility"></param>

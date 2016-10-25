@@ -112,6 +112,7 @@
     <Compile Include="translation\FieldDefinitionTranslationUnit.cs" />
     <Compile Include="translation\InterfaceDefinitionTranslationUnit.cs" />
     <Compile Include="translation\MethodDefinitionTranslationUnit.cs" />
+    <Compile Include="translation\ModuleDefinitionTranslationUnit.cs" />
     <Compile Include="translation\PropertyDefinitionTranslationUnit.cs" />
     <Compile Include="walkers\ClassDefinitionASTWalker.cs" />
     <Compile Include="walkers\NamespaceDefinitionASTWalker.cs" />
