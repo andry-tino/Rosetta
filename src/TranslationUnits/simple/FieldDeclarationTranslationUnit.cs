@@ -71,7 +71,9 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
-            writer.Write("{0} {1} {2} {3}",
+            string fieldVisibility = this.RenderedVisibilityModifier;
+
+            writer.Write("{0}{1} {2} {3}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
                 TokenUtility.ToString(this.Visibility),
                 this.Name.Translate(),
@@ -88,6 +90,11 @@ namespace Rosetta.Translation
         {
             get { return this.type; }
             set { this.type = value; }
+        }
+
+        protected virtual string RenderedVisibilityModifier
+        {
+            get { return TokenUtility.EmitOptionalVisibility(this.Visibility); }
         }
     }
 }

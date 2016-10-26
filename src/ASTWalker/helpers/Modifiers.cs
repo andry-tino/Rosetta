@@ -13,7 +13,7 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing modifiers in AST.
     /// </summary>
-    internal static class Modifiers
+    public static class Modifiers
     {
         /// <summary>
         /// Produces the right visibility token for a node.
@@ -54,6 +54,17 @@ namespace Rosetta.AST.Helpers
             }
 
             return visibility;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the visibility is expression access to member.
+        /// </summary>
+        /// <param name="visibilityToken"></param>
+        /// <returns></returns>
+        public static bool IsExposedVisibility(this VisibilityToken visibilityToken)
+        {
+            return visibilityToken.HasFlag(VisibilityToken.Public) || 
+                   visibilityToken.HasFlag(VisibilityToken.Internal);
         }
     }
 }

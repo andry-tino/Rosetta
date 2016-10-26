@@ -66,6 +66,12 @@ namespace Rosetta.ScriptSharp.Definition.AST
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
             var fieldDefinitionTranslationUnit = new FieldDefinitionTranslationUnitFactory(node).Create();
+            if (fieldDefinitionTranslationUnit == null)
+            {
+                // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
+                return;
+            }
+
             this.classDeclaration.AddMemberDeclaration(fieldDefinitionTranslationUnit);
 
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
@@ -78,6 +84,12 @@ namespace Rosetta.ScriptSharp.Definition.AST
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
             var propertyDefinitionTranslationUnit = new PropertyDefinitionTranslationUnitFactory(node).Create();
+            if (propertyDefinitionTranslationUnit == null)
+            {
+                // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
+                return;
+            }
+
             this.classDeclaration.AddPropertyDeclaration(propertyDefinitionTranslationUnit);
             
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
@@ -94,6 +106,12 @@ namespace Rosetta.ScriptSharp.Definition.AST
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             var methodDefinitionTranslationUnit = new MethodDefinitionTranslationUnitFactory(node).Create();
+            if (methodDefinitionTranslationUnit == null)
+            {
+                // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
+                return;
+            }
+
             this.classDeclaration.AddMethodDeclaration(methodDefinitionTranslationUnit);
 
             this.InvokeMethodDeclarationVisited(this, new WalkerEventArgs());
@@ -106,6 +124,12 @@ namespace Rosetta.ScriptSharp.Definition.AST
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
             var constructorDefinitionTranslationUnit = new ConstructorDefinitionTranslationUnitFactory(node).Create();
+            if (constructorDefinitionTranslationUnit == null)
+            {
+                // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
+                return;
+            }
+
             this.classDeclaration.AddConstructorDeclaration(constructorDefinitionTranslationUnit);
 
             this.InvokeConstructorDeclarationVisited(this, new WalkerEventArgs());

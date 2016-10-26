@@ -7,8 +7,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
 {
     using System;
     using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.AST.Factories;
+    using Rosetta.AST.Helpers;
     using Rosetta.ScriptSharp.Definition.Translation;
     using Rosetta.Translation;
 
@@ -17,8 +19,6 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     /// </summary>
     public class PropertyDefinitionTranslationUnitFactory : PropertyDeclarationTranslationUnitFactory
     {
-        private readonly CSharpSyntaxNode node;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyDefinitionTranslationUnitFactory"/> class.
         /// </summary>
@@ -26,6 +26,24 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         public PropertyDefinitionTranslationUnitFactory(CSharpSyntaxNode node) 
             : base(node)
         {
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the factory should return <code>null</code>.
+        /// </summary>
+        protected override bool DoNotCreateTranslationUnit
+        {
+            get
+            {
+                var helper = new PropertyDeclaration(this.Node as PropertyDeclarationSyntax);
+
+                if (helper.Visibility.IsExposedVisibility())
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
 
         /// <summary>

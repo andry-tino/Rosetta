@@ -7,8 +7,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
 {
     using System;
     using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.AST.Factories;
+    using Rosetta.AST.Helpers;
     using Rosetta.ScriptSharp.Definition.Translation;
     using Rosetta.Translation;
 
@@ -24,6 +26,24 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         public FieldDefinitionTranslationUnitFactory(CSharpSyntaxNode node) 
             : base(node)
         {
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the factory should return <code>null</code>.
+        /// </summary>
+        protected override bool DoNotCreateTranslationUnit
+        {
+            get
+            {
+                var helper = new FieldDeclaration(this.Node as FieldDeclarationSyntax);
+
+                if (helper.Visibility.IsExposedVisibility())
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
 
         /// <summary>

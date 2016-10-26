@@ -57,5 +57,10 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                 Type = type
             };
         }
+
+        protected override string RenderedVisibilityModifier
+        {
+            get { return string.Empty; }
+        }
     }
 }

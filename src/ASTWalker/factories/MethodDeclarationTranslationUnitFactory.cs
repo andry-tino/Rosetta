@@ -39,6 +39,11 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="MethodDeclarationTranslationUnit"/>.</returns>
         public ITranslationUnit Create()
         {
+            if (this.DoNotCreateTranslationUnit)
+            {
+                return null;
+            }
+
             MethodDeclaration helper = new MethodDeclaration(this.node as MethodDeclarationSyntax);
 
             var methodDeclaration = this.CreateTranslationUnit(
@@ -54,6 +59,22 @@ namespace Rosetta.AST.Factories
             }
 
             return methodDeclaration;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="CSharpSyntaxNode"/>.
+        /// </summary>
+        protected CSharpSyntaxNode Node
+        {
+            get { return this.node; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the factory should return <code>null</code>.
+        /// </summary>
+        protected virtual bool DoNotCreateTranslationUnit
+        {
+            get { return false; }
         }
 
         /// <summary>
