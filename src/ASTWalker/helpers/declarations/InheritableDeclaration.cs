@@ -89,11 +89,6 @@ namespace Rosetta.AST.Helpers
                                     ITypeSymbol typeSymbol = this.SemanticModel.GetSymbolInfo(
                                         baseType.Type).Symbol as ITypeSymbol;
 
-                                    if (typeSymbol == null)
-                                    {
-                                        throw new InvalidOperationException("Base type evaluation failure due to not sifficient semantic model");
-                                    }
-
                                     switch (typeSymbol.TypeKind)
                                     {
                                         case Roslyn.TypeKind.Class:
