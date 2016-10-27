@@ -19,13 +19,17 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     /// </summary>
     public class FieldDefinitionTranslationUnitFactory : FieldDeclarationTranslationUnitFactory
     {
+        private bool createWhenProtected;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldDefinitionTranslationUnitFactory"/> class.
         /// </summary>
-        /// <param name="node"></param>
-        public FieldDefinitionTranslationUnitFactory(CSharpSyntaxNode node) 
+        /// <param name="node">The syntax node.</param>
+        /// <param name="createWhenProtected">A value indicating whether the factory should create a <see cref="ITranslationUnit"/> when <see cref="node"/> is protected.</param>
+        public FieldDefinitionTranslationUnitFactory(CSharpSyntaxNode node, bool createWhenProtected = false) 
             : base(node)
         {
+            this.createWhenProtected = createWhenProtected;
         }
 
         /// <summary>
@@ -36,8 +40,13 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             get
             {
                 var helper = new FieldDeclaration(this.Node as FieldDeclarationSyntax);
-
+                
                 if (helper.Visibility.IsExposedVisibility())
+                {
+                    return false;
+                }
+
+                if (this.createWhenProtected && helper.Visibility.HasFlag(VisibilityToken.Protected))
                 {
                     return false;
                 }

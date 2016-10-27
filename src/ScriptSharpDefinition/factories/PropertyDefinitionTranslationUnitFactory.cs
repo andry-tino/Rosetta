@@ -19,13 +19,17 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     /// </summary>
     public class PropertyDefinitionTranslationUnitFactory : PropertyDeclarationTranslationUnitFactory
     {
+        private bool createWhenProtected;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyDefinitionTranslationUnitFactory"/> class.
         /// </summary>
-        /// <param name="node"></param>
-        public PropertyDefinitionTranslationUnitFactory(CSharpSyntaxNode node) 
+        /// <param name="node">The syntax node.</param>
+        /// <param name="createWhenProtected">A value indicating whether the factory should create a <see cref="ITranslationUnit"/> when <see cref="node"/> is protected.</param>
+        public PropertyDefinitionTranslationUnitFactory(CSharpSyntaxNode node, bool createWhenProtected = false) 
             : base(node)
         {
+            this.createWhenProtected = createWhenProtected;
         }
 
         /// <summary>
@@ -38,6 +42,11 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
                 var helper = new PropertyDeclaration(this.Node as PropertyDeclarationSyntax);
 
                 if (helper.Visibility.IsExposedVisibility())
+                {
+                    return false;
+                }
+
+                if (this.createWhenProtected && helper.Visibility.HasFlag(VisibilityToken.Protected))
                 {
                     return false;
                 }

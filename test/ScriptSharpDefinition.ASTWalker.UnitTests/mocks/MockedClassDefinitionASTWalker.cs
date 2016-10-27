@@ -16,16 +16,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.UnitTests.Mocks
     /// </summary>
     public class MockedClassDefinitionASTWalker : ClassDefinitionASTWalker
     {
-        protected MockedClassDefinitionASTWalker(ClassDefinitionASTWalker original)
+        protected MockedClassDefinitionASTWalker(ClassDefinitionASTWalker original, bool generateTranslationUniOnProtectedMembers)
             : base(original)
         {
             // Reassigning since base class operated on it
             this.classDeclaration = MockedClassDefinitionTranslationUnit.Create(this.classDeclaration as ClassDefinitionTranslationUnit);
+
+            this.generateTranslationUniOnProtectedMembers = generateTranslationUniOnProtectedMembers;
         }
 
-        public new static MockedClassDefinitionASTWalker Create(CSharpSyntaxNode node)
+        public new static MockedClassDefinitionASTWalker Create(CSharpSyntaxNode node, bool generateTranslationUniOnProtectedMembers)
         {
-            return new MockedClassDefinitionASTWalker(ClassDefinitionASTWalker.Create(node));
+            return new MockedClassDefinitionASTWalker(ClassDefinitionASTWalker.Create(node), generateTranslationUniOnProtectedMembers);
         }
 
         public MockedClassDefinitionTranslationUnit ClassDefinition
