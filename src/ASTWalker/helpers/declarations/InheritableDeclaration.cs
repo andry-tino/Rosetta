@@ -79,8 +79,9 @@ namespace Rosetta.AST.Helpers
                     {
                         SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.TypeDeclarationSyntaxNode.BaseList.Types;
 
-                        try
+                        if (this.SemanticModel != null)
                         {
+                            // Semantic model available, use it!
                             foreach (BaseTypeSyntax baseType in listSyntax)
                             {
                                 if (baseType.Kind() == SyntaxKind.SimpleBaseType)
@@ -111,9 +112,9 @@ namespace Rosetta.AST.Helpers
                                 }
                             }
                         }
-                        catch (InvalidOperationException)
+                        else
                         {
-                            // Semantic model is not good for separating class and interfaces, let's guess
+                            // Semantic model is not available, guess!
                             ((List<BaseTypeReference>)this.baseTypes).Clear();
 
                             IEnumerable<BaseTypeSyntax> simpleBaseTypes = listSyntax.Where(

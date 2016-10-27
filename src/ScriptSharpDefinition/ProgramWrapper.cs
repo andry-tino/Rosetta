@@ -11,6 +11,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.AST;
+    using Rosetta.AST.Transformers;
+    using Rosetta.ScriptSharp.Definition.AST.Transformers;
 
     /// <summary>
     /// Acts like a wrapper for <see cref="ProgramDefinitionASTWalker"/> in order to provide 
@@ -36,7 +38,10 @@ namespace Rosetta.ScriptSharp.Definition.AST
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
             Source.ProgramRoot = tree;
 
-            var node = tree.GetRoot() as CompilationUnitSyntax;
+            var node = tree.GetRoot();
+
+            IASTTransformer transformer = new ScriptNamespaceBasedASTTransformer();
+            transformer.Transform(ref node);
 
             // Creating the walker
             this.walker = ProgramDefinitionASTWalker.Create(node);

@@ -37,14 +37,20 @@ namespace Rosetta.AST.Helpers
             this.semanticModel = semanticModel;
         }
 
+        /// <summary>
+        /// Gets the semantic model.
+        /// 
+        /// TODO: Remove this logic in order for a full branching of the helper's logic when having 
+        /// the semantic model and when not having it.
+        /// </summary>
         protected SemanticModel SemanticModel
         {
             get
             {
-                if (this.semanticModel == null)
-                {
-                    return Source.SemanticModel;
-                }
+                //if (this.semanticModel == null)
+                //{
+                //    return Source.SemanticModel;
+                //}
 
                 return this.semanticModel;
             }
