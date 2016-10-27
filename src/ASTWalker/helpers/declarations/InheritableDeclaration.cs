@@ -91,7 +91,6 @@ namespace Rosetta.AST.Helpers
 
                                     if (typeSymbol == null)
                                     {
-                                        // TODO: This requires a semantic model. Add case where semantic model is not available
                                         throw new InvalidOperationException("Base type evaluation failure due to not sifficient semantic model");
                                     }
 
