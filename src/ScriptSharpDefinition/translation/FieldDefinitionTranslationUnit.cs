@@ -60,7 +60,16 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
         protected override string RenderedVisibilityModifier
         {
-            get { return string.Empty; }
+            get
+            {
+                if (this.Visibility.HasFlag(VisibilityToken.Protected))
+                {
+                    // If protected, emit the visibility modifier
+                    return TokenUtility.EmitOptionalVisibility(this.Visibility);
+                }
+
+                return string.Empty;
+            }
         }
     }
 }

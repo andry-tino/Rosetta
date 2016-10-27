@@ -106,7 +106,8 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             {
                 // Opening declaration: [<visibility>] get <name>() : <type> {
                 // TODO: Handle case of no visibility specified
-                writer.WriteLine("{0}{1}{2} {3} {4}{5}",
+                writer.WriteLine("{0}{1}{2}{3} {4} {5}{6}",
+                    this.RenderedVisibilityModifier,
                     Lexems.GetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket + Lexems.CloseRoundBracket,
@@ -121,7 +122,8 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                     this.type, IdentifierTranslationUnit.Create("value"));
 
                 // Opening declaration: [<visibility>] set <name>(value : <type>) {
-                writer.WriteLine("{0}{1}{2}{3}{4}",
+                writer.WriteLine("{0}{1}{2}{3}{4}{5}",
+                    this.RenderedVisibilityModifier,
                     Lexems.SetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket,
@@ -130,6 +132,20 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             }
 
             return writer.ToString();
+        }
+
+        protected virtual string RenderedVisibilityModifier
+        {
+            get
+            {
+                if (this.Visibility.HasFlag(VisibilityToken.Protected))
+                {
+                    // If protected, emit the visibility modifier
+                    return TokenUtility.EmitOptionalVisibility(this.Visibility);
+                }
+
+                return string.Empty;
+            }
         }
     }
 }
