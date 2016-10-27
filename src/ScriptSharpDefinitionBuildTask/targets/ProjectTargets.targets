@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">  
+
+	<!-- Give the task a miningul name -->
+	<!-- Change the path to point to the assembly -->
+	<UsingTask
+		TaskName="Build.Tasks.GenerateDefinitionFiles"
+		AssemblyFile=".\Rosetta.ScriptSharpDefinitionBuildTask.dll" 
+	/>
+	
+	<!-- 
+		In your project file, add the following lines:
+
+		<Import Project="<path-to-targets>\ProjectTargets.targets" />
+		<Target Name="Build.Tasks.GenerateDefinitionFiles" BeforeTargets="" Inputs="@(Compile)" Outputs="<output-path>">
+			<Build.Tasks.GenerateDefinitionFiles Files="@(Compile)" OutputFile="<output>" />
+		</Target>
+	-->
+	
+	
+</Project>
+

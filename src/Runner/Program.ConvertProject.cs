@@ -11,6 +11,8 @@ namespace Rosetta.Runner
 
     /// <summary>
     /// Part of program responsible for translating one single file.
+    /// 
+    /// TODO: Remove as a build task can be used instead.
     /// </summary>
     internal partial class Program
     {
