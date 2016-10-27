@@ -39,7 +39,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static FieldDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name)
+        public static new FieldDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name)
         {
             if (type == null)
             {

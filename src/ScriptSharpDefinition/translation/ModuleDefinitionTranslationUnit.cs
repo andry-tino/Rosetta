@@ -59,7 +59,7 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ModuleDefinitionTranslationUnit Create(ITranslationUnit name)
+        public static new ModuleDefinitionTranslationUnit Create(ITranslationUnit name)
         {
             if (name == null)
             {

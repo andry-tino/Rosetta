@@ -52,7 +52,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static MethodDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
+        public static new MethodDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
         {
             if (name == null)
             {

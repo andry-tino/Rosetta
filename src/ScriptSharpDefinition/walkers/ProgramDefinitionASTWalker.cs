@@ -47,7 +47,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"><see cref="ProgramDefinitionASTWalker"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
         /// <returns></returns>
-        public static ProgramDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static new ProgramDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
             return new ProgramDefinitionASTWalker(node,
                 new ProgramDefinitionTranslationUnitFactory(node).Create() as ProgramTranslationUnit)

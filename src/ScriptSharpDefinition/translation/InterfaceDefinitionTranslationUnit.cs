@@ -41,7 +41,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static InterfaceDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name)
+        public static new InterfaceDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name)
         {
             if (name == null)
             {
