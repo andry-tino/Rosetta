@@ -38,7 +38,7 @@ namespace Rosetta.Runner.UnitTests
         public void WhenCalledWithNoParameterThenMainRoutineIsNotRun()
         {
             var program = new MockedProgram(new string[] { });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(false, program.MainRunRoutineRun, "User should be notified about not feasible execution!");
             Assert.AreEqual(true, program.HelpContentDisplayed, "Help content should have been displayed!");
@@ -53,7 +53,7 @@ namespace Rosetta.Runner.UnitTests
         public void WhenCalledWithNoParameterThenHelpIsShown()
         {
             var program = new MockedProgram(new string[]{ });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(true, program.HelpContentDisplayed, "Help content should have been displayed!");
             program.AssertProgramNotRun();
@@ -66,7 +66,7 @@ namespace Rosetta.Runner.UnitTests
             {
                 ParameterUtils.HelpArgumentParameter
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(true, program.HelpContentDisplayed, "Help content should have been displayed!");
             program.AssertProgramNotRun();
@@ -79,7 +79,7 @@ namespace Rosetta.Runner.UnitTests
             {
                 ParameterUtils.HelpArgumentShortParameter
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(true, program.HelpContentDisplayed, "Help content should have been displayed!");
             program.AssertProgramNotRun();
@@ -120,7 +120,7 @@ namespace Rosetta.Runner.UnitTests
             foreach (var input in parameters)
             {
                 var program = new MockedProgram(input);
-                program.Run();
+                program.Execute();
 
                 Assert.AreEqual(true, program.HelpContentDisplayed, "Help content should have been displayed!");
                 program.AssertProgramNotRun();
@@ -139,7 +139,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 "file"
             });
-            program.Run();
+            program.Execute();
 
             program.AssertMainProgramRoutineRun();
             Assert.AreEqual(true, program.FileConversionRoutineRun, "File conversion routine was expected to be run!");
@@ -153,7 +153,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.ProjectArgumentShortParameter,
                 "file"
             });
-            program.Run();
+            program.Execute();
 
             program.AssertMainProgramRoutineRun();
             Assert.AreEqual(true, program.FileConversionRoutineRun, "File conversion routine was expected to be run!");
@@ -169,9 +169,9 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 value
             });
-            program.Run();
+            program.Execute();
 
-            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FilePath, 
+            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FileConversionRunnerFilePath, 
                 "File conversion routine was expected to be run!");
         }
 
@@ -185,9 +185,9 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentShortParameter,
                 value
             });
-            program.Run();
+            program.Execute();
 
-            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FilePath, 
+            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FileConversionRunnerFilePath, 
                 "File conversion routine was expected to be run!");
         }
 
@@ -200,9 +200,9 @@ namespace Rosetta.Runner.UnitTests
             {
                 value
             });
-            program.Run();
+            program.Execute();
 
-            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FilePath, 
+            Assert.AreEqual(PathUtils.GetAbsolutePath(value), program.FileConversionRunnerFilePath, 
                 "File conversion routine was expected to be run!");
         }
 
@@ -217,7 +217,7 @@ namespace Rosetta.Runner.UnitTests
                 value1,
                 value2
             });
-            program.Run();
+            program.Execute();
 
             program.AssertMainProgramRoutineNotRun();
 
@@ -245,7 +245,7 @@ namespace Rosetta.Runner.UnitTests
                 "file1",
                 "file2"
             });
-            program.Run();
+            program.Execute();
 
             program.AssertMainProgramRoutineNotRun();
 
@@ -280,7 +280,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.OutputArgumentParameter,
                 value
             });
-            program.Run();
+            program.Execute();
 
             Assert.IsNotNull(program.OutputFolder, "Expecting output folder path!");
             Assert.AreEqual(value, program.OutputFolder, "Not matching output folder path!");
@@ -298,7 +298,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.OutputArgumentShortParameter,
                 value
             });
-            program.Run();
+            program.Execute();
 
             Assert.IsNotNull(program.OutputFolder, "Expecting output folder path!");
             Assert.AreEqual(value, program.OutputFolder, "Not matching output folder path!");

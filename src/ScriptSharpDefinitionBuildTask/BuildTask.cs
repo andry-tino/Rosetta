@@ -11,6 +11,8 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
 
+    using Rosetta.ScriptSharp.Definition.AST;
+
     /// <summary>
     /// The build task.
     /// </summary>
@@ -36,6 +38,13 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         public override bool Execute()
         {
             throw new NotImplementedException();
+        }
+
+        private static string PerformConversion(string source)
+        {
+            var program = new ProgramWrapper(source);
+
+            return program.Output;
         }
     }
 }

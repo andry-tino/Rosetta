@@ -11,7 +11,6 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
     using Rosetta.Executable;
     using Rosetta.Executable.Exceptions;
-    using Rosetta.ScriptSharp.Definition.AST;
 
     using Mono.Options;
 
@@ -21,12 +20,9 @@ namespace Rosetta.ScriptSharp.Definition.Runner
     /// <remarks>
     /// Members protected for testability.
     /// </remarks>
-    internal partial class Program
+    internal partial class Program : Executable
     {
         protected static Program instance;
-
-        protected string[] args;
-        protected OptionSet options;
 
         protected string filePath = null;         // File to convert
         protected string outputFolder = null;     // The output folder path for destination files
@@ -81,16 +77,15 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         static void Main(string[] args)
         {
             instance = new Program(args);
-            instance.Run();
+            instance.Execute();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Program"/> class.
         /// </summary>
         /// <param name="args"></param>
-        public Program(string[] args)
+        public Program(string[] args) : base(args)
         {
-            this.args = args;
             this.options = new OptionSet()
             {
                 { FileOption, "The path to the C# {FILE} to convert into TypeScript.",
@@ -107,38 +102,9 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         }
 
         /// <summary>
-        /// Starts the program.
-        /// </summary>
-        public void Run()
-        {
-            List<string> extra;
-            try
-            {
-                extra = this.options.Parse(this.args);
-                this.HandleExtraParameters(extra);
-            }
-            catch (OptionException e)
-            {
-                this.HandleOptionException(e);
-                return;
-            }
-
-            // If user provided no input arguments, show help
-            if (this.args.Length == 0)
-            {
-                Console.Write("No input provided!");
-                this.ShowHelp();
-
-                return;
-            }
-
-            this.RunCore();
-        }
-
-        /// <summary>
         /// Runs the main logic.
         /// </summary>
-        protected virtual void RunCore()
+        protected override void ExecuteCore()
         {
             // Priority to help
             if (help)
@@ -176,7 +142,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 #endif
         }
 
-        protected virtual void HandleOptionException(OptionException e)
+        protected override void HandleOptionException(OptionException e)
         {
             Console.Write("An error occurred while reading input: ");
             Console.WriteLine(e.Message);
@@ -189,7 +155,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             this.ShowHelp();
         }
 
-        protected virtual void HandleExtraParameters(IEnumerable<string> extra)
+        protected override void HandleExtraParameters(IEnumerable<string> extra)
         {
             int count = extra.Count();
 
@@ -218,17 +184,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             // If everything is fine, just apply to file-path
             this.filePath = extra.ElementAt(0);
         }
-
-        private static string PerformConversion(string source)
-        {
-            var program = new ProgramWrapper(source);
-
-            return program.Output;
-        }
-
-        #region Helpers
-
-        protected virtual void ShowHelp()
+        
+        protected override void ShowHelp()
         {
             Console.WriteLine("Usage: RosettaScriptSharpDefinition [OPTIONS]+ message");
             Console.WriteLine("Generates TypeScript definition files from C# files.");
@@ -236,7 +193,5 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             Console.WriteLine("Options:");
             this.options.WriteOptionDescriptions(Console.Out);
         }
-
-        #endregion
     }
 }

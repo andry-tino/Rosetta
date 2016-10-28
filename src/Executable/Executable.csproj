@@ -40,13 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConversionProvider.cs" />
     <Compile Include="exceptions\ConflictingOptionsException.cs" />
     <Compile Include="exceptions\DefaultOptionException.cs" />
+    <Compile Include="Executable.cs" />
     <Compile Include="external\MonoOptions.cs" />
+    <Compile Include="FileConversionRunner.cs" />
     <Compile Include="FileManager.cs" />
+    <Compile Include="IRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

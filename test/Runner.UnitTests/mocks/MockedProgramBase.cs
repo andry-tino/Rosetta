@@ -123,10 +123,10 @@ namespace Rosetta.Runner.UnitTests.Mocks
             get { return this.fileManager; }
         }
 
-        protected override void RunCore()
+        protected override void ExecuteCore()
         {
             this.MainRunRoutineRun = true;
-            base.RunCore();
+            base.ExecuteCore();
         }
 
         protected override void HandleNoFeasibleExecution()

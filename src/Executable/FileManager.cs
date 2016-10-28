@@ -288,14 +288,7 @@ namespace Rosetta.Executable
         #endregion
 
         #region Types
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public delegate string ConversionProvider(string source);
-
+        
         /// <summary>
         /// The file entry.
         /// </summary>

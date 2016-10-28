@@ -7,6 +7,8 @@ namespace Rosetta.Runner.UnitTests.Mocks
 {
     using System;
 
+    using Rosetta.Executable;
+
     /// <summary>
     /// Mock for <see cref="Program"/>.
     /// This mock inhibits both <see cref="Program.EmitFiles"/> and <see cref="Program.PrepareFiles"/>.
@@ -22,14 +24,25 @@ namespace Rosetta.Runner.UnitTests.Mocks
         {
         }
 
-        protected override void EmitFiles()
+        protected override IRunner CreateFileConversionRunner()
         {
-            // Do nothing, we do not want to proceed with actual translation
+            return new MockedFileConversionRunner(PerformFileConversion, this.filePath, this.outputFolder, Extension, this.fileName);
         }
 
-        protected override void PrepareFiles()
+        /// <summary>
+        /// 
+        /// </summary>
+        public string FileConversionRunnerFilePath
         {
-            // Do nothing, we do not want to proceed with actual translation
+            get { return (this.FileConversionRunner as MockedFileConversionRunner).FilePath; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string FileConversionRunnerOutputFolder
+        {
+            get { return (this.FileConversionRunner as MockedFileConversionRunner).OutputFolder; }
         }
     }
 }

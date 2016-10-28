@@ -53,12 +53,12 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 value // Relative path
             });
-            program.Run();
+            program.Execute();
 
-            Assert.IsNotNull(program.OutputFolder, "Expecting a file path!");
+            Assert.IsNotNull(program.FileConversionRunnerOutputFolder, "Expecting a file path!");
 
             var path = new FileInfo(value).DirectoryName;
-            Assert.AreEqual(path, program.OutputFolder);
+            Assert.AreEqual(path, program.FileConversionRunnerOutputFolder);
         }
 
         /// <summary>
@@ -75,13 +75,13 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 value // Absolute path
             });
-            program.Run();
+            program.Execute();
 
-            Assert.IsNotNull(program.OutputFolder, "Expecting a file path!");
+            Assert.IsNotNull(program.FileConversionRunnerOutputFolder, "Expecting a file path!");
 
             // We build the folder path from scratch by design
             var path = new FileInfo(value).DirectoryName;
-            Assert.AreEqual(path, program.OutputFolder);
+            Assert.AreEqual(path, program.FileConversionRunnerOutputFolder);
         }
 
         [TestMethod]
@@ -94,10 +94,10 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.OutputArgumentParameter,
                 PathUtils.CurrentDirectoryWildcard
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(false, program.ErrorHandled, "Error should not have been handled!");
-            Assert.AreEqual(PathUtils.ApplicationExecutingPath, program.OutputFolder,
+            Assert.AreEqual(PathUtils.ApplicationExecutingPath, program.FileConversionRunnerOutputFolder,
                 "Not matching output path!");
         }
 
@@ -116,7 +116,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.OutputArgumentParameter,
                 absoluteOutputPath
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(false, program.ErrorHandled, "No error expected!");
             Assert.AreEqual(absoluteOutputPath, program.OutputFolder, "Wrong acquired output path!");
@@ -140,11 +140,11 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.OutputArgumentParameter,
                 relativePathToDeploymentFolder
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(false, program.ErrorHandled, "No error expected!");
             Assert.AreEqual(testContext.GetTestDeploymentFolder(),
-                program.OutputFolder.StripLastFolderSeparatorFromPath(), 
+                program.FileConversionRunnerOutputFolder.StripLastFolderSeparatorFromPath(), 
                 "Wrong acquired output path!");
         }
 
@@ -161,7 +161,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.OutputArgumentParameter,
                 "wrongFolder1"
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(true, program.ErrorHandled, "Error should have been handled!");
         }
@@ -189,7 +189,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 absoluteFilePath
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(false, program.ErrorHandled, "No error expected!");
             Assert.AreEqual(absoluteFilePath, program.FilePath, "Wrong acquired file path!");
@@ -211,11 +211,11 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 Path.Combine(PathUtils.CurrentDirectoryWildcard, TestObjects.EmptyFile)
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(false, program.ErrorHandled, "No error expected!");
             Assert.AreEqual(Path.Combine(PathUtils.ApplicationExecutingPath, TestObjects.EmptyFile),
-                program.FilePath, "Wrong acquired file path!");
+                program.FileConversionRunnerFilePath, "Wrong acquired file path!");
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Rosetta.Runner.UnitTests
                 ParameterUtils.FileArgumentParameter,
                 Path.Combine(PathUtils.CurrentDirectoryWildcard, TestObjects.NotExistingFile)
             });
-            program.Run();
+            program.Execute();
 
             Assert.AreEqual(true, program.ErrorHandled, "Error should have been handled!");
             Assert.IsNotNull(program.ThrownProgramException, "Program expected to emit exception!");

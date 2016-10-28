@@ -50,7 +50,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="mocks\CustomizableFileConversionRunner.cs" />
     <Compile Include="mocks\CustomizableMockedProgram.cs" />
+    <Compile Include="mocks\MockedFileConversionRunner.cs" />
+    <Compile Include="mocks\MockedFileConversionRunnerBase.cs" />
     <Compile Include="mocks\MockedProgram.cs" />
     <Compile Include="mocks\MockedProgramBase.cs" />
     <Compile Include="InputParametersUnitTest.cs" />
