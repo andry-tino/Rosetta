@@ -47,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Executable\Executable.csproj">
+      <Project>{2d805f02-16c6-4a45-9837-210c0f20b4a4}</Project>
+      <Name>Executable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScriptSharpDefinition\ScriptSharpDefinition.csproj">
       <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
       <Name>ScriptSharpDefinition</Name>
