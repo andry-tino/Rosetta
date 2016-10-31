@@ -57,13 +57,18 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         {
             try
             {
+                this.Log.LogMessage("Generating TypeScript definitions for {0} file{1}...", 
+                    this.Files.Count(), this.Files.Count() > 1 ? "s" : string.Empty);
+
                 this.CreateTask().Run();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                this.Log.LogErrorFromException(new Exception("An error occurred while generating TypeScript definition files.", ex), false, true, null);
                 return false;
             }
 
+            this.Log.LogMessage("TypeScript definitions generation completed. Location: {0}.", this.OutputFolder);
             return true;
         }
 
