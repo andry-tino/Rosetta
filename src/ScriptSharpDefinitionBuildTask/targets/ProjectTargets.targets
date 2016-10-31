@@ -11,7 +11,7 @@
 		In your project file, add the following lines:
 
 		<Import Project="<path-to-targets>\ProjectTargets.targets" />
-		<Target Name="Build.Tasks.GenerateDefinitionFiles" BeforeTargets="" Inputs="@(Compile)" Outputs="<output-path>">
+		<Target Name="Build.Tasks.GenerateDefinitionFiles" BeforeTargets="" Inputs="" Outputs="">
 			<Build.Tasks.GenerateDefinitionFiles Files="@(Compile)" OutputFile="<output>" />
 		</Target>
 	-->

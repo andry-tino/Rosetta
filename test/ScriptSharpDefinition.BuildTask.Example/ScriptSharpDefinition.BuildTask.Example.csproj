@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FF0C1C5B-8CE3-480F-B3C3-4EA5D69C209E}</ProjectGuid>
+    <ProjectGuid>{29B55553-B8C5-45A3-87F7-893ECE5EBF9D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.ScriptSharp.Definition.BuildTask</RootNamespace>
-    <AssemblyName>Rosetta.ScriptSharpDefinitionBuildTask</AssemblyName>
+    <RootNamespace>Rosetta.ScriptSharp.Definition.BuildTask.Example</RootNamespace>
+    <AssemblyName>Rosetta.ScriptSharpDefinition.BuildTask.Example</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build" />
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,30 +40,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenerateDefinitionsBuildTask.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Executable\Executable.csproj">
-      <Project>{2d805f02-16c6-4a45-9837-210c0f20b4a4}</Project>
-      <Name>Executable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ScriptSharpDefinition\ScriptSharpDefinition.csproj">
-      <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
-      <Name>ScriptSharpDefinition</Name>
+    <ProjectReference Include="..\..\src\ScriptSharpDefinitionBuildTask\ScriptSharpDefinitionBuildTask.csproj">
+      <Project>{ff0c1c5b-8ce3-480f-b3c3-4ea5d69c209e}</Project>
+      <Name>ScriptSharpDefinitionBuildTask</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="targets\ProjectTargets.targets">
+    <EmbeddedResource Include="GenerateTypeScriptDefinitions.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <Import Project="GenerateTypeScriptDefinitions.targets" />
+  <Target Name="CreateOutFolder" BeforeTargets="GenerateTypeScriptDefinitionFiles">
+    <MakeDir Directories=".\out" />
   </Target>
-  <Target Name="AfterBuild">
+  <Target Name="GenerateTypeScriptDefinitionFiles" AfterTargets="CopyFilesToOutputDirectory">
+    <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out" />
   </Target>
-  -->
 </Project>
