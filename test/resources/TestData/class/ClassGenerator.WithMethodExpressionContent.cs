@@ -73,7 +73,7 @@ namespace Rosetta.Tests
                                 initVariable1 = false;
                                 int initVariable2 = 1;
                                 initVariable2 = 0;
-                                bool initVariable3 = ""hello"";
+                                string initVariable3 = ""hello"";
                                 initVariable3 = ""hello!"";
                             }}
                         }}

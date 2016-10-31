@@ -6,6 +6,7 @@
 namespace Rosetta.Translation
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Utility class for tokens.
@@ -49,7 +50,29 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public static string ToString(this VisibilityToken visibilityToken)
         {
-            return visibilityToken != VisibilityToken.None ? visibilityToken.ToString("G").ToLower() : string.Empty;
+            string representation = string.Empty;
+
+            if (visibilityToken != VisibilityToken.None)
+            {
+                var modifiers = new List<string>();
+
+                foreach (VisibilityToken flag in Enum.GetValues(typeof(VisibilityToken)))
+                {
+                    if (flag == VisibilityToken.None)
+                    {
+                        continue;
+                    }
+
+                    if (visibilityToken.HasFlag(flag))
+                    {
+                        modifiers.Add(flag.ToString("G").ToLower());
+                    }
+                }
+
+                representation = string.Join(" ", modifiers);
+            }
+
+            return representation;
         }
 
         /// <summary>
