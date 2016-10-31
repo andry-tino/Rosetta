@@ -254,6 +254,16 @@ namespace Rosetta.Executable
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GetFileNameWithExtension(string path)
+        {
+            return $"{Path.GetFileName(path)}{Path.GetExtension(path)}";
+        }
+
+        /// <summary>
         /// Checks that the folder where a file resides is a valid folder path.
         /// </summary>
         /// <param name="path">Path to the file to check.</param>

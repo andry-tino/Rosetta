@@ -16,14 +16,18 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
     /// </summary>
     public class GenerateBundleTask : GenerateTaskBase
     {
+        private readonly string bundleName;
+
         private List<FileConversionInfo> outputs;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateBundleTask"/> class.
         /// </summary>
-        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder) 
+        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string bundleName = "Bundle") 
             : base(sourceFiles, outputFolder)
         {
+            this.bundleName = bundleName;
+
             this.outputs = new List<FileConversionInfo>();
         }
 
@@ -38,7 +42,14 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
                 this.ConvertFile(file);
             }
 
-            var bundle = this.outputs.Aggregate((current, next) => new FileConversionInfo() { FileConversion = current.FileConversion + next.FileConversion }).FileConversion;
+            var chuncks = this.outputs.Select(output => string.Join(Environment.NewLine, new[] {
+                $"/**",
+                $" * File: {output.FileName}",
+                $" */",
+                $"{output.FileConversion}",
+                string.Empty }));
+
+            var bundle = string.Join(Environment.NewLine, chuncks);
 
             // Writing
             var outputPath = FileManager.GetAbsolutePath(this.outputFolder);
@@ -48,7 +59,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
                 throw new InvalidOperationException($"Folder '{outputPath}' does not exists!");
             }
 
-            FileManager.WriteToFile(bundle, outputPath, "Bundle" + "." + extension);
+            FileManager.WriteToFile(bundle, outputPath, this.bundleName + "." + extension);
         }
 
         private void ConvertFile(string filePath)
@@ -56,7 +67,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             var runner = new FileSilentConversionRunner(PerformFileConversion, filePath, this.outputFolder, extension);
             runner.Run();
 
-            this.outputs.Add(new FileConversionInfo() { FileName = "", FileConversion = runner.FileConversion });
+            this.outputs.Add(new FileConversionInfo() { FileName = FileManager.GetFileNameWithExtension(filePath), FileConversion = runner.FileConversion });
         }
 
         #region Types

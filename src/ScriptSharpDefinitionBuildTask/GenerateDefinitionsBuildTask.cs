@@ -12,8 +12,6 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
 
-    using Rosetta.Executable;
-
     /// <summary>
     /// The build task.
     /// </summary>
@@ -37,6 +35,14 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         public bool CreateBundle { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets the name of the generate bundle file. This name does not include the extension.
+        /// </summary>
+        /// <remarks>
+        /// Only works if <see cref="CreateBundle"/> is <code>true</code>.
+        /// </remarks>
+        public string BundleName { get; set; } = "Bundle";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GenerateDefinitionsBuildTask"/> class.
         /// </summary>
         public GenerateDefinitionsBuildTask()
@@ -53,7 +59,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             {
                 this.CreateTask().Run();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -69,7 +75,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         private GenerateTaskBase CreateTask()
         {
             return this.CreateBundle
-                ? new GenerateBundleTask(this.SourceFiles, this.OutputFolder)
+                ? new GenerateBundleTask(this.SourceFiles, this.OutputFolder, this.BundleName)
                 : new GenerateFilesTask(this.SourceFiles, this.OutputFolder) as GenerateTaskBase;
         }
     }
