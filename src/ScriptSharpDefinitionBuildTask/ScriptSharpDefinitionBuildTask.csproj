@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenerateBundleTask.cs" />
     <Compile Include="GenerateDefinitionsBuildTask.cs" />
+    <Compile Include="GenerateFilesTask.cs" />
+    <Compile Include="GenerateTaskBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

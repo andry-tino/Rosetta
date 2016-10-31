@@ -7,20 +7,18 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Build;
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
 
     using Rosetta.Executable;
-    using Rosetta.ScriptSharp.Definition.AST;
 
     /// <summary>
     /// The build task.
     /// </summary>
     public class GenerateDefinitionsBuildTask : Task
     {
-        protected const string Extension = "d.ts";
-        
         /// <summary>
         /// Gets or sets the collection of source files to generate definition files from.
         /// </summary>
@@ -34,17 +32,17 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         public string OutputFolder { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether a unique definition bundle should be generated.
+        /// </summary>
+        public bool CreateBundle { get; set; } = false;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GenerateDefinitionsBuildTask"/> class.
         /// </summary>
         public GenerateDefinitionsBuildTask()
         {
         }
-
-        protected virtual IRunner CreateFileConversionRunner(string filePath)
-        {
-            return new FileConversionRunner(PerformFileConversion, filePath, this.OutputFolder, Extension);
-        }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -53,10 +51,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         {
             try
             {
-                foreach (var file in this.Files)
-                {
-                    this.ConvertFile(file.GetMetadata("FullPath"));
-                }
+                this.CreateTask().Run();
             }
             catch (Exception ex)
             {
@@ -66,16 +61,16 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             return true;
         }
 
-        private void ConvertFile(string filePath)
+        protected IEnumerable<string> SourceFiles
         {
-            this.CreateFileConversionRunner(filePath).Run();
+            get { return this.Files.Select(taskItem => taskItem.GetMetadata("FullPath")); }
         }
 
-        private static string PerformFileConversion(string source)
+        private GenerateTaskBase CreateTask()
         {
-            var program = new ProgramWrapper(source);
-
-            return program.Output;
+            return this.CreateBundle
+                ? new GenerateBundleTask(this.SourceFiles, this.OutputFolder)
+                : new GenerateFilesTask(this.SourceFiles, this.OutputFolder) as GenerateTaskBase;
         }
     }
 }

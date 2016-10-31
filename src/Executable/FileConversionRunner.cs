@@ -9,7 +9,7 @@ namespace Rosetta.Executable
     using System.IO;
 
     /// <summary>
-    /// COnverts a file.
+    /// Converts a file and outputs the translation into a new file.
     /// </summary>
     public class FileConversionRunner : IRunner
     {
@@ -22,7 +22,7 @@ namespace Rosetta.Executable
         private string fileName;
         private string extension;
 
-        private FileManager fileManager;
+        protected FileManager fileManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileConversionRunner"/>.
@@ -93,12 +93,17 @@ namespace Rosetta.Executable
 
         protected virtual void EmitFiles()
         {
-            var writtenFiles = fileManager.WriteAllFilesToDestination(this.extension);
+            var writtenFiles = fileManager.WriteAllFilesToDestination(this.extension, this.WriteFilesOnEmit);
 
             foreach (var file in writtenFiles)
             {
                 Console.WriteLine("Wrote file {0}", file);
             }
+        }
+
+        protected virtual bool WriteFilesOnEmit
+        {
+            get { return true; }
         }
 
         #region Helpers

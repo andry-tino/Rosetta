@@ -47,6 +47,7 @@
     <Compile Include="external\MonoOptions.cs" />
     <Compile Include="FileConversionRunner.cs" />
     <Compile Include="FileManager.cs" />
+    <Compile Include="FileSilentConversionRunner.cs" />
     <Compile Include="IRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

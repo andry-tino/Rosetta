@@ -73,6 +73,8 @@ namespace Rosetta.Executable
 
         /// <summary>
         /// Gets the list of files.
+        /// 
+        /// TODO: Turn into property.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<string> Files()
@@ -82,6 +84,8 @@ namespace Rosetta.Executable
 
         /// <summary>
         /// Gets the list of file conversions.
+        /// 
+        /// TODO: Turn into property.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<string> FileConversions()
@@ -138,8 +142,12 @@ namespace Rosetta.Executable
         /// Causes <see cref="ApplyConversion"/> to be called and all files to be written to <see cref="DirectoryPath"/>.
         /// </summary>
         /// <param name="extension">The extension (without dot).</param>
+        /// <param name="writeFiles">
+        /// A value indicating whether output files should be generated or not. 
+        /// If <code>false</code>, it causes the method to return an empty collection.
+        /// </param>
         /// <returns></returns>
-        public IEnumerable<string> WriteAllFilesToDestination(string extension)
+        public IEnumerable<string> WriteAllFilesToDestination(string extension, bool writeFiles = true)
         {
             if (extension == null)
             {
@@ -150,13 +158,16 @@ namespace Rosetta.Executable
 
             this.ApplyConversion();
 
-            foreach (var entry in this.fileEntries)
+            if (writeFiles)
             {
-                var destinationFilePath = GetDestinationFilePath(entry.FilePath, extension, entry.NewName);
-                WriteToFile(entry.FileConversion, destinationFilePath);
-                writtenFiles.Add(destinationFilePath);
+                foreach (var entry in this.fileEntries)
+                {
+                    var destinationFilePath = GetDestinationFilePath(entry.FilePath, extension, entry.NewName);
+                    WriteToFile(entry.FileConversion, destinationFilePath);
+                    writtenFiles.Add(destinationFilePath);
+                }
             }
-
+            
             return writtenFiles;
         }
 
@@ -170,6 +181,17 @@ namespace Rosetta.Executable
         public static void WriteToFile(string output, string path)
         {
             File.WriteAllText(path, output);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="output"></param>
+        /// <param name="folderPath"></param>
+        /// <param name="fileName"></param>
+        public static void WriteToFile(string output, string folderPath, string fileName)
+        {
+            File.WriteAllText(Path.Combine(folderPath, fileName), output);
         }
 
         /// <summary>

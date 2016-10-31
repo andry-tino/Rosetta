@@ -63,4 +63,7 @@
   <Target Name="GenerateTypeScriptDefinitionFiles" AfterTargets="CopyFilesToOutputDirectory">
     <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out" />
   </Target>
+  <Target Name="GenerateTypeScriptDefinitionBundle" AfterTargets="CopyFilesToOutputDirectory">
+    <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out" CreateBundle="true" />
+  </Target>
 </Project>
