@@ -7,6 +7,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using Microsoft.Build;
     using Microsoft.Build.Framework;
@@ -50,11 +51,14 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         }
         
         /// <summary>
-        /// 
+        /// Executes the build task.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A value indicating whether the task could be completed or not.</returns>
         public override bool Execute()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             try
             {
                 this.Log.LogMessage("Generating TypeScript definitions for {0} file{1}...", 
@@ -64,11 +68,18 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             }
             catch (Exception ex)
             {
+                stopwatch.Reset();
                 this.Log.LogErrorFromException(new Exception("An error occurred while generating TypeScript definition files.", ex), false, true, null);
+
                 return false;
             }
 
-            this.Log.LogMessage("TypeScript definitions generation completed. Location: {0}.", this.OutputFolder);
+            stopwatch.Stop();
+            var elapsedTime = stopwatch.Elapsed;
+            var timeMessage = string.Format("{0:00}:{1:00}", elapsedTime.Seconds, elapsedTime.Milliseconds);
+
+            this.Log.LogMessage("TypeScript definitions generation completed in {0}. Location: {1}.", timeMessage, this.OutputFolder);
+
             return true;
         }
 
