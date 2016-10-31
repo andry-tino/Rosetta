@@ -260,7 +260,7 @@ namespace Rosetta.Executable
         /// <returns></returns>
         public static string GetFileNameWithExtension(string path)
         {
-            return $"{Path.GetFileName(path)}{Path.GetExtension(path)}";
+            return Path.GetFileName(path);
         }
 
         /// <summary>
