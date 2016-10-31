@@ -128,7 +128,7 @@ namespace Rosetta.Translation
                 // Opening declaration: [<visibility>] get <name>() : <type> {
                 // TODO: Handle case of no visibility specified
                 writer.WriteLine("{0}{1} {2}{3} {4} {5} {6}",
-                    this.Visibility == VisibilityToken.None ? string.Empty : TokenUtility.ToString(this.Visibility) + " ",
+                    this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
                     Lexems.GetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket + Lexems.CloseRoundBracket,
@@ -150,7 +150,7 @@ namespace Rosetta.Translation
 
                 // Opening declaration: [<visibility>] set <name>(value : <type>) {
                 writer.WriteLine("{0}{1} {2}{3}{4}{5} {6}",
-                    this.Visibility == VisibilityToken.None ? string.Empty : TokenUtility.ToString(this.Visibility) + " ",
+                    this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
                     Lexems.SetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket,

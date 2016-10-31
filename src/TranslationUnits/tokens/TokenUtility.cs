@@ -76,6 +76,59 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
+        /// Generates a <see cref="VisibilityToken"/> which is fully TypeScript compliant.
+        /// </summary>
+        /// <param name="visibilityToken"></param>
+        /// <returns></returns>
+        public static VisibilityToken ConvertToTypeScriptEquivalent(this VisibilityToken visibilityToken)
+        {
+            VisibilityToken modifiers = VisibilityToken.None;
+
+            if (visibilityToken.HasFlag(VisibilityToken.Static))
+            {
+                modifiers |= VisibilityToken.Static;
+            }
+
+            if (visibilityToken.HasFlag(VisibilityToken.Private))
+            {
+                modifiers |= VisibilityToken.Private;
+
+                return modifiers;
+            }
+
+            if (visibilityToken.HasFlag(VisibilityToken.Public))
+            {
+                modifiers |= VisibilityToken.Public;
+
+                return modifiers;
+            }
+
+            if (visibilityToken.HasFlag(VisibilityToken.Protected))
+            {
+                modifiers |= VisibilityToken.Protected;
+
+                if (visibilityToken.HasFlag(VisibilityToken.Internal))
+                {
+                    modifiers &= ~VisibilityToken.Protected; // Remove protected
+                    modifiers |= VisibilityToken.Public; // Add public
+
+                    return modifiers;
+                }
+
+                return modifiers;
+            }
+
+            if (visibilityToken.HasFlag(VisibilityToken.Internal))
+            {
+                modifiers |= VisibilityToken.Public;
+
+                return modifiers;
+            }
+
+            return modifiers;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="visibilityToken"></param>

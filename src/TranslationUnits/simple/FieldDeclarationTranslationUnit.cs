@@ -75,7 +75,7 @@ namespace Rosetta.Translation
 
             writer.Write("{0}{1} {2} {3}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
-                TokenUtility.ToString(this.Visibility),
+                this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
                 this.Name.Translate(),
                 Lexems.Colon,
                 this.type.Translate());

@@ -14,6 +14,9 @@ namespace Rosetta.Translation
     /// </summary>
     /// <remarks>
     /// For getting the corresponding C# keyword, use extension <see cref="TokenUtility.ToString(VisibilityToken)"/>.
+    ///
+    /// This enum includes also modifiers that are not part of the TypeScript definition, however they are needed as part of the C# definition, 
+    /// those not supported by TypeScript will be transformed and adapted in translation units.
     /// </remarks>
     [Flags]
     public enum VisibilityToken

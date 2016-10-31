@@ -144,7 +144,7 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
-            string classVisibility = TokenUtility.EmitOptionalVisibility(this.Visibility);
+            string classVisibility = this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
             string extensionList = this.BuildInterfaceExtensionList();
 
             if (this.injectedBefore == null)

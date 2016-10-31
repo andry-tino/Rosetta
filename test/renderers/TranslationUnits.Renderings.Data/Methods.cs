@@ -57,6 +57,32 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <returns></returns>
+        [RenderingResource("EmptyProtectedInternalMethod.ts")]
+        public string RenderEmptyProtectedInternalMethod()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
+                VisibilityToken.Protected | VisibilityToken.Internal, null, "EmptyProtectedInternal") as MethodDeclarationTranslationUnit;
+
+            return translationUnit.Translate();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [RenderingResource("EmptyProtectedInternalStaticMethod.ts")]
+        public string RenderEmptyProtectedInternalStaticMethod()
+        {
+            var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
+                VisibilityToken.Protected | VisibilityToken.Internal | VisibilityToken.Static, null, "EmptyProtectedInternalStatic") as MethodDeclarationTranslationUnit;
+
+            return translationUnit.Translate();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [RenderingResource("EmptyMethodWithReturn.ts")]
         public string RenderEmptyMethodWithReturn()
         {

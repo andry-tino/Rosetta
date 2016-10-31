@@ -63,6 +63,7 @@
     <Compile Include="regex\Regex.ClassDeclaration.cs" />
     <Compile Include="regex\Regex.cs" />
     <Compile Include="TestSuite.cs" />
+    <Compile Include="TokenUtilityUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\resources\TestData\TestData.csproj">

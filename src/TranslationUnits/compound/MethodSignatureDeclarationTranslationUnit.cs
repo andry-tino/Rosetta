@@ -154,7 +154,7 @@ namespace Rosetta.Translation
 
         protected virtual string RenderedVisibilityModifier
         {
-            get { return TokenUtility.EmitOptionalVisibility(this.Visibility); }
+            get { return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
         }
 
         protected virtual bool ShouldRenderReturnType
