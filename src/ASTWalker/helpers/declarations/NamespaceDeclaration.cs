@@ -43,7 +43,7 @@ namespace Rosetta.AST.Helpers
 
         private NamespaceDeclarationSyntax NamespaceDeclarationSyntaxNode
         {
-            get { return this.syntaxNode as NamespaceDeclarationSyntax; }
+            get { return this.SyntaxNode as NamespaceDeclarationSyntax; }
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Rosetta.AST.Helpers
 
         private ConstructorDeclarationSyntax ConstructorDeclarationSyntaxNode
         {
-            get { return this.syntaxNode as ConstructorDeclarationSyntax; }
+            get { return this.SyntaxNode as ConstructorDeclarationSyntax; }
         }
     }
 }

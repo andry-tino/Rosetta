@@ -47,7 +47,7 @@ namespace Rosetta.AST.Helpers
         
         private ReturnStatementSyntax ReturnStatementSyntaxNode
         {
-            get { return this.syntaxNode as ReturnStatementSyntax; }
+            get { return this.SyntaxNode as ReturnStatementSyntax; }
         }
     }
 }

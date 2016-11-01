@@ -142,7 +142,7 @@ namespace Rosetta.AST.Helpers
         
         private TypeDeclarationSyntax TypeDeclarationSyntaxNode
         {
-            get { return this.syntaxNode as TypeDeclarationSyntax; }
+            get { return this.SyntaxNode as TypeDeclarationSyntax; }
         }
     }
 }

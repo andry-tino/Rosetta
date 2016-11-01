@@ -91,7 +91,7 @@ namespace Rosetta.AST.Helpers
 
         private AssignmentExpressionSyntax AssignmentExpressionSyntaxNode
         {
-            get { return this.syntaxNode as AssignmentExpressionSyntax; }
+            get { return this.SyntaxNode as AssignmentExpressionSyntax; }
         }
     }
 }

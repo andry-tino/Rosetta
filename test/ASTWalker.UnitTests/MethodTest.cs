@@ -48,7 +48,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
             MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;
@@ -80,7 +79,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
             MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;
@@ -108,7 +106,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
             MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;
@@ -139,7 +136,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
             MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;
@@ -171,7 +167,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
             MethodDeclarationSyntax methodDeclarationNode = node as MethodDeclarationSyntax;

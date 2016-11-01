@@ -73,7 +73,7 @@ namespace Rosetta.AST.Helpers
 
         private ParameterSyntax ParameterSyntaxNode
         {
-            get { return this.syntaxNode as ParameterSyntax; }
+            get { return this.SyntaxNode as ParameterSyntax; }
         }
     }
 }

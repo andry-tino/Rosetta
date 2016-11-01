@@ -83,7 +83,7 @@ namespace Rosetta.AST.Helpers
 
         private VariableDeclarationSyntax VariableDeclarationSyntaxNode
         {
-            get { return this.syntaxNode as VariableDeclarationSyntax; }
+            get { return this.SyntaxNode as VariableDeclarationSyntax; }
         }
     }
 }

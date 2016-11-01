@@ -48,7 +48,7 @@ namespace Rosetta.AST.Helpers
 
         private ArgumentSyntax ArgumentSyntaxNode
         {
-            get { return this.syntaxNode as ArgumentSyntax; }
+            get { return this.SyntaxNode as ArgumentSyntax; }
         }
     }
 }

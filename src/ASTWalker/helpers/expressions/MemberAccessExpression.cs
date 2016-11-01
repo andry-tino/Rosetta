@@ -46,7 +46,7 @@ namespace Rosetta.AST.Helpers
 
         private MemberAccessExpressionSyntax MemberAccessExpressionSyntaxNode
         {
-            get { return this.syntaxNode as MemberAccessExpressionSyntax; }
+            get { return this.SyntaxNode as MemberAccessExpressionSyntax; }
         }
     }
 }

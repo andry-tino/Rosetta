@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers
     /// </summary>
     public abstract class Helper
     {
-        protected CSharpSyntaxNode syntaxNode;
+        private CSharpSyntaxNode syntaxNode;
         private SemanticModel semanticModel;
 
         /// <summary>
@@ -39,21 +39,12 @@ namespace Rosetta.AST.Helpers
 
         /// <summary>
         /// Gets the semantic model.
-        /// 
-        /// TODO: Remove this logic in order for a full branching of the helper's logic when having 
-        /// the semantic model and when not having it.
         /// </summary>
-        protected SemanticModel SemanticModel
-        {
-            get
-            {
-                //if (this.semanticModel == null)
-                //{
-                //    return Source.SemanticModel;
-                //}
+        protected SemanticModel SemanticModel => this.semanticModel;
 
-                return this.semanticModel;
-            }
-        }
+        /// <summary>
+        /// Gets the underlying syntax node.
+        /// </summary>
+        protected CSharpSyntaxNode SyntaxNode => this.syntaxNode;
     }
 }

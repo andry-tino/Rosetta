@@ -81,7 +81,7 @@ namespace Rosetta.AST.Helpers
 
         private BinaryExpressionSyntax BinaryExpressionSyntaxNode
         {
-            get { return this.syntaxNode as BinaryExpressionSyntax; }
+            get { return this.SyntaxNode as BinaryExpressionSyntax; }
         }
     }
 }

@@ -50,7 +50,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ConstructorDeclarationSyntax));
             ConstructorDeclarationSyntax constructorDeclarationNode = node as ConstructorDeclarationSyntax;
@@ -84,7 +83,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ConstructorDeclarationSyntax));
             ConstructorDeclarationSyntax constructorDeclarationNode = node as ConstructorDeclarationSyntax;
@@ -114,7 +112,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ConstructorDeclarationSyntax));
             ConstructorDeclarationSyntax constructorDeclarationNode = node as ConstructorDeclarationSyntax;
@@ -147,7 +144,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ConstructorDeclarationSyntax));
             ConstructorDeclarationSyntax constructorDeclarationNode = node as ConstructorDeclarationSyntax;
@@ -181,7 +177,6 @@ namespace Rosetta.AST.UnitTests
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ConstructorDeclarationSyntax));
             ConstructorDeclarationSyntax constructorDeclarationNode = node as ConstructorDeclarationSyntax;

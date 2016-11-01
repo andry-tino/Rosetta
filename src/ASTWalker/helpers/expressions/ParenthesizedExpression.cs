@@ -46,7 +46,7 @@ namespace Rosetta.AST.Helpers
 
         private ParenthesizedExpressionSyntax ParenthesizedExpressionSyntaxNode
         {
-            get { return this.syntaxNode as ParenthesizedExpressionSyntax; }
+            get { return this.SyntaxNode as ParenthesizedExpressionSyntax; }
         }
     }
 }

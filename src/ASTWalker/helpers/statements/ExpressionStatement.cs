@@ -47,7 +47,7 @@ namespace Rosetta.AST.Helpers
 
         private ExpressionStatementSyntax ExpressionStatementSyntaxNode
         {
-            get { return this.syntaxNode as ExpressionStatementSyntax; }
+            get { return this.SyntaxNode as ExpressionStatementSyntax; }
         }
     }
 }

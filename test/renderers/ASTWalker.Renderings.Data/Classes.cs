@@ -120,7 +120,6 @@ namespace Rosetta.AST.Renderings.Data
         {
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(ClassDeclarationSyntax));
             ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;

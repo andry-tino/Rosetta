@@ -104,12 +104,12 @@ namespace Rosetta.AST.Helpers
 
         private PrefixUnaryExpressionSyntax PrefixUnaryExpressionSyntaxNode
         {
-            get { return this.syntaxNode as PrefixUnaryExpressionSyntax; }
+            get { return this.SyntaxNode as PrefixUnaryExpressionSyntax; }
         }
 
         private PostfixUnaryExpressionSyntax PostfixUnaryExpressionSyntaxNode
         {
-            get { return this.syntaxNode as PostfixUnaryExpressionSyntax; }
+            get { return this.SyntaxNode as PostfixUnaryExpressionSyntax; }
         }
     }
 }

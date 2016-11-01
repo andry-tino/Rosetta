@@ -80,7 +80,7 @@ namespace Rosetta.AST.Helpers
 
         private FieldDeclarationSyntax FieldDeclarationSyntaxNode
         {
-            get { return this.syntaxNode as FieldDeclarationSyntax; }
+            get { return this.SyntaxNode as FieldDeclarationSyntax; }
         }
     }
 }

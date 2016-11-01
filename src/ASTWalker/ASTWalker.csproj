@@ -156,7 +156,6 @@
     <Compile Include="helpers\simple\TypeKind.cs" />
     <Compile Include="IASTWalker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="WalkerEventArgs.cs" />
     <Compile Include="walkers\ConstructorASTWalker.cs" />

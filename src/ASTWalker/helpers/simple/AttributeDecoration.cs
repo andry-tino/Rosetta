@@ -83,7 +83,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public AttributeSyntax AttributeNode
         {
-            get { return (AttributeSyntax)this.syntaxNode; }
+            get { return (AttributeSyntax)this.SyntaxNode; }
         }
     }
 }

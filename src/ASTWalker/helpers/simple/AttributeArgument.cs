@@ -55,7 +55,7 @@ namespace Rosetta.AST.Helpers
 
         private AttributeArgumentSyntax AttributeArgumentSyntaxNode
         {
-            get { return this.syntaxNode as AttributeArgumentSyntax; }
+            get { return this.SyntaxNode as AttributeArgumentSyntax; }
         }
     }
 }

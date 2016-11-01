@@ -105,7 +105,7 @@ namespace Rosetta.AST.Helpers
 
         private IfStatementSyntax IfStatementSyntaxNode
         {
-            get { return this.syntaxNode as IfStatementSyntax; }
+            get { return this.SyntaxNode as IfStatementSyntax; }
         }
     }
 }

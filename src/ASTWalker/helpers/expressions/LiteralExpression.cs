@@ -46,7 +46,7 @@ namespace Rosetta.AST.Helpers
 
         private LiteralExpressionSyntax LiteralExpressionSyntaxNode
         {
-            get { return this.syntaxNode as LiteralExpressionSyntax; }
+            get { return this.SyntaxNode as LiteralExpressionSyntax; }
         }
     }
 }

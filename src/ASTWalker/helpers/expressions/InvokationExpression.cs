@@ -68,7 +68,7 @@ namespace Rosetta.AST.Helpers
 
         private InvocationExpressionSyntax InvokationExpressionSyntaxNode
         {
-            get { return this.syntaxNode as InvocationExpressionSyntax; }
+            get { return this.SyntaxNode as InvocationExpressionSyntax; }
         }
     }
 }

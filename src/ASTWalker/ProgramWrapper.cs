@@ -32,7 +32,6 @@ namespace Rosetta.AST
 
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             var node = tree.GetRoot() as CompilationUnitSyntax;
 

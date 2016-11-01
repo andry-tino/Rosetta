@@ -60,7 +60,7 @@ namespace Rosetta.AST.Helpers
 
         private InterfaceDeclarationSyntax InterfaceDeclarationNode
         {
-            get { return (InterfaceDeclarationSyntax)this.syntaxNode; }
+            get { return (InterfaceDeclarationSyntax)this.SyntaxNode; }
         }
     }
 }

@@ -107,7 +107,6 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
         {
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateLast(typeof(CompilationUnitSyntax));
             CompilationUnitSyntax compilationUnitNode = node as CompilationUnitSyntax;

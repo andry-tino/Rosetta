@@ -46,7 +46,7 @@ namespace Rosetta.AST.Helpers
 
         private IdentifierNameSyntax IdentifierNameSyntaxNode
         {
-            get { return this.syntaxNode as IdentifierNameSyntax; }
+            get { return this.SyntaxNode as IdentifierNameSyntax; }
         }
     }
 }

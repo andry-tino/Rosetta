@@ -108,7 +108,7 @@ namespace Rosetta.AST.Helpers
         
         private BaseTypeSyntax BaseTypeSyntaxNode
         {
-            get { return this.syntaxNode as BaseTypeSyntax; }
+            get { return this.SyntaxNode as BaseTypeSyntax; }
         }
     }
 }

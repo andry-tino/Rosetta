@@ -123,7 +123,7 @@ namespace Rosetta.AST.Helpers
 
         private PropertyDeclarationSyntax PropertyDeclarationSyntaxNode
         {
-            get { return this.syntaxNode as PropertyDeclarationSyntax; }
+            get { return this.SyntaxNode as PropertyDeclarationSyntax; }
         }
     }
 }

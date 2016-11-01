@@ -47,7 +47,7 @@ namespace Rosetta.AST.Helpers
 
         private ThrowStatementSyntax ThrowStatementSyntaxNode
         {
-            get { return this.syntaxNode as ThrowStatementSyntax; }
+            get { return this.SyntaxNode as ThrowStatementSyntax; }
         }
     }
 }

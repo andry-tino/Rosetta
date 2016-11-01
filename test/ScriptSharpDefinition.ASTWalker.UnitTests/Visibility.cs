@@ -339,7 +339,6 @@ namespace Rosetta.ScriptSharp.Definition.AST.UnitTests
         {
             // Getting the AST node
             CSharpSyntaxTree tree = ASTExtractor.Extract(source);
-            Source.ProgramRoot = tree;
 
             SyntaxNode node = new NodeLocator(tree).LocateFirst(typeof(ClassDeclarationSyntax));
             var classDeclarationNode = node as ClassDeclarationSyntax;
