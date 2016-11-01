@@ -106,10 +106,9 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             {
                 // Opening declaration: [<visibility>] get <name>() : <type> {
                 // TODO: Handle case of no visibility specified
-                writer.WriteLine("{0}{1}{2}{3} {4} {5}{6}",
+                writer.WriteLine("{0}{1}{2} {3} {4}{5}",
                     this.RenderedVisibilityModifier,
-                    Lexems.GetKeyword,
-                    this.Name.Translate(),
+                    this.RenderedGetterMethodName,
                     Lexems.OpenRoundBracket + Lexems.CloseRoundBracket,
                     Lexems.Colon,
                     this.type.Translate(),
@@ -122,10 +121,9 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                     this.type, IdentifierTranslationUnit.Create("value"));
 
                 // Opening declaration: [<visibility>] set <name>(value : <type>) {
-                writer.WriteLine("{0}{1}{2}{3}{4}{5}",
+                writer.WriteLine("{0}{1}{2}{3}{4}",
                     this.RenderedVisibilityModifier,
-                    Lexems.SetKeyword,
-                    this.Name.Translate(),
+                    this.RenderedSetterMethodName,
                     Lexems.OpenRoundBracket,
                     valueParameter.Translate(),
                     Lexems.CloseRoundBracket);
@@ -133,7 +131,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
             return writer.ToString();
         }
-
+        
         protected virtual string RenderedVisibilityModifier
         {
             get
@@ -148,5 +146,12 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                 return string.Empty;
             }
         }
+
+        // ScriptSharp makes first letter lowercase
+        private string RenderedName => this.Name.Translate().ToScriptSharpName();
+
+        private string RenderedGetterMethodName => $"{Lexems.GetKeyword}_{this.RenderedName}";
+
+        private string RenderedSetterMethodName => $"{Lexems.SetKeyword}_{this.RenderedName}";
     }
 }
