@@ -92,7 +92,7 @@ namespace Rosetta.Translation
 
             writer.WriteLine("{0}{1}{2} {3} {4} {5}",
                 methodVisibility,
-                this.Name.Translate(),
+                this.RenderedName,
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.Colon,
                 this.ReturnType.Translate(), 

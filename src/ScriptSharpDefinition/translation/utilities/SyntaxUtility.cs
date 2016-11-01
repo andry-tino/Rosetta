@@ -14,7 +14,8 @@ namespace Rosetta.ScriptSharp.Definition.Translation
     public static class SyntaxUtility
     {
         /// <summary>
-        /// 
+        /// Outputs the name in the correct ScriptSharp convention:
+        /// - First letter must be lowercase.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>

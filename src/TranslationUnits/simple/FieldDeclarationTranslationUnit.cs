@@ -76,7 +76,7 @@ namespace Rosetta.Translation
             writer.Write("{0}{1} {2} {3}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
                 this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
-                this.Name.Translate(),
+                this.RenderedName,
                 Lexems.Colon,
                 this.type.Translate());
 
@@ -92,9 +92,8 @@ namespace Rosetta.Translation
             set { this.type = value; }
         }
 
-        protected virtual string RenderedVisibilityModifier
-        {
-            get { return TokenUtility.EmitOptionalVisibility(this.Visibility); }
-        }
+        protected virtual string RenderedVisibilityModifier => TokenUtility.EmitOptionalVisibility(this.Visibility);
+
+        protected virtual string RenderedName => this.Name.Translate();
     }
 }

@@ -118,7 +118,7 @@ namespace Rosetta.Translation
             {
                 writer.WriteLine("{0}{1}{2} {3} {4}",
                     classVisibility,
-                    this.Name.Translate(),
+                    this.RenderedName,
                     SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())),
                     Lexems.Colon,
                     this.ReturnType.Translate());
@@ -127,7 +127,7 @@ namespace Rosetta.Translation
             {
                 writer.WriteLine("{0}{1}{2}",
                     classVisibility,
-                    this.Name.Translate(),
+                    this.RenderedName,
                     SyntaxUtility.ToBracketEnclosedList(this.arguments.Select(unit => unit.Translate())));
             }
 
@@ -152,14 +152,10 @@ namespace Rosetta.Translation
 
         #endregion
 
-        protected virtual string RenderedVisibilityModifier
-        {
-            get { return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
-        }
+        protected virtual string RenderedVisibilityModifier => this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
 
-        protected virtual bool ShouldRenderReturnType
-        {
-            get { return true; }
-        }
+        protected virtual bool ShouldRenderReturnType => true;
+
+        protected virtual string RenderedName => this.Name.Translate();
     }
 }
