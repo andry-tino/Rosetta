@@ -3,7 +3,7 @@
   <metadata>
     <id>Rosetta.ScriptSharp.Definition.BuildTask</id>
     <version>$version$-beta</version>
-    <title>$title$</title>
+    <title>Rosetta TypeScript definition files generator from ScriptSharp</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
     <licenseUrl>https://github.com/andry-tino/Rosetta/LICENSE</licenseUrl>
@@ -11,6 +11,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>First release.</releaseNotes>
+	<summary>A tool for generating TypeScript definition files from C# files in a ScriptSharp project.</summary>
     <copyright>Copyright 2015-2016</copyright>
     <tags>csharp typescript scriptsharp definition-files</tags>
 	<dependencies>
