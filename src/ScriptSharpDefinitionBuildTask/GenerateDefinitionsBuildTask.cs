@@ -79,6 +79,10 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             var timeMessage = string.Format("{0:00}:{1:00}", elapsedTime.Seconds, elapsedTime.Milliseconds);
 
             this.Log.LogMessage("TypeScript definitions generation completed in {0}. Location: {1}.", timeMessage, this.OutputFolder);
+            if (this.CreateBundle)
+            {
+                this.Log.LogMessage("Bundle '{0}' created!", this.BundleName);
+            }
 
             return true;
         }
