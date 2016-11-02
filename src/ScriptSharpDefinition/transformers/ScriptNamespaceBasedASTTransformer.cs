@@ -16,9 +16,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
     using Rosetta.AST.Utilities;
     using Rosetta.ScriptSharp.Definition.AST.Helpers;
 
-    // TODO: This class has a limitation. We are relying on the fact that the C# code is not using 
-    //       nested classes or files with nested namespaces with classes inside. We need to improve 
-    //       this logic in order to handle the most generic case where classes can appear everywhere in the AST.
+    // TODO: Test cases where namespaces are nested with classes inside.
 
     /// <summary>
     /// Base class for rearrangement of namespaces for classes basing on ScriptSharp's <code>ScriptNamespace</code> attribute.
