@@ -139,7 +139,6 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                 if (this.Visibility.HasFlag(VisibilityToken.Protected))
                 {
                     // If protected, emit the visibility modifier
-                    // TODO: Create a method for transforming the modifier list, we are losing stuff here!
                     return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
                 }
 
