@@ -3,5 +3,7 @@
 **/.vs/**
 demo/Output/**
 **/TestResults/**
+packages/**
 **/*.vspx
 **/*.psess
+**/*.nupkg
