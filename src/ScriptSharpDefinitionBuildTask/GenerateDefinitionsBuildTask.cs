@@ -69,7 +69,12 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             catch (Exception ex)
             {
                 stopwatch.Reset();
+
+#if DEBUG
+                this.Log.LogErrorFromException(new Exception("An error occurred while generating TypeScript definition files.", ex), true, true, null);
+#else
                 this.Log.LogErrorFromException(new Exception("An error occurred while generating TypeScript definition files.", ex), false, true, null);
+#endif
 
                 return false;
             }
