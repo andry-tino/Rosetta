@@ -16,6 +16,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
     using Rosetta.AST.Utilities;
     using Rosetta.ScriptSharp.Definition.AST.Helpers;
 
+    // TODO: This class has a limitation. We are relying on the fact that the C# code is not using 
+    //       nested classes or files with nested namespaces with classes inside. We need to improve 
+    //       this logic in order to handle the most generic case where classes can appear everywhere in the AST.
+
     /// <summary>
     /// Base class for rearrangement of namespaces for classes basing on ScriptSharp's <code>ScriptNamespace</code> attribute.
     /// </summary>
@@ -46,13 +50,19 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                     $"This class can only handle nodes of type: {typeof(CompilationUnitSyntax).Name}!");
             }
 
+            // 1. Initialize
             this.Initialize(node);
 
+            // 2.1 Analyze
             this.RetrieveOverridenNamespaceNames();
+            // 2.2 Rearrange
             this.ProcessOverridenNamespaceNames();
+            // 2.3 Tidy up
+            this.CleanUpCompilationUnit();
 
             node = this.newNode;
 
+            // 3 Clean resources
             this.CleanUp();
         }
 
@@ -132,6 +142,15 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             }
 
             this.newNode = newNode;
+        }
+
+        private void CleanUpCompilationUnit()
+        {
+            this.RemoveEmptyNamespaces();
+        }
+
+        private void RemoveEmptyNamespaces()
+        {
         }
 
         private void Initialize(CSharpSyntaxNode node)

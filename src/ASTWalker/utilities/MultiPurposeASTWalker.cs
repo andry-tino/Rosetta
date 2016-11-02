@@ -19,6 +19,7 @@ namespace Rosetta.AST.Utilities
 
         private readonly Func<SyntaxNode, bool> condition;
         private readonly Action<SyntaxNode> operation;
+        private readonly bool traverseRootOnly;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiPurposeASTWalker"/> class.
@@ -26,10 +27,14 @@ namespace Rosetta.AST.Utilities
         /// <param name="node">The root to traverse.</param>
         /// <param name="condition">The condition to react to when traversing nodes.</param>
         /// <param name="operation">The operation to perform when condition is met when traversing a node.</param>
+        /// <param name="traverseRootOnly">
+        /// When <code>true</code>, it causes the walker to traverse only the units in <see cref="node"/>, 
+        /// otherwise a full deep traversal is performed.
+        /// </param>
         /// <remarks>
         /// The walker will walk through all nodes as depth level.
         /// </remarks>
-        public MultiPurposeASTWalker(SyntaxNode node, Func<SyntaxNode, bool> condition, Action<SyntaxNode> operation)
+        public MultiPurposeASTWalker(SyntaxNode node, Func<SyntaxNode, bool> condition, Action<SyntaxNode> operation, bool traverseRootOnly = false)
             : base(SyntaxWalkerDepth.Node)
         {
             if (node == null)
@@ -48,6 +53,7 @@ namespace Rosetta.AST.Utilities
             this.root = node;
             this.condition = condition;
             this.operation = operation;
+            this.traverseRootOnly = traverseRootOnly;
         }
 
         /// <summary>
@@ -65,7 +71,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAccessorDeclaration(AccessorDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAccessorDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitAccessorDeclaration(node);
         }
 
         /// <summary>
@@ -75,7 +81,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAccessorList(AccessorListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAccessorList(node);
+            if (!this.traverseRootOnly) base.VisitAccessorList(node);
         }
 
         /// <summary>
@@ -85,7 +91,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAliasQualifiedName(AliasQualifiedNameSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAliasQualifiedName(node);
+            if (!this.traverseRootOnly) base.VisitAliasQualifiedName(node);
         }
         /// <summary>
         /// 
@@ -94,7 +100,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAnonymousMethodExpression(AnonymousMethodExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAnonymousMethodExpression(node);
+            if (!this.traverseRootOnly) base.VisitAnonymousMethodExpression(node);
         }
 
         /// <summary>
@@ -104,7 +110,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAnonymousObjectCreationExpression(AnonymousObjectCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAnonymousObjectCreationExpression(node);
+            if (!this.traverseRootOnly) base.VisitAnonymousObjectCreationExpression(node);
         }
 
         /// <summary>
@@ -114,7 +120,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAnonymousObjectMemberDeclarator(AnonymousObjectMemberDeclaratorSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAnonymousObjectMemberDeclarator(node);
+            if (!this.traverseRootOnly) base.VisitAnonymousObjectMemberDeclarator(node);
         }
 
         /// <summary>
@@ -124,7 +130,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitArgument(ArgumentSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitArgument(node);
+            if (!this.traverseRootOnly) base.VisitArgument(node);
         }
 
         /// <summary>
@@ -134,7 +140,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitArgumentList(ArgumentListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitArgumentList(node);
+            if (!this.traverseRootOnly) base.VisitArgumentList(node);
         }
 
         /// <summary>
@@ -144,7 +150,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitArrayCreationExpression(ArrayCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitArrayCreationExpression(node);
+            if (!this.traverseRootOnly) base.VisitArrayCreationExpression(node);
         }
 
         /// <summary>
@@ -154,7 +160,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitArrayRankSpecifier(ArrayRankSpecifierSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitArrayRankSpecifier(node);
+            if (!this.traverseRootOnly) base.VisitArrayRankSpecifier(node);
         }
 
         /// <summary>
@@ -164,7 +170,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitArrayType(ArrayTypeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitArrayType(node);
+            if (!this.traverseRootOnly) base.VisitArrayType(node);
         }
 
         /// <summary>
@@ -174,7 +180,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitArrowExpressionClause(ArrowExpressionClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitArrowExpressionClause(node);
+            if (!this.traverseRootOnly) base.VisitArrowExpressionClause(node);
         }
 
         /// <summary>
@@ -184,7 +190,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAssignmentExpression(AssignmentExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAssignmentExpression(node);
+            if (!this.traverseRootOnly) base.VisitAssignmentExpression(node);
         }
 
         /// <summary>
@@ -194,7 +200,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAttribute(AttributeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAttribute(node);
+            if (!this.traverseRootOnly) base.VisitAttribute(node);
         }
 
         /// <summary>
@@ -204,7 +210,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAttributeArgument(AttributeArgumentSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAttributeArgument(node);
+            if (!this.traverseRootOnly) base.VisitAttributeArgument(node);
         }
 
         /// <summary>
@@ -214,7 +220,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAttributeArgumentList(AttributeArgumentListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAttributeArgumentList(node);
+            if (!this.traverseRootOnly) base.VisitAttributeArgumentList(node);
         }
 
         /// <summary>
@@ -224,7 +230,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAttributeList(AttributeListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAttributeList(node);
+            if (!this.traverseRootOnly) base.VisitAttributeList(node);
         }
 
         /// <summary>
@@ -234,7 +240,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAttributeTargetSpecifier(AttributeTargetSpecifierSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAttributeTargetSpecifier(node);
+            if (!this.traverseRootOnly) base.VisitAttributeTargetSpecifier(node);
         }
 
         /// <summary>
@@ -244,7 +250,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitAwaitExpression(AwaitExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitAwaitExpression(node);
+            if (!this.traverseRootOnly) base.VisitAwaitExpression(node);
         }
 
         /// <summary>
@@ -254,7 +260,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBadDirectiveTrivia(BadDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBadDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitBadDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -264,7 +270,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBaseExpression(BaseExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBaseExpression(node);
+            if (!this.traverseRootOnly) base.VisitBaseExpression(node);
         }
 
         /// <summary>
@@ -274,7 +280,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBaseList(BaseListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBaseList(node);
+            if (!this.traverseRootOnly) base.VisitBaseList(node);
         }
 
         /// <summary>
@@ -284,7 +290,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBinaryExpression(BinaryExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBinaryExpression(node);
+            if (!this.traverseRootOnly) base.VisitBinaryExpression(node);
         }
 
         /// <summary>
@@ -294,7 +300,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBlock(BlockSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBlock(node);
+            if (!this.traverseRootOnly) base.VisitBlock(node);
         }
 
         /// <summary>
@@ -304,7 +310,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBracketedArgumentList(BracketedArgumentListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBracketedArgumentList(node);
+            if (!this.traverseRootOnly) base.VisitBracketedArgumentList(node);
         }
 
         /// <summary>
@@ -314,7 +320,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBracketedParameterList(BracketedParameterListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBracketedParameterList(node);
+            if (!this.traverseRootOnly) base.VisitBracketedParameterList(node);
         }
 
         /// <summary>
@@ -324,7 +330,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitBreakStatement(BreakStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitBreakStatement(node);
+            if (!this.traverseRootOnly) base.VisitBreakStatement(node);
         }
 
         /// <summary>
@@ -334,7 +340,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCaseSwitchLabel(CaseSwitchLabelSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCaseSwitchLabel(node);
+            if (!this.traverseRootOnly) base.VisitCaseSwitchLabel(node);
         }
 
         /// <summary>
@@ -344,7 +350,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCastExpression(CastExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCastExpression(node);
+            if (!this.traverseRootOnly) base.VisitCastExpression(node);
         }
 
         /// <summary>
@@ -354,7 +360,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCatchClause(CatchClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCatchClause(node);
+            if (!this.traverseRootOnly) base.VisitCatchClause(node);
         }
 
         /// <summary>
@@ -364,7 +370,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCatchDeclaration(CatchDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCatchDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitCatchDeclaration(node);
         }
 
         /// <summary>
@@ -374,7 +380,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCatchFilterClause(CatchFilterClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCatchFilterClause(node);
+            if (!this.traverseRootOnly) base.VisitCatchFilterClause(node);
         }
 
         /// <summary>
@@ -384,7 +390,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCheckedExpression(CheckedExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCheckedExpression(node);
+            if (!this.traverseRootOnly) base.VisitCheckedExpression(node);
         }
 
         /// <summary>
@@ -394,7 +400,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCheckedStatement(CheckedStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCheckedStatement(node);
+            if (!this.traverseRootOnly) base.VisitCheckedStatement(node);
         }
 
         /// <summary>
@@ -404,7 +410,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitClassDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitClassDeclaration(node);
         }
 
         /// <summary>
@@ -414,7 +420,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitClassOrStructConstraint(ClassOrStructConstraintSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitClassOrStructConstraint(node);
+            if (!this.traverseRootOnly) base.VisitClassOrStructConstraint(node);
         }
 
         /// <summary>
@@ -424,7 +430,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCompilationUnit(CompilationUnitSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCompilationUnit(node);
+            if (!this.traverseRootOnly) base.VisitCompilationUnit(node);
         }
 
         /// <summary>
@@ -434,7 +440,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitConditionalAccessExpression(ConditionalAccessExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitConditionalAccessExpression(node);
+            if (!this.traverseRootOnly) base.VisitConditionalAccessExpression(node);
         }
 
         /// <summary>
@@ -444,7 +450,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitConditionalExpression(ConditionalExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitConditionalExpression(node);
+            if (!this.traverseRootOnly) base.VisitConditionalExpression(node);
         }
 
         /// <summary>
@@ -454,7 +460,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitConstructorConstraint(ConstructorConstraintSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitConstructorConstraint(node);
+            if (!this.traverseRootOnly) base.VisitConstructorConstraint(node);
         }
 
         /// <summary>
@@ -464,7 +470,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitConstructorDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitConstructorDeclaration(node);
         }
 
         /// <summary>
@@ -474,7 +480,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitConstructorInitializer(ConstructorInitializerSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitConstructorInitializer(node);
+            if (!this.traverseRootOnly) base.VisitConstructorInitializer(node);
         }
 
         /// <summary>
@@ -484,7 +490,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitContinueStatement(ContinueStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitContinueStatement(node);
+            if (!this.traverseRootOnly) base.VisitContinueStatement(node);
         }
 
         /// <summary>
@@ -494,7 +500,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitConversionOperatorDeclaration(ConversionOperatorDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitConversionOperatorDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitConversionOperatorDeclaration(node);
         }
 
         /// <summary>
@@ -504,7 +510,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitConversionOperatorMemberCref(ConversionOperatorMemberCrefSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitConversionOperatorMemberCref(node);
+            if (!this.traverseRootOnly) base.VisitConversionOperatorMemberCref(node);
         }
         /// <summary>
         /// 
@@ -513,7 +519,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCrefBracketedParameterList(CrefBracketedParameterListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCrefBracketedParameterList(node);
+            if (!this.traverseRootOnly) base.VisitCrefBracketedParameterList(node);
         }
 
         /// <summary>
@@ -523,7 +529,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCrefParameter(CrefParameterSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCrefParameter(node);
+            if (!this.traverseRootOnly) base.VisitCrefParameter(node);
         }
 
         /// <summary>
@@ -533,7 +539,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitCrefParameterList(CrefParameterListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitCrefParameterList(node);
+            if (!this.traverseRootOnly) base.VisitCrefParameterList(node);
         }
 
         /// <summary>
@@ -543,7 +549,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitDefaultExpression(DefaultExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitDefaultExpression(node);
+            if (!this.traverseRootOnly) base.VisitDefaultExpression(node);
         }
 
         /// <summary>
@@ -553,7 +559,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitDefaultSwitchLabel(DefaultSwitchLabelSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitDefaultSwitchLabel(node);
+            if (!this.traverseRootOnly) base.VisitDefaultSwitchLabel(node);
         }
 
         /// <summary>
@@ -563,7 +569,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitDefineDirectiveTrivia(DefineDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitDefineDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitDefineDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -573,7 +579,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitDelegateDeclaration(DelegateDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitDelegateDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitDelegateDeclaration(node);
         }
 
         /// <summary>
@@ -583,7 +589,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitDestructorDeclaration(DestructorDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitDestructorDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitDestructorDeclaration(node);
         }
 
         /// <summary>
@@ -593,7 +599,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitDocumentationCommentTrivia(DocumentationCommentTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitDocumentationCommentTrivia(node);
+            if (!this.traverseRootOnly) base.VisitDocumentationCommentTrivia(node);
         }
 
         /// <summary>
@@ -603,7 +609,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitDoStatement(DoStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitDoStatement(node);
+            if (!this.traverseRootOnly) base.VisitDoStatement(node);
         }
 
         /// <summary>
@@ -613,7 +619,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitElementAccessExpression(ElementAccessExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitElementAccessExpression(node);
+            if (!this.traverseRootOnly) base.VisitElementAccessExpression(node);
         }
 
         /// <summary>
@@ -623,7 +629,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitElementBindingExpression(ElementBindingExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitElementBindingExpression(node);
+            if (!this.traverseRootOnly) base.VisitElementBindingExpression(node);
         }
 
         /// <summary>
@@ -633,7 +639,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitElifDirectiveTrivia(ElifDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitElifDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitElifDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -643,7 +649,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitElseClause(ElseClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitElseClause(node);
+            if (!this.traverseRootOnly) base.VisitElseClause(node);
         }
 
         /// <summary>
@@ -653,7 +659,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitElseDirectiveTrivia(ElseDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitElseDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitElseDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -663,7 +669,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEmptyStatement(EmptyStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEmptyStatement(node);
+            if (!this.traverseRootOnly) base.VisitEmptyStatement(node);
         }
 
         /// <summary>
@@ -673,7 +679,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEndIfDirectiveTrivia(EndIfDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEndIfDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitEndIfDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -683,7 +689,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEndRegionDirectiveTrivia(EndRegionDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEndRegionDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitEndRegionDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -693,7 +699,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEnumDeclaration(EnumDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEnumDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitEnumDeclaration(node);
         }
 
         /// <summary>
@@ -703,7 +709,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEnumMemberDeclaration(EnumMemberDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEnumMemberDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitEnumMemberDeclaration(node);
         }
 
         /// <summary>
@@ -713,7 +719,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEqualsValueClause(EqualsValueClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEqualsValueClause(node);
+            if (!this.traverseRootOnly) base.VisitEqualsValueClause(node);
         }
 
         /// <summary>
@@ -723,7 +729,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitErrorDirectiveTrivia(ErrorDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitErrorDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitErrorDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -733,7 +739,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEventDeclaration(EventDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEventDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitEventDeclaration(node);
         }
 
         /// <summary>
@@ -743,7 +749,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitEventFieldDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitEventFieldDeclaration(node);
         }
 
         /// <summary>
@@ -753,7 +759,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitExplicitInterfaceSpecifier(ExplicitInterfaceSpecifierSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitExplicitInterfaceSpecifier(node);
+            if (!this.traverseRootOnly) base.VisitExplicitInterfaceSpecifier(node);
         }
 
         /// <summary>
@@ -763,7 +769,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitExpressionStatement(ExpressionStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitExpressionStatement(node);
+            if (!this.traverseRootOnly) base.VisitExpressionStatement(node);
         }
 
         /// <summary>
@@ -773,7 +779,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitExternAliasDirective(ExternAliasDirectiveSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitExternAliasDirective(node);
+            if (!this.traverseRootOnly) base.VisitExternAliasDirective(node);
         }
 
         /// <summary>
@@ -783,7 +789,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitFieldDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitFieldDeclaration(node);
         }
 
         /// <summary>
@@ -793,7 +799,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitFinallyClause(FinallyClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitFinallyClause(node);
+            if (!this.traverseRootOnly) base.VisitFinallyClause(node);
         }
 
         /// <summary>
@@ -803,7 +809,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitFixedStatement(FixedStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitFixedStatement(node);
+            if (!this.traverseRootOnly) base.VisitFixedStatement(node);
         }
 
         /// <summary>
@@ -813,7 +819,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitForEachStatement(ForEachStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitForEachStatement(node);
+            if (!this.traverseRootOnly) base.VisitForEachStatement(node);
         }
 
         /// <summary>
@@ -823,7 +829,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitForStatement(ForStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitForStatement(node);
+            if (!this.traverseRootOnly) base.VisitForStatement(node);
         }
 
         /// <summary>
@@ -833,7 +839,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitFromClause(FromClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitFromClause(node);
+            if (!this.traverseRootOnly) base.VisitFromClause(node);
         }
 
         /// <summary>
@@ -843,7 +849,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitGenericName(GenericNameSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitGenericName(node);
+            if (!this.traverseRootOnly) base.VisitGenericName(node);
         }
 
         /// <summary>
@@ -853,7 +859,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitGlobalStatement(GlobalStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitGlobalStatement(node);
+            if (!this.traverseRootOnly) base.VisitGlobalStatement(node);
         }
 
         /// <summary>
@@ -863,7 +869,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitGotoStatement(GotoStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitGotoStatement(node);
+            if (!this.traverseRootOnly) base.VisitGotoStatement(node);
         }
 
         /// <summary>
@@ -873,7 +879,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitGroupClause(GroupClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitGroupClause(node);
+            if (!this.traverseRootOnly) base.VisitGroupClause(node);
         }
 
         /// <summary>
@@ -883,7 +889,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitIdentifierName(IdentifierNameSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitIdentifierName(node);
+            if (!this.traverseRootOnly) base.VisitIdentifierName(node);
         }
 
         /// <summary>
@@ -893,7 +899,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitIfDirectiveTrivia(IfDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitIfDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitIfDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -903,7 +909,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitIfStatement(IfStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitIfStatement(node);
+            if (!this.traverseRootOnly) base.VisitIfStatement(node);
         }
 
         /// <summary>
@@ -913,7 +919,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitImplicitArrayCreationExpression(ImplicitArrayCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitImplicitArrayCreationExpression(node);
+            if (!this.traverseRootOnly) base.VisitImplicitArrayCreationExpression(node);
         }
 
         /// <summary>
@@ -923,7 +929,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitImplicitElementAccess(ImplicitElementAccessSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitImplicitElementAccess(node);
+            if (!this.traverseRootOnly) base.VisitImplicitElementAccess(node);
         }
 
         /// <summary>
@@ -933,7 +939,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitIncompleteMember(IncompleteMemberSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitIncompleteMember(node);
+            if (!this.traverseRootOnly) base.VisitIncompleteMember(node);
         }
 
         /// <summary>
@@ -943,7 +949,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitIndexerDeclaration(IndexerDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitIndexerDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitIndexerDeclaration(node);
         }
 
         /// <summary>
@@ -953,7 +959,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitIndexerMemberCref(IndexerMemberCrefSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitIndexerMemberCref(node);
+            if (!this.traverseRootOnly) base.VisitIndexerMemberCref(node);
         }
 
         /// <summary>
@@ -963,7 +969,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInitializerExpression(InitializerExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInitializerExpression(node);
+            if (!this.traverseRootOnly) base.VisitInitializerExpression(node);
         }
 
         /// <summary>
@@ -973,7 +979,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInterfaceDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitInterfaceDeclaration(node);
         }
 
         /// <summary>
@@ -983,7 +989,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInterpolatedStringExpression(node);
+            if (!this.traverseRootOnly) base.VisitInterpolatedStringExpression(node);
         }
 
         /// <summary>
@@ -993,7 +999,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInterpolatedStringText(InterpolatedStringTextSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInterpolatedStringText(node);
+            if (!this.traverseRootOnly) base.VisitInterpolatedStringText(node);
         }
 
         /// <summary>
@@ -1003,7 +1009,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInterpolation(InterpolationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInterpolation(node);
+            if (!this.traverseRootOnly) base.VisitInterpolation(node);
         }
 
         /// <summary>
@@ -1013,7 +1019,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInterpolationAlignmentClause(InterpolationAlignmentClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInterpolationAlignmentClause(node);
+            if (!this.traverseRootOnly) base.VisitInterpolationAlignmentClause(node);
         }
 
         /// <summary>
@@ -1023,7 +1029,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInterpolationFormatClause(InterpolationFormatClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInterpolationFormatClause(node);
+            if (!this.traverseRootOnly) base.VisitInterpolationFormatClause(node);
         }
 
         /// <summary>
@@ -1033,7 +1039,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitInvocationExpression(InvocationExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitInvocationExpression(node);
+            if (!this.traverseRootOnly) base.VisitInvocationExpression(node);
         }
 
         /// <summary>
@@ -1043,7 +1049,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitJoinClause(JoinClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitJoinClause(node);
+            if (!this.traverseRootOnly) base.VisitJoinClause(node);
         }
 
         /// <summary>
@@ -1053,7 +1059,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitJoinIntoClause(JoinIntoClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitJoinIntoClause(node);
+            if (!this.traverseRootOnly) base.VisitJoinIntoClause(node);
         }
 
         /// <summary>
@@ -1063,7 +1069,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitLabeledStatement(LabeledStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitLabeledStatement(node);
+            if (!this.traverseRootOnly) base.VisitLabeledStatement(node);
         }
 
         /// <summary>
@@ -1073,7 +1079,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitLetClause(LetClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitLetClause(node);
+            if (!this.traverseRootOnly) base.VisitLetClause(node);
         }
 
         /// <summary>
@@ -1083,7 +1089,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitLineDirectiveTrivia(LineDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitLineDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitLineDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1093,7 +1099,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitLiteralExpression(LiteralExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitLiteralExpression(node);
+            if (!this.traverseRootOnly) base.VisitLiteralExpression(node);
         }
 
         /// <summary>
@@ -1103,7 +1109,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitLocalDeclarationStatement(node);
+            if (!this.traverseRootOnly) base.VisitLocalDeclarationStatement(node);
         }
 
         /// <summary>
@@ -1113,7 +1119,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitLockStatement(LockStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitLockStatement(node);
+            if (!this.traverseRootOnly) base.VisitLockStatement(node);
         }
 
         /// <summary>
@@ -1123,7 +1129,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitMakeRefExpression(MakeRefExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitMakeRefExpression(node);
+            if (!this.traverseRootOnly) base.VisitMakeRefExpression(node);
         }
 
         /// <summary>
@@ -1133,7 +1139,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitMemberAccessExpression(MemberAccessExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitMemberAccessExpression(node);
+            if (!this.traverseRootOnly) base.VisitMemberAccessExpression(node);
         }
 
         /// <summary>
@@ -1143,7 +1149,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitMemberBindingExpression(MemberBindingExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitMemberBindingExpression(node);
+            if (!this.traverseRootOnly) base.VisitMemberBindingExpression(node);
         }
 
         /// <summary>
@@ -1153,7 +1159,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitMethodDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitMethodDeclaration(node);
         }
 
         /// <summary>
@@ -1163,7 +1169,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitNameColon(NameColonSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitNameColon(node);
+            if (!this.traverseRootOnly) base.VisitNameColon(node);
         }
 
         /// <summary>
@@ -1173,7 +1179,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitNameEquals(NameEqualsSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitNameEquals(node);
+            if (!this.traverseRootOnly) base.VisitNameEquals(node);
         }
 
         /// <summary>
@@ -1183,7 +1189,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitNameMemberCref(NameMemberCrefSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitNameMemberCref(node);
+            if (!this.traverseRootOnly) base.VisitNameMemberCref(node);
         }
 
         /// <summary>
@@ -1193,7 +1199,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitNamespaceDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitNamespaceDeclaration(node);
         }
 
         /// <summary>
@@ -1203,7 +1209,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitNullableType(NullableTypeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitNullableType(node);
+            if (!this.traverseRootOnly) base.VisitNullableType(node);
         }
 
         /// <summary>
@@ -1213,7 +1219,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitObjectCreationExpression(node);
+            if (!this.traverseRootOnly) base.VisitObjectCreationExpression(node);
         }
 
         /// <summary>
@@ -1223,7 +1229,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitOmittedArraySizeExpression(OmittedArraySizeExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitOmittedArraySizeExpression(node);
+            if (!this.traverseRootOnly) base.VisitOmittedArraySizeExpression(node);
         }
 
         /// <summary>
@@ -1233,7 +1239,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitOmittedTypeArgument(OmittedTypeArgumentSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitOmittedTypeArgument(node);
+            if (!this.traverseRootOnly) base.VisitOmittedTypeArgument(node);
         }
 
         /// <summary>
@@ -1243,7 +1249,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitOperatorDeclaration(OperatorDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitOperatorDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitOperatorDeclaration(node);
         }
 
         /// <summary>
@@ -1253,7 +1259,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitOperatorMemberCref(OperatorMemberCrefSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitOperatorMemberCref(node);
+            if (!this.traverseRootOnly) base.VisitOperatorMemberCref(node);
         }
 
         /// <summary>
@@ -1263,7 +1269,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitOrderByClause(OrderByClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitOrderByClause(node);
+            if (!this.traverseRootOnly) base.VisitOrderByClause(node);
         }
 
         /// <summary>
@@ -1273,7 +1279,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitOrdering(OrderingSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitOrdering(node);
+            if (!this.traverseRootOnly) base.VisitOrdering(node);
         }
 
         /// <summary>
@@ -1283,7 +1289,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitParameter(ParameterSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitParameter(node);
+            if (!this.traverseRootOnly) base.VisitParameter(node);
         }
 
         /// <summary>
@@ -1293,7 +1299,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitParameterList(ParameterListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitParameterList(node);
+            if (!this.traverseRootOnly) base.VisitParameterList(node);
         }
 
         /// <summary>
@@ -1303,7 +1309,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitParenthesizedExpression(node);
+            if (!this.traverseRootOnly) base.VisitParenthesizedExpression(node);
         }
 
         /// <summary>
@@ -1313,7 +1319,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitParenthesizedLambdaExpression(ParenthesizedLambdaExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitParenthesizedLambdaExpression(node);
+            if (!this.traverseRootOnly) base.VisitParenthesizedLambdaExpression(node);
         }
 
         /// <summary>
@@ -1323,7 +1329,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitPointerType(PointerTypeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitPointerType(node);
+            if (!this.traverseRootOnly) base.VisitPointerType(node);
         }
 
         /// <summary>
@@ -1333,7 +1339,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitPostfixUnaryExpression(PostfixUnaryExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitPostfixUnaryExpression(node);
+            if (!this.traverseRootOnly) base.VisitPostfixUnaryExpression(node);
         }
 
         /// <summary>
@@ -1343,7 +1349,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitPragmaChecksumDirectiveTrivia(PragmaChecksumDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitPragmaChecksumDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitPragmaChecksumDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1353,7 +1359,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitPragmaWarningDirectiveTrivia(PragmaWarningDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitPragmaWarningDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitPragmaWarningDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1363,7 +1369,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitPredefinedType(PredefinedTypeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitPredefinedType(node);
+            if (!this.traverseRootOnly) base.VisitPredefinedType(node);
         }
 
         /// <summary>
@@ -1373,7 +1379,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitPrefixUnaryExpression(PrefixUnaryExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitPrefixUnaryExpression(node);
+            if (!this.traverseRootOnly) base.VisitPrefixUnaryExpression(node);
         }
 
         /// <summary>
@@ -1383,7 +1389,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitPropertyDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitPropertyDeclaration(node);
         }
 
         /// <summary>
@@ -1393,7 +1399,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitQualifiedCref(QualifiedCrefSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitQualifiedCref(node);
+            if (!this.traverseRootOnly) base.VisitQualifiedCref(node);
         }
 
         /// <summary>
@@ -1403,7 +1409,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitQualifiedName(QualifiedNameSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitQualifiedName(node);
+            if (!this.traverseRootOnly) base.VisitQualifiedName(node);
         }
 
         /// <summary>
@@ -1413,7 +1419,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitQueryBody(QueryBodySyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitQueryBody(node);
+            if (!this.traverseRootOnly) base.VisitQueryBody(node);
         }
 
         /// <summary>
@@ -1423,7 +1429,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitQueryContinuation(QueryContinuationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitQueryContinuation(node);
+            if (!this.traverseRootOnly) base.VisitQueryContinuation(node);
         }
 
         /// <summary>
@@ -1433,7 +1439,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitQueryExpression(QueryExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitQueryExpression(node);
+            if (!this.traverseRootOnly) base.VisitQueryExpression(node);
         }
 
         /// <summary>
@@ -1443,7 +1449,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitReferenceDirectiveTrivia(ReferenceDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitReferenceDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitReferenceDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1453,7 +1459,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitRefTypeExpression(RefTypeExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitRefTypeExpression(node);
+            if (!this.traverseRootOnly) base.VisitRefTypeExpression(node);
         }
 
         /// <summary>
@@ -1463,7 +1469,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitRefValueExpression(RefValueExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitRefValueExpression(node);
+            if (!this.traverseRootOnly) base.VisitRefValueExpression(node);
         }
 
         /// <summary>
@@ -1473,7 +1479,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitRegionDirectiveTrivia(RegionDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitRegionDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitRegionDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1483,7 +1489,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitReturnStatement(ReturnStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitReturnStatement(node);
+            if (!this.traverseRootOnly) base.VisitReturnStatement(node);
         }
 
         /// <summary>
@@ -1493,7 +1499,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitSelectClause(SelectClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitSelectClause(node);
+            if (!this.traverseRootOnly) base.VisitSelectClause(node);
         }
 
         /// <summary>
@@ -1503,7 +1509,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitSimpleBaseType(SimpleBaseTypeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitSimpleBaseType(node);
+            if (!this.traverseRootOnly) base.VisitSimpleBaseType(node);
         }
 
         /// <summary>
@@ -1513,7 +1519,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitSimpleLambdaExpression(SimpleLambdaExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitSimpleLambdaExpression(node);
+            if (!this.traverseRootOnly) base.VisitSimpleLambdaExpression(node);
         }
 
         /// <summary>
@@ -1523,7 +1529,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitSizeOfExpression(SizeOfExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitSizeOfExpression(node);
+            if (!this.traverseRootOnly) base.VisitSizeOfExpression(node);
         }
 
         /// <summary>
@@ -1533,7 +1539,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitSkippedTokensTrivia(SkippedTokensTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitSkippedTokensTrivia(node);
+            if (!this.traverseRootOnly) base.VisitSkippedTokensTrivia(node);
         }
 
         /// <summary>
@@ -1543,7 +1549,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitStackAllocArrayCreationExpression(StackAllocArrayCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitStackAllocArrayCreationExpression(node);
+            if (!this.traverseRootOnly) base.VisitStackAllocArrayCreationExpression(node);
         }
 
         /// <summary>
@@ -1553,7 +1559,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitStructDeclaration(StructDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitStructDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitStructDeclaration(node);
         }
 
         /// <summary>
@@ -1563,7 +1569,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitSwitchSection(SwitchSectionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitSwitchSection(node);
+            if (!this.traverseRootOnly) base.VisitSwitchSection(node);
         }
 
         /// <summary>
@@ -1573,7 +1579,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitSwitchStatement(SwitchStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitSwitchStatement(node);
+            if (!this.traverseRootOnly) base.VisitSwitchStatement(node);
         }
 
         /// <summary>
@@ -1583,7 +1589,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitThisExpression(ThisExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitThisExpression(node);
+            if (!this.traverseRootOnly) base.VisitThisExpression(node);
         }
 
         /// <summary>
@@ -1593,7 +1599,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitThrowStatement(ThrowStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitThrowStatement(node);
+            if (!this.traverseRootOnly) base.VisitThrowStatement(node);
         }
 
         /// <summary>
@@ -1603,7 +1609,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTryStatement(TryStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTryStatement(node);
+            if (!this.traverseRootOnly) base.VisitTryStatement(node);
         }
 
         /// <summary>
@@ -1613,7 +1619,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTypeArgumentList(TypeArgumentListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTypeArgumentList(node);
+            if (!this.traverseRootOnly) base.VisitTypeArgumentList(node);
         }
 
         /// <summary>
@@ -1623,7 +1629,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTypeConstraint(TypeConstraintSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTypeConstraint(node);
+            if (!this.traverseRootOnly) base.VisitTypeConstraint(node);
         }
 
         /// <summary>
@@ -1633,7 +1639,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTypeCref(TypeCrefSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTypeCref(node);
+            if (!this.traverseRootOnly) base.VisitTypeCref(node);
         }
 
         /// <summary>
@@ -1643,7 +1649,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTypeOfExpression(TypeOfExpressionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTypeOfExpression(node);
+            if (!this.traverseRootOnly) base.VisitTypeOfExpression(node);
         }
 
         /// <summary>
@@ -1653,7 +1659,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTypeParameter(TypeParameterSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTypeParameter(node);
+            if (!this.traverseRootOnly) base.VisitTypeParameter(node);
         }
 
         /// <summary>
@@ -1663,7 +1669,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTypeParameterConstraintClause(TypeParameterConstraintClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTypeParameterConstraintClause(node);
+            if (!this.traverseRootOnly) base.VisitTypeParameterConstraintClause(node);
         }
         /// <summary>
         /// 
@@ -1672,7 +1678,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitTypeParameterList(TypeParameterListSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitTypeParameterList(node);
+            if (!this.traverseRootOnly) base.VisitTypeParameterList(node);
         }
 
         /// <summary>
@@ -1682,7 +1688,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitUndefDirectiveTrivia(UndefDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitUndefDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitUndefDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1692,7 +1698,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitUnsafeStatement(UnsafeStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitUnsafeStatement(node);
+            if (!this.traverseRootOnly) base.VisitUnsafeStatement(node);
         }
 
         /// <summary>
@@ -1702,7 +1708,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitUsingDirective(UsingDirectiveSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitUsingDirective(node);
+            if (!this.traverseRootOnly) base.VisitUsingDirective(node);
         }
 
         /// <summary>
@@ -1712,7 +1718,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitUsingStatement(UsingStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitUsingStatement(node);
+            if (!this.traverseRootOnly) base.VisitUsingStatement(node);
         }
 
         /// <summary>
@@ -1722,7 +1728,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitVariableDeclaration(node);
+            if (!this.traverseRootOnly) base.VisitVariableDeclaration(node);
         }
 
         /// <summary>
@@ -1732,7 +1738,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitVariableDeclarator(VariableDeclaratorSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitVariableDeclarator(node);
+            if (!this.traverseRootOnly) base.VisitVariableDeclarator(node);
         }
 
         /// <summary>
@@ -1742,7 +1748,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitWarningDirectiveTrivia(WarningDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitWarningDirectiveTrivia(node);
+            if (!this.traverseRootOnly) base.VisitWarningDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1752,7 +1758,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitWhereClause(WhereClauseSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitWhereClause(node);
+            if (!this.traverseRootOnly) base.VisitWhereClause(node);
         }
 
         /// <summary>
@@ -1762,7 +1768,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitWhileStatement(WhileStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitWhileStatement(node);
+            if (!this.traverseRootOnly) base.VisitWhileStatement(node);
         }
 
         /// <summary>
@@ -1772,7 +1778,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlCDataSection(XmlCDataSectionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlCDataSection(node);
+            if (!this.traverseRootOnly) base.VisitXmlCDataSection(node);
         }
 
         /// <summary>
@@ -1782,7 +1788,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlComment(XmlCommentSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlComment(node);
+            if (!this.traverseRootOnly) base.VisitXmlComment(node);
         }
 
         /// <summary>
@@ -1792,7 +1798,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlCrefAttribute(XmlCrefAttributeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlCrefAttribute(node);
+            if (!this.traverseRootOnly) base.VisitXmlCrefAttribute(node);
         }
 
         /// <summary>
@@ -1802,7 +1808,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlElement(XmlElementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlElement(node);
+            if (!this.traverseRootOnly) base.VisitXmlElement(node);
         }
 
         /// <summary>
@@ -1812,7 +1818,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlElementEndTag(XmlElementEndTagSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlElementEndTag(node);
+            if (!this.traverseRootOnly) base.VisitXmlElementEndTag(node);
         }
 
         /// <summary>
@@ -1822,7 +1828,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlElementStartTag(XmlElementStartTagSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlElementStartTag(node);
+            if (!this.traverseRootOnly) base.VisitXmlElementStartTag(node);
         }
 
         /// <summary>
@@ -1832,7 +1838,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlEmptyElement(XmlEmptyElementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlEmptyElement(node);
+            if (!this.traverseRootOnly) base.VisitXmlEmptyElement(node);
         }
 
         /// <summary>
@@ -1842,7 +1848,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlName(XmlNameSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlName(node);
+            if (!this.traverseRootOnly) base.VisitXmlName(node);
         }
 
         /// <summary>
@@ -1852,7 +1858,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlNameAttribute(XmlNameAttributeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlNameAttribute(node);
+            if (!this.traverseRootOnly) base.VisitXmlNameAttribute(node);
         }
 
         /// <summary>
@@ -1862,7 +1868,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlPrefix(XmlPrefixSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlPrefix(node);
+            if (!this.traverseRootOnly) base.VisitXmlPrefix(node);
         }
 
         /// <summary>
@@ -1872,7 +1878,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlProcessingInstruction(XmlProcessingInstructionSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlProcessingInstruction(node);
+            if (!this.traverseRootOnly) base.VisitXmlProcessingInstruction(node);
         }
 
         /// <summary>
@@ -1882,7 +1888,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlText(XmlTextSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlText(node);
+            if (!this.traverseRootOnly) base.VisitXmlText(node);
         }
 
         /// <summary>
@@ -1892,7 +1898,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitXmlTextAttribute(XmlTextAttributeSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitXmlTextAttribute(node);
+            if (!this.traverseRootOnly) base.VisitXmlTextAttribute(node);
         }
 
         /// <summary>
@@ -1902,7 +1908,7 @@ namespace Rosetta.AST.Utilities
         sealed public override void VisitYieldStatement(YieldStatementSyntax node)
         {
             this.OnNodeVisited(node);
-            base.VisitYieldStatement(node);
+            if (!this.traverseRootOnly) base.VisitYieldStatement(node);
         }
 
         private void OnNodeVisited(SyntaxNode node)

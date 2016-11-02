@@ -69,6 +69,7 @@
     <Compile Include="mocks\MockedProgramTranslationUnit.cs" />
     <Compile Include="mocks\MockedVariableDeclarationTranslationUnit.cs" />
     <Compile Include="MultipleLevelsTest.cs" />
+    <Compile Include="MultiPurposeASTWalkerTest.cs" />
     <Compile Include="NamespaceTest.cs" />
     <Compile Include="ProgramTest.cs" />
     <Compile Include="StatementTest.Conditional.cs" />
