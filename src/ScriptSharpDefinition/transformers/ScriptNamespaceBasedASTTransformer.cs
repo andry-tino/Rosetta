@@ -102,7 +102,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                     if (string.IsNullOrEmpty(scriptNamespaceAttributeHelper.OverridenNamespace) || 
                         string.IsNullOrWhiteSpace(scriptNamespaceAttributeHelper.OverridenNamespace))
                     {
-                        throw new InvalidOperationException("The ScriptNamespace attribute contains an overriden namespace value which is not acceptable!");
+                        throw new InvalidOperationException("The ScriptNamespace attribute contains an overriden namespace value which cannot be accepted!");
                     }
                     
                     var info = new TransformationInfo()
