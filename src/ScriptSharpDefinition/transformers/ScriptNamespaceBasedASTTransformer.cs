@@ -7,6 +7,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -25,6 +26,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
     {
         // Temporary quantities
         private List<TransformationInfo> transformationInfos;
+        private List<SyntaxNode> removableNamespaces;
         private CompilationUnitSyntax node;
         private CompilationUnitSyntax newNode;
 
@@ -144,23 +146,55 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
 
         private void CleanUpCompilationUnit()
         {
+            this.RetrieveEmptyNamespaces();
             this.RemoveEmptyNamespaces();
+        }
+
+        private void RetrieveEmptyNamespaces()
+        {
+            new MultiPurposeASTWalker(this.node,
+                astNode => astNode as NamespaceDeclarationSyntax != null,
+                delegate (SyntaxNode astNode)
+                {
+                    var namespaceNode = astNode as NamespaceDeclarationSyntax;
+                    var helper = new NamespaceDeclaration(namespaceNode);
+
+                    if (helper.Types.Count() == 0)
+                    {
+                        this.removableNamespaces.Add(namespaceNode);
+                    }
+                })
+                .Start();
         }
 
         private void RemoveEmptyNamespaces()
         {
+            CompilationUnitSyntax newNode = this.node;
+
+            foreach (var namespaceNode in this.removableNamespaces)
+            {
+                newNode = newNode.RemoveNode(namespaceNode, SyntaxRemoveOptions.KeepNoTrivia);
+            }
+
+            this.newNode = newNode;
         }
 
         private void Initialize(CSharpSyntaxNode node)
         {
             this.node = node as CompilationUnitSyntax;
             this.transformationInfos = new List<TransformationInfo>();
+            this.removableNamespaces = new List<SyntaxNode>();
         }
 
         private void CleanUp()
         {
             this.node = null;
+
+            this.transformationInfos.Clear();
             this.transformationInfos = null;
+
+            this.removableNamespaces.Clear();
+            this.removableNamespaces = null;
         }
         
         private static ScriptNamespaceAttributeDecoration RetrieveScriptNamespaceAttribute(AttributeLists helper)
