@@ -71,19 +71,23 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             new MultiPurposeASTWalker(this.node,
                 delegate (SyntaxNode astNode)
                 {
+                    var typeDeclarationNode = astNode as TypeDeclarationSyntax;
+
+                    // Recognizing only classes and interfaces
                     var classNode = astNode as ClassDeclarationSyntax;
-                    if (classNode == null)
+                    var interfaceNode = astNode as InterfaceDeclarationSyntax;
+                    if (classNode == null && interfaceNode == null)
                     {
                         return false;
                     }
 
-                    var helper = new AttributeLists(classNode);
+                    var helper = new AttributeLists(typeDeclarationNode);
                     return RetrieveScriptNamespaceAttribute(helper) != null;
                 },
                 delegate (SyntaxNode astNode)
                 {
-                    var classNode = astNode as ClassDeclarationSyntax;
-                    var scriptNamespaceAttributeHelper = RetrieveScriptNamespaceAttribute(new AttributeLists(classNode));
+                    var typeDeclarationNode = astNode as TypeDeclarationSyntax;
+                    var scriptNamespaceAttributeHelper = RetrieveScriptNamespaceAttribute(new AttributeLists(typeDeclarationNode));
 
                     AttributeListSyntax scriptNamespaceAttributeListSyntax = scriptNamespaceAttributeHelper.AttributeDecoration.AttributeList; // The list where ScriptNamespace belongs to
                     AttributeSyntax scriptNamespaceAttributeSyntax = scriptNamespaceAttributeHelper.AttributeDecoration.AttributeNode; // The ScriptNamespace attribute
@@ -92,11 +96,23 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                     SeparatedSyntaxList<AttributeSyntax> newAttributeListSyntaxAttributes = scriptNamespaceAttributeListSyntax.Attributes.Remove(scriptNamespaceAttributeSyntax);
                     AttributeListSyntax newAttributeListSyntax = SyntaxFactory.AttributeList(newAttributeListSyntaxAttributes);
 
-                    SyntaxList<AttributeListSyntax> newAttributeLists = classNode.AttributeLists.Remove(scriptNamespaceAttributeListSyntax);
+                    SyntaxList<AttributeListSyntax> newAttributeLists = typeDeclarationNode.AttributeLists.Remove(scriptNamespaceAttributeListSyntax);
                     newAttributeLists = newAttributeLists.Add(newAttributeListSyntax);
 
-                    ClassDeclarationSyntax newClassSyntax = classNode.RemoveNode(scriptNamespaceAttributeListSyntax, SyntaxRemoveOptions.KeepNoTrivia);
-                    newClassSyntax.WithAttributeLists(newAttributeLists);
+                    TypeDeclarationSyntax newTypeDeclarationSyntax = typeDeclarationNode.RemoveNode(scriptNamespaceAttributeListSyntax, SyntaxRemoveOptions.KeepNoTrivia);
+
+                    if (newTypeDeclarationSyntax as ClassDeclarationSyntax != null)
+                    {
+                        (newTypeDeclarationSyntax as ClassDeclarationSyntax).WithAttributeLists(newAttributeLists);
+                    }
+                    else if (newTypeDeclarationSyntax as InterfaceDeclarationSyntax != null)
+                    {
+                        (newTypeDeclarationSyntax as InterfaceDeclarationSyntax).WithAttributeLists(newAttributeLists);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Not recognized type at rearrangement phase. Expecting classes and interfaces only!");
+                    }
 
                     // Asserting that the overriden namespace has a proper value
                     if (string.IsNullOrEmpty(scriptNamespaceAttributeHelper.OverridenNamespace) || 
@@ -107,8 +123,8 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                     
                     var info = new TransformationInfo()
                     {
-                        OriginalClassNode = classNode,
-                        TransformedClassNode = newClassSyntax,
+                        OriginalNode = typeDeclarationNode,
+                        TransformedNode = newTypeDeclarationSyntax,
                         OverridenNamespace = scriptNamespaceAttributeHelper.OverridenNamespace
                     };
 
@@ -122,10 +138,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             CompilationUnitSyntax newNode = this.node;
 
             // Removing classes
-            var removableNodes = new List<ClassDeclarationSyntax>();
+            var removableNodes = new List<TypeDeclarationSyntax>();
             foreach (var info in this.transformationInfos)
             {
-                removableNodes.Add(info.OriginalClassNode);
+                removableNodes.Add(info.OriginalNode);
             }
 
             // Removing the classes in the array
@@ -136,7 +152,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             foreach (var info in this.transformationInfos)
             {
                 var namespaceSyntax = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.IdentifierName(info.OverridenNamespace));
-                namespaceSyntax = namespaceSyntax.AddMembers(info.TransformedClassNode);
+                namespaceSyntax = namespaceSyntax.AddMembers(info.TransformedNode);
 
                 newNode = newNode.AddMembers(namespaceSyntax);
             }
@@ -220,12 +236,12 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             /// <summary>
             /// 
             /// </summary>
-            public ClassDeclarationSyntax OriginalClassNode { get; set; }
+            public TypeDeclarationSyntax OriginalNode { get; set; }
 
             /// <summary>
             /// 
             /// </summary>
-            public ClassDeclarationSyntax TransformedClassNode { get; set; }
+            public TypeDeclarationSyntax TransformedNode { get; set; }
 
             /// <summary>
             /// 
