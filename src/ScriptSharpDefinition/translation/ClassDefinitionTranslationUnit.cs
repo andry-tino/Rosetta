@@ -81,8 +81,8 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             get
             {
                 return this.IsAtRootLevel
-                    ? $"{Lexems.DeclareKeyword}{Lexems.Whitespace}"
-                    : string.Empty; // In this case, the containing structure will add the exposing keyword
+                    ? $"{Lexems.DeclareKeyword}{Lexems.Whitespace}" // In this case, the containing structure will add the exposing keyword
+                    : string.Empty;
             }
         }
     }

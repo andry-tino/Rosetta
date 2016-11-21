@@ -1,0 +1,43 @@
+﻿/// <summary>
+/// InterfaceDefinitionTranslationUnitFactory.cs
+/// Andrea Tino - 2016
+/// </summary>
+
+namespace Rosetta.ScriptSharp.Definition.AST.Factories
+{
+    using System;
+    using Microsoft.CodeAnalysis.CSharp;
+
+    using Rosetta.AST.Factories;
+    using Rosetta.ScriptSharp.Definition.Translation;
+    using Rosetta.Translation;
+
+    /// <summary>
+    /// Generic helper.
+    /// </summary>
+    public class InterfaceDefinitionTranslationUnitFactory : InterfaceDeclarationTranslationUnitFactory
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InterfaceDefinitionTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="node"></param>
+        public InterfaceDefinitionTranslationUnitFactory(CSharpSyntaxNode node)
+            : base(node)
+        {
+        }
+
+        /// <summary>
+        /// Creates the translation unit.
+        /// </summary>
+        /// <remarks>
+        /// Must return a type inheriting from <see cref="InterfaceDeclarationTranslationUnit"/>.
+        /// </remarks>
+        /// <param name="visibility"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected override ITranslationUnit CreateTranslationUnit(VisibilityToken visibility, ITranslationUnit name)
+        {
+            return InterfaceDefinitionTranslationUnit.Create(visibility, name);
+        }
+    }
+}

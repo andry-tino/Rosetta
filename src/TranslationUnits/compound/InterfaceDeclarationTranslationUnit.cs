@@ -59,6 +59,11 @@ namespace Rosetta.Translation
         protected IEnumerable<ITranslationUnit> Interfaces { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the interface is part, as a member, of a namespace or module or not.
+        /// </summary>
+        public bool IsAtRootLevel { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="visibility"></param>
@@ -144,14 +149,14 @@ namespace Rosetta.Translation
             };
 
             // Opening declaration
-            string classVisibility = this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
+            string interfaceVisibility = this.RenderedVisibilityModifier;
             string extensionList = this.BuildInterfaceExtensionList();
 
             if (this.injectedBefore == null)
             {
                 writer.WriteLine("{0}{1} {2} {3} {4}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
-                classVisibility,
+                interfaceVisibility,
                 Lexems.InterfaceKeyword,
                 this.Name.Translate(),
                 extensionList,
@@ -162,17 +167,20 @@ namespace Rosetta.Translation
                 writer.WriteLine("{0} {1}{2} {3} {4} {5}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
                 this.injectedBefore.Translate(),
-                classVisibility,
+                interfaceVisibility,
                 Lexems.InterfaceKeyword,
                 this.Name.Translate(),
                 extensionList,
                 Lexems.OpenCurlyBracket);
             }
-            
+
             // Signatures
-            foreach (ITranslationUnit translationUnit in this.signatures)
+            if (this.ShouldRenderSignatures)
             {
-                writer.WriteLine("{0}{1}", translationUnit.Translate(), Lexems.Semicolon);
+                foreach (ITranslationUnit translationUnit in this.signatures)
+                {
+                    writer.WriteLine("{0}{1}", translationUnit.Translate(), Lexems.Semicolon);
+                }
             }
 
             // Closing
@@ -205,6 +213,16 @@ namespace Rosetta.Translation
         }
 
         #endregion
+        
+        protected virtual bool ShouldRenderSignatures
+        {
+            get { return true; }
+        }
+
+        protected virtual string RenderedVisibilityModifier
+        {
+            get { return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
+        }
 
         /// <summary>
         /// 

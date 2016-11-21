@@ -136,10 +136,7 @@ namespace Rosetta.Translation
             var lastInterface = this.interfaces.Count() > 0 ? this.interfaces.Last() : null;
             foreach (ITranslationUnit translationUnit in this.interfaces)
             {
-                // TODO: Handle with injection like in classes
-                writer.WriteLine("{0} {1}",
-                    Lexems.ExportKeyword,
-                    translationUnit.Translate());
+                writer.WriteLine(translationUnit.Translate());
 
                 if ((object)translationUnit != (object)lastInterface)
                 {
@@ -194,6 +191,12 @@ namespace Rosetta.Translation
             if (translationUnit as NestedElementTranslationUnit != null)
             {
                 ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
+            // Interfaces need injection for observing indentation
+            if (translationUnit as ITranslationInjector != null)
+            {
+                ((ITranslationInjector)translationUnit).InjectedTranslationUnitBefore = IdentifierTranslationUnit.Create(Lexems.ExportKeyword);
             }
 
             ((List<ITranslationUnit>)this.interfaces).Add(translationUnit);

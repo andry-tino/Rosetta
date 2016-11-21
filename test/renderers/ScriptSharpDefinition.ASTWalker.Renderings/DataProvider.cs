@@ -19,9 +19,19 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
             get { return typeof(Classes); }
         }
 
+        public static Type InterfacesDefinitionMethodsProvider
+        {
+            get { return typeof(Interfaces); }
+        }
+
         public static Type ClassesWithScriptNamespaceDefinitionMethodsProvider
         {
             get { return typeof(ClassesWithScriptNamespace); }
+        }
+
+        public static Type InterfacesWithScriptNamespaceDefinitionMethodsProvider
+        {
+            get { return typeof(InterfacesWithScriptNamespace); }
         }
     }
 }

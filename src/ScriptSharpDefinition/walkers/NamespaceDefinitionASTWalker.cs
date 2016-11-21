@@ -82,7 +82,11 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"></param>
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
-            // We do not output interfaces for definitions
+            var translationUnit = new InterfaceDefinitionTranslationUnitFactory(node).Create();
+            (translationUnit as InterfaceDefinitionTranslationUnit).IsAtRootLevel = false;
+            this.module.AddInterface(translationUnit);
+
+            this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
         }
 
         #endregion

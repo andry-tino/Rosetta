@@ -12,6 +12,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
     using Rosetta.AST;
     using Rosetta.ScriptSharp.Definition.AST.Factories;
+    using Rosetta.ScriptSharp.Definition.Translation;
     using Rosetta.Translation;
 
     /// <summary>
@@ -56,20 +57,6 @@ namespace Rosetta.ScriptSharp.Definition.AST
             };
         }
 
-        /// <summary>
-        /// Walk the whole tree starting from specified <see cref="CSharpSyntaxNode"/> and 
-        /// build the translation unit tree necessary for generating TypeScript output.
-        /// </summary>
-        /// <returns>The root of the translation unit tree.</returns>
-        public ITranslationUnit Walk()
-        {
-            // Visiting
-            this.Visit(node);
-
-            // Returning root
-            return this.program;
-        }
-
         #region CSharpSyntaxWalker overrides
 
         /// <summary>
@@ -112,40 +99,14 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"></param>
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
-            // We do not output interfaces for definitions
+            var translationUnit = new InterfaceDefinitionTranslationUnitFactory(node).Create();
+            (translationUnit as InterfaceDefinitionTranslationUnit).IsAtRootLevel = true;
+            this.program.AddContent(translationUnit);
+
+            this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
         }
 
         #endregion
-
-        #region Walk events
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event WalkerEvent ClassDeclarationVisited;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event WalkerEvent NamespaceDeclarationVisited;
-
-        #endregion
-
-        private void InvokeClassDeclarationVisited(object sender, WalkerEventArgs e)
-        {
-            if (this.ClassDeclarationVisited != null)
-            {
-                this.ClassDeclarationVisited(sender, e);
-            }
-        }
-
-        private void InvokeNamespaceDeclarationVisited(object sender, WalkerEventArgs e)
-        {
-            if (this.NamespaceDeclarationVisited != null)
-            {
-                this.NamespaceDeclarationVisited(sender, e);
-            }
-        }
 
         private ASTWalkerContext CreateWalkingContext()
         {

@@ -13,6 +13,7 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.Text;
 
     using Rosetta.Translation;
+    using Rosetta.AST.Factories;
     using Rosetta.AST.Helpers;
 
     /// <summary>
@@ -68,18 +69,8 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static InterfaceASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
         {
-            InterfaceDeclaration helper = new InterfaceDeclaration(node as InterfaceDeclarationSyntax);
-
-            var interfaceDeclaration = InterfaceDeclarationTranslationUnit.Create(
-                helper.Visibility,
-                IdentifierTranslationUnit.Create(helper.Name));
-
-            foreach (BaseTypeReference implementedInterface in helper.ExtendedInterfaces)
-            {
-                interfaceDeclaration.AddExtendedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
-            }
-
-            return new InterfaceASTWalker(node, interfaceDeclaration)
+            return new InterfaceASTWalker(node, 
+                new InterfaceDeclarationTranslationUnitFactory(node).Create() as InterfaceDeclarationTranslationUnit)
             {
                 Context = context
             };

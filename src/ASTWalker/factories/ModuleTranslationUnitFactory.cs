@@ -13,7 +13,7 @@ namespace Rosetta.AST.Factories
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    /// Generic helper.
+    /// Factory for <see cref="ModuleTranslationUnit"/>.
     /// </summary>
     public class ModuleTranslationUnitFactory : ITranslationUnitFactory
     {

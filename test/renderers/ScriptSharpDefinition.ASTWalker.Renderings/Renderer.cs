@@ -33,7 +33,9 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
                 return new Type[]
                 {
                     DataProvider.ClassesDefinitionMethodsProvider,
-                    DataProvider.ClassesWithScriptNamespaceDefinitionMethodsProvider
+                    DataProvider.InterfacesDefinitionMethodsProvider,
+                    DataProvider.ClassesWithScriptNamespaceDefinitionMethodsProvider,
+                    DataProvider.InterfacesWithScriptNamespaceDefinitionMethodsProvider
                 };
             }
         }

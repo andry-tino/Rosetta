@@ -155,7 +155,7 @@ namespace Rosetta.AST
 
         #endregion
 
-        private void InvokeClassDeclarationVisited(object sender, WalkerEventArgs e)
+        protected void InvokeClassDeclarationVisited(object sender, WalkerEventArgs e)
         {
             if (this.ClassDeclarationVisited != null)
             {
@@ -163,7 +163,7 @@ namespace Rosetta.AST
             }
         }
 
-        private void InvokeNamespaceDeclarationVisited(object sender, WalkerEventArgs e)
+        protected void InvokeNamespaceDeclarationVisited(object sender, WalkerEventArgs e)
         {
             if (this.NamespaceDeclarationVisited != null)
             {
@@ -171,7 +171,7 @@ namespace Rosetta.AST
             }
         }
 
-        private void InvokeInterfaceDeclarationVisited(object sender, WalkerEventArgs e)
+        protected void InvokeInterfaceDeclarationVisited(object sender, WalkerEventArgs e)
         {
             if (this.InterfaceDeclarationVisited != null)
             {
