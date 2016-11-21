@@ -152,7 +152,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
 
         private void RetrieveEmptyNamespaces()
         {
-            new MultiPurposeASTWalker(this.node,
+            new MultiPurposeASTWalker(this.newNode,
                 astNode => astNode as NamespaceDeclarationSyntax != null,
                 delegate (SyntaxNode astNode)
                 {
@@ -169,7 +169,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
 
         private void RemoveEmptyNamespaces()
         {
-            CompilationUnitSyntax newNode = this.node;
+            CompilationUnitSyntax newNode = this.newNode;
 
             foreach (var namespaceNode in this.removableNamespaces)
             {
