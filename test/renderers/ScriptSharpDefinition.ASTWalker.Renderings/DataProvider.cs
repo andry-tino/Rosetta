@@ -19,6 +19,11 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
             get { return typeof(Classes); }
         }
 
+        public static Type EnumsDefinitionMethodsProvider
+        {
+            get { return typeof(Enums); }
+        }
+
         public static Type InterfacesDefinitionMethodsProvider
         {
             get { return typeof(Interfaces); }
@@ -27,6 +32,11 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
         public static Type ClassesWithScriptNamespaceDefinitionMethodsProvider
         {
             get { return typeof(ClassesWithScriptNamespace); }
+        }
+
+        public static Type EnumsWithScriptNamespaceDefinitionMethodsProvider
+        {
+            get { return typeof(EnumsWithScriptNamespace); }
         }
 
         public static Type InterfacesWithScriptNamespaceDefinitionMethodsProvider

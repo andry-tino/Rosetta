@@ -25,7 +25,7 @@ namespace Rosetta.AST.Helpers
         /// Initializes a new instance of the <see cref="AttributeLists"/> class.
         /// </summary>
         /// <param name="syntaxNode"></param>
-        public AttributeLists(TypeDeclarationSyntax syntaxNode)
+        public AttributeLists(BaseTypeDeclarationSyntax syntaxNode)
             : this(syntaxNode, null)
         {
             this.attributeLists = syntaxNode.AttributeLists;
@@ -39,7 +39,7 @@ namespace Rosetta.AST.Helpers
         /// <remarks>
         /// When providing the semantic model, some properites will be devised from that.
         /// </remarks>
-        public AttributeLists(TypeDeclarationSyntax syntaxNode, SemanticModel semanticModel)
+        public AttributeLists(BaseTypeDeclarationSyntax syntaxNode, SemanticModel semanticModel)
             : base(syntaxNode, semanticModel)
         {
         }

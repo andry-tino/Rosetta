@@ -106,6 +106,19 @@ namespace Rosetta.ScriptSharp.Definition.AST
             this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public override void VisitEnumDeclaration(EnumDeclarationSyntax node)
+        {
+            var translationUnit = new EnumDefinitionTranslationUnitFactory(node).Create();
+            (translationUnit as EnumDefinitionTranslationUnit).IsAtRootLevel = true;
+            this.program.AddContent(translationUnit);
+
+            this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
+        }
+
         #endregion
 
         private ASTWalkerContext CreateWalkingContext()

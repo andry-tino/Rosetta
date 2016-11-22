@@ -71,12 +71,13 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             new MultiPurposeASTWalker(this.node,
                 delegate (SyntaxNode astNode)
                 {
-                    var typeDeclarationNode = astNode as TypeDeclarationSyntax;
+                    var typeDeclarationNode = astNode as BaseTypeDeclarationSyntax;
 
                     // Recognizing only classes and interfaces
                     var classNode = astNode as ClassDeclarationSyntax;
+                    var enumNode = astNode as EnumDeclarationSyntax;
                     var interfaceNode = astNode as InterfaceDeclarationSyntax;
-                    if (classNode == null && interfaceNode == null)
+                    if (classNode == null && enumNode == null && interfaceNode == null)
                     {
                         return false;
                     }
@@ -86,7 +87,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                 },
                 delegate (SyntaxNode astNode)
                 {
-                    var typeDeclarationNode = astNode as TypeDeclarationSyntax;
+                    var typeDeclarationNode = astNode as BaseTypeDeclarationSyntax;
                     var scriptNamespaceAttributeHelper = RetrieveScriptNamespaceAttribute(new AttributeLists(typeDeclarationNode));
 
                     AttributeListSyntax scriptNamespaceAttributeListSyntax = scriptNamespaceAttributeHelper.AttributeDecoration.AttributeList; // The list where ScriptNamespace belongs to
@@ -99,7 +100,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                     SyntaxList<AttributeListSyntax> newAttributeLists = typeDeclarationNode.AttributeLists.Remove(scriptNamespaceAttributeListSyntax);
                     newAttributeLists = newAttributeLists.Add(newAttributeListSyntax);
 
-                    TypeDeclarationSyntax newTypeDeclarationSyntax = typeDeclarationNode.RemoveNode(scriptNamespaceAttributeListSyntax, SyntaxRemoveOptions.KeepNoTrivia);
+                    BaseTypeDeclarationSyntax newTypeDeclarationSyntax = typeDeclarationNode.RemoveNode(scriptNamespaceAttributeListSyntax, SyntaxRemoveOptions.KeepNoTrivia);
 
                     if (newTypeDeclarationSyntax as ClassDeclarationSyntax != null)
                     {
@@ -108,6 +109,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                     else if (newTypeDeclarationSyntax as InterfaceDeclarationSyntax != null)
                     {
                         (newTypeDeclarationSyntax as InterfaceDeclarationSyntax).WithAttributeLists(newAttributeLists);
+                    }
+                    else if (newTypeDeclarationSyntax as EnumDeclarationSyntax != null)
+                    {
+                        (newTypeDeclarationSyntax as EnumDeclarationSyntax).WithAttributeLists(newAttributeLists);
                     }
                     else
                     {
@@ -138,7 +143,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             CompilationUnitSyntax newNode = this.node;
 
             // Removing classes
-            var removableNodes = new List<TypeDeclarationSyntax>();
+            var removableNodes = new List<BaseTypeDeclarationSyntax>();
             foreach (var info in this.transformationInfos)
             {
                 removableNodes.Add(info.OriginalNode);
@@ -236,12 +241,12 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
             /// <summary>
             /// 
             /// </summary>
-            public TypeDeclarationSyntax OriginalNode { get; set; }
+            public BaseTypeDeclarationSyntax OriginalNode { get; set; }
 
             /// <summary>
             /// 
             /// </summary>
-            public TypeDeclarationSyntax TransformedNode { get; set; }
+            public BaseTypeDeclarationSyntax TransformedNode { get; set; }
 
             /// <summary>
             /// 

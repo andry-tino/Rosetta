@@ -19,6 +19,7 @@ namespace Rosetta.Translation
     public class ModuleTranslationUnit : NestedElementTranslationUnit, ITranslationUnit, ICompoundTranslationUnit
     {
         protected IEnumerable<ITranslationUnit> classes;
+        protected IEnumerable<ITranslationUnit> enums;
         protected IEnumerable<ITranslationUnit> interfaces;
 
         protected ITranslationUnit name;
@@ -49,6 +50,7 @@ namespace Rosetta.Translation
             : base(nestingLevel)
         {
             this.classes = new List<ITranslationUnit>();
+            this.enums = new List<ITranslationUnit>();
             this.interfaces = new List<ITranslationUnit>();
 
             this.name = name;
@@ -65,6 +67,7 @@ namespace Rosetta.Translation
             : base()
         {
             this.classes = other.classes;
+            this.enums = other.enums;
             this.interfaces = other.interfaces;
 
             this.name = other.name;
@@ -92,7 +95,9 @@ namespace Rosetta.Translation
         {
             get
             {
-                return this.classes.Concat(this.interfaces);
+                return this.classes
+                    .Concat(this.enums)
+                    .Concat(this.interfaces);
             }
         }
 
@@ -127,6 +132,18 @@ namespace Rosetta.Translation
                 writer.WriteLine(translationUnit.Translate());
 
                 if ((object)translationUnit != (object)lastClass)
+                {
+                    writer.WriteLine(string.Empty);
+                }
+            }
+
+            // We render enums next
+            var lastEnum = this.enums.Count() > 0 ? this.enums.Last() : null;
+            foreach (ITranslationUnit translationUnit in this.enums)
+            {
+                writer.WriteLine(translationUnit.Translate());
+
+                if ((object)translationUnit != (object)lastEnum)
                 {
                     writer.WriteLine(string.Empty);
                 }
@@ -175,6 +192,31 @@ namespace Rosetta.Translation
             }
 
             ((List<ITranslationUnit>)this.classes).Add(translationUnit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="translationUnit"></param>
+        public void AddEnum(ITranslationUnit translationUnit)
+        {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
+            // Enums need injection for observing indentation
+            if (translationUnit as ITranslationInjector != null)
+            {
+                ((ITranslationInjector)translationUnit).InjectedTranslationUnitBefore = IdentifierTranslationUnit.Create(Lexems.ExportKeyword);
+            }
+
+            ((List<ITranslationUnit>)this.enums).Add(translationUnit);
         }
 
         /// <summary>

@@ -98,6 +98,8 @@
   <ItemGroup>
     <Compile Include="Classes.cs" />
     <Compile Include="ClassesWithScriptNamespace.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="EnumsWithScriptNamespace.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="InterfacesWithScriptNamespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

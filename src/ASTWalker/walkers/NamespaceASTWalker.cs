@@ -129,6 +129,11 @@ namespace Rosetta.AST
         /// <summary>
         /// 
         /// </summary>
+        public event WalkerEvent EnumDeclarationVisited;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public event WalkerEvent InterfaceDeclarationVisited;
 
         #endregion
@@ -138,6 +143,14 @@ namespace Rosetta.AST
             if (this.ClassDeclarationVisited != null)
             {
                 this.ClassDeclarationVisited(sender, e);
+            }
+        }
+
+        protected void InvokeEnumDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.EnumDeclarationVisited != null)
+            {
+                this.EnumDeclarationVisited(sender, e);
             }
         }
 
