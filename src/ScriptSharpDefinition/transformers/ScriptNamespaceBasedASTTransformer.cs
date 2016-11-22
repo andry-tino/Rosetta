@@ -73,7 +73,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Transformers
                 {
                     var typeDeclarationNode = astNode as BaseTypeDeclarationSyntax;
 
-                    // Recognizing only classes and interfaces
+                    // Recognizing only classes, enums and interfaces
                     var classNode = astNode as ClassDeclarationSyntax;
                     var enumNode = astNode as EnumDeclarationSyntax;
                     var interfaceNode = astNode as InterfaceDeclarationSyntax;
