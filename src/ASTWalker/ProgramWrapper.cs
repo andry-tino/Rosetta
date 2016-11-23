@@ -19,12 +19,15 @@ namespace Rosetta.AST
     {
         // TODO: Make base class for program wrappers
 
-        private readonly ProgramASTWalker walker;
+        private readonly string source;
         private readonly string assemblyPath;
-        private readonly CSharpSyntaxTree tree;
 
+        // Lazy loaded or cached quantities
+        private ProgramASTWalker walker;
+        private CSharpSyntaxTree tree;
         private SemanticModel semanticModel;
         private string output;
+        private bool initialized;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramWrapper"/> class.
@@ -43,15 +46,10 @@ namespace Rosetta.AST
                 throw new ArgumentException(nameof(assemblyPath), "The specified assembly could not be found!");
             }
 
+            this.source = source;
             this.assemblyPath = assemblyPath;
 
-            // Getting the AST node
-            this.tree = ASTExtractor.Extract(source);
-            var node = tree.GetRoot() as CompilationUnitSyntax;
-
-            // Creating the walker
-            this.walker = ProgramASTWalker.Create(node);
-            this.output = null;
+            this.initialized = false;
         }
 
         /// <summary>
@@ -61,18 +59,35 @@ namespace Rosetta.AST
         {
             get
             {
-                if (this.output == null)
+                if (!this.initialized)
                 {
-                    if (this.assemblyPath != null)
-                    {
-                        this.LoadSemanticModel(this.assemblyPath, this.tree);
-                    }
-
-                    this.output = this.walker.Walk().Translate();
+                    this.Initialize();
                 }
 
                 return this.output;
             }
+        }
+
+        private void Initialize()
+        {
+            // Getting the AST node
+            this.tree = ASTExtractor.Extract(this.source);
+            var node = this.tree.GetRoot();
+
+            // Loading the semantic model
+            if (this.assemblyPath != null)
+            {
+                this.LoadSemanticModel(this.assemblyPath, this.tree);
+            }
+
+            // Creating the walker
+            // If no semantic model was loaded, null will just be passed
+            this.walker = ProgramASTWalker.Create(node, null, this.semanticModel);
+
+            // Translating
+            this.output = this.walker.Walk().Translate();
+
+            this.initialized = true;
         }
 
         private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)

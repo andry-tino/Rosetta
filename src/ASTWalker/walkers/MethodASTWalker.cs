@@ -73,7 +73,7 @@ namespace Rosetta.AST
         {
             return new MethodASTWalker(
                 node,
-                new MethodDeclarationTranslationUnitFactory(node).Create() as MethodDeclarationTranslationUnit,
+                new MethodDeclarationTranslationUnitFactory(node, semanticModel).Create() as MethodDeclarationTranslationUnit,
                 semanticModel)
             {
                 Context = context

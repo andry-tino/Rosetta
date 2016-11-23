@@ -73,7 +73,7 @@ namespace Rosetta.AST
         {
             return new InterfaceASTWalker(
                 node, 
-                new InterfaceDeclarationTranslationUnitFactory(node).Create() as InterfaceDeclarationTranslationUnit,
+                new InterfaceDeclarationTranslationUnitFactory(node, semanticModel).Create() as InterfaceDeclarationTranslationUnit,
                 semanticModel)
             {
                 Context = context

@@ -74,7 +74,7 @@ namespace Rosetta.AST
         /// <returns></returns>
         public static PropertyASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            var propertyDeclaration = new PropertyDeclarationTranslationUnitFactory(node).Create() as PropertyDeclarationTranslationUnit;
+            var propertyDeclaration = new PropertyDeclarationTranslationUnitFactory(node, semanticModel).Create() as PropertyDeclarationTranslationUnit;
 
             return new PropertyASTWalker(node, propertyDeclaration, semanticModel)
             {

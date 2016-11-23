@@ -59,7 +59,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         {
             return new ClassDefinitionASTWalker(
                 node,
-                new ClassDefinitionTranslationUnitFactory(node).Create() as ClassDefinitionTranslationUnit,
+                new ClassDefinitionTranslationUnitFactory(node, semanticModel).Create() as ClassDefinitionTranslationUnit,
                 semanticModel)
             {
                 Context = context

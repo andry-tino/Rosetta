@@ -54,7 +54,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         {
             return new ProgramDefinitionASTWalker(
                 node,
-                new ProgramDefinitionTranslationUnitFactory(node).Create() as ProgramTranslationUnit,
+                new ProgramDefinitionTranslationUnitFactory(node, semanticModel).Create() as ProgramTranslationUnit,
                 semanticModel)
             {
                 Context = context

@@ -74,7 +74,7 @@ namespace Rosetta.AST
         {
             return new ClassASTWalker(
                 node,
-                new ClassDeclarationTranslationUnitFactory(node).Create() as ClassDeclarationTranslationUnit, 
+                new ClassDeclarationTranslationUnitFactory(node, semanticModel).Create() as ClassDeclarationTranslationUnit, 
                 semanticModel)
             {
                 Context = context

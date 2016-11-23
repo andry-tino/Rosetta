@@ -70,7 +70,7 @@ namespace Rosetta.AST
         {
             return new NamespaceASTWalker(
                 node,
-                new ModuleTranslationUnitFactory(node).Create() as ModuleTranslationUnit,
+                new ModuleTranslationUnitFactory(node, semanticModel).Create() as ModuleTranslationUnit,
                 semanticModel)
             {
                 Context = context
