@@ -27,6 +27,20 @@ namespace Rosetta.Executable
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FileSilentConversionRunner"/>.
+        /// </summary>
+        /// <param name="conversionProvider"></param>
+        /// <param name="filePath"></param>
+        /// <param name="assemblyPath"></param>
+        /// <param name="outputFolder"></param>
+        /// <param name="extension"></param>
+        /// <param name="fileName"></param>
+        public FileSilentConversionRunner(ConversionProvider conversionProvider, string filePath, string assemblyPath, string outputFolder, string extension, string fileName = null)
+            : base(conversionProvider, filePath, assemblyPath, outputFolder, extension, fileName)
+        {
+        }
+
+        /// <summary>
         /// Gets the file conversion.
         /// </summary>
         public string FileConversion

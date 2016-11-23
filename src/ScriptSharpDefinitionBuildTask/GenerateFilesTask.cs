@@ -18,8 +18,8 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateFilesTask"/> class.
         /// </summary>
-        public GenerateFilesTask(IEnumerable<string> sourceFiles, string outputFolder) 
-            : base(sourceFiles, outputFolder)
+        public GenerateFilesTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath = null) 
+            : base(sourceFiles, outputFolder, assemblyPath)
         {
         }
         
@@ -37,7 +37,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
         private void ConvertFile(string filePath)
         {
-            new FileConversionRunner(PerformFileConversion, filePath, this.outputFolder, extension)
+            new FileConversionRunner(PerformFileConversion, filePath, this.assemblyPath, this.outputFolder, extension)
                 .Run();
         }
     }

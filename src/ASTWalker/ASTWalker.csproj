@@ -140,6 +140,7 @@
     <Compile Include="helpers\statements\ConditionalStatement.cs" />
     <Compile Include="helpers\statements\ThrowStatement.cs" />
     <Compile Include="helpers\simple\Parameter.cs" />
+    <Compile Include="helpers\SymbolHelper.cs" />
     <Compile Include="IASTTransformer.cs" />
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="transformers\ClassInDifferentNamespaceASTTransformer.cs" />

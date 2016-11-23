@@ -85,7 +85,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)
         {
             var assembly = MetadataReference.CreateFromFile(path);
-            var compilation = CSharpCompilation.Create("", new[] { sourceTree }, new[] { assembly });
+            var compilation = CSharpCompilation.Create("LoadedAssembly", new[] { sourceTree }, new[] { assembly });
 
             this.semanticModel = compilation.GetSemanticModel(sourceTree);
         }

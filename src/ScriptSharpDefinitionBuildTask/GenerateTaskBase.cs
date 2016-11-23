@@ -18,12 +18,16 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         protected const string extension = "d.ts";
 
         protected readonly IEnumerable<string> sourceFiles;
+        protected readonly string assemblyPath;
         protected readonly string outputFolder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateTaskBase"/> class.
         /// </summary>
-        public GenerateTaskBase(IEnumerable<string> sourceFiles, string outputFolder)
+        /// <param name="sourceFiles"></param>
+        /// <param name="outputFolder"></param>
+        /// <param name="assemblyPath"></param>
+        public GenerateTaskBase(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath = null)
         {
             if (sourceFiles == null)
             {
@@ -35,6 +39,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             }
 
             this.sourceFiles = sourceFiles;
+            this.assemblyPath = assemblyPath;
             this.outputFolder = outputFolder;
         }
 
@@ -46,7 +51,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
         protected static string PerformFileConversion(string source, string assemblyPath)
         {
-            var program = new ProgramWrapper(source);
+            var program = new ProgramWrapper(source, assemblyPath);
 
             return program.Output;
         }

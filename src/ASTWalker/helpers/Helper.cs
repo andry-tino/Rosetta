@@ -40,11 +40,11 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the semantic model.
         /// </summary>
-        protected SemanticModel SemanticModel => this.semanticModel;
+        public SemanticModel SemanticModel => this.semanticModel;
 
         /// <summary>
         /// Gets the underlying syntax node.
         /// </summary>
-        protected CSharpSyntaxNode SyntaxNode => this.syntaxNode;
+        public CSharpSyntaxNode SyntaxNode => this.syntaxNode;
     }
 }

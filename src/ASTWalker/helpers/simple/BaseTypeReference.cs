@@ -100,9 +100,11 @@ namespace Rosetta.AST.Helpers
             get
             {
                 var simpleNameSyntaxNode = this.BaseTypeSyntaxNode.Type as SimpleNameSyntax;
-                return simpleNameSyntaxNode != null ? 
-                    simpleNameSyntaxNode.Identifier.ValueText : 
-                    this.BaseTypeSyntaxNode.Type.ToString();
+                
+                // TODO: Verify the correctness of the semantic model action
+                return this.ChooseSymbolFrom<string>(
+                    () => simpleNameSyntaxNode != null ? simpleNameSyntaxNode.Identifier.ValueText : this.BaseTypeSyntaxNode.Type.ToString(),
+                    (semanticModel) => semanticModel.GetSymbolInfo(this.BaseTypeSyntaxNode).Symbol.MetadataName);
             }
         }
         

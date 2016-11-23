@@ -23,8 +23,23 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateBundleTask"/> class.
         /// </summary>
+        /// <param name="sourceFiles"></param>
+        /// <param name="outputFolder"></param>
+        /// <param name="bundleName"></param>
         public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string bundleName = "Bundle") 
-            : base(sourceFiles, outputFolder)
+            : this(sourceFiles, outputFolder, null, bundleName)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenerateBundleTask"/> class.
+        /// </summary>
+        /// <param name="sourceFiles"></param>
+        /// <param name="outputFolder"></param>
+        /// <param name="assemblyPath"></param>
+        /// <param name="bundleName"></param>
+        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath, string bundleName = "Bundle")
+            : base(sourceFiles, outputFolder, assemblyPath)
         {
             this.bundleName = bundleName;
 

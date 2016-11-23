@@ -44,7 +44,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
         protected static string PerformFileConversion(string source, string assemblyPath)
         {
-            var program = new ProgramWrapper(source);
+            var program = new ProgramWrapper(source, assemblyPath);
 
             return program.Output;
         }
