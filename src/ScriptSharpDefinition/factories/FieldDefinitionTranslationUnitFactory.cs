@@ -6,6 +6,7 @@
 namespace Rosetta.ScriptSharp.Definition.AST.Factories
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -27,7 +28,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// <param name="node">The syntax node.</param>
         /// <param name="createWhenProtected">A value indicating whether the factory should create a <see cref="ITranslationUnit"/> when <see cref="node"/> is protected.</param>
         public FieldDefinitionTranslationUnitFactory(CSharpSyntaxNode node, bool createWhenProtected = false) 
-            : base(node)
+            : this(node, null, createWhenProtected)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldDefinitionTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="node">The syntax node.</param>
+        /// <param name="semanticModel">The semantic model</param>
+        /// <param name="createWhenProtected">A value indicating whether the factory should create a <see cref="ITranslationUnit"/> when <see cref="node"/> is protected.</param>
+        public FieldDefinitionTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null, bool createWhenProtected = false)
+            : base(node, semanticModel)
         {
             this.createWhenProtected = createWhenProtected;
         }

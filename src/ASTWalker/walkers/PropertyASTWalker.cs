@@ -29,8 +29,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="propertyDeclaration"></param>
-        protected PropertyASTWalker(CSharpSyntaxNode node, PropertyDeclarationTranslationUnit propertyDeclaration) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected PropertyASTWalker(CSharpSyntaxNode node, PropertyDeclarationTranslationUnit propertyDeclaration, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var propertyDeclarationSyntaxNode = node as PropertyDeclarationSyntax;
             if (propertyDeclarationSyntaxNode == null)
@@ -69,12 +70,13 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static PropertyASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static PropertyASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
             var propertyDeclaration = new PropertyDeclarationTranslationUnitFactory(node).Create() as PropertyDeclarationTranslationUnit;
 
-            return new PropertyASTWalker(node, propertyDeclaration)
+            return new PropertyASTWalker(node, propertyDeclaration, semanticModel)
             {
                 Context = context
             };
@@ -112,7 +114,7 @@ namespace Rosetta.AST
         {
             foreach (var accessor in node.AccessorList.Accessors)
             {
-                IASTWalker walker = BlockASTWalker.Create(accessor.Body);
+                IASTWalker walker = BlockASTWalker.Create(accessor.Body, null, this.semanticModel);
                 ITranslationUnit translationUnit = walker.Walk();
 
                 // TODO: call events

@@ -30,8 +30,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="classDeclaration"></param>
-        protected ClassASTWalker(CSharpSyntaxNode node, ClassDeclarationTranslationUnit classDeclaration) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected ClassASTWalker(CSharpSyntaxNode node, ClassDeclarationTranslationUnit classDeclaration, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var classDeclarationSyntaxNode = node as ClassDeclarationSyntax;
             if (classDeclarationSyntaxNode == null)
@@ -67,11 +68,14 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static ClassASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static ClassASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            return new ClassASTWalker(node,
-                new ClassDeclarationTranslationUnitFactory(node).Create() as ClassDeclarationTranslationUnit)
+            return new ClassASTWalker(
+                node,
+                new ClassDeclarationTranslationUnitFactory(node).Create() as ClassDeclarationTranslationUnit, 
+                semanticModel)
             {
                 Context = context
             };
@@ -99,7 +103,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
-            var fieldDeclarationTranslationUnit = new FieldDeclarationTranslationUnitFactory(node).Create();
+            var fieldDeclarationTranslationUnit = new FieldDeclarationTranslationUnitFactory(node, this.semanticModel).Create();
             this.classDeclaration.AddMemberDeclaration(fieldDeclarationTranslationUnit);
 
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
@@ -113,7 +117,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
-            var propertyWalker = PropertyASTWalker.Create(node, this.CreateWalkingContext());
+            var propertyWalker = PropertyASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = propertyWalker.Walk();
             this.classDeclaration.AddPropertyDeclaration(translationUnit);
 
@@ -130,7 +134,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            var methodWalker = MethodASTWalker.Create(node, this.CreateWalkingContext());
+            var methodWalker = MethodASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = methodWalker.Walk();
             this.classDeclaration.AddMethodDeclaration(translationUnit);
 
@@ -143,7 +147,7 @@ namespace Rosetta.AST
         /// <param name="node"></param>
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
-            var constructorWalker = ConstructorASTWalker.Create(node, this.CreateWalkingContext());
+            var constructorWalker = ConstructorASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = constructorWalker.Walk();
             this.classDeclaration.AddConstructorDeclaration(translationUnit);
 

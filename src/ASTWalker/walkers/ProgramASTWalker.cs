@@ -26,8 +26,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="module"></param>
-        protected ProgramASTWalker(CSharpSyntaxNode node, ProgramTranslationUnit program) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected ProgramASTWalker(CSharpSyntaxNode node, ProgramTranslationUnit program, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var programSyntaxNode = node as CompilationUnitSyntax;
             if (programSyntaxNode == null)
@@ -63,11 +64,14 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static ProgramASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static ProgramASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            return new ProgramASTWalker(node,
-                new ProgramTranslationUnitFactory(node).Create() as ProgramTranslationUnit)
+            return new ProgramASTWalker(
+                node,
+                new ProgramTranslationUnitFactory(node).Create() as ProgramTranslationUnit,
+                semanticModel)
             {
                 Context = context
             };
@@ -99,7 +103,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var classWalker = ClassASTWalker.Create(node, this.CreateWalkingContext());
+            var classWalker = ClassASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = classWalker.Walk();
             this.program.AddContent(translationUnit);
 
@@ -116,7 +120,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
-            var namespaceWalker = NamespaceASTWalker.Create(node, this.CreateWalkingContext());
+            var namespaceWalker = NamespaceASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = namespaceWalker.Walk();
             this.program.AddContent(translationUnit);
 

@@ -6,6 +6,7 @@
 namespace Rosetta.AST.Factories
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -17,13 +18,17 @@ namespace Rosetta.AST.Factories
     /// </summary>
     public class EnumTranslationUnitFactory : ITranslationUnitFactory
     {
+        // TODO: Create common base class for all translation unit factories
+
         private readonly CSharpSyntaxNode node;
+        private readonly SemanticModel semanticModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
-        public EnumTranslationUnitFactory(CSharpSyntaxNode node)
+        /// <param name="semanticModel">The semantic model</param>
+        public EnumTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
             if (node == null)
             {
@@ -31,6 +36,7 @@ namespace Rosetta.AST.Factories
             }
 
             this.node = node;
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -39,7 +45,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="EnumTranslationUnitFactory"/>.</returns>
         public ITranslationUnit Create()
         {
-            EnumDeclaration helper = new EnumDeclaration(node as EnumDeclarationSyntax);
+            EnumDeclaration helper = new EnumDeclaration(node as EnumDeclarationSyntax, this.semanticModel);
 
             var enumDeclaration = this.CreateTranslationUnit(helper.Visibility,
                 IdentifierTranslationUnit.Create(helper.Name)) as EnumTranslationUnit;

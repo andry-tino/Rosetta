@@ -29,8 +29,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="interfaceDeclaration"></param>
-        protected InterfaceASTWalker(CSharpSyntaxNode node, InterfaceDeclarationTranslationUnit interfaceDeclaration) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected InterfaceASTWalker(CSharpSyntaxNode node, InterfaceDeclarationTranslationUnit interfaceDeclaration, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var interfaceDeclarationSyntaxNode = node as InterfaceDeclarationSyntax;
             if (interfaceDeclarationSyntaxNode == null)
@@ -66,11 +67,14 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static InterfaceASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static InterfaceASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            return new InterfaceASTWalker(node, 
-                new InterfaceDeclarationTranslationUnitFactory(node).Create() as InterfaceDeclarationTranslationUnit)
+            return new InterfaceASTWalker(
+                node, 
+                new InterfaceDeclarationTranslationUnitFactory(node).Create() as InterfaceDeclarationTranslationUnit,
+                semanticModel)
             {
                 Context = context
             };
@@ -101,8 +105,10 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
-            var helper = new PropertyDeclaration(node);
+            // TODO: Use translation unit factories
 
+            var helper = new PropertyDeclaration(node, this.semanticModel);
+            
             // Properties in TypeScript will be translated as methods as 
             // TypeScript does not support properties in interfaces
             var translationUnit = MethodSignatureDeclarationTranslationUnit.Create(
@@ -122,7 +128,9 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            var helper = new MethodDeclaration(node);
+            // TODO: Use translation unit factories
+
+            var helper = new MethodDeclaration(node, this.semanticModel);
 
             // Properties in TypeScript will be translated as methods as 
             // TypeScript does not support properties in interfaces

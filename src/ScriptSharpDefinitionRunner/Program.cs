@@ -25,6 +25,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         protected static Program instance;
 
         protected string filePath = null;         // File to convert
+        protected string assemblyPath = null;     // Assembly to use
         protected string outputFolder = null;     // The output folder path for destination files
         protected string fileName = null;         // The output file name
         protected bool verbose = false;           // Verbosity
@@ -34,20 +35,27 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
         public const string UnnamedArgumentName = "unnamed";
 
-        public const string FileArgumentName = "file";
-        public const string FileArgumentChar = "f";
-        public const string OutputArgumentName = "output";
-        public const string OutputArgumentChar = "o";
-        public const string FileNameArgumentName = "filename";
-        public const string FileNameArgumentChar = "n";
-        public const string VerboseArgumentName = "verbose";
-        public const string VerboseArgumentChar = "v";
-        public const string HelpArgumentName = "help";
-        public const string HelpArgumentChar = "h";
+        public const string FileArgumentName        = "file";
+        public const string FileArgumentChar        = "f";
+        public const string AssemblyArgumentName    = "assembly";
+        public const string AssemblyArgumentChar    = "a";
+        public const string OutputArgumentName      = "output";
+        public const string OutputArgumentChar      = "o";
+        public const string FileNameArgumentName    = "filename";
+        public const string FileNameArgumentChar    = "n";
+        public const string VerboseArgumentName     = "verbose";
+        public const string VerboseArgumentChar     = "v";
+        public const string HelpArgumentName        = "help";
+        public const string HelpArgumentChar        = "h";
 
         public string FileOption
         {
             get { return string.Format("{0}|{1}=", FileArgumentName, FileArgumentChar); }
+        }
+
+        public string AssemblyOption
+        {
+            get { return string.Format("{0}|{1}=", AssemblyArgumentName, AssemblyArgumentChar); }
         }
 
         public string OutputOption
@@ -90,6 +98,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             {
                 { FileOption, "The path to the C# {FILE} to convert into TypeScript.",
                   value => this.filePath = value },
+                { AssemblyOption, "The path to the assembly {FILE} to use in the conversion process.",
+                  value => this.assemblyPath = value },
                 { OutputOption, "The {OUTPUT} folder path where Rosetta will emit all output files.",
                   value => this.outputFolder = value },
                 { FileNameOption, "The {FILENAME} to use for output file. Valid only when {FILE} is specified.",

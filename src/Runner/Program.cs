@@ -25,6 +25,7 @@ namespace Rosetta.Runner
         protected static Program instance;
 
         protected string filePath = null;         // File to convert
+        protected string assemblyPath = null;     // Assembly to use
         protected string projectPath = null;      // Project to convert
         protected string outputFolder = null;     // The output folder path for destination files
         protected string fileName = null;         // The output file name
@@ -37,6 +38,8 @@ namespace Rosetta.Runner
 
         public const string FileArgumentName        = "file";
         public const string FileArgumentChar        = "f";
+        public const string AssemblyArgumentName    = "assembly";
+        public const string AssemblyArgumentChar    = "a";
         public const string ProjectArgumentName     = "project";
         public const string ProjectArgumentChar     = "p";
         public const string OutputArgumentName      = "output";
@@ -51,6 +54,11 @@ namespace Rosetta.Runner
         public string FileOption
         {
             get { return string.Format("{0}|{1}=", FileArgumentName, FileArgumentChar); }
+        }
+
+        public string AssemblyOption
+        {
+            get { return string.Format("{0}|{1}=", AssemblyArgumentName, AssemblyArgumentChar); }
         }
 
         public string ProjectOption
@@ -98,6 +106,8 @@ namespace Rosetta.Runner
             {
                 { FileOption, "The path to the C# {FILE} to convert into TypeScript.",
                   value => this.filePath = value },
+                { AssemblyOption, "The path to the assembly {FILE} to use in the conversion process.",
+                  value => this.assemblyPath = value },
                 { ProjectOption, "The path to the C# {PROJECT} to convert into TypeScript project.",
                   value => this.filePath = value },
                 { OutputOption, "The {OUTPUT} folder path where Rosetta will emit all output files.",
@@ -191,7 +201,7 @@ namespace Rosetta.Runner
             }
 
             // Also, if parameter --file has been specified together with one unnamed 
-            // parameter, we will throw an exception indicatring the conflict
+            // parameter, we will throw an exception indicating the conflict
             if (this.filePath != null)
             {
                 throw new OptionException("Conflict occurred when processing input: " + 

@@ -26,8 +26,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="statement"></param>
-        protected LocalDeclarationStatementASTWalker(CSharpSyntaxNode node, LocalDeclarationStatementTranslationUnit localDeclarationStatement) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected LocalDeclarationStatementASTWalker(CSharpSyntaxNode node, LocalDeclarationStatementTranslationUnit localDeclarationStatement, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var declarationSyntaxNode = node as LocalDeclarationStatementSyntax;
             if (declarationSyntaxNode == null)
@@ -62,13 +63,19 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="LocalDeclarationStatementASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static LocalDeclarationStatementASTWalker Create(CSharpSyntaxNode node)
+        public static LocalDeclarationStatementASTWalker Create(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
-            var variableDeclaration = new VariableDeclaration((node as LocalDeclarationStatementSyntax).Declaration);
+            // TODO: Use TranslationUnitFactory in order to have AST walkers decoupled from helpers 
+            //       via factories (which will be using helpers)
+
+            var variableDeclaration = new VariableDeclaration((node as LocalDeclarationStatementSyntax).Declaration, semanticModel);
 
             ExpressionSyntax expression = variableDeclaration.Expressions[0]; // This can contain null, so need to act accordingly
-            ITranslationUnit expressionTranslationUnit = expression == null ? null : new ExpressionTranslationUnitBuilder(expression).Build();
+            ITranslationUnit expressionTranslationUnit = expression == null 
+                ? null 
+                : new ExpressionTranslationUnitBuilder(expression, semanticModel).Build();
 
             var variableDeclarationTranslationUnit = VariableDeclarationTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Create(variableDeclaration.Type),
@@ -77,7 +84,7 @@ namespace Rosetta.AST
 
             var statement = LocalDeclarationStatementTranslationUnit.Create(variableDeclarationTranslationUnit);
 
-            return new LocalDeclarationStatementASTWalker(node, statement);
+            return new LocalDeclarationStatementASTWalker(node, statement, semanticModel);
         }
 
         protected override bool ShouldWalkInto

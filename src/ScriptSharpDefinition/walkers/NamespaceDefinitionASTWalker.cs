@@ -25,8 +25,9 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="module"></param>
-        protected NamespaceDefinitionASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module) 
-            : base(node, module)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected NamespaceDefinitionASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module, SemanticModel semanticModel) 
+            : base(node, module, semanticModel)
         {
         }
 
@@ -47,11 +48,14 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static new NamespaceDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static new NamespaceDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            return new NamespaceDefinitionASTWalker(node,
-                new ModuleDefinitionTranslationUnitFactory(node).Create() as ModuleTranslationUnit)
+            return new NamespaceDefinitionASTWalker(
+                node,
+                new ModuleDefinitionTranslationUnitFactory(node).Create() as ModuleTranslationUnit,
+                semanticModel)
             {
                 Context = context
             };
@@ -69,7 +73,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var classDefinitionWalker = ClassDefinitionASTWalker.Create(node, this.CreateWalkingContext());
+            var classDefinitionWalker = ClassDefinitionASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = classDefinitionWalker.Walk();
             this.module.AddClass(translationUnit);
 
@@ -82,7 +86,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"></param>
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
-            var translationUnit = new InterfaceDefinitionTranslationUnitFactory(node).Create();
+            var translationUnit = new InterfaceDefinitionTranslationUnitFactory(node, this.semanticModel).Create();
             (translationUnit as InterfaceDefinitionTranslationUnit).IsAtRootLevel = false;
             this.module.AddInterface(translationUnit);
 
@@ -95,7 +99,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"></param>
         public override void VisitEnumDeclaration(EnumDeclarationSyntax node)
         {
-            var translationUnit = new EnumDefinitionTranslationUnitFactory(node).Create();
+            var translationUnit = new EnumDefinitionTranslationUnitFactory(node, this.semanticModel).Create();
             (translationUnit as EnumDefinitionTranslationUnit).IsAtRootLevel = false;
             this.module.AddEnum(translationUnit);
 

@@ -27,8 +27,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="statementsGroup"></param>
-        protected BlockASTWalker(CSharpSyntaxNode node, StatementsGroupTranslationUnit statementsGroup) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected BlockASTWalker(CSharpSyntaxNode node, StatementsGroupTranslationUnit statementsGroup, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var namespaceSyntaxNode = node as BlockSyntax;
             if (namespaceSyntaxNode == null)
@@ -42,6 +43,7 @@ namespace Rosetta.AST
             {
                 throw new ArgumentNullException(nameof(statementsGroup));
             }
+
             this.statementsGroup = statementsGroup;
         }
 
@@ -60,13 +62,14 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static BlockASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static BlockASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
             // No helper needed for this walker
             var statementsGroup = StatementsGroupTranslationUnit.Create();
 
-            return new BlockASTWalker(node, statementsGroup)
+            return new BlockASTWalker(node, statementsGroup, semanticModel)
             {
                 Context = context
             };
@@ -365,7 +368,7 @@ namespace Rosetta.AST
 
         private void VisitStatement(StatementSyntax node)
         {
-            IASTWalker walker = new StatementASTWalkerBuilder(node).Build();
+            IASTWalker walker = new StatementASTWalkerBuilder(node, this.semanticModel).Build();
             ITranslationUnit statementTranslationUnit = walker.Walk();
 
             this.statementsGroup.AddStatement(statementTranslationUnit);

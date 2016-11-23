@@ -29,8 +29,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="methodDeclaration"></param>
-        protected MethodASTWalker(CSharpSyntaxNode node, MethodDeclarationTranslationUnit methodDeclaration) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected MethodASTWalker(CSharpSyntaxNode node, MethodDeclarationTranslationUnit methodDeclaration, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var methodDeclarationSyntaxNode = node as MethodDeclarationSyntax;
             if (methodDeclarationSyntaxNode == null)
@@ -66,11 +67,14 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static MethodASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static MethodASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            return new MethodASTWalker(node,
-                new MethodDeclarationTranslationUnitFactory(node).Create() as MethodDeclarationTranslationUnit)
+            return new MethodASTWalker(
+                node,
+                new MethodDeclarationTranslationUnitFactory(node).Create() as MethodDeclarationTranslationUnit,
+                semanticModel)
             {
                 Context = context
             };
@@ -388,7 +392,7 @@ namespace Rosetta.AST
 
         private void VisitStatement(StatementSyntax node)
         {
-            IASTWalker walker = new StatementASTWalkerBuilder(node).Build();
+            IASTWalker walker = new StatementASTWalkerBuilder(node, this.semanticModel).Build();
             ITranslationUnit statementTranslationUnit = walker.Walk();
 
             this.methodDeclaration.AddStatement(statementTranslationUnit);

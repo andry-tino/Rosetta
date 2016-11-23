@@ -6,6 +6,7 @@
 namespace Rosetta.ScriptSharp.Definition.AST
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -27,8 +28,9 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="classDefinition"></param>
-        protected ClassDefinitionASTWalker(CSharpSyntaxNode node, ClassDefinitionTranslationUnit classDefinition) 
-            : base(node, classDefinition)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected ClassDefinitionASTWalker(CSharpSyntaxNode node, ClassDefinitionTranslationUnit classDefinition, SemanticModel semanticModel) 
+            : base(node, classDefinition, semanticModel)
         {
             this.generateTranslationUniOnProtectedMembers = true;
         }
@@ -51,11 +53,14 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static new ClassDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static new ClassDefinitionASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            return new ClassDefinitionASTWalker(node,
-                new ClassDefinitionTranslationUnitFactory(node).Create() as ClassDefinitionTranslationUnit)
+            return new ClassDefinitionASTWalker(
+                node,
+                new ClassDefinitionTranslationUnitFactory(node).Create() as ClassDefinitionTranslationUnit,
+                semanticModel)
             {
                 Context = context
             };
@@ -69,7 +74,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"></param>
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
-            var fieldDefinitionTranslationUnit = new FieldDefinitionTranslationUnitFactory(node, this.generateTranslationUniOnProtectedMembers).Create();
+            var fieldDefinitionTranslationUnit = new FieldDefinitionTranslationUnitFactory(node, this.semanticModel, this.generateTranslationUniOnProtectedMembers).Create();
             if (fieldDefinitionTranslationUnit == null)
             {
                 // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
@@ -87,7 +92,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"></param>
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
-            var propertyDefinitionTranslationUnit = new PropertyDefinitionTranslationUnitFactory(node, this.generateTranslationUniOnProtectedMembers).Create();
+            var propertyDefinitionTranslationUnit = new PropertyDefinitionTranslationUnitFactory(node, this.semanticModel, this.generateTranslationUniOnProtectedMembers).Create();
             if (propertyDefinitionTranslationUnit == null)
             {
                 // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
@@ -109,7 +114,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </remarks>
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            var methodDefinitionTranslationUnit = new MethodDefinitionTranslationUnitFactory(node, this.generateTranslationUniOnProtectedMembers).Create();
+            var methodDefinitionTranslationUnit = new MethodDefinitionTranslationUnitFactory(node, this.semanticModel, this.generateTranslationUniOnProtectedMembers).Create();
             if (methodDefinitionTranslationUnit == null)
             {
                 // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
@@ -127,7 +132,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// <param name="node"></param>
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
-            var constructorDefinitionTranslationUnit = new ConstructorDefinitionTranslationUnitFactory(node, this.generateTranslationUniOnProtectedMembers).Create();
+            var constructorDefinitionTranslationUnit = new ConstructorDefinitionTranslationUnitFactory(node, this.semanticModel, this.generateTranslationUniOnProtectedMembers).Create();
             if (constructorDefinitionTranslationUnit == null)
             {
                 // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree

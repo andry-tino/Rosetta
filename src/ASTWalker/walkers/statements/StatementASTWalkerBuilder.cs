@@ -17,12 +17,13 @@ namespace Rosetta.AST
     /// </summary>
     public sealed class StatementASTWalkerBuilder
     {
-        private CSharpSyntaxNode node;
+        private readonly CSharpSyntaxNode node;
+        private readonly SemanticModel semanticModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StatementASTWalkerBuilder"/> class.
         /// </summary>
-        public StatementASTWalkerBuilder(CSharpSyntaxNode node)
+        public StatementASTWalkerBuilder(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
             var statementSyntaxNode = node as StatementSyntax;
             if (statementSyntaxNode == null)
@@ -33,6 +34,7 @@ namespace Rosetta.AST
             }
 
             this.node = node;
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace Rosetta.AST
             {
                 case SyntaxKind.BreakStatement:
                 case SyntaxKind.ContinueStatement:
-                    return KeywordStatementASTWalker.Create(this.node);
+                    return KeywordStatementASTWalker.Create(this.node, this.semanticModel);
 
                 case SyntaxKind.CheckedStatement:
                 case SyntaxKind.DoStatement:
@@ -62,18 +64,18 @@ namespace Rosetta.AST
                     return null;
 
                 case SyntaxKind.IfStatement:
-                    return ConditionalStatementASTWalker.Create(this.node);
+                    return ConditionalStatementASTWalker.Create(this.node, this.semanticModel);
 
                 case SyntaxKind.LabeledStatement:
                     return null;
 
                 case SyntaxKind.LocalDeclarationStatement:
-                    return LocalDeclarationStatementASTWalker.Create(this.node);
+                    return LocalDeclarationStatementASTWalker.Create(this.node, this.semanticModel);
 
                 case SyntaxKind.ExpressionStatement:
                 case SyntaxKind.ReturnStatement:
                 case SyntaxKind.ThrowStatement:
-                    return ExpressionStatementASTWalker.Create(this.node);
+                    return ExpressionStatementASTWalker.Create(this.node, this.semanticModel);
 
                 case SyntaxKind.SwitchStatement:
                 case SyntaxKind.TryStatement:
@@ -96,7 +98,7 @@ namespace Rosetta.AST
         private IASTWalker BuildExpressionStatementTranslationUnit(CSharpSyntaxNode node)
         {
             var expressionStatementNode = node as ExpressionStatementSyntax;
-            var expressionTranslationUnit = new ExpressionTranslationUnitBuilder(expressionStatementNode.Expression).Build();
+            var expressionTranslationUnit = new ExpressionTranslationUnitBuilder(expressionStatementNode.Expression, this.semanticModel).Build();
 
             return null;
         }

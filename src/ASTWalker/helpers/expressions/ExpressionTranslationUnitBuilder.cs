@@ -19,15 +19,23 @@ namespace Rosetta.AST.Helpers
     /// </summary>
     public sealed class ExpressionTranslationUnitBuilder
     {
-        private ExpressionSyntax node;
+        private readonly ExpressionSyntax node;
+        private readonly SemanticModel semanticModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpressionTranslationUnitBuilder"/> class.
         /// </summary>
-        /// <param name="syntaxNode"></param>
-        public ExpressionTranslationUnitBuilder(ExpressionSyntax node)
+        /// <param name="node">The node</param>
+        /// <param name="semanticModel">The semantic model</param>
+        public ExpressionTranslationUnitBuilder(ExpressionSyntax node, SemanticModel semanticModel)
         {
+            if (node == null)
+            {
+                throw new ArgumentNullException(nameof(node), "A node is needed!");
+            }
+
             this.node = node;
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -51,7 +59,7 @@ namespace Rosetta.AST.Helpers
                     {
                         throw new InvalidCastException("Unable to correctly cast expected binary expression to binary expression!");
                     }
-                    return BuildBinaryExpressionTranslationUnit(binaryExpression);
+                    return BuildBinaryExpressionTranslationUnit(binaryExpression, this.semanticModel);
 
                 // Unary expressions
                 case SyntaxKind.PostIncrementExpression:
@@ -66,8 +74,8 @@ namespace Rosetta.AST.Helpers
                         throw new InvalidCastException("Unable to correctly cast expected unary expression to unary expression!");
                     }
                     return prefixUnaryExpression != null ? 
-                        BuildUnaryExpressionTranslationUnit(prefixUnaryExpression) : 
-                        BuildUnaryExpressionTranslationUnit(postfixUnaryExpression);
+                        BuildUnaryExpressionTranslationUnit(prefixUnaryExpression, this.semanticModel) : 
+                        BuildUnaryExpressionTranslationUnit(postfixUnaryExpression, this.semanticModel);
 
                 // Literal expressions
                 case SyntaxKind.NumericLiteralExpression:
@@ -81,7 +89,7 @@ namespace Rosetta.AST.Helpers
                     {
                         throw new InvalidCastException("Unable to correctly cast expected literal expression to literal expression!");
                     }
-                    return BuildLiteralExpressionTranslationUnit(literalExpression);
+                    return BuildLiteralExpressionTranslationUnit(literalExpression, this.semanticModel);
 
                 case SyntaxKind.IdentifierName:
                     var identifierNameExpression = this.node as IdentifierNameSyntax;
@@ -89,7 +97,7 @@ namespace Rosetta.AST.Helpers
                     {
                         throw new InvalidCastException("Unable to correctly cast expected identifier name expression to identifer name expression!");
                     }
-                    return BuildIdentifierNameExpressionTranslationUnit(identifierNameExpression);
+                    return BuildIdentifierNameExpressionTranslationUnit(identifierNameExpression, this.semanticModel);
 
                 case SyntaxKind.InvocationExpression:
                     var invokationExpression = this.node as InvocationExpressionSyntax;
@@ -97,7 +105,7 @@ namespace Rosetta.AST.Helpers
                     {
                         throw new InvalidCastException("Unable to correctly cast expected invokation expression to invokation expression!");
                     }
-                    return BuildInvokationExpressionTranslationUnit(invokationExpression);
+                    return BuildInvokationExpressionTranslationUnit(invokationExpression, this.semanticModel);
 
                 // TODO: Enable when object creation and invocation have been completed
                 //case SyntaxKind.ObjectCreationExpression:
@@ -115,7 +123,7 @@ namespace Rosetta.AST.Helpers
                     {
                         throw new InvalidCastException("Unable to correctly cast expected parenthesized expression to parenthesized expression!");
                     }
-                    return BuildParenthesizedExpressionTranslationUnit(parenthesizedExpression);
+                    return BuildParenthesizedExpressionTranslationUnit(parenthesizedExpression, this.semanticModel);
 
                 // Member access expressions
                 case SyntaxKind.SimpleMemberAccessExpression:
@@ -124,7 +132,7 @@ namespace Rosetta.AST.Helpers
                     {
                         throw new InvalidCastException("Unable to correctly cast expected member access expression to member access expression!");
                     }
-                    return BuildMemberAccessExpressionTranslationUnit(memberAccessExpression);
+                    return BuildMemberAccessExpressionTranslationUnit(memberAccessExpression, this.semanticModel);
 
                 // Assignment expressions
                 case SyntaxKind.AddAssignmentExpression:
@@ -143,13 +151,15 @@ namespace Rosetta.AST.Helpers
                     {
                         throw new InvalidCastException("Unable to correctly cast expected assignment expression to assignment expression!");
                     }
-                    return BuildAssignmentExpressionTranslationUnit(assignmentExpression);
+                    return BuildAssignmentExpressionTranslationUnit(assignmentExpression, this.semanticModel);
             }
 
             throw new InvalidOperationException(string.Format("Cannot build an expression for node type {0}!", this.node.Kind()));
         }
 
-        private static ITranslationUnit BuildBinaryExpressionTranslationUnit(BinaryExpressionSyntax expression)
+        #region Builder methods
+
+        private static ITranslationUnit BuildBinaryExpressionTranslationUnit(BinaryExpressionSyntax expression, SemanticModel semanticModel)
         {
             OperatorToken token = OperatorToken.Undefined;
 
@@ -180,14 +190,14 @@ namespace Rosetta.AST.Helpers
                 throw new InvalidOperationException("Binary operator could not be detected!");
             }
 
-            BinaryExpression binaryExpressionHelper = new BinaryExpression(expression);
-            ITranslationUnit leftHandOperand = new ExpressionTranslationUnitBuilder(binaryExpressionHelper.LeftHandOperand).Build();
-            ITranslationUnit rightHandOperand = new ExpressionTranslationUnitBuilder(binaryExpressionHelper.RightHandOperand).Build();
+            BinaryExpression binaryExpressionHelper = new BinaryExpression(expression, semanticModel);
+            ITranslationUnit leftHandOperand = new ExpressionTranslationUnitBuilder(binaryExpressionHelper.LeftHandOperand, semanticModel).Build();
+            ITranslationUnit rightHandOperand = new ExpressionTranslationUnitBuilder(binaryExpressionHelper.RightHandOperand, semanticModel).Build();
 
             return BinaryExpressionTranslationUnit.Create(leftHandOperand, rightHandOperand, token);
         }
 
-        private static ITranslationUnit BuildUnaryExpressionTranslationUnit(PrefixUnaryExpressionSyntax expression)
+        private static ITranslationUnit BuildUnaryExpressionTranslationUnit(PrefixUnaryExpressionSyntax expression, SemanticModel semanticModel)
         {
             OperatorToken token = OperatorToken.Undefined;
 
@@ -209,13 +219,13 @@ namespace Rosetta.AST.Helpers
                 throw new InvalidOperationException("Unary operator could not be detected!");
             }
 
-            UnaryExpression unaryExpressionHelper = new UnaryExpression(expression);
-            ITranslationUnit operand = new ExpressionTranslationUnitBuilder(unaryExpressionHelper.Operand).Build();
+            UnaryExpression unaryExpressionHelper = new UnaryExpression(expression, semanticModel);
+            ITranslationUnit operand = new ExpressionTranslationUnitBuilder(unaryExpressionHelper.Operand, semanticModel).Build();
 
             return UnaryExpressionTranslationUnit.Create(operand, token, UnaryExpressionTranslationUnit.UnaryPosition.Prefix);
         }
 
-        private static ITranslationUnit BuildUnaryExpressionTranslationUnit(PostfixUnaryExpressionSyntax expression)
+        private static ITranslationUnit BuildUnaryExpressionTranslationUnit(PostfixUnaryExpressionSyntax expression, SemanticModel semanticModel)
         {
             OperatorToken token = OperatorToken.Undefined;
 
@@ -234,13 +244,13 @@ namespace Rosetta.AST.Helpers
                 throw new InvalidOperationException("Unary operator could not be detected!");
             }
 
-            UnaryExpression unaryExpressionHelper = new UnaryExpression(expression);
-            ITranslationUnit operand = new ExpressionTranslationUnitBuilder(unaryExpressionHelper.Operand).Build();
+            UnaryExpression unaryExpressionHelper = new UnaryExpression(expression, semanticModel);
+            ITranslationUnit operand = new ExpressionTranslationUnitBuilder(unaryExpressionHelper.Operand, semanticModel).Build();
 
             return UnaryExpressionTranslationUnit.Create(operand, token, UnaryExpressionTranslationUnit.UnaryPosition.Postfix);
         }
 
-        private static ITranslationUnit BuildLiteralExpressionTranslationUnit(LiteralExpressionSyntax expression)
+        private static ITranslationUnit BuildLiteralExpressionTranslationUnit(LiteralExpressionSyntax expression, SemanticModel semanticModel)
         {
             SyntaxToken token = expression.Token;
 
@@ -266,20 +276,20 @@ namespace Rosetta.AST.Helpers
             throw new InvalidOperationException(string.Format("Cannot build a literal expression for token type {0}!", token.Kind()));
         }
 
-        private static ITranslationUnit BuildParenthesizedExpressionTranslationUnit(ParenthesizedExpressionSyntax expression)
+        private static ITranslationUnit BuildParenthesizedExpressionTranslationUnit(ParenthesizedExpressionSyntax expression, SemanticModel semanticModel)
         {
-            ParenthesizedExpression parenthesizedExpressionHelper = new ParenthesizedExpression(expression);
+            ParenthesizedExpression parenthesizedExpressionHelper = new ParenthesizedExpression(expression, semanticModel);
 
             return ParenthesizedExpressionTranslationUnit.Create(
-                new ExpressionTranslationUnitBuilder(parenthesizedExpressionHelper.Expression).Build());
+                new ExpressionTranslationUnitBuilder(parenthesizedExpressionHelper.Expression, semanticModel).Build());
         }
 
-        private static ITranslationUnit BuildMemberAccessExpressionTranslationUnit(MemberAccessExpressionSyntax expression)
+        private static ITranslationUnit BuildMemberAccessExpressionTranslationUnit(MemberAccessExpressionSyntax expression, SemanticModel semanticModel)
         {
             var thisExpression = expression.Expression as ThisExpressionSyntax;
             var baseExpression = expression.Expression as BaseExpressionSyntax;
 
-            var helper = new MemberAccessExpression(expression);
+            var helper = new MemberAccessExpression(expression, semanticModel);
 
             if (thisExpression != null)
             {
@@ -298,26 +308,26 @@ namespace Rosetta.AST.Helpers
             throw new InvalidOperationException("Cannot build a member access expression as it is not a `this` expression, nor a `base` expression!");
         }
 
-        private static ITranslationUnit BuildAssignmentExpressionTranslationUnit(AssignmentExpressionSyntax expression)
+        private static ITranslationUnit BuildAssignmentExpressionTranslationUnit(AssignmentExpressionSyntax expression, SemanticModel semanticModel)
         {
-            var helper = new AssignmentExpression(expression);
+            var helper = new AssignmentExpression(expression, semanticModel);
 
             return AssignmentExpressionTranslationUnit.Create(
-                new ExpressionTranslationUnitBuilder(helper.LeftHand).Build(), 
-                new ExpressionTranslationUnitBuilder(helper.RightHand).Build(), 
+                new ExpressionTranslationUnitBuilder(helper.LeftHand, semanticModel).Build(), 
+                new ExpressionTranslationUnitBuilder(helper.RightHand, semanticModel).Build(), 
                 helper.Operator);
         }
 
-        private static ITranslationUnit BuildInvokationExpressionTranslationUnit(InvocationExpressionSyntax expression)
+        private static ITranslationUnit BuildInvokationExpressionTranslationUnit(InvocationExpressionSyntax expression, SemanticModel semanticModel)
         {
-            var helper = new InvokationExpression(expression);
+            var helper = new InvokationExpression(expression, semanticModel);
 
             var translationUnit =  InvokationExpressionTranslationUnit.Create(
-                new ExpressionTranslationUnitBuilder(helper.Expression).Build());
+                new ExpressionTranslationUnitBuilder(helper.Expression, semanticModel).Build());
 
             foreach (var argument in helper.Arguments)
             {
-                var argumentTranslationUnit = new ExpressionTranslationUnitBuilder(argument.Expression).Build();
+                var argumentTranslationUnit = new ExpressionTranslationUnitBuilder(argument.Expression, semanticModel).Build();
 
                 translationUnit.AddArgument(argumentTranslationUnit);
             }
@@ -326,18 +336,20 @@ namespace Rosetta.AST.Helpers
         }
 
         // TODO: Enable once invocation expressions have been completed
-        //private static ITranslationUnit BuildObjectCreationExpressionTranslationUnit(ObjectCreationExpressionSyntax expression)
+        //private static ITranslationUnit BuildObjectCreationExpressionTranslationUnit(ObjectCreationExpressionSyntax expression, SemanticModel semanticModel)
         //{
-        //    var helper = new IdentifierExpression(expression);
+        //    var helper = new IdentifierExpression(expression, semanticModel);
 
         //    return IdentifierTranslationUnit.Create(helper.Identifier);
         //}
 
-        private static ITranslationUnit BuildIdentifierNameExpressionTranslationUnit(IdentifierNameSyntax expression)
+        private static ITranslationUnit BuildIdentifierNameExpressionTranslationUnit(IdentifierNameSyntax expression, SemanticModel semanticModel)
         {
-            var helper = new IdentifierExpression(expression);
+            var helper = new IdentifierExpression(expression, semanticModel);
 
             return IdentifierTranslationUnit.Create(helper.Identifier);
         }
+
+        #endregion
     }
 }

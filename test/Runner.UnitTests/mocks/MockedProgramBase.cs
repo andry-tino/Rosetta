@@ -78,6 +78,14 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// <summary>
         /// 
         /// </summary>
+        public string AssemblyPath
+        {
+            get { return this.assemblyPath; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ProjectPath
         {
             get { return this.projectPath; }

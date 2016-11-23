@@ -26,12 +26,15 @@ namespace Rosetta.Executable
 
         // The path to output directory
         private readonly string directory;
+        // The path to assembly
+        private readonly string assemblyPath;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="FileManager"/> class.
         /// </summary>
-        /// <param name="directoryPath"></param>
-        public FileManager(string directoryPath)
+        /// <param name="directoryPath">The folder where to emit files.</param>
+        /// <param name="assemblyPath">The assembly for getting the semantic model.</param>
+        public FileManager(string directoryPath, string assemblyPath = null)
         {
             if (directoryPath == null)
             {
@@ -43,8 +46,15 @@ namespace Rosetta.Executable
                 throw new ArgumentException("Invalid path!", nameof(directoryPath));
             }
 
+            if (assemblyPath != null && !File.Exists(assemblyPath))
+            {
+                throw new ArgumentException(nameof(assemblyPath), "The specified assembly could not be found!");
+            }
+
             this.directory = directoryPath;
-            this.FileConversionProvider = input => string.Empty;
+            this.assemblyPath = assemblyPath;
+
+            this.FileConversionProvider = (input, pathToAssembly) => string.Empty;
 
             this.fileEntries = new List<FileEntry>();
         }
@@ -134,7 +144,7 @@ namespace Rosetta.Executable
         {
             foreach (var entry in this.fileEntries)
             {
-                entry.FileConversion = this.FileConversionProvider(File.ReadAllText(entry.FilePath));
+                entry.FileConversion = this.FileConversionProvider(File.ReadAllText(entry.FilePath), this.assemblyPath);
             }
         }
 

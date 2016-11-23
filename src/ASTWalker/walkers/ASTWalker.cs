@@ -6,6 +6,7 @@
 namespace Rosetta.AST
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
     /// <summary>
@@ -16,6 +17,7 @@ namespace Rosetta.AST
     {
         // Protected for testability
         protected CSharpSyntaxNode node;
+        protected SemanticModel semanticModel;
 
         private ASTWalkerContext context;
 
@@ -23,7 +25,8 @@ namespace Rosetta.AST
         /// Initializes a new instance of the <see cref="ASTWalker"/> class.
         /// </summary>
         /// <param name="node"></param>
-        protected ASTWalker(CSharpSyntaxNode node)
+        /// <param name="semanticModel"></param>
+        protected ASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel)
         {
             if (node == null)
             {
@@ -31,6 +34,7 @@ namespace Rosetta.AST
             }
 
             this.node = node;
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -48,6 +52,7 @@ namespace Rosetta.AST
             }
 
             this.node = other.node;
+            this.semanticModel = other.semanticModel;
         }
 
         /// <summary>

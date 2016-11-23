@@ -26,8 +26,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="module"></param>
-        protected NamespaceASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected NamespaceASTWalker(CSharpSyntaxNode node, ModuleTranslationUnit module, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var namespaceSyntaxNode = node as NamespaceDeclarationSyntax;
             if (namespaceSyntaxNode == null)
@@ -63,11 +64,14 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
         /// <param name="context">The walking context.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static NamespaceASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null)
+        public static NamespaceASTWalker Create(CSharpSyntaxNode node, ASTWalkerContext context = null, SemanticModel semanticModel = null)
         {
-            return new NamespaceASTWalker(node,
-                new ModuleTranslationUnitFactory(node).Create() as ModuleTranslationUnit)
+            return new NamespaceASTWalker(
+                node,
+                new ModuleTranslationUnitFactory(node).Create() as ModuleTranslationUnit,
+                semanticModel)
             {
                 Context = context
             };
@@ -99,7 +103,7 @@ namespace Rosetta.AST
         /// </remarks>
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var classWalker = ClassASTWalker.Create(node, this.CreateWalkingContext());
+            var classWalker = ClassASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = classWalker.Walk();
             this.module.AddClass(translationUnit);
 

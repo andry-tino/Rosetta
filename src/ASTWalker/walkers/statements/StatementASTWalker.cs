@@ -18,7 +18,10 @@ namespace Rosetta.AST
     /// </summary>
     public class StatementASTWalker : CSharpSyntaxWalker, IASTWalker
     {
+        // TODO: Find common base with ASTWalker
+
         protected CSharpSyntaxNode node;
+        protected SemanticModel semanticModel;
         
         /// <summary>
         /// Derives should fill this.
@@ -29,7 +32,7 @@ namespace Rosetta.AST
         /// Initializes a new instance of the <see cref="StatementASTWalker"/> class.
         /// </summary>
         /// <param name="node"></param>
-        protected StatementASTWalker(CSharpSyntaxNode node)
+        protected StatementASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel)
         {
             var statementSyntaxNode = node as StatementSyntax;
             if (statementSyntaxNode == null)
@@ -40,6 +43,7 @@ namespace Rosetta.AST
             }
 
             this.node = node;
+            this.semanticModel = semanticModel;
             this.statement = null;
         }
 
@@ -58,6 +62,7 @@ namespace Rosetta.AST
             }
 
             this.node = other.node;
+            this.semanticModel = other.semanticModel;
             this.statement = other.statement;
         }
 

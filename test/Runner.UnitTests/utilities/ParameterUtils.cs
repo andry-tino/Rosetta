@@ -24,6 +24,16 @@ namespace Rosetta.Runner.UnitTests.Utils
             get { return string.Format("-{0}", Program.FileArgumentChar); }
         }
 
+        public static string AssemblyArgumentParameter
+        {
+            get { return string.Format("--{0}", Program.AssemblyArgumentName); }
+        }
+
+        public static string AssemblyArgumentShortParameter
+        {
+            get { return string.Format("-{0}", Program.AssemblyArgumentChar); }
+        }
+
         public static string ProjectArgumentParameter
         {
             get { return string.Format("--{0}", Program.ProjectArgumentName); }

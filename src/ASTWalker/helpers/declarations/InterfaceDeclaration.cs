@@ -22,11 +22,22 @@ namespace Rosetta.AST.Helpers
         private IEnumerable<BaseTypeReference> interfaces;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClassDeclarationSyntax"/> class.
+        /// Initializes a new instance of the <see cref="InterfaceDeclaration"/> class.
         /// </summary>
-        /// <param name="classDeclarationNode"></param>
+        /// <param name="interfaceDeclarationNode"></param>
         public InterfaceDeclaration(InterfaceDeclarationSyntax interfaceDeclarationNode)
             : base(interfaceDeclarationNode)
+        {
+            this.interfaces = null;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InterfaceDeclaration"/> class.
+        /// </summary>
+        /// <param name="interfaceDeclarationNode"></param>
+        /// <param name="semanticModel"></param>
+        public InterfaceDeclaration(InterfaceDeclarationSyntax interfaceDeclarationNode, SemanticModel semanticModel)
+            : base(interfaceDeclarationNode, semanticModel)
         {
             this.interfaces = null;
         }

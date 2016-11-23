@@ -36,6 +36,14 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         public bool CreateBundle { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets the path to the assembly in order to get the semantic model.
+        /// </summary>
+        /// <remarks>
+        /// Only works if <see cref="CreateBundle"/> is <code>true</code>.
+        /// </remarks>
+        public string AssemblyPath { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the generate bundle file. This name does not include the extension.
         /// </summary>
         /// <remarks>

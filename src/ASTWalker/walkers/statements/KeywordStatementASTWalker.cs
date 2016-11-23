@@ -26,8 +26,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="statement"></param>
-        protected KeywordStatementASTWalker(CSharpSyntaxNode node, KeywordStatementTranslationUnit keywordStatement)
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected KeywordStatementASTWalker(CSharpSyntaxNode node, KeywordStatementTranslationUnit keywordStatement, SemanticModel semanticModel)
+            : base(node, semanticModel)
         {
             var breakSyntaxNode = node as BreakStatementSyntax;
             var continueSyntaxNode = node as ContinueStatementSyntax;
@@ -65,9 +66,13 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="KeywordStatementASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static KeywordStatementASTWalker Create(CSharpSyntaxNode node)
+        public static KeywordStatementASTWalker Create(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
+            // TODO: Use TranslationUnitFactory in order to have AST walkers decoupled from helpers 
+            //       via factories (which will be using helpers)
+
             KeywordStatementTranslationUnit statement;
 
             if (node as BreakStatementSyntax != null)
@@ -83,7 +88,7 @@ namespace Rosetta.AST
                 throw new InvalidOperationException("Unrecognized keyword based statement!");
             }
 
-            return new KeywordStatementASTWalker(node, statement);
+            return new KeywordStatementASTWalker(node, statement, semanticModel);
         }
 
         protected override bool ShouldWalkInto

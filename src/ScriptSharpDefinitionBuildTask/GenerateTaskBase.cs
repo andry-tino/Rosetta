@@ -44,7 +44,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <returns></returns>
         public abstract void Run();
 
-        protected static string PerformFileConversion(string source)
+        protected static string PerformFileConversion(string source, string assemblyPath)
         {
             var program = new ProgramWrapper(source);
 

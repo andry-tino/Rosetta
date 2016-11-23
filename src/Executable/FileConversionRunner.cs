@@ -17,6 +17,7 @@ namespace Rosetta.Executable
 
         // Protected for testability
         protected string filePath;
+        protected string assemblyPath;
         protected string outputFolder;
 
         private string fileName;
@@ -32,7 +33,21 @@ namespace Rosetta.Executable
         /// <param name="outputFolder"></param>
         /// <param name="extension"></param>
         /// <param name="fileName"></param>
-        public FileConversionRunner(ConversionProvider conversionProvider, string filePath, string outputFolder, string extension, string fileName = null)
+        public FileConversionRunner(ConversionProvider conversionProvider, string filePath, string outputFolder, string extension, string fileName = null) 
+            : this(conversionProvider, filePath, null, outputFolder, extension, fileName)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileConversionRunner"/>.
+        /// </summary>
+        /// <param name="outputGenerator"></param>
+        /// <param name="filePath"></param>
+        /// <param name="assemblyPath"></param>
+        /// <param name="outputFolder"></param>
+        /// <param name="extension"></param>
+        /// <param name="fileName"></param>
+        public FileConversionRunner(ConversionProvider conversionProvider, string filePath, string assemblyPath, string outputFolder, string extension, string fileName = null)
         {
             if (conversionProvider == null)
             {
@@ -42,6 +57,10 @@ namespace Rosetta.Executable
             {
                 throw new ArgumentNullException(nameof(filePath));
             }
+            if (assemblyPath != null && !File.Exists(assemblyPath))
+            {
+                throw new ArgumentException(nameof(assemblyPath), "The specified assembly could not be found!");
+            }
             if (extension == null)
             {
                 throw new ArgumentNullException(nameof(extension));
@@ -49,6 +68,7 @@ namespace Rosetta.Executable
 
             this.conversionProvider = conversionProvider;
             this.filePath = filePath;
+            this.assemblyPath = assemblyPath;
             this.outputFolder = outputFolder;
             this.extension = extension;
             this.fileName = fileName;
@@ -80,7 +100,7 @@ namespace Rosetta.Executable
             this.outputFolder = this.GetOutputFolderForFile(this.outputFolder);
 
             // Initializing the file manager
-            this.fileManager = new FileManager(this.outputFolder);
+            this.fileManager = new FileManager(this.outputFolder, this.assemblyPath);
             this.fileManager.FileConversionProvider = this.conversionProvider;
         }
 

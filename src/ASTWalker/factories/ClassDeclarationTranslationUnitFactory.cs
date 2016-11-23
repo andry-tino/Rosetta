@@ -6,6 +6,7 @@
 namespace Rosetta.AST.Factories
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -17,13 +18,17 @@ namespace Rosetta.AST.Factories
     /// </summary>
     public class ClassDeclarationTranslationUnitFactory : ITranslationUnitFactory
     {
+        // TODO: Create common base class for all translation unit factories
+
         private readonly CSharpSyntaxNode node;
+        private readonly SemanticModel semanticModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
-        public ClassDeclarationTranslationUnitFactory(CSharpSyntaxNode node)
+        /// <param name="semanticModel">The semantic model</param>
+        public ClassDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
             if (node == null)
             {
@@ -31,6 +36,7 @@ namespace Rosetta.AST.Factories
             }
 
             this.node = node;
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -39,7 +45,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="MethodDeclarationTranslationUnit"/>.</returns>
         public ITranslationUnit Create()
         {
-            ClassDeclaration helper = new ClassDeclaration(node as ClassDeclarationSyntax);
+            ClassDeclaration helper = new ClassDeclaration(this.node as ClassDeclarationSyntax, this.semanticModel);
 
             var classDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,

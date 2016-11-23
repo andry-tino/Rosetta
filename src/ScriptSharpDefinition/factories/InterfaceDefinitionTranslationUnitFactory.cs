@@ -6,6 +6,7 @@
 namespace Rosetta.ScriptSharp.Definition.AST.Factories
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST.Factories;
@@ -21,8 +22,9 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// Initializes a new instance of the <see cref="InterfaceDefinitionTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
-        public InterfaceDefinitionTranslationUnitFactory(CSharpSyntaxNode node)
-            : base(node)
+        /// <param name="semanticModel">The semantic model</param>
+        public InterfaceDefinitionTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+            : base(node, semanticModel)
         {
         }
 

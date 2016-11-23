@@ -6,24 +6,27 @@
 namespace Rosetta.AST.Factories
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Factory for <see cref="ProgramTranslationUnit"/>.
     /// </summary>
     public class ProgramTranslationUnitFactory : ITranslationUnitFactory
     {
+        // TODO: Create common base class for all translation unit factories
+
         private readonly CSharpSyntaxNode node;
+        private readonly SemanticModel semanticModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
-        public ProgramTranslationUnitFactory(CSharpSyntaxNode node)
+        /// <param name="semanticModel">The semantic model</param>
+        public ProgramTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
             if (node == null)
             {
@@ -31,6 +34,7 @@ namespace Rosetta.AST.Factories
             }
 
             this.node = node;
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -39,7 +43,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="ProgramTranslationUnitFactory"/>.</returns>
         public ITranslationUnit Create()
         {
-            return ProgramTranslationUnit.Create(); ;
+            return ProgramTranslationUnit.Create();
         }
     }
 }

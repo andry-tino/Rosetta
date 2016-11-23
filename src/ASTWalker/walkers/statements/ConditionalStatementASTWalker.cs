@@ -25,8 +25,9 @@ namespace Rosetta.AST
         /// </summary>
         /// <param name="node"></param>
         /// <param name="conditionalStatement"></param>
-        protected ConditionalStatementASTWalker(CSharpSyntaxNode node, ConditionalStatementTranslationUnit conditionalStatement) 
-            : base(node)
+        /// <param name="semanticModel">The semantic model.</param>
+        protected ConditionalStatementASTWalker(CSharpSyntaxNode node, ConditionalStatementTranslationUnit conditionalStatement, SemanticModel semanticModel) 
+            : base(node, semanticModel)
         {
             var statementSyntaxNode = node as IfStatementSyntax;
             if (statementSyntaxNode == null)
@@ -64,14 +65,18 @@ namespace Rosetta.AST
         /// Factory method for class <see cref="ConditionalStatementASTWalker"/>.
         /// </summary>
         /// <param name="node"><see cref="CSharpSyntaxNode"/> Used to initialize the walker.</param>
+        /// <param name="semanticModel">The semantic model.</param>
         /// <returns></returns>
-        public static ConditionalStatementASTWalker Create(CSharpSyntaxNode node)
+        public static ConditionalStatementASTWalker Create(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
+            // TODO: Use TranslationUnitFactory in order to have AST walkers decoupled from helpers 
+            //       via factories (which will be using helpers)
+
             ConditionalStatement helper = new ConditionalStatement(node as IfStatementSyntax);
 
             var statement = ConditionalStatementTranslationUnit.Create(helper.BlocksNumber, helper.HasElseBlock);
 
-            return new ConditionalStatementASTWalker(node, statement);
+            return new ConditionalStatementASTWalker(node, statement, semanticModel);
         }
 
         /// <summary>
@@ -94,7 +99,7 @@ namespace Rosetta.AST
         {
             // Handling conditional expression
             this.Statement.SetTestExpression(
-                new ExpressionTranslationUnitBuilder(node.Condition).Build(), 
+                new ExpressionTranslationUnitBuilder(node.Condition, this.semanticModel).Build(), 
                 index);
 
             // Handling body

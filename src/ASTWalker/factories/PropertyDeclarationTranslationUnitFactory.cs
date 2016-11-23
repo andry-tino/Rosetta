@@ -6,6 +6,7 @@
 namespace Rosetta.AST.Factories
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -17,13 +18,17 @@ namespace Rosetta.AST.Factories
     /// </summary>
     public class PropertyDeclarationTranslationUnitFactory : ITranslationUnitFactory
     {
+        // TODO: Create common base class for all translation unit factories
+
         private readonly CSharpSyntaxNode node;
+        private readonly SemanticModel semanticModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
-        public PropertyDeclarationTranslationUnitFactory(CSharpSyntaxNode node)
+        /// <param name="semanticModel">The semantic model</param>
+        public PropertyDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
         {
             if (node == null)
             {
@@ -31,6 +36,7 @@ namespace Rosetta.AST.Factories
             }
 
             this.node = node;
+            this.semanticModel = semanticModel;
         }
 
         /// <summary>
@@ -44,7 +50,7 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            PropertyDeclaration helper = new PropertyDeclaration(this.node as PropertyDeclarationSyntax);
+            PropertyDeclaration helper = new PropertyDeclaration(this.node as PropertyDeclarationSyntax, this.semanticModel);
 
             var propertyDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,

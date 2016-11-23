@@ -34,7 +34,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
         protected virtual IRunner CreateFileConversionRunner()
         {
-            return new FileConversionRunner(PerformFileConversion, this.filePath, this.outputFolder, Extension, this.fileName);
+            return new FileConversionRunner(PerformFileConversion, this.filePath, this.assemblyPath, this.outputFolder, Extension, this.fileName);
         }
 
         protected virtual void ConvertFile()
@@ -42,7 +42,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             this.FileConversionRunner.Run();
         }
 
-        protected static string PerformFileConversion(string source)
+        protected static string PerformFileConversion(string source, string assemblyPath)
         {
             var program = new ProgramWrapper(source);
 

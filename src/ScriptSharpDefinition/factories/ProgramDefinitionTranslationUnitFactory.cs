@@ -6,6 +6,7 @@
 namespace Rosetta.ScriptSharp.Definition.AST.Factories
 {
     using System;
+    using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST.Factories;
@@ -17,14 +18,13 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     /// </summary>
     public class ProgramDefinitionTranslationUnitFactory : ProgramTranslationUnitFactory
     {
-        private readonly CSharpSyntaxNode node;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramDefinitionTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
-        public ProgramDefinitionTranslationUnitFactory(CSharpSyntaxNode node)
-            : base(node)
+        /// <param name="semanticModel">The semantic model</param>
+        public ProgramDefinitionTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+            : base(node, semanticModel)
         {
         }
     }

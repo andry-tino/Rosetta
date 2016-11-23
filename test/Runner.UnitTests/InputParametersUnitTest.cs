@@ -266,6 +266,30 @@ namespace Rosetta.Runner.UnitTests
 
         #endregion
 
+        #region Parameter Assembly
+
+        [TestMethod]
+        public void AssemblyParameterValueIsStored()
+        {
+            var value = "fileAssembly1";
+
+            var program = new MockedProgram(new string[]
+            {
+                ParameterUtils.FileArgumentParameter,
+                "file1",
+                ParameterUtils.AssemblyArgumentParameter,
+                value,
+                ParameterUtils.OutputArgumentParameter,
+                value
+            });
+            program.Execute();
+
+            Assert.IsNotNull(program.AssemblyPath, "Expecting assembly path!");
+            Assert.AreEqual(value, program.AssemblyPath, "Not matching output folder path!");
+        }
+
+        #endregion
+
         #region Parameter Output
 
         [TestMethod]
