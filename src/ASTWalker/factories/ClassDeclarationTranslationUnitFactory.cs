@@ -50,11 +50,11 @@ namespace Rosetta.AST.Factories
             var classDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
                 IdentifierTranslationUnit.Create(helper.Name),
-                helper.BaseClass == null ? null : IdentifierTranslationUnit.Create(helper.BaseClass.Name)) as ClassDeclarationTranslationUnit;
+                helper.BaseClass == null ? null : IdentifierTranslationUnit.Create(helper.BaseClass.FullName)) as ClassDeclarationTranslationUnit;
 
             foreach (BaseTypeReference implementedInterface in helper.ImplementedInterfaces)
             {
-                classDeclaration.AddImplementedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
+                classDeclaration.AddImplementedInterface(IdentifierTranslationUnit.Create(implementedInterface.FullName));
             }
 
             return classDeclaration;

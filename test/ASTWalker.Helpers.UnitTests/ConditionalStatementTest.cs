@@ -39,9 +39,7 @@ namespace Rosetta.AST.Helpers.UnitTests
                     }
                 }
             ");
-            Class1SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class1SyntaxTree).GetSemanticModel(Class1SyntaxTree);
+            Class1SemanticModel = null;
 
             Class2SyntaxTree = CSharpSyntaxTree.ParseText(@"
                 class Class1 {
@@ -52,9 +50,7 @@ namespace Rosetta.AST.Helpers.UnitTests
                     }
                 }
             ");
-            Class2SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class2SyntaxTree).GetSemanticModel(Class2SyntaxTree);
+            Class2SemanticModel = null;
 
             Class3SyntaxTree = CSharpSyntaxTree.ParseText(@"
                 class Class1 {
@@ -66,9 +62,7 @@ namespace Rosetta.AST.Helpers.UnitTests
                     }
                 }
             ");
-            Class3SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class3SyntaxTree).GetSemanticModel(Class3SyntaxTree);
+            Class3SemanticModel = null;
         }
 
         [ClassCleanup]

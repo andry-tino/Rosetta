@@ -43,24 +43,15 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public string IdentifierName
         {
-            get
-            {
-                return this.ParameterSyntaxNode.Identifier.ValueText;
-            }
+            get { return this.ParameterSyntaxNode.Identifier.ValueText; }
         }
 
         /// <summary>
-        /// Gets the type name.
+        /// Gets the type.
         /// </summary>
-        public string TypeName
+        public TypeReference Type
         {
-            get
-            {
-                var simpleNameSyntaxNode = this.ParameterSyntaxNode.Type as SimpleNameSyntax;
-                return simpleNameSyntaxNode != null ?
-                    simpleNameSyntaxNode.Identifier.ValueText :
-                    this.ParameterSyntaxNode.Type.ToString();
-            }
+            get { return new TypeReference(this.ParameterSyntaxNode.Type, this.SemanticModel); }
         }
 
         /// <summary>

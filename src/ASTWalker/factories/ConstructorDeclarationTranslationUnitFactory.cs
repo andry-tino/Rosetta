@@ -57,7 +57,7 @@ namespace Rosetta.AST.Factories
             foreach (Parameter parameter in helper.Parameters)
             {
                 constructorDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    TypeIdentifierTranslationUnit.Create(parameter.TypeName),
+                    TypeIdentifierTranslationUnit.Create(parameter.Type.FullName),
                     IdentifierTranslationUnit.Create(parameter.IdentifierName)));
             }
 

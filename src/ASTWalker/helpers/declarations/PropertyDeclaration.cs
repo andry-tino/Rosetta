@@ -63,15 +63,9 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the name of the type.
         /// </summary>
-        public string Type
+        public TypeReference Type
         {
-            get
-            {
-                var simpleNameSyntaxNode = this.PropertyDeclarationSyntaxNode.Type as SimpleNameSyntax;
-                return simpleNameSyntaxNode != null ?
-                    simpleNameSyntaxNode.Identifier.ValueText :
-                    this.PropertyDeclarationSyntaxNode.Type.ToString();
-            }
+            get { return new TypeReference(this.PropertyDeclarationSyntaxNode.Type, this.SemanticModel); }
         }
 
         /// <summary>

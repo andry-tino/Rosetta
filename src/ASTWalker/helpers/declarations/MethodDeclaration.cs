@@ -59,17 +59,11 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
-        /// Gets the name of the type.
+        /// Gets the return type.
         /// </summary>
-        public string ReturnType
+        public TypeReference ReturnType
         {
-            get
-            {
-                var simpleNameSyntaxNode = this.MethodDeclarationSyntaxNode.ReturnType as SimpleNameSyntax;
-                return simpleNameSyntaxNode != null ?
-                    simpleNameSyntaxNode.Identifier.ValueText :
-                    this.MethodDeclarationSyntaxNode.ReturnType.ToString();
-            }
+            get { return new TypeReference(this.MethodDeclarationSyntaxNode.ReturnType, this.SemanticModel); }
         }
 
         /// <summary>
@@ -82,7 +76,7 @@ namespace Rosetta.AST.Helpers
                 if (this.parameters == null)
                 {
                     this.parameters = this.MethodDeclarationSyntaxNode.ParameterList.Parameters.Select(
-                        (ParameterSyntax p) => new Parameter(p)).ToList();
+                        p => new Parameter(p, this.SemanticModel)).ToList();
                 }
 
                 return this.parameters;

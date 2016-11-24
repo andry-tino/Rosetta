@@ -17,6 +17,7 @@ namespace Rosetta.AST.Helpers
     /// </summary>
     public class BaseTypeReference : Helper
     {
+        // TODO: Is this really needed?
         private Microsoft.CodeAnalysis.TypeKind? kind;
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace Rosetta.AST.Helpers
         /// This is a minimal constructor, some properties might be unavailable.
         /// </remarks>
         public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode) 
-            : this(baseTypeSyntaxNode, null)
+            : this(baseTypeSyntaxNode, null, Microsoft.CodeAnalysis.TypeKind.Unknown)
         {
         }
 
@@ -40,9 +41,8 @@ namespace Rosetta.AST.Helpers
         /// When providing the semantic model, some properites will be devised from that.
         /// </remarks>
         public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, SemanticModel semanticModel)
-            : base(baseTypeSyntaxNode, semanticModel)
+            : this(baseTypeSyntaxNode, semanticModel, Microsoft.CodeAnalysis.TypeKind.Unknown)
         {
-            this.kind = null;
         }
 
         /// <summary>
@@ -54,7 +54,21 @@ namespace Rosetta.AST.Helpers
         /// Type kind will be stored statically.
         /// </remarks>
         public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, Microsoft.CodeAnalysis.TypeKind kind) 
-            : this(baseTypeSyntaxNode)
+            : this(baseTypeSyntaxNode, null, kind)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeReference"/> class.
+        /// </summary>
+        /// <param name="baseTypeSyntaxNode"></param>
+        /// <param name="semanticModel"></param>
+        /// <param name="kind"></param>
+        /// <remarks>
+        /// Type kind will be stored statically.
+        /// </remarks>
+        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, SemanticModel semanticModel, Microsoft.CodeAnalysis.TypeKind kind)
+            : base(baseTypeSyntaxNode, semanticModel)
         {
             this.kind = kind;
         }
@@ -93,7 +107,34 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
-        /// Gets the type name.
+        /// Gets the base type name.
+        /// </summary>
+        public string FullName
+        {
+            get
+            {
+                var simpleNameSyntaxNode = this.BaseTypeSyntaxNode.Type as SimpleNameSyntax;
+
+                Func<string> noSemanticAction = () => simpleNameSyntaxNode != null ? simpleNameSyntaxNode.Identifier.ValueText : this.BaseTypeSyntaxNode.Type.ToString();
+                Func<SemanticModel, string> semanticAction = (semanticModel) => 
+                {
+                    var symbol = semanticModel.GetSymbolInfo(this.BaseTypeSyntaxNode.Type).Symbol;
+                    if (symbol == null)
+                    {
+                        return noSemanticAction();
+                    }
+                    
+                    var displayFormat = new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
+                    return symbol.ToDisplayString(displayFormat);
+                };
+
+                // TODO: Verify the correctness of the semantic model action
+                return this.ChooseSymbolFrom<string>(noSemanticAction, semanticAction);
+            }
+        }
+
+        /// <summary>
+        /// Gets the base type name.
         /// </summary>
         public string Name
         {
@@ -101,13 +142,10 @@ namespace Rosetta.AST.Helpers
             {
                 var simpleNameSyntaxNode = this.BaseTypeSyntaxNode.Type as SimpleNameSyntax;
                 
-                // TODO: Verify the correctness of the semantic model action
-                return this.ChooseSymbolFrom<string>(
-                    () => simpleNameSyntaxNode != null ? simpleNameSyntaxNode.Identifier.ValueText : this.BaseTypeSyntaxNode.Type.ToString(),
-                    (semanticModel) => semanticModel.GetSymbolInfo(this.BaseTypeSyntaxNode).Symbol.MetadataName);
+                return simpleNameSyntaxNode != null ? simpleNameSyntaxNode.Identifier.ValueText : this.BaseTypeSyntaxNode.Type.ToString();
             }
         }
-        
+
         private BaseTypeSyntax BaseTypeSyntaxNode
         {
             get { return this.SyntaxNode as BaseTypeSyntax; }

@@ -54,7 +54,7 @@ namespace Rosetta.AST.Factories
 
             var propertyDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
-                TypeIdentifierTranslationUnit.Create(helper.Type),
+                TypeIdentifierTranslationUnit.Create(helper.Type.FullName),
                 IdentifierTranslationUnit.Create(helper.Name),
                 helper.HasGet,
                 helper.HasSet);

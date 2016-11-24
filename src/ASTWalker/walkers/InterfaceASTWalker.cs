@@ -112,7 +112,7 @@ namespace Rosetta.AST
             // Properties in TypeScript will be translated as methods as 
             // TypeScript does not support properties in interfaces
             var translationUnit = MethodSignatureDeclarationTranslationUnit.Create(
-                helper.Visibility, TypeIdentifierTranslationUnit.Create(helper.Type), IdentifierTranslationUnit.Create(helper.Name));
+                helper.Visibility, TypeIdentifierTranslationUnit.Create(helper.Type.FullName), IdentifierTranslationUnit.Create(helper.Name));
             
             this.interfaceDeclaration.AddSignature(translationUnit);
 
@@ -135,7 +135,7 @@ namespace Rosetta.AST
             // Properties in TypeScript will be translated as methods as 
             // TypeScript does not support properties in interfaces
             var translationUnit = MethodSignatureDeclarationTranslationUnit.Create(
-                helper.Visibility, TypeIdentifierTranslationUnit.Create(helper.ReturnType), IdentifierTranslationUnit.Create(helper.Name));
+                helper.Visibility, TypeIdentifierTranslationUnit.Create(helper.ReturnType.Name), IdentifierTranslationUnit.Create(helper.Name));
 
             this.interfaceDeclaration.AddSignature(translationUnit);
 

@@ -50,7 +50,7 @@ namespace Rosetta.AST.Factories
 
             foreach (BaseTypeReference implementedInterface in helper.ExtendedInterfaces)
             {
-                interfaceDeclaration.AddExtendedInterface(IdentifierTranslationUnit.Create(implementedInterface.Name));
+                interfaceDeclaration.AddExtendedInterface(IdentifierTranslationUnit.Create(implementedInterface.FullName));
             }
             
             return interfaceDeclaration;

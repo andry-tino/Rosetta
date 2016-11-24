@@ -9,7 +9,8 @@ namespace Rosetta.AST
     using System.IO;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Acts like a wrapper for <see cref="ProgramASTWalker"/> in order to provide 
@@ -92,10 +93,7 @@ namespace Rosetta.AST
 
         private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)
         {
-            var assembly = MetadataReference.CreateFromFile(path);
-            var compilation = CSharpCompilation.Create("LoadedAssembly", new[] { sourceTree }, new[] { assembly });
-
-            this.semanticModel = compilation.GetSemanticModel(sourceTree);
+            this.semanticModel = SemanticHelper.RetrieveSemanticModel("LoadedAssembly", path, sourceTree, true);
         }
     }
 }

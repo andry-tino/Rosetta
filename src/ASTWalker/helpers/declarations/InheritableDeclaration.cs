@@ -93,11 +93,11 @@ namespace Rosetta.AST.Helpers
                                     {
                                         case Roslyn.TypeKind.Class:
                                             ((List<BaseTypeReference>)this.baseTypes).Add(
-                                                new BaseTypeReference(baseType, Roslyn.TypeKind.Class));
+                                                new BaseTypeReference(baseType, this.SemanticModel, Roslyn.TypeKind.Class));
                                             break;
                                         case Roslyn.TypeKind.Interface:
                                             ((List<BaseTypeReference>)this.baseTypes).Add(
-                                                new BaseTypeReference(baseType, Roslyn.TypeKind.Interface));
+                                                new BaseTypeReference(baseType, this.SemanticModel, Roslyn.TypeKind.Interface));
                                             break;
                                         default:
                                             // Not recognized, skip it
@@ -117,15 +117,16 @@ namespace Rosetta.AST.Helpers
 
                             foreach (var baseTypeInfo in baseTypeInfos)
                             {
+                                // Semantic model passed for consistency, but here is actually null
                                 switch (baseTypeInfo.Kind)
                                 {
                                     case Roslyn.TypeKind.Class:
                                         ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            new BaseTypeReference(baseTypeInfo.Node, Roslyn.TypeKind.Class));
+                                            new BaseTypeReference(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Class));
                                         break;
                                     case Roslyn.TypeKind.Interface:
                                         ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            new BaseTypeReference(baseTypeInfo.Node, Roslyn.TypeKind.Interface));
+                                            new BaseTypeReference(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Interface));
                                         break;
                                     default:
                                         // Not recognized, skip it

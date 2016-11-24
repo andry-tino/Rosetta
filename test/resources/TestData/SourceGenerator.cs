@@ -51,9 +51,11 @@ namespace Rosetta.Tests.Data
             Name = "MyClass";
             BaseName = "MyBaseClass";
             NamespaceName = "MyNamespace";
-            Interface1Name = "MyInterface1";
-            Interface2Name = "MyInterface2";
-            Interface3Name = "MyInterface3";
+            // It is important that interfaces start with "I" in the name as we do not use a 
+            // semantic model in this tests, thus we default to the guess strategy
+            Interface1Name = "IMyInterface1";
+            Interface2Name = "IMyInterface2";
+            Interface3Name = "IMyInterface3";
         }
 
         /// <summary>

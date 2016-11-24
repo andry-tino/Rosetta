@@ -34,19 +34,13 @@ namespace Rosetta.AST.Helpers.UnitTests
         {
             // Creating needed resources
             Class1SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class1.Key);
-            Class1SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class1SyntaxTree).GetSemanticModel(Class1SyntaxTree);
+            Class1SemanticModel = null;
 
             Class2SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class2.Key);
-            Class2SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class2SyntaxTree).GetSemanticModel(Class2SyntaxTree);
+            Class2SemanticModel = null;
 
             Class3SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class3.Key);
-            Class3SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class3SyntaxTree).GetSemanticModel(Class3SyntaxTree);
+            Class3SemanticModel = null;
         }
 
         [ClassCleanup]

@@ -9,11 +9,9 @@ namespace Rosetta.ScriptSharp.Definition.AST
     using System.IO;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.AST;
-    using Rosetta.AST.Transformers;
-    using Rosetta.ScriptSharp.Definition.AST.Transformers;
+    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Acts like a wrapper for <see cref="ProgramDefinitionASTWalker"/> in order to provide 
@@ -78,8 +76,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
             this.tree = ASTExtractor.Extract(this.source);
             var node = this.tree.GetRoot();
 
-            IASTTransformer transformer = new ScriptNamespaceBasedASTTransformer();
-            transformer.Transform(ref node);
+            //IASTTransformer transformer = new ScriptNamespaceBasedASTTransformer();
+            //transformer.Transform(ref node);
 
             // Loading the semantic model
             if (this.assemblyPath != null)
@@ -99,10 +97,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
         private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)
         {
-            var assembly = MetadataReference.CreateFromFile(path);
-            var compilation = CSharpCompilation.Create("LoadedAssembly", new[] { sourceTree }, new[] { assembly });
-
-            this.semanticModel = compilation.GetSemanticModel(sourceTree);
+            this.semanticModel = SemanticHelper.RetrieveSemanticModel("LoadedAssembly", path, sourceTree, true);
         }
     }
 }

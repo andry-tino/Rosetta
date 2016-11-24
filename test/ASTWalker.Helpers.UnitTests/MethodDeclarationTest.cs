@@ -30,9 +30,7 @@ namespace Rosetta.AST.Helpers.UnitTests
         {
             // Creating needed resources
             Class11SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class11.Key);
-            Class11SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class11SyntaxTree).GetSemanticModel(Class11SyntaxTree);
+            Class11SemanticModel = null;
         }
 
         [ClassCleanup]
@@ -231,7 +229,7 @@ namespace Rosetta.AST.Helpers.UnitTests
                 typeof(MethodDeclarationSyntax).Name);
 
             MethodDeclaration methodDeclaration = new MethodDeclaration(methodDeclarationNode);
-            string typeName = methodDeclaration.ReturnType;
+            string typeName = methodDeclaration.ReturnType.Name;
 
             Assert.IsNotNull(typeName, "Method name should not be null!");
             Assert.AreNotEqual(string.Empty, typeName, "Method name should not be empty!");

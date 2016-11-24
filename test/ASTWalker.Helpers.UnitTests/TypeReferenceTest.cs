@@ -15,7 +15,7 @@ namespace Rosetta.AST.Helpers.UnitTests
     using Rosetta.Tests.Utils;
 
     /// <summary>
-    /// Tests for <see cref="BaseTypeReference"/> class.
+    /// Tests for <see cref="BaseTypeReference"/> and the <see cref="TypeReference"/> classes.
     /// </summary>
     [TestClass]
     public class BaseTypeReferenceTest
@@ -30,14 +30,10 @@ namespace Rosetta.AST.Helpers.UnitTests
         {
             // Creating needed resources
             Class2SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class2.Key);
-            Class2SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class2SyntaxTree).GetSemanticModel(Class2SyntaxTree);
+            Class2SemanticModel = null;
 
             Class3SyntaxTree = CSharpSyntaxTree.ParseText(TestSuite.Class3.Key);
-            Class3SemanticModel = CSharpCompilation.Create("Class").AddReferences(
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)).AddSyntaxTrees(
-                Class3SyntaxTree).GetSemanticModel(Class3SyntaxTree);
+            Class3SemanticModel = null;
         }
 
         [ClassCleanup]
@@ -58,7 +54,7 @@ namespace Rosetta.AST.Helpers.UnitTests
             ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
             BaseTypeSyntax baseTypeNode = classDeclarationNode.BaseList.Types.FirstOrDefault();
 
-            TestRetrieveTypeName(baseTypeNode, TestSuite.Class2.Value["BaseClassName"]);
+            TestRetrieveTypeName(baseTypeNode, null, TestSuite.Class2.Value["BaseClassName"]);
         }
 
         /// <summary>
@@ -74,22 +70,69 @@ namespace Rosetta.AST.Helpers.UnitTests
             ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
             BaseTypeSyntax baseTypeNode = classDeclarationNode.BaseList.Types.FirstOrDefault();
 
-            TestRetrieveTypeName(baseTypeNode, TestSuite.Class3.Value["Interface1Name"]);
+            TestRetrieveTypeName(baseTypeNode, null, TestSuite.Class3.Value["Interface1Name"]);
+        }
+
+        /// <summary>
+        /// Tests that we render the name and full name when not specifying the semantic model and when doing so.
+        /// </summary>
+        [TestMethod]
+        public void TypeFullNameRenderingSemanticModel()
+        {
+            var tree = CSharpSyntaxTree.ParseText(@"
+            using System;
+            public class MyClass : IDisposable {
+                public void Dispose() { }
+            }
+            ");
+
+            var node = new NodeLocator(tree).LocateLast(typeof(ClassDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(ClassDeclarationSyntax).Name));
+
+            // Loading MSCoreLib
+            var compilation = CSharpCompilation.Create("TestAssembly")
+                  .AddReferences(
+                     MetadataReference.CreateFromFile(
+                       typeof(object).Assembly.Location))
+                  .AddSyntaxTrees(tree);
+            var semanticModel = compilation.GetSemanticModel(tree);
+
+            ClassDeclarationSyntax classDeclarationNode = node as ClassDeclarationSyntax;
+            BaseTypeSyntax baseTypeNode = classDeclarationNode.BaseList.Types.FirstOrDefault();
+
+            TestRetrieveTypeName(baseTypeNode, null, "IDisposable");
+            TestRetrieveTypeName(baseTypeNode, semanticModel, "IDisposable");
+            TestRetrieveTypeFullName(baseTypeNode, null, "IDisposable");
+            TestRetrieveTypeFullName(baseTypeNode, semanticModel, "System.IDisposable");
         }
 
         #region Helpers
 
-        private static void TestRetrieveTypeName(BaseTypeSyntax baseTypeNode, string expected)
+        private static void TestRetrieveTypeName(BaseTypeSyntax baseTypeNode, SemanticModel semanticModel, string expected)
         {
             Assert.IsNotNull(baseTypeNode, "Found node should be of type `{0}`!", 
                 typeof(BaseTypeSyntax).Name);
 
-            BaseTypeReference baseTypeReference = new BaseTypeReference(baseTypeNode);
+            BaseTypeReference baseTypeReference = new BaseTypeReference(baseTypeNode, semanticModel);
             string name = baseTypeReference.Name;
 
             Assert.IsNotNull(name, "Type name should not be null!");
             Assert.AreNotEqual(string.Empty, name, "Type name should not be empty!");
             Assert.AreEqual(expected, name, "Type name is not the one in source!");
+        }
+
+        private static void TestRetrieveTypeFullName(BaseTypeSyntax baseTypeNode, SemanticModel semanticModel, string expected)
+        {
+            Assert.IsNotNull(baseTypeNode, "Found node should be of type `{0}`!",
+                typeof(BaseTypeSyntax).Name);
+
+            BaseTypeReference baseTypeReference = new BaseTypeReference(baseTypeNode, semanticModel);
+            string name = baseTypeReference.FullName;
+
+            Assert.IsNotNull(name, "Type full name should not be null!");
+            Assert.AreNotEqual(string.Empty, name, "Type full name should not be empty!");
+            Assert.AreEqual(expected, name, "Type full name is not the one in source!");
         }
 
         #endregion
