@@ -6,7 +6,6 @@
 namespace Rosetta.AST.Helpers
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -26,10 +25,8 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         /// <param name="classDeclarationNode"></param>
         public ClassDeclaration(ClassDeclarationSyntax classDeclarationNode) 
-            : base(classDeclarationNode)
+            : this(classDeclarationNode, null)
         {
-            this.interfaces = null;
-            this.baseClass = null;
         }
 
         /// <summary>

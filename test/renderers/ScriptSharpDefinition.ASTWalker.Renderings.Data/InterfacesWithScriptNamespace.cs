@@ -120,7 +120,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
             var node = new NodeLocator(tree).LocateLast(typeof(CompilationUnitSyntax)) as CSharpSyntaxNode;
 
             // Transforming
-            new ScriptNamespaceBasedASTTransformer().Transform(ref node);
+            new ScriptNamespaceBasedASTTransformer().Transform(ref tree);
 
             var programNode = node as CompilationUnitSyntax;
 

@@ -8,6 +8,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.AST.Factories;
     using Rosetta.ScriptSharp.Definition.Translation;
@@ -42,6 +43,17 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             VisibilityToken visibility, ITranslationUnit name, ITranslationUnit baseClassName)
         {
             return ClassDefinitionTranslationUnit.Create(visibility, name, baseClassName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        protected override Rosetta.AST.Helpers.ClassDeclaration CreateHelper(ClassDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new Rosetta.ScriptSharp.Definition.AST.Helpers.ClassDeclaration(node, semanticModel);
         }
     }
 }

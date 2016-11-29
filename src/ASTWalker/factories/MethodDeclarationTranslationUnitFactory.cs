@@ -50,7 +50,7 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            MethodDeclaration helper = new MethodDeclaration(this.node as MethodDeclarationSyntax, this.semanticModel);
+            MethodDeclaration helper = this.CreateHelper(this.node as MethodDeclarationSyntax, this.semanticModel);
 
             var methodDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
@@ -97,6 +97,17 @@ namespace Rosetta.AST.Factories
             VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
         {
             return MethodDeclarationTranslationUnit.Create(visibility, returnType, name);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        protected virtual MethodDeclaration CreateHelper(MethodDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new MethodDeclaration(node, semanticModel);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
     using Rosetta.AST;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Transformers;
+    using Rosetta.ScriptSharp.Definition.AST.Transformers;
 
     /// <summary>
     /// Acts like a wrapper for <see cref="ProgramDefinitionASTWalker"/> in order to provide 
@@ -74,19 +76,28 @@ namespace Rosetta.ScriptSharp.Definition.AST
         {
             // Getting the AST node
             this.tree = ASTExtractor.Extract(this.source);
-            var node = this.tree.GetRoot();
-
-            //IASTTransformer transformer = new ScriptNamespaceBasedASTTransformer();
-            //transformer.Transform(ref node);
 
             // Loading the semantic model
+            CSharpCompilation compilation = null;
             if (this.assemblyPath != null)
             {
-                this.LoadSemanticModel(this.assemblyPath, this.tree);
+                compilation = this.GetCompilation(this.assemblyPath, this.tree);
+            }
+
+            IASTTransformer transformer = new ScriptNamespaceBasedASTTransformer();
+            if (compilation != null)
+            {
+                transformer.Transform(ref this.tree, ref compilation);
+                this.semanticModel = SemanticHelper.RetrieveSemanticModel(compilation, this.tree);
+            }
+            else
+            {
+                transformer.Transform(ref this.tree);
             }
 
             // Creating the walker
             // If no semantic model was loaded, null will just be passed
+            var node = this.tree.GetRoot();
             this.walker = ProgramDefinitionASTWalker.Create(node, null, this.semanticModel);
 
             // Translating
@@ -95,9 +106,9 @@ namespace Rosetta.ScriptSharp.Definition.AST
             this.initialized = true;
         }
 
-        private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)
+        private CSharpCompilation GetCompilation(string path, CSharpSyntaxTree sourceTree)
         {
-            this.semanticModel = SemanticHelper.RetrieveSemanticModel("LoadedAssembly", path, sourceTree, true);
+            return SemanticHelper.RetrieveCompilation("LoadedAssembly", path, sourceTree, true);
         }
     }
 }

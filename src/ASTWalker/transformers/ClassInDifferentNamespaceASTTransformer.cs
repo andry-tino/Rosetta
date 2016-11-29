@@ -11,7 +11,7 @@ namespace Rosetta.AST.Transformers
     /// <summary>
     /// Base class for transformers acting on namespaces.
     /// </summary>
-    public abstract class ClassInDifferentNamespaceASTTransformer : IASTTransformer
+    public abstract class ClassInDifferentNamespaceASTTransformer
     {
         private readonly string namespaceFullName;
 
@@ -36,11 +36,5 @@ namespace Rosetta.AST.Transformers
         {
             get { return this.namespaceFullName; }
         }
-
-        /// <summary>
-        /// Transforms the tree.
-        /// </summary>
-        /// <param name="node"></param>
-        public abstract void Transform(ref CSharpSyntaxNode node);
     }
 }

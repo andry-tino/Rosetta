@@ -27,6 +27,30 @@ namespace Rosetta.AST.Helpers
         /// <returns></returns>
         public static SemanticModel RetrieveSemanticModel(string name, string path, CSharpSyntaxTree sourceTree, bool loadMsCoreLib = false)
         {
+            return RetrieveCompilation(name, path, sourceTree, loadMsCoreLib).GetSemanticModel(sourceTree);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="compilation"></param>
+        /// <param name="sourceTree"></param>
+        /// <returns></returns>
+        public static SemanticModel RetrieveSemanticModel(Compilation compilation, CSharpSyntaxTree sourceTree)
+        {
+            return compilation.GetSemanticModel(sourceTree);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="path"></param>
+        /// <param name="sourceTree"></param>
+        /// <param name="loadMsCoreLib"></param>
+        /// <returns></returns>
+        public static CSharpCompilation RetrieveCompilation(string name, string path, CSharpSyntaxTree sourceTree, bool loadMsCoreLib = false)
+        {
             var references = new List<MetadataReference>();
 
             var assembly = MetadataReference.CreateFromFile(path); // The target assembly we want to translate
@@ -38,9 +62,7 @@ namespace Rosetta.AST.Helpers
                 references.Add(mscorelib);
             }
 
-            var compilation = CSharpCompilation.Create(name, new[] { sourceTree }, references);
-
-            return compilation.GetSemanticModel(sourceTree);
+            return CSharpCompilation.Create(name, new[] { sourceTree }, references);
         }
 
         private static PortableExecutableReference GetMsCoreLibMetadataReference()

@@ -63,7 +63,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public TypeReference ReturnType
         {
-            get { return new TypeReference(this.MethodDeclarationSyntaxNode.ReturnType, this.SemanticModel); }
+            get { return this.CreateTypeReferenceHelper(this.MethodDeclarationSyntaxNode.ReturnType, this.SemanticModel); }
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Rosetta.AST.Helpers
                 if (this.parameters == null)
                 {
                     this.parameters = this.MethodDeclarationSyntaxNode.ParameterList.Parameters.Select(
-                        p => new Parameter(p, this.SemanticModel)).ToList();
+                        p => this.CreateParameterHelper(p, this.SemanticModel)).ToList();
                 }
 
                 return this.parameters;
@@ -86,6 +86,28 @@ namespace Rosetta.AST.Helpers
         private MethodDeclarationSyntax MethodDeclarationSyntaxNode
         {
             get { return this.SyntaxNode as MethodDeclarationSyntax; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        protected virtual TypeReference CreateTypeReferenceHelper(TypeSyntax node, SemanticModel semanticModel)
+        {
+            return new TypeReference(node, semanticModel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        protected virtual Parameter CreateParameterHelper(ParameterSyntax node, SemanticModel semanticModel)
+        {
+            return new Parameter(node, semanticModel);
         }
     }
 }

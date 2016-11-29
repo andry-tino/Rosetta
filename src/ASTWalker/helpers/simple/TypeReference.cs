@@ -47,26 +47,15 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the type full name.
         /// </summary>
-        public string FullName
+        public virtual string FullName
         {
             get
             {
                 var simpleNameSyntaxNode = this.TypeSyntaxNode as SimpleNameSyntax;
 
                 Func<string> noSemanticAction = () => simpleNameSyntaxNode != null ? simpleNameSyntaxNode.Identifier.ValueText : this.TypeSyntaxNode.ToString();
-                Func<SemanticModel, string> semanticAction = (semanticModel) =>
-                {
-                    var symbol = semanticModel.GetSymbolInfo(this.TypeSyntaxNode).Symbol;
-                    if (symbol == null)
-                    {
-                        return noSemanticAction();
-                    }
-
-                    var displayFormat = new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
-                    return symbol.ToDisplayString(displayFormat);
-                };
-
-                // TODO: Verify the correctness of the semantic model action
+                Func<SemanticModel, string> semanticAction = (semanticModel) => TryGetTypeSymbolFullName(this.TypeSyntaxNode, this.SemanticModel) ?? noSemanticAction();
+                
                 return this.ChooseSymbolFrom<string>(noSemanticAction, semanticAction);
             }
         }
@@ -84,7 +73,53 @@ namespace Rosetta.AST.Helpers
             }
         }
 
-        private TypeSyntax TypeSyntaxNode
+        /// <summary>
+        /// Tries all possible ways to retrieve the full name using the semantic model.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        /// <exception cref="SymbolNotFoundException"></exception>
+        internal static string GetTypeSymbolFullName(TypeSyntax node, SemanticModel semanticModel)
+        {
+            var value = TryGetTypeSymbolFullName(node, semanticModel);
+            if (value != null)
+            {
+                return value;
+            }
+
+            throw new SymbolNotFoundException(node, semanticModel);
+        }
+
+        /// <summary>
+        /// Tries all possible ways to retrieve the full name using the semantic model.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        internal static string TryGetTypeSymbolFullName(TypeSyntax node, SemanticModel semanticModel)
+        {
+            var displayFormat = new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
+
+            // Symbol can be found via Symbol
+            ISymbol symbol = semanticModel.GetSymbolInfo(node).Symbol;
+            if (symbol != null)
+            {
+                return symbol.ToDisplayString(displayFormat);
+            }
+
+            // Symbol can be found via TypeSymbol
+            ITypeSymbol type = semanticModel.GetTypeInfo(node).Type;
+            if (type != null)
+            {
+                return type.ToDisplayString(displayFormat);
+            }
+
+            // Could not find symbol
+            return null;
+        }
+
+        protected TypeSyntax TypeSyntaxNode
         {
             get { return this.SyntaxNode as TypeSyntax; }
         }

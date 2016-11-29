@@ -70,6 +70,8 @@ namespace Rosetta.AST.Helpers
         {
             get
             {
+                // TODO: Simplify this logic
+
                 if (this.baseTypes == null)
                 {
                     this.baseTypes = new List<BaseTypeReference>();
@@ -79,25 +81,25 @@ namespace Rosetta.AST.Helpers
                     {
                         SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.TypeDeclarationSyntaxNode.BaseList.Types;
 
-                        if (this.SemanticModel != null)
+                        // TODO: Enable back once the semantic model use with AST transformation works again
+                        /*if (this.SemanticModel != null) // Semantic model available, use it!
                         {
-                            // Semantic model available, use it!
                             foreach (BaseTypeSyntax baseType in listSyntax)
                             {
                                 if (baseType.Kind() == SyntaxKind.SimpleBaseType)
                                 {
-                                    ITypeSymbol typeSymbol = this.SemanticModel.GetSymbolInfo(
-                                        baseType.Type).Symbol as ITypeSymbol;
+                                    var symbolInfo = this.SemanticModel.GetSymbolInfo(baseType.Type);
+                                    var typeSymbol = symbolInfo.Symbol as ITypeSymbol;
 
                                     switch (typeSymbol.TypeKind)
                                     {
                                         case Roslyn.TypeKind.Class:
                                             ((List<BaseTypeReference>)this.baseTypes).Add(
-                                                new BaseTypeReference(baseType, this.SemanticModel, Roslyn.TypeKind.Class));
+                                                this.CreateBaseTypeReferenceHelper(baseType, this.SemanticModel, Roslyn.TypeKind.Class));
                                             break;
                                         case Roslyn.TypeKind.Interface:
                                             ((List<BaseTypeReference>)this.baseTypes).Add(
-                                                new BaseTypeReference(baseType, this.SemanticModel, Roslyn.TypeKind.Interface));
+                                                this.CreateBaseTypeReferenceHelper(baseType, this.SemanticModel, Roslyn.TypeKind.Interface));
                                             break;
                                         default:
                                             // Not recognized, skip it
@@ -106,13 +108,9 @@ namespace Rosetta.AST.Helpers
                                 }
                             }
                         }
-                        else
+                        else // Semantic model is not available, guess!*/
                         {
-                            // Semantic model is not available, guess!
-                            ((List<BaseTypeReference>)this.baseTypes).Clear();
-
-                            IEnumerable<BaseTypeSyntax> simpleBaseTypes = listSyntax.Where(
-                                delegate (BaseTypeSyntax node) { return node.Kind() == SyntaxKind.SimpleBaseType; });
+                            IEnumerable<BaseTypeSyntax> simpleBaseTypes = listSyntax.Where(node => node.Kind() == SyntaxKind.SimpleBaseType);
                             IEnumerable<SemanticUtilities.BaseTypeInfo> baseTypeInfos = SemanticUtilities.SeparateClassAndInterfacesBasedOnNames(simpleBaseTypes);
 
                             foreach (var baseTypeInfo in baseTypeInfos)
@@ -122,11 +120,11 @@ namespace Rosetta.AST.Helpers
                                 {
                                     case Roslyn.TypeKind.Class:
                                         ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            new BaseTypeReference(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Class));
+                                            this.CreateBaseTypeReferenceHelper(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Class));
                                         break;
                                     case Roslyn.TypeKind.Interface:
                                         ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            new BaseTypeReference(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Interface));
+                                            this.CreateBaseTypeReferenceHelper(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Interface));
                                         break;
                                     default:
                                         // Not recognized, skip it
@@ -140,7 +138,19 @@ namespace Rosetta.AST.Helpers
                 return this.baseTypes;
             }
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <param name="typeKind"></param>
+        /// <returns></returns>
+        protected virtual BaseTypeReference CreateBaseTypeReferenceHelper(BaseTypeSyntax node, SemanticModel semanticModel, Roslyn.TypeKind typeKind)
+        {
+            return new BaseTypeReference(node, semanticModel, typeKind);
+        }
+
         private TypeDeclarationSyntax TypeDeclarationSyntaxNode
         {
             get { return this.SyntaxNode as TypeDeclarationSyntax; }

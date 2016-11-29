@@ -45,7 +45,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="MethodDeclarationTranslationUnit"/>.</returns>
         public ITranslationUnit Create()
         {
-            ClassDeclaration helper = new ClassDeclaration(this.node as ClassDeclarationSyntax, this.semanticModel);
+            ClassDeclaration helper = this.CreateHelper(this.node as ClassDeclarationSyntax, this.semanticModel);
 
             var classDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
@@ -74,6 +74,17 @@ namespace Rosetta.AST.Factories
             VisibilityToken visibility, ITranslationUnit name, ITranslationUnit baseClassName)
         {
             return ClassDeclarationTranslationUnit.Create(visibility, name, baseClassName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        protected virtual ClassDeclaration CreateHelper(ClassDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new ClassDeclaration(node, semanticModel);
         }
     }
 }

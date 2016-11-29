@@ -19,6 +19,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Helpers
     public class ScriptNamespaceAttributeDecoration
     {
         public const string ScriptNamespaceFullName = "ScriptNamespace";
+        public const string ScriptNamespaceName = "ScriptNamespace";
 
         private AttributeDecoration attribute;
 
