@@ -14,7 +14,7 @@ namespace Rosetta.AST.Factories
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    /// Factory for <see cref="EnumTranslationUnitFactory"/>.
+    /// Factory for <see cref="EnumTranslationUnit"/>.
     /// </summary>
     public class EnumTranslationUnitFactory : ITranslationUnitFactory
     {

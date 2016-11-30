@@ -47,6 +47,14 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
+        /// Gets the values of the enum.
+        /// </summary>
+        public IEnumerable<string> Values
+        {
+            get { return null; }
+        }
+
+        /// <summary>
         /// Gets the name.
         /// </summary>
         public string Name

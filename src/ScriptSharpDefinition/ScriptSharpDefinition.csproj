@@ -125,6 +125,7 @@
     <Compile Include="translation\PropertyDefinitionTranslationUnit.cs" />
     <Compile Include="translation\utilities\SyntaxUtility.cs" />
     <Compile Include="walkers\ClassDefinitionASTWalker.cs" />
+    <Compile Include="walkers\EnumDefinitionASTWalker.cs" />
     <Compile Include="walkers\NamespaceDefinitionASTWalker.cs" />
     <Compile Include="walkers\ProgramDefinitionASTWalker.cs" />
   </ItemGroup>

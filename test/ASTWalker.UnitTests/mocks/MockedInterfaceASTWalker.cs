@@ -21,7 +21,7 @@ namespace Rosetta.AST.UnitTests.Mocks
             this.interfaceDeclaration = MockedInterfaceDeclarationTranslationUnit.Create(this.interfaceDeclaration);
         }
 
-        public new static MockedInterfaceASTWalker Create(CSharpSyntaxNode node)
+        public static MockedInterfaceASTWalker Create(CSharpSyntaxNode node)
         {
             return new MockedInterfaceASTWalker(InterfaceASTWalker.Create(node));
         }

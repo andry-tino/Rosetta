@@ -12,6 +12,7 @@ namespace Rosetta.Translation
     /// </summary>
     public class IdentifierTranslationUnit : ITranslationUnit
     {
+        // TODO: Use a translation unit
         private string name;
 
         /// <summary>

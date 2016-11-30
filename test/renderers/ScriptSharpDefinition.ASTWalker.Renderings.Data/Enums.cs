@@ -45,6 +45,17 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
             ");
         }
 
+        [RenderingResource("EnumWithValuesWithEqualsExpr.d.ts")]
+        public string RenderEnumWithValuesWithEqualsExpr()
+        {
+            return GetTranslation(@"
+                public enum Enum1 {
+                    Value1 = 0,
+                    Value2 = 1
+                }
+            ");
+        }
+
         private static string GetTranslation(string source)
         {
             // Getting the AST node

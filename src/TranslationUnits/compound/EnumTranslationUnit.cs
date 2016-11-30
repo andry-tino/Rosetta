@@ -7,6 +7,7 @@ namespace Rosetta.Translation
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Describes enums.
@@ -18,7 +19,7 @@ namespace Rosetta.Translation
         ITranslationUnit, ICompoundTranslationUnit, ITranslationInjector
     {
         // Inner units
-        protected IEnumerable<ITranslationUnit> values;
+        protected IEnumerable<ITranslationUnit> members;
 
         // Injected units
         protected ITranslationUnit injectedBefore;
@@ -29,7 +30,7 @@ namespace Rosetta.Translation
         protected EnumTranslationUnit() : base()
         {
             this.Name = IdentifierTranslationUnit.Empty;
-            this.values = new List<ITranslationUnit>();
+            this.members = new List<ITranslationUnit>();
 
             this.injectedBefore = null;
         }
@@ -45,7 +46,7 @@ namespace Rosetta.Translation
             : base(other)
         {
             this.Name = other.Name;
-            this.values = other.values;
+            this.members = other.members;
 
             this.injectedBefore = other.injectedBefore;
         }
@@ -82,7 +83,7 @@ namespace Rosetta.Translation
         /// </summary>
         public IEnumerable<ITranslationUnit> InnerUnits
         {
-            get { return this.values; }
+            get { return this.members; }
         }
 
         /// <summary>
@@ -148,12 +149,19 @@ namespace Rosetta.Translation
                 Lexems.OpenCurlyBracket);
             }
 
-            if (this.ShouldRenderValues)
+            if (this.ShouldRenderMembers)
             {
-                foreach (ITranslationUnit translationUnit in this.values)
+                var lastMember = this.members.Count() > 0 ? this.members.Last() : null;
+                foreach (ITranslationUnit translationUnit in this.members)
                 {
-                    // TODO: Remove last colon
-                    writer.WriteLine("{0}{1}", translationUnit.Translate(), Lexems.Colon);
+                    if ((object)translationUnit == (object)lastMember)
+                    {
+                        writer.WriteLine("{0}", translationUnit.Translate());
+                    }
+                    else
+                    {
+                        writer.WriteLine("{0}{1}", translationUnit.Translate(), Lexems.Comma);
+                    }
                 }
             }
 
@@ -171,7 +179,7 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         /// <param name="translationUnit"></param>
-        public void AddValue(ITranslationUnit translationUnit)
+        public void AddMember(ITranslationUnit translationUnit)
         {
             if (translationUnit == null)
             {
@@ -183,7 +191,7 @@ namespace Rosetta.Translation
                 ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
             }
 
-            ((List<ITranslationUnit>)this.values).Add(translationUnit);
+            ((List<ITranslationUnit>)this.members).Add(translationUnit);
         }
 
         #endregion
@@ -193,7 +201,7 @@ namespace Rosetta.Translation
             get { return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
         }
 
-        protected virtual bool ShouldRenderValues
+        protected virtual bool ShouldRenderMembers
         {
             get { return true; }
         }

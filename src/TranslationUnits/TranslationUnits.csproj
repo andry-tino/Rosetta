@@ -77,6 +77,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScopedElementTranslationUnit.cs" />
     <Compile Include="simple\ArgumentDefinitionTranslationUnit.cs" />
+    <Compile Include="simple\EnumMemberTranslationUnit.cs" />
     <Compile Include="simple\FieldDeclarationTranslationUnit.cs" />
     <Compile Include="simple\IdentifierTranslationUnit.cs" />
     <Compile Include="compound\expressions\LiteralTranslationUnit.cs" />

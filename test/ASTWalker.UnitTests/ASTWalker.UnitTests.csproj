@@ -52,11 +52,14 @@
   <ItemGroup>
     <Compile Include="ClassTest.cs" />
     <Compile Include="ConstructorTest.cs" />
+    <Compile Include="EnumTest.cs" />
     <Compile Include="InterfaceTest.cs" />
     <Compile Include="mocks\MockedConditionalStatementASTWalker.cs" />
     <Compile Include="mocks\MockedConditionalStatementTranslationUnit.cs" />
     <Compile Include="mocks\MockedConstructorASTWalker.cs" />
     <Compile Include="mocks\MockedConstructorDeclarationTranslationUnit.cs" />
+    <Compile Include="mocks\MockedEnumASTWalker.cs" />
+    <Compile Include="mocks\MockedEnumTranslationUnit.cs" />
     <Compile Include="mocks\MockedInterfaceASTWalker.cs" />
     <Compile Include="mocks\MockedInterfaceDeclarationTranslationUnit.cs" />
     <Compile Include="mocks\MockedLocalDeclarationStatementTranslationUnit.cs" />

@@ -107,6 +107,7 @@
     <Compile Include="exceptions\UnsupportedSyntaxException.cs" />
     <Compile Include="factories\ClassDeclarationTranslationUnitFactory.cs" />
     <Compile Include="factories\ConstructorDeclarationTranslationUnitFactory.cs" />
+    <Compile Include="factories\EnumMemberTranslationUnitFactory.cs" />
     <Compile Include="factories\EnumTranslationUnitFactory.cs" />
     <Compile Include="factories\FieldDeclarationTranslationUnitFactory.cs" />
     <Compile Include="factories\InterfaceDeclarationTranslationUnitFactory.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="factories\PropertyDeclarationTranslationUnitFactory.cs" />
     <Compile Include="helpers\declarations\ConstructorDeclaration.cs" />
     <Compile Include="helpers\declarations\EnumDeclaration.cs" />
+    <Compile Include="helpers\declarations\EnumMemberDeclaration.cs" />
     <Compile Include="helpers\declarations\FieldDeclaration.cs" />
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
     <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
@@ -166,6 +168,7 @@
     <Compile Include="Types.cs" />
     <Compile Include="WalkerEventArgs.cs" />
     <Compile Include="walkers\ConstructorASTWalker.cs" />
+    <Compile Include="walkers\EnumASTWalker.cs" />
     <Compile Include="walkers\InterfaceASTWalker.cs" />
     <Compile Include="walkers\MethodASTWalker.cs" />
     <Compile Include="walkers\NamespaceASTWalker.cs" />

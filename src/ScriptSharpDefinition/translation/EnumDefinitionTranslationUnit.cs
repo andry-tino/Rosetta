@@ -65,9 +65,9 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             }
         }
 
-        protected override bool ShouldRenderValues
+        protected override bool ShouldRenderMembers
         {
-            get { return false; }
+            get { return true; }
         }
     }
 }
