@@ -6,8 +6,8 @@
 namespace Rosetta.Runner
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
+    using System.Linq;
     
     using Rosetta.Executable;
     using Rosetta.Executable.Exceptions;
@@ -24,13 +24,13 @@ namespace Rosetta.Runner
     {
         protected static Program instance;
 
-        protected string filePath = null;         // File to convert
-        protected string assemblyPath = null;     // Assembly to use
-        protected string projectPath = null;      // Project to convert
-        protected string outputFolder = null;     // The output folder path for destination files
-        protected string fileName = null;         // The output file name
-        protected bool verbose = false;           // Verbosity
-        protected bool help = false;              // Show help message
+        protected string filePath = null;                       // File to convert
+        protected string assemblyPath = null;                   // Assembly to use
+        protected string projectPath = null;                    // Project to convert
+        protected string outputFolder = null;                   // The output folder path for destination files
+        protected string fileName = null;                       // The output file name
+        protected bool verbose = false;                         // Verbosity
+        protected bool help = false;                            // Show help message
 
         protected FileManager fileManager;
 

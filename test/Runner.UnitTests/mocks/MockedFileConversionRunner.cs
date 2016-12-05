@@ -19,12 +19,9 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// Initializes a new instance of the <see cref="MockedFileConversionRunner"/> class.
         /// </summary>
         /// <param name="conversionProvider"></param>
-        /// <param name="filePath"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="extension"></param>
-        /// <param name="fileName"></param>
-        public MockedFileConversionRunner(ConversionProvider conversionProvider, string filePath, string outputFolder, string extension, string fileName = null)
-            : base(conversionProvider, filePath, outputFolder, extension, fileName)
+        /// <param name="arguments"></param>
+        public MockedFileConversionRunner(ConversionProvider conversionProvider, ConversionArguments arguments)
+            : base(conversionProvider, arguments)
         {
         }
         

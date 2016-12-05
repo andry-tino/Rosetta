@@ -10,8 +10,7 @@ namespace Rosetta.Executable
     /// <summary>
     /// Defines a delegate for defining the logic to convert the code.
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="assemblyPath"></param>
+    /// <param name="arguments">The arguments.</param>
     /// <returns></returns>
-    public delegate string ConversionProvider(string source, string assemblyPath);
+    public delegate string ConversionProvider(ConversionArguments arguments);
 }

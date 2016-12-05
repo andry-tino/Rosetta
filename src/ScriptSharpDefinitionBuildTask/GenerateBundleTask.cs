@@ -27,7 +27,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <param name="outputFolder"></param>
         /// <param name="bundleName"></param>
         public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string bundleName = "Bundle") 
-            : this(sourceFiles, outputFolder, null, bundleName)
+            : this(sourceFiles, outputFolder, null, null, bundleName)
         {
         }
 
@@ -39,7 +39,20 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <param name="assemblyPath"></param>
         /// <param name="bundleName"></param>
         public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath, string bundleName = "Bundle")
-            : base(sourceFiles, outputFolder, assemblyPath)
+            : this(sourceFiles, outputFolder, assemblyPath, null, bundleName)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenerateBundleTask"/> class.
+        /// </summary>
+        /// <param name="sourceFiles"></param>
+        /// <param name="outputFolder"></param>
+        /// <param name="assemblyPath"></param>
+        /// <param name="references"></param>
+        /// <param name="bundleName"></param>
+        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath, IEnumerable<string> references, string bundleName = "Bundle")
+            : base(sourceFiles, outputFolder, assemblyPath, references)
         {
             this.bundleName = bundleName;
 
@@ -79,7 +92,12 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
         private void ConvertFile(string filePath)
         {
-            var runner = new FileSilentConversionRunner(PerformFileConversion, filePath, this.outputFolder, extension);
+            var runner = new FileSilentConversionRunner(PerformFileConversion, new ConversionArguments()
+            {
+                FilePath = filePath,
+                OutputDirectory = this.outputFolder,
+                Extension = extension
+            });
             runner.Run();
 
             this.outputs.Add(new FileConversionInfo() { FileName = FileManager.GetFileNameWithExtension(filePath), FileConversion = runner.FileConversion });

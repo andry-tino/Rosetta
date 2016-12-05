@@ -7,7 +7,9 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
+    using Rosetta.Executable;
     using Rosetta.ScriptSharp.Definition.AST;
 
     /// <summary>
@@ -18,6 +20,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         protected const string extension = "d.ts";
 
         protected readonly IEnumerable<string> sourceFiles;
+        protected readonly IEnumerable<string> references;
         protected readonly string assemblyPath;
         protected readonly string outputFolder;
 
@@ -27,7 +30,8 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <param name="sourceFiles"></param>
         /// <param name="outputFolder"></param>
         /// <param name="assemblyPath"></param>
-        public GenerateTaskBase(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath = null)
+        /// <param name="references"></param>
+        public GenerateTaskBase(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath = null, IEnumerable<string> references = null)
         {
             if (sourceFiles == null)
             {
@@ -41,6 +45,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             this.sourceFiles = sourceFiles;
             this.assemblyPath = assemblyPath;
             this.outputFolder = outputFolder;
+            this.references = references;
         }
 
         /// <summary>
@@ -49,9 +54,14 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <returns></returns>
         public abstract void Run();
 
-        protected static string PerformFileConversion(string source, string assemblyPath)
+        protected static string PerformFileConversion(ConversionArguments arguments)
         {
-            var program = new ProgramWrapper(source, assemblyPath);
+            var program = new ProgramWrapper(
+                arguments.Source, 
+                arguments.AssemblyPath, 
+                arguments.References != null && arguments.References.Count() > 0 
+                    ? arguments.References.ToArray() 
+                    : null);
 
             return program.Output;
         }

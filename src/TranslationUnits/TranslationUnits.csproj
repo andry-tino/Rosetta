@@ -59,6 +59,7 @@
     <Compile Include="compound\statements\ExpressionStatementTranslationUnit.cs" />
     <Compile Include="compound\statements\KeywordStatementTranslationUnit.cs" />
     <Compile Include="compound\statements\LocalDeclarationStatementTranslationUnit.cs" />
+    <Compile Include="compound\statements\ReferencesGroupTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementTranslationUnit.cs" />
     <Compile Include="compound\statements\StatementsGroupTranslationUnit.cs" />
     <Compile Include="formatters\WhiteSpaceInvariantFormatter.cs" />
@@ -81,6 +82,8 @@
     <Compile Include="simple\FieldDeclarationTranslationUnit.cs" />
     <Compile Include="simple\IdentifierTranslationUnit.cs" />
     <Compile Include="compound\expressions\LiteralTranslationUnit.cs" />
+    <Compile Include="simple\ReferenceTranslationUnit.cs" />
+    <Compile Include="simple\SingleLineCommentTranslationUnit.cs" />
     <Compile Include="simple\TypeIdentifierTranslationUnit.cs" />
     <Compile Include="simple\VariableDeclarationTranslationUnit.cs" />
     <Compile Include="simple\VoidTranslationUnit.cs" />

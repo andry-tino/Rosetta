@@ -6,8 +6,8 @@
 namespace Rosetta.ScriptSharp.Definition.Runner
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Rosetta.Executable;
     using Rosetta.Executable.Exceptions;
@@ -24,15 +24,14 @@ namespace Rosetta.ScriptSharp.Definition.Runner
     {
         protected static Program instance;
 
-        protected string filePath = null;         // File to convert
-        protected string assemblyPath = null;     // Assembly to use
-        protected string outputFolder = null;     // The output folder path for destination files
-        protected string fileName = null;         // The output file name
-        protected bool verbose = false;           // Verbosity
-        protected bool help = false;              // Show help message
-
-        protected FileManager fileManager;
-
+        protected string filePath = null;                       // File to convert
+        protected string assemblyPath = null;                   // Assembly to use
+        protected string outputFolder = null;                   // The output folder path for destination files
+        protected string fileName = null;                       // The output file name
+        protected List<string> includes = new List<string>();   // The included files to be emitted as references
+        protected bool verbose = false;                         // Verbosity
+        protected bool help = false;                            // Show help message
+        
         public const string UnnamedArgumentName = "unnamed";
 
         public const string FileArgumentName        = "file";
@@ -43,6 +42,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         public const string OutputArgumentChar      = "o";
         public const string FileNameArgumentName    = "filename";
         public const string FileNameArgumentChar    = "n";
+        public const string IncludeArgumentName     = "include";
+        public const string IncludeArgumentChar     = "i";
         public const string VerboseArgumentName     = "verbose";
         public const string VerboseArgumentChar     = "v";
         public const string HelpArgumentName        = "help";
@@ -66,6 +67,11 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         public string FileNameOption
         {
             get { return string.Format("{0}|{1}=", FileNameArgumentName, FileNameArgumentChar); }
+        }
+
+        public string IncludeOption
+        {
+            get { return string.Format("{0}|{1}=", IncludeArgumentName, IncludeArgumentChar); }
         }
 
         public string VerboseOption
@@ -104,6 +110,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
                   value => this.outputFolder = value },
                 { FileNameOption, "The {FILENAME} to use for output file. Valid only when {FILE} is specified.",
                   value => this.fileName = value },
+                { IncludeOption, "The {FILENAME} to include as reference in the emitted definition.",
+                  value => this.includes.Add(value) },
                 { VerboseOption, "Increase debug message {VERBOSE} level.",
                   value => this.verbose = value != null },
                 { HelpOption,  "Show this message and exit.",

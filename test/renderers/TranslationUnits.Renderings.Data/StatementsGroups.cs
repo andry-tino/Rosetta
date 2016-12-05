@@ -15,13 +15,18 @@ namespace Rosetta.Translation.Renderings.Data
     public class StatementsGroups
     {
         /// <summary>
-        /// TODO: Implement
+        /// Renders a group of references.
         /// </summary>
         /// <returns></returns>
-        [RenderingResource("SimpleGroup.ts")]
-        public string RenderSimpleGroup()
+        [RenderingResource("ReferencesGroup.ts")]
+        public string RenderReferencesGroup()
         {
-            ITranslationUnit translationUnit = null;
+            ITranslationUnit translationUnit = TranslationUnitBuilder.BuildReferencesGroupTranslationUnit(new[] 
+            {
+                "file1.ts",
+                "file2.ts",
+                "file3.ts"
+            });
 
             return translationUnit.Translate();
         }

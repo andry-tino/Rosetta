@@ -6,6 +6,7 @@
 namespace Rosetta.ScriptSharp.Definition.Runner
 {
     using System;
+    using System.Linq;
     
     using Rosetta.Executable;
     using Rosetta.ScriptSharp.Definition.AST;
@@ -34,7 +35,15 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
         protected virtual IRunner CreateFileConversionRunner()
         {
-            return new FileConversionRunner(PerformFileConversion, this.filePath, this.assemblyPath, this.outputFolder, Extension, this.fileName);
+            return new FileConversionRunner(PerformFileConversion, new ConversionArguments()
+            {
+                FilePath = this.filePath,
+                AssemblyPath = this.assemblyPath,
+                OutputDirectory = this.outputFolder,
+                Extension = Extension,
+                FileName = this.fileName,
+                References = this.includes
+            });
         }
 
         protected virtual void ConvertFile()
@@ -42,9 +51,14 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             this.FileConversionRunner.Run();
         }
 
-        protected static string PerformFileConversion(string source, string assemblyPath)
+        protected static string PerformFileConversion(ConversionArguments arguments)
         {
-            var program = new ProgramWrapper(source, assemblyPath);
+            var program = new ProgramWrapper(
+                arguments.Source,
+                arguments.AssemblyPath,
+                arguments.References != null && arguments.References.Count() > 0
+                    ? arguments.References.ToArray()
+                    : null);
 
             return program.Output;
         }

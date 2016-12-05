@@ -39,6 +39,7 @@ namespace Rosetta.Translation.Renderings
                     DataProvider.MethodsMethodsProvider,
                     DataProvider.MethodSignaturesMethodsProvider,
                     DataProvider.PropertiesMethodsProvider,
+                    DataProvider.ReferencesMethodsProvider,
                     DataProvider.ConstructorsMethodsProvider,
                     DataProvider.MembersMethodsProvider,
                     DataProvider.BinaryExpressionsMethodsProvider,

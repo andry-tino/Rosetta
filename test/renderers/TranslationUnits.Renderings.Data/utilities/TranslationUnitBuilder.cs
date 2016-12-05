@@ -256,6 +256,11 @@ namespace Rosetta.Translation.Renderings.Data
                 expression);
         }
 
+        public static ITranslationUnit BuildReferenceTranslationUnit(string path)
+        {
+            return ReferenceTranslationUnit.Create(path);
+        }
+
         #region Expressions
 
         /// <summary>
@@ -424,6 +429,23 @@ namespace Rosetta.Translation.Renderings.Data
         public static ITranslationUnit BuildThrowStatementTranslationUnit()
         {
             return ExpressionStatementTranslationUnit.CreateThrow();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="references"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildReferencesGroupTranslationUnit(string[] references)
+        {
+            var translationUnit = ReferencesGroupTranslationUnit.Create();
+
+            foreach (var reference in references)
+            {
+                translationUnit.AddStatement(ReferenceTranslationUnit.Create(reference));
+            }
+
+            return translationUnit;
         }
 
         #endregion

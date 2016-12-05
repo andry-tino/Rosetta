@@ -213,6 +213,16 @@ namespace Rosetta.Translation
         public const string MinusMinus = "--";
 
         /// <summary>
+        /// String rendering constant for single line comment. 
+        /// </summary>
+        public const string SingleLineComment = "//";
+
+        /// <summary>
+        /// String rendering constant for single line comment like in XML comments. 
+        /// </summary>
+        public const string SingleLineXmlStyleComment = "///";
+
+        /// <summary>
         /// String rendering constant for newline token. 
         /// </summary>
         public static string Newline = Environment.NewLine;

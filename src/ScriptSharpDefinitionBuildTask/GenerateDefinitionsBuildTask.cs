@@ -25,6 +25,13 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         public ITaskItem[] Files { get; set; }
 
         /// <summary>
+        /// Gets or sets the collection of referenced files.
+        /// This will cause references in the final file or bundle to be included in the emitted code.
+        /// The references to files are emitted as they are, no normalization nor validation on paths is performed.
+        /// </summary>
+        public ITaskItem[] References { get; set; }
+
+        /// <summary>
         /// Gets or sets the path to the folder where to store files.
         /// </summary>
         [Required]
@@ -107,6 +114,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
         private GenerateTaskBase CreateTask()
         {
+            // TODO: Wire up assembly and references
             return this.CreateBundle
                 ? new GenerateBundleTask(this.SourceFiles, this.OutputFolder, this.BundleName)
                 : new GenerateFilesTask(this.SourceFiles, this.OutputFolder) as GenerateTaskBase;

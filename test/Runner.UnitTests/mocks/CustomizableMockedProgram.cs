@@ -37,7 +37,13 @@ namespace Rosetta.Runner.UnitTests.Mocks
 
         protected override IRunner CreateFileConversionRunner()
         {
-            return new CustomizableFileConversionRunner(this.emitFilesRoutine, this.prepareFilesRoutine, PerformFileConversion, this.filePath, this.outputFolder, Extension, this.fileName);
+            return new CustomizableFileConversionRunner(this.emitFilesRoutine, this.prepareFilesRoutine, PerformFileConversion, new ConversionArguments()
+            {
+                FilePath = this.filePath,
+                OutputDirectory = this.outputFolder,
+                Extension = Extension,
+                FileName = this.fileName
+            });
         }
 
         /// <summary>

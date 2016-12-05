@@ -69,7 +69,7 @@ namespace Rosetta.Translation
             {
                 writer.WriteLine("{0}{1}",
                     statement.Translate(),
-                    ShouldRenderSemicolon(statement) ? Lexems.Semicolon : string.Empty);
+                    this.ShouldRenderSemicolon(statement) ? Lexems.Semicolon : string.Empty);
             }
 
             return writer.ToString();
@@ -81,7 +81,7 @@ namespace Rosetta.Translation
         /// 
         /// </summary>
         /// <param name="statement"></param>
-        public void AddStatement(ITranslationUnit statement)
+        public virtual void AddStatement(ITranslationUnit statement)
         {
             if (statement == null)
             {
@@ -96,7 +96,7 @@ namespace Rosetta.Translation
 
         #endregion
 
-        private static bool ShouldRenderSemicolon(ITranslationUnit statement)
+        protected virtual bool ShouldRenderSemicolon(ITranslationUnit statement)
         {
             var type = statement.GetType();
 

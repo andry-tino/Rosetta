@@ -13,65 +13,32 @@ namespace Rosetta.Executable
     /// </summary>
     public class FileConversionRunner : IRunner
     {
-        ConversionProvider conversionProvider;
-
-        // Protected for testability
-        protected string filePath;
-        protected string assemblyPath;
-        protected string outputFolder;
-
-        private string fileName;
-        private string extension;
-
+        protected readonly ConversionProvider conversionProvider;
+        protected readonly ConversionArguments arguments;
+        
         protected FileManager fileManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileConversionRunner"/>.
+        /// Initializes a new instance of the <see cref="FileConversionRunner"/> class.
         /// </summary>
-        /// <param name="outputGenerator"></param>
-        /// <param name="filePath"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="extension"></param>
-        /// <param name="fileName"></param>
-        public FileConversionRunner(ConversionProvider conversionProvider, string filePath, string outputFolder, string extension, string fileName = null) 
-            : this(conversionProvider, filePath, null, outputFolder, extension, fileName)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FileConversionRunner"/>.
-        /// </summary>
-        /// <param name="outputGenerator"></param>
-        /// <param name="filePath"></param>
-        /// <param name="assemblyPath"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="extension"></param>
-        /// <param name="fileName"></param>
-        public FileConversionRunner(ConversionProvider conversionProvider, string filePath, string assemblyPath, string outputFolder, string extension, string fileName = null)
+        /// <param name="conversionProvider"></param>
+        /// <param name="arguments"></param>
+        public FileConversionRunner(ConversionProvider conversionProvider, ConversionArguments arguments)
         {
             if (conversionProvider == null)
             {
                 throw new ArgumentNullException(nameof(conversionProvider));
             }
-            if (filePath == null)
+            if (arguments == null)
             {
-                throw new ArgumentNullException(nameof(filePath));
-            }
-            if (assemblyPath != null && !File.Exists(assemblyPath))
-            {
-                throw new ArgumentException(nameof(assemblyPath), "The specified assembly could not be found!");
-            }
-            if (extension == null)
-            {
-                throw new ArgumentNullException(nameof(extension));
+                throw new ArgumentNullException(nameof(arguments));
             }
 
+            // Validating arguments
+            new ArgumentsValidator(arguments).Validate();
+
             this.conversionProvider = conversionProvider;
-            this.filePath = filePath;
-            this.assemblyPath = assemblyPath;
-            this.outputFolder = outputFolder;
-            this.extension = extension;
-            this.fileName = fileName;
+            this.arguments = arguments;
         }
 
         public void Run()
@@ -93,14 +60,14 @@ namespace Rosetta.Executable
             // Attention: Path correctness is checked later
             // Important: File path must be converted into absolute now 
             // as the calculation for output folder relies on this!
-            this.filePath = this.GetFilePath(this.filePath);
+            this.arguments.FilePath = this.GetFilePath(this.arguments.FilePath);
 
             // Setting output folder
             // Making sure this gets translated into absolute path
-            this.outputFolder = this.GetOutputFolderForFile(this.outputFolder);
+            this.arguments.OutputDirectory = this.GetOutputFolderForFile(this.arguments.OutputDirectory);
 
             // Initializing the file manager
-            this.fileManager = new FileManager(this.outputFolder, this.assemblyPath);
+            this.fileManager = new FileManager(this.arguments);
             this.fileManager.FileConversionProvider = this.conversionProvider;
         }
 
@@ -108,12 +75,12 @@ namespace Rosetta.Executable
         {
             // This will perform anothe file existing check, redundant as we 
             // do it in initialization routine, but fine!
-            fileManager.AddFile(this.filePath, this.fileName);
+            fileManager.AddFile(this.arguments.FilePath, this.arguments.FileName); // TODO: arguments have all which is required, change signature
         }
 
         protected virtual void EmitFiles()
         {
-            var writtenFiles = fileManager.WriteAllFilesToDestination(this.extension, this.WriteFilesOnEmit);
+            var writtenFiles = fileManager.WriteAllFilesToDestination(this.arguments.Extension, this.WriteFilesOnEmit);
 
             foreach (var file in writtenFiles)
             {
@@ -154,13 +121,13 @@ namespace Rosetta.Executable
 
             // User did not provide a path, we get the path of the input file
             // Attention, the path might be relative
-            if (FileManager.IsDirectoryWhereFileResidesCorrect(this.filePath))
+            if (FileManager.IsDirectoryWhereFileResidesCorrect(this.arguments.FilePath))
             {
-                return FileManager.ExtractDirectoryPathFromFilePath(this.filePath);
+                return FileManager.ExtractDirectoryPathFromFilePath(this.arguments.FilePath);
             }
 
             throw new InvalidOperationException("Invalid path provided for input file for extracting output directory!",
-                new FileNotFoundException("File not found", filePath));
+                new FileNotFoundException("File not found", arguments.FilePath));
         }
 
         /// <summary>
@@ -173,6 +140,51 @@ namespace Rosetta.Executable
         private string GetFilePath(string userInput)
         {
             return FileManager.GetAbsolutePath(userInput);
+        }
+
+        #endregion
+
+        #region Types
+
+        /// <summary>
+        /// Custom validator.
+        /// </summary>
+        private class ArgumentsValidator : IConversionArgumentsValidator
+        {
+            private readonly ConversionArguments arguments;
+
+            public ArgumentsValidator(ConversionArguments arguments)
+            {
+                if (arguments == null)
+                {
+                    throw new ArgumentNullException(nameof(arguments));
+                }
+
+                this.arguments = arguments;
+            }
+
+            public bool TryValidate()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Validate()
+            {
+                if (this.arguments.FilePath == null)
+                {
+                    throw new ArgumentNullException(nameof(this.arguments.FilePath));
+                }
+
+                if (this.arguments.Extension == null)
+                {
+                    throw new ArgumentNullException(nameof(this.arguments.Extension));
+                }
+
+                if (this.arguments.AssemblyPath != null && !File.Exists(this.arguments.AssemblyPath))
+                {
+                    throw new ArgumentException("Invalid path!", nameof(this.arguments.FilePath));
+                }
+            }
         }
 
         #endregion

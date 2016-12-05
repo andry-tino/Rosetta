@@ -29,8 +29,8 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// <param name="extension"></param>
         /// <param name="fileName"></param>
         public CustomizableFileConversionRunner(Action emitFilesRoutine, Action prepareFilesRoutine, 
-            ConversionProvider conversionProvider, string filePath, string outputFolder, string extension, string fileName = null)
-            : base(conversionProvider, filePath, outputFolder, extension, fileName)
+            ConversionProvider conversionProvider, ConversionArguments arguments)
+            : base(conversionProvider, arguments)
         {
             this.prepareFilesRoutine = prepareFilesRoutine;
             this.emitFilesRoutine = emitFilesRoutine;

@@ -24,37 +24,25 @@ namespace Rosetta.Executable
         // The paths of files to convert and conversions
         private IEnumerable<FileEntry> fileEntries;
 
-        // The path to output directory
-        private readonly string directory;
-        // The path to assembly
-        private readonly string assemblyPath;
+        private readonly ConversionArguments arguments;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileManager"/> class.
         /// </summary>
-        /// <param name="directoryPath">The folder where to emit files.</param>
-        /// <param name="assemblyPath">The assembly for getting the semantic model.</param>
-        public FileManager(string directoryPath, string assemblyPath = null)
+        /// <param name="arguments">The arguments.</param>
+        public FileManager(ConversionArguments arguments)
         {
-            if (directoryPath == null)
+            if (arguments == null)
             {
-                throw new ArgumentNullException(nameof(directoryPath));
+                throw new ArgumentNullException(nameof(arguments), "Arguments are required!");
             }
 
-            if (!IsDirectoryPathCorrect(directoryPath))
-            {
-                throw new ArgumentException("Invalid path!", nameof(directoryPath));
-            }
+            // Validating arguments
+            new ArgumentsValidator(arguments).Validate();
 
-            if (assemblyPath != null && !File.Exists(assemblyPath))
-            {
-                throw new ArgumentException(nameof(assemblyPath), "The specified assembly could not be found!");
-            }
+            this.arguments = arguments;
 
-            this.directory = directoryPath;
-            this.assemblyPath = assemblyPath;
-
-            this.FileConversionProvider = (input, pathToAssembly) => string.Empty;
+            this.FileConversionProvider = ConversionProviders.EmptyConversionProvider;
 
             this.fileEntries = new List<FileEntry>();
         }
@@ -65,11 +53,11 @@ namespace Rosetta.Executable
         public ConversionProvider FileConversionProvider { get; set; }
 
         /// <summary>
-        /// Gets the directory path.
+        /// Gets a copy of the arguments.
         /// </summary>
-        public string DirectoryPath
+        public ConversionArguments Arguments
         {
-            get { return this.directory; }
+            get { return this.arguments.Clone() as ConversionArguments; }
         }
 
         /// <summary>
@@ -144,7 +132,14 @@ namespace Rosetta.Executable
         {
             foreach (var entry in this.fileEntries)
             {
-                entry.FileConversion = this.FileConversionProvider(File.ReadAllText(entry.FilePath), this.assemblyPath);
+                var arguments = new ConversionArguments()
+                {
+                    Source = File.ReadAllText(entry.FilePath),
+                    AssemblyPath = this.arguments.AssemblyPath,
+                    References = this.arguments.References
+                };
+
+                entry.FileConversion = this.FileConversionProvider(arguments);
             }
         }
 
@@ -330,7 +325,48 @@ namespace Rosetta.Executable
         #endregion
 
         #region Types
-        
+
+        /// <summary>
+        /// Custom validator.
+        /// </summary>
+        private class ArgumentsValidator : IConversionArgumentsValidator
+        {
+            private readonly ConversionArguments arguments;
+
+            public ArgumentsValidator(ConversionArguments arguments)
+            {
+                if (arguments == null)
+                {
+                    throw new ArgumentNullException(nameof(arguments));
+                }
+
+                this.arguments = arguments;
+            }
+
+            public bool TryValidate()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Validate()
+            {
+                if (this.arguments.OutputDirectory == null)
+                {
+                    throw new ArgumentNullException(nameof(this.arguments.OutputDirectory));
+                }
+
+                if (!Directory.Exists(this.arguments.OutputDirectory))
+                {
+                    throw new ArgumentException("Invalid path!", nameof(this.arguments.OutputDirectory));
+                }
+
+                if (this.arguments.AssemblyPath != null && !File.Exists(this.arguments.AssemblyPath))
+                {
+                    throw new ArgumentException("Invalid path!", nameof(this.arguments.FilePath));
+                }
+            }
+        }
+
         /// <summary>
         /// The file entry.
         /// </summary>
@@ -368,10 +404,10 @@ namespace Rosetta.Executable
         {
             if (newName == null)
             {
-                return Path.Combine(directory, Path.GetFileName(Path.ChangeExtension(filepath, extension)));
+                return Path.Combine(this.arguments.OutputDirectory, Path.GetFileName(Path.ChangeExtension(filepath, extension)));
             }
 
-            return Path.Combine(directory, newName);
+            return Path.Combine(this.arguments.OutputDirectory, newName);
         }
     }
 }

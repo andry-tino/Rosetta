@@ -14,6 +14,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
     using Rosetta.AST.Helpers;
     using Rosetta.AST.Transformers;
     using Rosetta.ScriptSharp.Definition.AST.Transformers;
+    using Rosetta.Translation;
 
     /// <summary>
     /// Acts like a wrapper for <see cref="ProgramDefinitionASTWalker"/> in order to provide 
@@ -25,6 +26,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
         private readonly string source;
         private readonly string assemblyPath;
+        private readonly string[] includes;
 
         // Lazy loaded or cached quantities
         private ProgramASTWalker walker;
@@ -38,20 +40,28 @@ namespace Rosetta.ScriptSharp.Definition.AST
         /// </summary>
         /// <param name="source">The source code</param>
         /// <param name="assemblyPath">The path to assembly for semantic model</param>
-        public ProgramWrapper(string source, string assemblyPath = null)
+        /// <param name="includes">The paths to Typescript definitions to include in the generated definition</param>
+        public ProgramWrapper(string source, string assemblyPath = null, string[] includes = null)
         {
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
             }
 
-            if (assemblyPath != null && !File.Exists(assemblyPath))
+            if (assemblyPath != null)
             {
-                throw new ArgumentException(nameof(assemblyPath), "The specified assembly could not be found!");
+                ValidatePaths(new[] { assemblyPath }, nameof(assemblyPath), "The specified assembly could not be found!");
+            }
+
+            if (includes != null)
+            {
+                // TODO: INvestigate whether we want to perform this or not
+                //ValidatePaths(includes, nameof(includes), "One of the included files could not be found!");
             }
 
             this.source = source;
             this.assemblyPath = assemblyPath;
+            this.includes = includes;
 
             this.initialized = false;
         }
@@ -100,8 +110,12 @@ namespace Rosetta.ScriptSharp.Definition.AST
             var node = this.tree.GetRoot();
             this.walker = ProgramDefinitionASTWalker.Create(node, null, this.semanticModel);
 
+            // Generating references which will be prepended
+            ITranslationUnit references = this.includes != null ? CreateReferencesGroupTranslationUnit(this.includes) : null;
+            var prependedText = references != null ? $"{references.Translate()}{Lexems.Newline}{Lexems.Newline}" : string.Empty;
+
             // Translating
-            this.output = this.walker.Walk().Translate();
+            this.output = prependedText + this.walker.Walk().Translate();
 
             this.initialized = true;
         }
@@ -109,6 +123,30 @@ namespace Rosetta.ScriptSharp.Definition.AST
         private CSharpCompilation GetCompilation(string path, CSharpSyntaxTree sourceTree)
         {
             return SemanticHelper.RetrieveCompilation("LoadedAssembly", path, sourceTree, true);
+        }
+
+        private static ITranslationUnit CreateReferencesGroupTranslationUnit(string[] paths)
+        {
+            // TODO: Change to use a factory
+            var statementsGroup = ReferencesGroupTranslationUnit.Create();
+
+            foreach (var path in paths)
+            {
+                statementsGroup.AddStatement(ReferenceTranslationUnit.Create(path));
+            }
+
+            return statementsGroup;
+        }
+
+        private static void ValidatePaths(string[] paths, string argumentName, string message)
+        {
+            foreach (var path in paths)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new ArgumentException(argumentName, message);
+                }
+            }
         }
     }
 }

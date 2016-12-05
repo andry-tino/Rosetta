@@ -91,6 +91,17 @@ namespace Rosetta.Translation.Renderings
         }
 
         /// <summary>
+        /// Gets render methods for <see cref="References"/>.
+        /// </summary>
+        public static Type ReferencesMethodsProvider
+        {
+            get
+            {
+                return typeof(References);
+            }
+        }
+
+        /// <summary>
         /// Gets render methods for <see cref="Constructors"/>.
         /// </summary>
         public static Type ConstructorsMethodsProvider
@@ -201,7 +212,8 @@ namespace Rosetta.Translation.Renderings
                 {
                     typeof(ConditionalStatements.Statements),
                     typeof(KeywordStatements.Statements),
-                    typeof(ExpressionStatements.Statements)
+                    typeof(ExpressionStatements.Statements),
+                    typeof(StatementsGroups)
                 };
             }
         }

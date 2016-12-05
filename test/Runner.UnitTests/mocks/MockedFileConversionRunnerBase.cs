@@ -18,12 +18,9 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// Initializes a new instance of the <see cref="MockedFileConversionRunnerBase"/> class.
         /// </summary>
         /// <param name="conversionProvider"></param>
-        /// <param name="filePath"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="extension"></param>
-        /// <param name="fileName"></param>
-        public MockedFileConversionRunnerBase(ConversionProvider conversionProvider, string filePath, string outputFolder, string extension, string fileName = null)
-            : base(conversionProvider, filePath, outputFolder, extension, fileName)
+        /// <param name="arguments"></param>
+        public MockedFileConversionRunnerBase(ConversionProvider conversionProvider, ConversionArguments arguments)
+            : base(conversionProvider, arguments)
         {
         }
 
@@ -32,7 +29,7 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// </summary>
         public string FilePath
         {
-            get { return this.filePath; }
+            get { return this.arguments.FilePath; }
         }
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace Rosetta.Runner.UnitTests.Mocks
         /// </summary>
         public string OutputFolder
         {
-            get { return this.outputFolder; }
+            get { return this.arguments.OutputDirectory; }
         }
     }
 }
