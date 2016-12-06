@@ -79,6 +79,9 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
             var bundle = string.Join(Environment.NewLine, chuncks);
 
+            // Handling references
+            bundle = this.GeneratePrependedText() + bundle;
+
             // Writing
             var outputPath = FileManager.GetAbsolutePath(this.outputFolder);
 
@@ -96,7 +99,9 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             {
                 FilePath = filePath,
                 OutputDirectory = this.outputFolder,
-                Extension = extension
+                Extension = extension,
+                AssemblyPath = this.assemblyPath,
+                References = this.references
             });
             runner.Run();
 

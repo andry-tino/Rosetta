@@ -37,13 +37,22 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
         private void ConvertFile(string filePath)
         {
-            new FileConversionRunner(PerformFileConversion, new ConversionArguments()
+            var arguments = new ConversionArguments()
             {
                 FilePath = filePath,
-                AssemblyPath = this.assemblyPath,
                 OutputDirectory = this.outputFolder,
-                Extension = extension
-            }).Run();
+                Extension = extension,
+                AssemblyPath = this.assemblyPath,
+                References = this.references
+            };
+
+            if (this.ReferencesDefined)
+            {
+                new FileAppendableContentConversionRunner(PerformFileConversion, arguments, this.GeneratePrependedText()).Run();
+                return;
+            }
+
+            new FileConversionRunner(PerformFileConversion, arguments).Run();
         }
     }
 }

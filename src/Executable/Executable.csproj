@@ -46,6 +46,7 @@
     <Compile Include="exceptions\DefaultOptionException.cs" />
     <Compile Include="Executable.cs" />
     <Compile Include="external\MonoOptions.cs" />
+    <Compile Include="FileAppendableContentConversionRunner.cs" />
     <Compile Include="FileConversionRunner.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="FileSilentConversionRunner.cs" />

@@ -13,7 +13,7 @@ namespace Rosetta.Executable
     /// </summary>
     public class FileConversionRunner : IRunner
     {
-        protected readonly ConversionProvider conversionProvider;
+        protected ConversionProvider conversionProvider;
         protected readonly ConversionArguments arguments;
         
         protected FileManager fileManager;

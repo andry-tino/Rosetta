@@ -6,10 +6,12 @@
 namespace Rosetta.ScriptSharp.Definition.Runner
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     
     using Rosetta.Executable;
     using Rosetta.ScriptSharp.Definition.AST;
+    using Rosetta.Translation;
 
     /// <summary>
     /// Part of program responsible for translating one single file.
@@ -18,24 +20,9 @@ namespace Rosetta.ScriptSharp.Definition.Runner
     {
         protected const string Extension = "d.ts";
 
-        protected IRunner fileConversionRunner;
-
-        protected IRunner FileConversionRunner
+        protected virtual void ConvertFile()
         {
-            get
-            {
-                if (this.fileConversionRunner == null)
-                {
-                    this.fileConversionRunner = this.CreateFileConversionRunner();
-                }
-
-                return this.fileConversionRunner;
-            }
-        }
-
-        protected virtual IRunner CreateFileConversionRunner()
-        {
-            return new FileConversionRunner(PerformFileConversion, new ConversionArguments()
+            var arguments = new ConversionArguments()
             {
                 FilePath = this.filePath,
                 AssemblyPath = this.assemblyPath,
@@ -43,24 +30,48 @@ namespace Rosetta.ScriptSharp.Definition.Runner
                 Extension = Extension,
                 FileName = this.fileName,
                 References = this.includes
-            });
-        }
+            };
 
-        protected virtual void ConvertFile()
-        {
-            this.FileConversionRunner.Run();
+            if (this.includes.Count() > 0)
+            {
+                new FileAppendableContentConversionRunner(PerformFileConversion, arguments, this.GeneratePrependedText()).Run();
+                return;
+            }
+
+            new FileConversionRunner(PerformFileConversion, arguments).Run();
         }
 
         protected static string PerformFileConversion(ConversionArguments arguments)
         {
             var program = new ProgramWrapper(
                 arguments.Source,
-                arguments.AssemblyPath,
-                arguments.References != null && arguments.References.Count() > 0
-                    ? arguments.References.ToArray()
-                    : null);
+                arguments.AssemblyPath);
 
             return program.Output;
+        }
+
+        private string GeneratePrependedText()
+        {
+            if (this.includes.Count() == 0)
+            {
+                return string.Empty;
+            }
+
+            ITranslationUnit references = CreateReferencesGroupTranslationUnit(this.includes);
+            return $"{references.Translate()}{Lexems.Newline}{Lexems.Newline}";
+        }
+
+        private static ITranslationUnit CreateReferencesGroupTranslationUnit(IEnumerable<string> paths)
+        {
+            // TODO: Change to use a factory
+            var statementsGroup = ReferencesGroupTranslationUnit.Create();
+
+            foreach (var path in paths)
+            {
+                statementsGroup.AddStatement(ReferenceTranslationUnit.Create(path));
+            }
+
+            return statementsGroup;
         }
     }
 }

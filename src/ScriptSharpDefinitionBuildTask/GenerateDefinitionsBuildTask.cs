@@ -29,6 +29,21 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// This will cause references in the final file or bundle to be included in the emitted code.
         /// The references to files are emitted as they are, no normalization nor validation on paths is performed.
         /// </summary>
+        /// <remarks>
+        /// The suggested aprroach is to define an ItemGroup with references there like:
+        /// <code>
+        /// <ItemGroup>
+        ///   <TypeScriptDefinitionReference Include="file1.d.ts" />
+        ///   <TypeScriptDefinitionReference Include="file2.d.ts" />
+        /// </ItemGroup>
+        /// </code>
+        /// And reference those in the argument:
+        /// <code>
+        /// <Target>
+        ///   <GenerateDefinitionsBuildTask References="@(TypeScriptDefinitionReference)" />
+        /// </Target>
+        /// </code>
+        /// </remarks>
         public ITaskItem[] References { get; set; }
 
         /// <summary>
@@ -107,17 +122,15 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             return true;
         }
 
-        protected IEnumerable<string> SourceFiles
-        {
-            get { return this.Files.Select(taskItem => taskItem.GetMetadata("FullPath")); }
-        }
+        protected IEnumerable<string> SourceFiles => this.Files?.Select(taskItem => taskItem.GetMetadata("FullPath"));
+
+        protected IEnumerable<string> ReferencedFiles => this.References?.Select(taskItem => taskItem.ItemSpec);
 
         private GenerateTaskBase CreateTask()
         {
-            // TODO: Wire up assembly and references
             return this.CreateBundle
-                ? new GenerateBundleTask(this.SourceFiles, this.OutputFolder, this.BundleName)
-                : new GenerateFilesTask(this.SourceFiles, this.OutputFolder) as GenerateTaskBase;
+                ? new GenerateBundleTask(this.SourceFiles, this.OutputFolder, this.AssemblyPath, this.ReferencedFiles, this.BundleName)
+                : new GenerateFilesTask(this.SourceFiles, this.OutputFolder, this.AssemblyPath, this.ReferencedFiles) as GenerateTaskBase;
         }
     }
 }

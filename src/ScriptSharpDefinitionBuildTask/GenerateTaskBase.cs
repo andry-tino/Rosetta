@@ -10,6 +10,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
     using System.Linq;
 
     using Rosetta.Executable;
+    using Rosetta.Translation;
     using Rosetta.ScriptSharp.Definition.AST;
 
     /// <summary>
@@ -54,16 +55,39 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <returns></returns>
         public abstract void Run();
 
+        protected bool ReferencesDefined => this.references != null && this.references.Count() != 0;
+
         protected static string PerformFileConversion(ConversionArguments arguments)
         {
             var program = new ProgramWrapper(
                 arguments.Source, 
-                arguments.AssemblyPath, 
-                arguments.References != null && arguments.References.Count() > 0 
-                    ? arguments.References.ToArray() 
-                    : null);
+                arguments.AssemblyPath);
 
             return program.Output;
+        }
+
+        protected string GeneratePrependedText()
+        {
+            if (this.references == null)
+            {
+                return string.Empty;
+            }
+
+            ITranslationUnit references = CreateReferencesGroupTranslationUnit(this.references);
+            return $"{references.Translate()}{Lexems.Newline}{Lexems.Newline}";
+        }
+
+        private static ITranslationUnit CreateReferencesGroupTranslationUnit(IEnumerable<string> paths)
+        {
+            // TODO: Change to use a factory
+            var statementsGroup = ReferencesGroupTranslationUnit.Create();
+
+            foreach (var path in paths)
+            {
+                statementsGroup.AddStatement(ReferenceTranslationUnit.Create(path));
+            }
+
+            return statementsGroup;
         }
     }
 }

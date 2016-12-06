@@ -58,6 +58,10 @@
       <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
       <Name>ScriptSharpDefinition</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TranslationUnits\TranslationUnits.csproj">
+      <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
+      <Name>TranslationUnits</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="targets\ProjectTargets.targets">
