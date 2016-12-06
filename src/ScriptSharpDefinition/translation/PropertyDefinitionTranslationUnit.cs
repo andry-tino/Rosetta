@@ -120,13 +120,16 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                 var valueParameter = ArgumentDefinitionTranslationUnit.Create(
                     this.type, IdentifierTranslationUnit.Create("value"));
 
-                // Opening declaration: [<visibility>] set <name>(value : <type>) {
-                writer.WriteLine("{0}{1}{2}{3}{4}",
+                // Opening declaration: [<visibility>] set <name>(value : <type>) : void {
+                // Emitting `void` in order to prevent errors in case of implicitAllowAny
+                writer.WriteLine("{0}{1}{2}{3}{4} {5} {6}",
                     this.RenderedVisibilityModifier,
                     this.RenderedSetterMethodName,
                     Lexems.OpenRoundBracket,
                     valueParameter.Translate(),
-                    Lexems.CloseRoundBracket);
+                    Lexems.CloseRoundBracket,
+                    Lexems.Colon,
+                    Lexems.VoidReturnType);
             }
 
             return writer.ToString();

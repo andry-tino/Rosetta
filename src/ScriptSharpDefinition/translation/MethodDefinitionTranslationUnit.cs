@@ -82,5 +82,8 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         }
 
         protected override string RenderedName => this.Name.Translate().ToScriptSharpName();
+
+        // This is in order to prevent errors in case of implicitAllowAny
+        protected override bool ShouldRenderReturnType => true;
     }
 }

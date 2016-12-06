@@ -61,6 +61,16 @@ namespace Rosetta.Translation
             set { this.returnType = value; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the return type is <code>void</code>.
+        /// </summary>
+        /// <remarks>
+        /// The translation unit will not emit a type if return type was not specified at construction time. 
+        /// However, if a translation unit was specified for return type and that translation unit translates 
+        /// into `void`, then `void` will be rendered as this is the intended behavior.
+        /// </remarks>
+        protected bool IsVoid => this.returnType == null;
+
         protected IEnumerable<ITranslationUnit> Arguments
         {
             get { return this.arguments; }
@@ -154,7 +164,7 @@ namespace Rosetta.Translation
 
         protected virtual string RenderedVisibilityModifier => this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
 
-        protected virtual bool ShouldRenderReturnType => true;
+        protected virtual bool ShouldRenderReturnType => !this.IsVoid;
 
         protected virtual string RenderedName => this.Name.Translate();
     }

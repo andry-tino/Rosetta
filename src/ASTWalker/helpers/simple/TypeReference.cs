@@ -74,6 +74,11 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
+        /// Gets a value indicating whether the type of the node is <code>void</code> or not.
+        /// </summary>
+        public bool IsVoid => this.FullName.ToLower().Contains("void"); // Using FullName so we can rely on SemanticModel if available
+
+        /// <summary>
         /// Tries all possible ways to retrieve the full name using the semantic model.
         /// </summary>
         /// <param name="node"></param>

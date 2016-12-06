@@ -90,13 +90,24 @@ namespace Rosetta.Translation
             // TODO: Handle case of no visibility specified
             string methodVisibility = this.RenderedVisibilityModifier;
 
-            writer.WriteLine("{0}{1}{2} {3} {4} {5}",
+            if (this.ShouldRenderReturnType)
+            {
+                writer.WriteLine("{0}{1}{2} {3} {4} {5}",
                 methodVisibility,
                 this.RenderedName,
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.Colon,
-                this.ReturnType.Translate(), 
+                this.ReturnType.Translate(),
                 Lexems.OpenCurlyBracket);
+            }
+            else
+            {
+                writer.WriteLine("{0}{1}{2} {3}",
+                methodVisibility,
+                this.RenderedName,
+                SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
+                Lexems.OpenCurlyBracket);
+            }
 
             // Statements
             // The body, we render them as a list of semicolon/newline separated elements

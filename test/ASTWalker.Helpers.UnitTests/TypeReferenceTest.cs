@@ -107,6 +107,84 @@ namespace Rosetta.AST.Helpers.UnitTests
             TestRetrieveTypeFullName(baseTypeNode, semanticModel, "System.IDisposable");
         }
 
+        /// <summary>
+        /// Tests that we can successfully discriminate void from non-void without semantic model.
+        /// </summary>
+        [TestMethod]
+        public void DetectVoidType()
+        {
+            var tree = CSharpSyntaxTree.ParseText(@"
+            using System;
+            public class MyClass {
+                public void Method1() { }
+                public int Method2() { }
+            }
+            ");
+            
+            // First method
+            var node = new NodeLocator(tree).LocateFirst(typeof(MethodDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(MethodDeclarationSyntax).Name));
+
+            var methodDeclarationNode = node as MethodDeclarationSyntax;
+            var helper = new MethodDeclaration(methodDeclarationNode).ReturnType;
+
+            Assert.IsTrue(helper.IsVoid, "Expected void type!");
+
+            // Second method
+            node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(MethodDeclarationSyntax).Name));
+
+            methodDeclarationNode = node as MethodDeclarationSyntax;
+            helper = new MethodDeclaration(methodDeclarationNode).ReturnType;
+
+            Assert.IsFalse(helper.IsVoid, "Void type not expected!");
+        }
+
+        /// <summary>
+        /// Tests that we can successfully discriminate void from non-void without semantic model.
+        /// </summary>
+        [TestMethod]
+        public void DetectVoidTypeWithSemanticModel()
+        {
+            var tree = CSharpSyntaxTree.ParseText(@"
+            using System;
+            public class MyClass {
+                public void Method1() { }
+                public int Method2() { }
+            }
+            ");
+
+            // First method
+            var node = new NodeLocator(tree).LocateFirst(typeof(MethodDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(MethodDeclarationSyntax).Name));
+
+            // Loading MSCoreLib
+            var compilation = CSharpCompilation.Create("TestAssembly")
+                  .AddReferences(
+                     MetadataReference.CreateFromFile(
+                       typeof(object).Assembly.Location))
+                  .AddSyntaxTrees(tree);
+            var semanticModel = compilation.GetSemanticModel(tree);
+
+            var methodDeclarationNode = node as MethodDeclarationSyntax;
+            var helper = new MethodDeclaration(methodDeclarationNode, semanticModel).ReturnType;
+
+            Assert.IsTrue(helper.IsVoid, "Expected void type!");
+
+            // Second method
+            node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(MethodDeclarationSyntax).Name));
+
+            methodDeclarationNode = node as MethodDeclarationSyntax;
+            helper = new MethodDeclaration(methodDeclarationNode, semanticModel).ReturnType;
+
+            Assert.IsFalse(helper.IsVoid, "Void type not expected!");
+        }
+
         #region Helpers
 
         private static void TestRetrieveTypeName(BaseTypeSyntax baseTypeNode, SemanticModel semanticModel, string expected)
