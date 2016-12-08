@@ -10,8 +10,6 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST.Factories;
-    using Rosetta.ScriptSharp.Definition.Translation;
-    using Rosetta.Translation;
 
     /// <summary>
     /// Generic helper.
@@ -25,6 +23,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// <param name="semanticModel">The semantic model</param>
         public ProgramDefinitionTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
             : base(node, semanticModel)
+        {
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ProgramDefinitionTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ProgramDefinitionTranslationUnitFactory(ProgramDefinitionTranslationUnitFactory other) 
+            : base(other)
         {
         }
     }

@@ -115,6 +115,7 @@
     <Compile Include="factories\ModuleTranslationUnitFactory.cs" />
     <Compile Include="factories\ProgramTranslationUnitFactory.cs" />
     <Compile Include="factories\PropertyDeclarationTranslationUnitFactory.cs" />
+    <Compile Include="factories\TranslationUnitFactory.cs" />
     <Compile Include="helpers\declarations\ConstructorDeclaration.cs" />
     <Compile Include="helpers\declarations\EnumDeclaration.cs" />
     <Compile Include="helpers\declarations\EnumMemberDeclaration.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="transformers\ClassWithAttributeInDifferentNamespaceASTTransformer.cs" />
     <Compile Include="utilities\MultiPurposeASTWalker.cs" />
     <Compile Include="utilities\SemanticUtilities.cs" />
+    <Compile Include="utilities\TypeMappings.cs" />
     <Compile Include="utilities\VisibilityUtilities.cs" />
     <Compile Include="walkers\ASTWalker.cs" />
     <Compile Include="walkers\ASTWalkerContext.cs" />

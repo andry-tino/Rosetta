@@ -18,7 +18,7 @@ namespace Rosetta.AST.UnitTests
     using Rosetta.Translation;
     using Rosetta.Tests.Data;
     using Rosetta.Tests.Utils;
-    using Rosetta.AST.UnitTests.Mocks;
+    using Rosetta.AST.Mocks;
 
     /// <summary>
     /// Tests for <see cref="EnumASTWalker"/> class.

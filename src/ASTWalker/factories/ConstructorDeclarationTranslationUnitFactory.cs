@@ -12,31 +12,33 @@ namespace Rosetta.AST.Factories
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Utilities;
 
     /// <summary>
     /// Factory for <see cref="ConstructorDeclarationTranslationUnit"/>.
     /// </summary>
-    public class ConstructorDeclarationTranslationUnitFactory : ITranslationUnitFactory
+    public class ConstructorDeclarationTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstructorDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public ConstructorDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public ConstructorDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ConstructorDeclarationTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ConstructorDeclarationTranslationUnitFactory(ConstructorDeclarationTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -50,26 +52,18 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            ConstructorDeclaration helper = new ConstructorDeclaration(this.node as ConstructorDeclarationSyntax, this.semanticModel);
+            ConstructorDeclaration helper = new ConstructorDeclaration(this.Node as ConstructorDeclarationSyntax, this.SemanticModel);
 
             var constructorDeclaration = this.CreateTranslationUnit(helper.Visibility) as MethodSignatureDeclarationTranslationUnit;
 
             foreach (Parameter parameter in helper.Parameters)
             {
                 constructorDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    TypeIdentifierTranslationUnit.Create(parameter.Type.FullName),
+                    TypeIdentifierTranslationUnit.Create(parameter.Type.FullName.MapType()),
                     IdentifierTranslationUnit.Create(parameter.IdentifierName)));
             }
 
             return constructorDeclaration;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="CSharpSyntaxNode"/>.
-        /// </summary>
-        protected CSharpSyntaxNode Node
-        {
-            get { return this.node; }
         }
 
         /// <summary>

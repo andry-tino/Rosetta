@@ -16,27 +16,28 @@ namespace Rosetta.AST.Factories
     /// <summary>
     /// Factory for <see cref="ModuleTranslationUnit"/>.
     /// </summary>
-    public class ModuleTranslationUnitFactory : ITranslationUnitFactory
+    public class ModuleTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ModuleTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public ModuleTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public ModuleTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ModuleTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ModuleTranslationUnitFactory(ModuleTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="ModuleTranslationUnitFactory"/>.</returns>
         public ITranslationUnit Create()
         {
-            var helper = new NamespaceDeclaration(this.node as NamespaceDeclarationSyntax, this.semanticModel);
+            var helper = new NamespaceDeclaration(this.Node as NamespaceDeclarationSyntax, this.SemanticModel);
 
             var module = this.CreateTranslationUnit(IdentifierTranslationUnit.Create(helper.Name));
 

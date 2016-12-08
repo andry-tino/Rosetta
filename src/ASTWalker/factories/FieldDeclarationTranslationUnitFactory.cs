@@ -12,31 +12,33 @@ namespace Rosetta.AST.Factories
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Utilities;
 
     /// <summary>
     /// Factory for <see cref="FieldDeclarationTranslationUnit"/>.
     /// </summary>
-    public class FieldDeclarationTranslationUnitFactory : ITranslationUnitFactory
+    public class FieldDeclarationTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public FieldDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public FieldDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="FieldDeclarationTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public FieldDeclarationTranslationUnitFactory(FieldDeclarationTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -50,20 +52,14 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            var helper = new FieldDeclaration(this.node as FieldDeclarationSyntax, this.semanticModel);
+            var helper = new FieldDeclaration(this.Node as FieldDeclarationSyntax, this.SemanticModel);
 
-            var fieldDeclaration = this.CreateTranslationUnit(helper.Visibility,
-                TypeIdentifierTranslationUnit.Create(helper.Type), IdentifierTranslationUnit.Create(helper.Name));
+            var fieldDeclaration = this.CreateTranslationUnit(
+                helper.Visibility,
+                TypeIdentifierTranslationUnit.Create(helper.Type.MapType()), 
+                IdentifierTranslationUnit.Create(helper.Name));
 
             return fieldDeclaration;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="CSharpSyntaxNode"/>.
-        /// </summary>
-        protected CSharpSyntaxNode Node
-        {
-            get { return this.node; }
         }
 
         /// <summary>

@@ -29,6 +29,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         }
 
         /// <summary>
+        /// Copy initializes a new instance of the <see cref="InterfaceDefinitionTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public InterfaceDefinitionTranslationUnitFactory(InterfaceDefinitionTranslationUnitFactory other) 
+            : base(other)
+        {
+        }
+
+        /// <summary>
         /// Creates the translation unit.
         /// </summary>
         /// <remarks>

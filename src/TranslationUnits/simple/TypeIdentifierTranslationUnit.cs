@@ -79,7 +79,7 @@ namespace Rosetta.Translation
         /// <returns></returns>
         public string Translate()
         {
-            return TypesMapping.MapType(this.typeName);
+            return this.typeName;
         }
 
         #region Validation

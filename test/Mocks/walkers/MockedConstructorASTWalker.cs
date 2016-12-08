@@ -3,11 +3,13 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.AST.UnitTests.Mocks
+namespace Rosetta.AST.Mocks
 {
     using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
+
+    using Rosetta.Translation.Mocks;
 
     /// <summary>
     /// Mock for <see cref="ConstructorASTWalker"/>.
@@ -21,7 +23,7 @@ namespace Rosetta.AST.UnitTests.Mocks
             this.constructorDeclaration = MockedConstructorDeclarationTranslationUnit.Create(this.constructorDeclaration);
         }
 
-        public new static MockedConstructorASTWalker Create(CSharpSyntaxNode node)
+        public static MockedConstructorASTWalker Create(CSharpSyntaxNode node)
         {
             return new MockedConstructorASTWalker(ConstructorASTWalker.Create(node));
         }

@@ -16,25 +16,28 @@ namespace Rosetta.AST.Factories
     /// <summary>
     /// Factory for <see cref="InterfaceDeclarationTranslationUnit"/>.
     /// </summary>
-    public class InterfaceDeclarationTranslationUnitFactory : ITranslationUnitFactory
+    public class InterfaceDeclarationTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="InterfaceDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public InterfaceDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public InterfaceDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="InterfaceDeclarationTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public InterfaceDeclarationTranslationUnitFactory(InterfaceDeclarationTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="InterfaceDeclarationTranslationUnit"/>.</returns>
         public ITranslationUnit Create()
         {
-            InterfaceDeclaration helper = new InterfaceDeclaration(node as InterfaceDeclarationSyntax, this.semanticModel);
+            InterfaceDeclaration helper = new InterfaceDeclaration(this.Node as InterfaceDeclarationSyntax, this.SemanticModel);
 
             var interfaceDeclaration = this.CreateTranslationUnit(helper.Visibility,
                 IdentifierTranslationUnit.Create(helper.Name)) as InterfaceDeclarationTranslationUnit;

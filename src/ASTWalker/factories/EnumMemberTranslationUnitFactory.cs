@@ -16,27 +16,28 @@ namespace Rosetta.AST.Factories
     /// <summary>
     /// Factory for <see cref="EnumMemberTranslationUnit"/>.
     /// </summary>
-    public class EnumMemberTranslationUnitFactory : ITranslationUnitFactory
+    public class EnumMemberTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumMemberTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public EnumMemberTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public EnumMemberTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="EnumMemberTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public EnumMemberTranslationUnitFactory(EnumMemberTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -45,10 +46,10 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="EnumMemberTranslationUnitFactory"/>.</returns>
         public ITranslationUnit Create()
         {
-            var helper = new EnumMemberDeclaration(node as EnumMemberDeclarationSyntax, this.semanticModel);
+            var helper = new EnumMemberDeclaration(this.Node as EnumMemberDeclarationSyntax, this.SemanticModel);
 
             var enumMemberDeclaration = this.CreateTranslationUnit(IdentifierTranslationUnit.Create(helper.Name), 
-                helper.Value != null ? new ExpressionTranslationUnitBuilder(helper.Value, this.semanticModel).Build() : null) 
+                helper.Value != null ? new ExpressionTranslationUnitBuilder(helper.Value, this.SemanticModel).Build() : null) 
                 as EnumMemberTranslationUnit;
 
             return enumMemberDeclaration;

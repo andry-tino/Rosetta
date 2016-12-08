@@ -3,11 +3,13 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.AST.UnitTests.Mocks
+namespace Rosetta.AST.Mocks
 {
     using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
+
+    using Rosetta.Translation.Mocks;
 
     /// <summary>
     /// Mock for <see cref="InterfaceASTWalker"/>.

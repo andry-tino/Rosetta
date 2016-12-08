@@ -3,12 +3,12 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.AST
+namespace Rosetta.AST.Mocks
 {
     using System;
     using Microsoft.CodeAnalysis.CSharp;
-
-    using Rosetta.Translation;
+    
+    using Rosetta.Translation.Mocks;
 
     /// <summary>
     /// Walks an interface AST node.

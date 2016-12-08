@@ -12,31 +12,33 @@ namespace Rosetta.AST.Factories
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Utilities;
 
     /// <summary>
     /// Factory for <see cref="PropertyDeclarationTranslationUnit"/>.
     /// </summary>
-    public class PropertyDeclarationTranslationUnitFactory : ITranslationUnitFactory
+    public class PropertyDeclarationTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public PropertyDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public PropertyDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="PropertyDeclarationTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public PropertyDeclarationTranslationUnitFactory(PropertyDeclarationTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -50,24 +52,16 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            PropertyDeclaration helper = new PropertyDeclaration(this.node as PropertyDeclarationSyntax, this.semanticModel);
+            PropertyDeclaration helper = new PropertyDeclaration(this.Node as PropertyDeclarationSyntax, this.SemanticModel);
 
             var propertyDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
-                TypeIdentifierTranslationUnit.Create(helper.Type.FullName),
+                TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType()),
                 IdentifierTranslationUnit.Create(helper.Name),
                 helper.HasGet,
                 helper.HasSet);
 
             return propertyDeclaration;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="CSharpSyntaxNode"/>.
-        /// </summary>
-        protected CSharpSyntaxNode Node
-        {
-            get { return this.node; }
         }
 
         /// <summary>

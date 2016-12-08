@@ -29,6 +29,18 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         }
 
         /// <summary>
+        /// Copy initializes a new instance of the <see cref="EnumDefinitionTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public EnumDefinitionTranslationUnitFactory(EnumDefinitionTranslationUnitFactory other) 
+            : base(other)
+        {
+        }
+
+        /// <summary>
         /// Creates the translation unit.
         /// </summary>
         /// <remarks>

@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.AST.UnitTests.Mocks
+namespace Rosetta.Translation.Mocks
 {
     using System;
     using System.Collections.Generic;
@@ -24,6 +24,8 @@ namespace Rosetta.AST.UnitTests.Mocks
         {
             return new MockedClassDeclarationTranslationUnit(classDeclarationTranslationUnit);
         }
+
+        public new ITranslationUnit Name => base.Name;
 
         public IEnumerable<ITranslationUnit> MemberDeclarations
         {

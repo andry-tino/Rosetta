@@ -91,7 +91,6 @@
     <Compile Include="tokens\OperatorToken.cs" />
     <Compile Include="tokens\TokenUtility.cs" />
     <Compile Include="utilities\FormatOptions.cs" />
-    <Compile Include="utilities\TypesMapping.cs" />
     <Compile Include="utilities\VisibilityToken.cs" />
     <Compile Include="utilities\CodePerfect.cs" />
     <Compile Include="utilities\FormatWriter.cs" />

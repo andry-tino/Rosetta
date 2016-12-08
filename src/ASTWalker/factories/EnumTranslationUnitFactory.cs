@@ -16,27 +16,28 @@ namespace Rosetta.AST.Factories
     /// <summary>
     /// Factory for <see cref="EnumTranslationUnit"/>.
     /// </summary>
-    public class EnumTranslationUnitFactory : ITranslationUnitFactory
+    public class EnumTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public EnumTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public EnumTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="EnumTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public EnumTranslationUnitFactory(EnumTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="EnumTranslationUnitFactory"/>.</returns>
         public ITranslationUnit Create()
         {
-            EnumDeclaration helper = new EnumDeclaration(node as EnumDeclarationSyntax, this.semanticModel);
+            EnumDeclaration helper = new EnumDeclaration(this.Node as EnumDeclarationSyntax, this.SemanticModel);
 
             var enumDeclaration = this.CreateTranslationUnit(helper.Visibility,
                 IdentifierTranslationUnit.Create(helper.Name)) as EnumTranslationUnit;

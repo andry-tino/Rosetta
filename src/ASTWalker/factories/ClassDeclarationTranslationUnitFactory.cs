@@ -16,27 +16,28 @@ namespace Rosetta.AST.Factories
     /// <summary>
     /// Factory for <see cref="ClassDeclarationTranslationUnit"/>.
     /// </summary>
-    public class ClassDeclarationTranslationUnitFactory : ITranslationUnitFactory
+    public class ClassDeclarationTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public ClassDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public ClassDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ClassDeclarationTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ClassDeclarationTranslationUnitFactory(ClassDeclarationTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="MethodDeclarationTranslationUnit"/>.</returns>
         public ITranslationUnit Create()
         {
-            ClassDeclaration helper = this.CreateHelper(this.node as ClassDeclarationSyntax, this.semanticModel);
+            ClassDeclaration helper = this.CreateHelper(this.Node as ClassDeclarationSyntax, this.SemanticModel);
 
             var classDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,

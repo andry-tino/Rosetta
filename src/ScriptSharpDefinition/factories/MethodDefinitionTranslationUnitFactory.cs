@@ -20,7 +20,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     /// </summary>
     public class MethodDefinitionTranslationUnitFactory : MethodDeclarationTranslationUnitFactory
     {
-        private bool createWhenProtected;
+        private readonly bool createWhenProtected;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDefinitionTranslationUnitFactory"/> class.
@@ -42,6 +42,19 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             : base(node, semanticModel)
         {
             this.createWhenProtected = createWhenProtected;
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="MethodDefinitionTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public MethodDefinitionTranslationUnitFactory(MethodDefinitionTranslationUnitFactory other) 
+            : base(other)
+        {
+            this.createWhenProtected = other.createWhenProtected;
         }
 
         /// <summary>

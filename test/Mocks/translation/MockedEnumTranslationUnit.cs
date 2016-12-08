@@ -3,7 +3,7 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.Translation
+namespace Rosetta.Translation.Mocks
 {
     using System;
     using System.Collections.Generic;

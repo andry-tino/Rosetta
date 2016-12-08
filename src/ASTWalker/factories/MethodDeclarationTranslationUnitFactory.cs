@@ -12,31 +12,33 @@ namespace Rosetta.AST.Factories
 
     using Rosetta.Translation;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Utilities;
 
     /// <summary>
     /// Factory for <see cref="MethodDeclarationTranslationUnit"/>.
     /// </summary>
-    public class MethodDeclarationTranslationUnitFactory : ITranslationUnitFactory
+    public class MethodDeclarationTranslationUnitFactory : TranslationUnitFactory, ITranslationUnitFactory
     {
-        // TODO: Create common base class for all translation unit factories
-
-        private readonly CSharpSyntaxNode node;
-        private readonly SemanticModel semanticModel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnitFactory"/> class.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="semanticModel">The semantic model</param>
-        public MethodDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null)
+        public MethodDeclarationTranslationUnitFactory(CSharpSyntaxNode node, SemanticModel semanticModel = null) 
+            : base(node, semanticModel)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node), "A node must be specified!");
-            }
+        }
 
-            this.node = node;
-            this.semanticModel = semanticModel;
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="MethodDeclarationTranslationUnitFactory"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public MethodDeclarationTranslationUnitFactory(MethodDeclarationTranslationUnitFactory other) 
+            : base(other)
+        {
         }
 
         /// <summary>
@@ -50,29 +52,21 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            MethodDeclaration helper = this.CreateHelper(this.node as MethodDeclarationSyntax, this.semanticModel);
+            MethodDeclaration helper = this.CreateHelper(this.Node as MethodDeclarationSyntax, this.SemanticModel);
 
             var methodDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
-                TypeIdentifierTranslationUnit.Create(helper.ReturnType.FullName),
+                TypeIdentifierTranslationUnit.Create(helper.ReturnType.FullName.MapType()),
                 IdentifierTranslationUnit.Create(helper.Name)) as MethodSignatureDeclarationTranslationUnit;
 
             foreach (Parameter parameter in helper.Parameters)
             {
                 methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    TypeIdentifierTranslationUnit.Create(parameter.Type.FullName),
+                    TypeIdentifierTranslationUnit.Create(parameter.Type.FullName.MapType()),
                     IdentifierTranslationUnit.Create(parameter.IdentifierName)));
             }
 
             return methodDeclaration;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="CSharpSyntaxNode"/>.
-        /// </summary>
-        protected CSharpSyntaxNode Node
-        {
-            get { return this.node; }
         }
 
         /// <summary>
