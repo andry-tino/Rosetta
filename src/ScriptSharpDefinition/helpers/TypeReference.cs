@@ -6,9 +6,13 @@
 namespace Rosetta.ScriptSharp.Definition.AST.Helpers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+    using Rosetta.AST.Helpers;
 
     /// <summary>
     ///Decorates <see cref="AttributeDecoration"/>.
@@ -54,14 +58,15 @@ namespace Rosetta.ScriptSharp.Definition.AST.Helpers
                     var symbol = this.SemanticModel.GetSymbolInfo(this.TypeSyntaxNode).Symbol;
                     if (symbol != null)
                     {
-                        var attributes = symbol.GetAttributes();
+                        var attributeDatas = symbol.GetAttributes();
                         string overriddenName = null;
-                        foreach (var attribute in attributes)
+                        foreach (var attributeData in attributeDatas)
                         {
-                            if (attribute.AttributeClass.Name.Contains(ScriptNamespaceAttributeDecoration.ScriptNamespaceName) && attribute.ConstructorArguments.Length > 0)
+                            var attribute = new AttributeSemantics(attributeData);
+                            if (attribute.AttributeClassName.Contains(ScriptNamespaceAttributeDecoration.ScriptNamespaceName) && attribute.ConstructorArguments.Count() > 0)
                             {
                                 // Limitation: We consider this usage of the attribute: `[ScriptNamespace("SomeName")]`
-                                overriddenName = attribute.ConstructorArguments[0].Value.ToString();
+                                overriddenName = attribute.ConstructorArguments.First().Value.ToString();
                             }
                         }
 

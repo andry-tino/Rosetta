@@ -93,7 +93,7 @@ namespace Rosetta.AST
         
         private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)
         {
-            this.semanticModel = SemanticHelper.RetrieveSemanticModel("LoadedAssembly", path, sourceTree, true);
+            this.semanticModel = SemanticUtils.RetrieveSemanticModel("LoadedAssembly", path, sourceTree, true);
         }
     }
 }

@@ -116,6 +116,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AttributeSemanticsTest.cs" />
     <Compile Include="ClassDeclarationTest.cs" />
     <Compile Include="ConditionalStatementTest.cs" />
     <Compile Include="MethodDeclarationTest.cs" />

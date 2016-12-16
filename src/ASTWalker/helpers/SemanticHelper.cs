@@ -6,75 +6,28 @@
 namespace Rosetta.AST.Helpers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.IO;
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
 
     /// <summary>
-    /// Helper for interacting with the <see cref="SemanticModel"/>.
+    /// Generic semantic helper.
     /// </summary>
-    public static class SemanticHelper
+    public abstract class SemanticHelper
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
-        /// <param name="sourceTree"></param>
-        /// <param name="loadMsCoreLib"></param>
-        /// <returns></returns>
-        public static SemanticModel RetrieveSemanticModel(string name, string path, CSharpSyntaxTree sourceTree, bool loadMsCoreLib = false)
-        {
-            return RetrieveCompilation(name, path, sourceTree, loadMsCoreLib).GetSemanticModel(sourceTree);
-        }
+        private readonly object semanticObject;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="SemanticHelper"/> class.
         /// </summary>
-        /// <param name="compilation"></param>
-        /// <param name="sourceTree"></param>
-        /// <returns></returns>
-        public static SemanticModel RetrieveSemanticModel(Compilation compilation, CSharpSyntaxTree sourceTree)
+        /// <param name="semanticObject">The Roslyn semantic object.</param>
+        public SemanticHelper(object semanticObject)
         {
-            return compilation.GetSemanticModel(sourceTree);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
-        /// <param name="sourceTree"></param>
-        /// <param name="loadMsCoreLib"></param>
-        /// <returns></returns>
-        public static CSharpCompilation RetrieveCompilation(string name, string path, CSharpSyntaxTree sourceTree, bool loadMsCoreLib = false)
-        {
-            var references = new List<MetadataReference>();
-
-            var assembly = MetadataReference.CreateFromFile(path); // The target assembly we want to translate
-            references.Add(assembly);
-
-            if (loadMsCoreLib)
+            if (semanticObject == null)
             {
-                var mscorelib = GetMsCoreLibMetadataReference(); // .NET native
-                references.Add(mscorelib);
+                throw new ArgumentNullException(nameof(semanticObject), "A semantic object is necessary!");
             }
 
-            return CSharpCompilation.Create(name, new[] { sourceTree }, references);
+            this.semanticObject = semanticObject;
         }
 
-        private static PortableExecutableReference GetMsCoreLibMetadataReference()
-        {
-            var assembly = typeof(object).Assembly;
-
-            // TODO: determine the best logic for this
-            //var path = Uri.UnescapeDataString(new UriBuilder(assembly.CodeBase).Path);
-            //var metadataReference = MetadataReference.CreateFromFile(path);
-            var metadataReference = MetadataReference.CreateFromFile(assembly.Location);
-
-            return metadataReference;
-        }
+        protected object SemanticObject => this.semanticObject;
     }
 }

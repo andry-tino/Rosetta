@@ -20,6 +20,8 @@ namespace Rosetta.AST.Helpers
         // TODO: Is this really needed?
         private Microsoft.CodeAnalysis.TypeKind? kind;
 
+        // TODO: Revise this contruction logic, it is odd and not consistent!
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTypeReference"/> class.
         /// </summary>

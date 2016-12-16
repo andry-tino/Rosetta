@@ -70,6 +70,9 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the <see cref="Helper"/> though which it is possible to access to attributes.
         /// </summary>
+        /// <remarks>
+        /// These attributes are the decorations applied in syntax to the class.
+        /// </remarks>
         public AttributeLists AttributeLists
         {
             get

@@ -88,7 +88,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
             if (compilation != null)
             {
                 transformer.Transform(ref this.tree, ref compilation);
-                this.semanticModel = SemanticHelper.RetrieveSemanticModel(compilation, this.tree);
+                this.semanticModel = SemanticUtils.RetrieveSemanticModel(compilation, this.tree);
             }
             else
             {
@@ -108,7 +108,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
         private CSharpCompilation GetCompilation(string path, CSharpSyntaxTree sourceTree)
         {
-            return SemanticHelper.RetrieveCompilation("LoadedAssembly", path, sourceTree, true);
+            return SemanticUtils.RetrieveCompilation("LoadedAssembly", path, sourceTree, true);
         }
 
         private static void ValidatePaths(string[] paths, string argumentName, string message)

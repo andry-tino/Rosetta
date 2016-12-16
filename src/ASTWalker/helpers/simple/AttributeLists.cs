@@ -14,6 +14,9 @@ namespace Rosetta.AST.Helpers
     /// <summary>
     /// Helper for accessing attribute lists references in AST.
     /// </summary>
+    /// <remarks>
+    /// This class is to be used for syntax decoration.
+    /// </remarks>
     public class AttributeLists : Helper
     {
         private SyntaxList<AttributeListSyntax> attributeLists;
@@ -28,7 +31,6 @@ namespace Rosetta.AST.Helpers
         public AttributeLists(BaseTypeDeclarationSyntax syntaxNode)
             : this(syntaxNode, null)
         {
-            this.attributeLists = syntaxNode.AttributeLists;
         }
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace Rosetta.AST.Helpers
         public AttributeLists(BaseTypeDeclarationSyntax syntaxNode, SemanticModel semanticModel)
             : base(syntaxNode, semanticModel)
         {
+            this.attributeLists = syntaxNode.AttributeLists;
         }
 
         /// <summary>

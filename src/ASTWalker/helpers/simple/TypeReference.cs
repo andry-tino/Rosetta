@@ -6,11 +6,12 @@
 namespace Rosetta.AST.Helpers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Collections.Immutable;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    using Rosetta.AST.Utilities;
 
     /// <summary>
     /// Helper for accessing type references in AST.
@@ -18,6 +19,9 @@ namespace Rosetta.AST.Helpers
     public class TypeReference : Helper
     {
         // TODO: Have a common or unique class for this and `BaseTypeReference`
+
+        // Cached quantities
+        private IEnumerable<AttributeSemantics> attributes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeReference"/> class.
@@ -42,6 +46,57 @@ namespace Rosetta.AST.Helpers
         public TypeReference(TypeSyntax typeSyntaxNode, SemanticModel semanticModel)
             : base(typeSyntaxNode, semanticModel)
         {
+        }
+
+        /// <summary>
+        /// Gets the list of attributes applied to the type.
+        /// </summary>
+        /// <remarks>
+        /// This is about semantically retrieved attributes.
+        /// </remarks>
+        public IEnumerable<AttributeSemantics> Attributes
+        {
+            get
+            {
+                if (this.attributes == null)
+                {
+                    if (this.SemanticModel != null)
+                    {
+                        ImmutableArray<AttributeData>? attributes = null;
+
+                        // Symbol can be found via Symbol
+                        ISymbol symbol = this.SemanticModel.GetSymbolInfo(this.TypeSyntaxNode).Symbol;
+                        if (symbol != null)
+                        {
+                            attributes = symbol.GetAttributes();
+                        }
+
+                        // Symbol can be found via TypeSymbol
+                        ITypeSymbol type = this.SemanticModel.GetTypeInfo(this.TypeSyntaxNode).Type;
+                        if (type != null)
+                        {
+                            attributes = type.GetAttributes();
+                        }
+
+                        if (!attributes.HasValue)
+                        {
+                            // Could not find attributes
+                            this.attributes = new AttributeSemantics[0];
+                        }
+                        else
+                        {
+                            // Attributes could be found
+                            this.attributes = attributes.Value.Select(attribute => new AttributeSemantics(attribute));
+                        }
+                    }
+                    else
+                    {
+                        this.attributes = new AttributeSemantics[0];
+                    }
+                }
+
+                return this.attributes;
+            }
         }
 
         /// <summary>
@@ -123,6 +178,15 @@ namespace Rosetta.AST.Helpers
             // Could not find symbol
             return null;
         }
+
+        /// <summary>
+        /// Tries all possible ways to retrieve the full name using the semantic model.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        internal static string GetTypeSymbolFullName(ITypeSymbol typeSymbol) =>
+            typeSymbol.ToDisplayString(new SymbolDisplayFormat(
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces));
 
         protected TypeSyntax TypeSyntaxNode
         {

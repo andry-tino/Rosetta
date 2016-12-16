@@ -6,6 +6,8 @@
 namespace Rosetta.AST.Helpers.UnitTests
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -183,6 +185,43 @@ namespace Rosetta.AST.Helpers.UnitTests
             helper = new MethodDeclaration(methodDeclarationNode, semanticModel).ReturnType;
 
             Assert.IsFalse(helper.IsVoid, "Void type not expected!");
+        }
+
+        [TestMethod]
+        public void RetrieveAttributesOnClassFromMethodViaSemantics()
+        {
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(@"
+            using System;
+            namespace Namespace1
+            {
+                [Obsolete]
+                public class Class1 { }
+                public class Class2 { 
+                    public Class1 Method1() { return null; }
+                }
+            }"
+            );
+
+            // Second class
+            var node = new NodeLocator(tree).LocateLast(typeof(MethodDeclarationSyntax));
+            Assert.IsNotNull(node, string.Format("Node of type `{0}` should be found!",
+                typeof(MethodDeclarationSyntax).Name));
+
+            // Loading MSCoreLib
+            var compilation = CSharpCompilation.Create("TestAssembly")
+                  .AddReferences(
+                     MetadataReference.CreateFromFile(
+                       typeof(object).Assembly.Location))
+                  .AddSyntaxTrees(tree);
+            var semanticModel = compilation.GetSemanticModel(tree);
+
+            var methodDeclarationNode = node as MethodDeclarationSyntax;
+            var helper = new MethodDeclaration(methodDeclarationNode, semanticModel).ReturnType;
+
+            var attributes = helper.Attributes;
+            Assert.IsNotNull(attributes);
+            Assert.AreEqual(1, attributes.Count(), "Expecting 1 attribute!");
+            Assert.IsTrue(attributes.First().AttributeClassName.Contains("ObsoleteAttribute"), "Attribute `Obsolete` expected!");
         }
 
         #region Helpers
