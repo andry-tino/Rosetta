@@ -65,7 +65,7 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public TypeReference Type
         {
-            get { return new TypeReference(this.PropertyDeclarationSyntaxNode.Type, this.SemanticModel); }
+            get { return this.CreateTypeReferenceHelper(this.PropertyDeclarationSyntaxNode.Type, this.SemanticModel); }
         }
 
         /// <summary>
@@ -100,6 +100,17 @@ namespace Rosetta.AST.Helpers
 
                 return this.hasSet.Value;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        protected virtual TypeReference CreateTypeReferenceHelper(TypeSyntax node, SemanticModel semanticModel)
+        {
+            return new TypeReference(node, semanticModel);
         }
 
         private static bool SearchForNode(SyntaxList<AccessorDeclarationSyntax> accessors, SyntaxKind kind)

@@ -43,7 +43,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Helpers
         /// <returns></returns>
         protected override Rosetta.AST.Helpers.BaseTypeReference CreateBaseTypeReferenceHelper(BaseTypeSyntax node, SemanticModel semanticModel, TypeKind typeKind)
         {
-            return new BaseTypeReference(node, semanticModel, typeKind);
+            return new Rosetta.ScriptSharp.Definition.AST.Helpers.BaseTypeReference(node, semanticModel, typeKind);
         }
     }
 }

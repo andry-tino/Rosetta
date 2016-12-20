@@ -13,16 +13,28 @@ namespace Rosetta.Translation
     /// </summary>
     public class ArgumentDefinitionTranslationUnit : ITranslationUnit
     {
-        private VariableDeclarationTranslationUnit variableDeclaration;
+        protected ITranslationUnit variableDeclaration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArgumentDefinitionTranslationUnit"/> class.
         /// </summary>
         /// <param name="typeName"></param>
         /// <param name="name"></param>
-        private ArgumentDefinitionTranslationUnit(ITranslationUnit typeName, ITranslationUnit name)
+        protected ArgumentDefinitionTranslationUnit(ITranslationUnit typeName, ITranslationUnit name)
         {
             this.variableDeclaration = VariableDeclarationTranslationUnit.Create(typeName, name, null, false);
+        }
+
+        /// <summary>
+        /// Copy initializes a new instance of the <see cref="ArgumentDefinitionTranslationUnit"/> class.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <remarks>
+        /// For testability.
+        /// </remarks>
+        public ArgumentDefinitionTranslationUnit(ArgumentDefinitionTranslationUnit other)
+        {
+            this.variableDeclaration = other.variableDeclaration;
         }
 
         /// <summary>

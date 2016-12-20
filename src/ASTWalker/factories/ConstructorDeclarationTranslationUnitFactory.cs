@@ -52,7 +52,7 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            ConstructorDeclaration helper = new ConstructorDeclaration(this.Node as ConstructorDeclarationSyntax, this.SemanticModel);
+            ConstructorDeclaration helper = this.CreateHelper(this.Node as ConstructorDeclarationSyntax, this.SemanticModel);
 
             var constructorDeclaration = this.CreateTranslationUnit(helper.Visibility) as MethodSignatureDeclarationTranslationUnit;
 
@@ -85,6 +85,20 @@ namespace Rosetta.AST.Factories
         protected virtual ITranslationUnit CreateTranslationUnit(VisibilityToken visibility)
         {
             return ConstructorDeclarationTranslationUnit.Create(visibility);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Must be a type derived from <see cref="ConstructorDeclaration"/>.
+        /// </remarks>
+        protected virtual ConstructorDeclaration CreateHelper(ConstructorDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new ConstructorDeclaration(node, semanticModel);
         }
     }
 }

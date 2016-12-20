@@ -95,5 +95,19 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         {
             return MethodDefinitionTranslationUnit.Create(visibility, returnType, name);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Must be a type derived from <see cref="MethodDeclaration"/>.
+        /// </remarks>
+        protected override Rosetta.AST.Helpers.MethodDeclaration CreateHelper(MethodDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new Rosetta.ScriptSharp.Definition.AST.Helpers.MethodDeclaration(node, semanticModel);
+        }
     }
 }

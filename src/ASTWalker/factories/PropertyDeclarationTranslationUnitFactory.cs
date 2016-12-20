@@ -52,7 +52,7 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            PropertyDeclaration helper = new PropertyDeclaration(this.Node as PropertyDeclarationSyntax, this.SemanticModel);
+            PropertyDeclaration helper = this.CreateHelper(this.Node as PropertyDeclarationSyntax, this.SemanticModel);
 
             var propertyDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
@@ -85,6 +85,20 @@ namespace Rosetta.AST.Factories
             VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name, bool hasGet, bool hasSet)
         {
             return PropertyDeclarationTranslationUnit.Create(visibility, type, name, hasGet, hasSet);
+        }
+
+        /// <summary>
+        /// Creates the helper.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Returned type must be a derived type of <see cref="PropertyDeclaration"/>.
+        /// </remarks>
+        protected virtual PropertyDeclaration CreateHelper(PropertyDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new PropertyDeclaration(node, semanticModel);
         }
     }
 }

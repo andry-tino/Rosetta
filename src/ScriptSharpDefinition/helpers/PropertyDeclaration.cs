@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// MethodDeclaration.cs
+/// PropertyDeclaration.cs
 /// Andrea Tino - 2016
 /// </summary>
 
@@ -11,29 +11,26 @@ namespace Rosetta.ScriptSharp.Definition.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     /// <summary>
-    /// Helper for parameters.
+    ///Decorates <see cref="AttributeDecoration"/>.
     /// </summary>
-    public class Parameter : Rosetta.AST.Helpers.Parameter
+    public class PropertyDeclaration : Rosetta.AST.Helpers.PropertyDeclaration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Parameter"/> class.
+        /// Initializes a new instance of the <see cref="PropertyDeclaration"/> class.
         /// </summary>
-        /// <param name="syntaxNode"></param>
-        public Parameter(ParameterSyntax syntaxNode)
-            : this(syntaxNode, null)
+        /// <param name="classDeclarationNode"></param>
+        public PropertyDeclaration(PropertyDeclarationSyntax propertyDeclarationNode)
+            : this(propertyDeclarationNode, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Parameter"/> class.
+        /// Initializes a new instance of the <see cref="PropertyDeclaration"/> class.
         /// </summary>
-        /// <param name="syntaxNode"></param>
-        /// <param name="kind"></param>
-        /// <remarks>
-        /// When providing the semantic model, some properites will be devised from that.
-        /// </remarks>
-        public Parameter(ParameterSyntax syntaxNode, SemanticModel semanticModel)
-            : base(syntaxNode, semanticModel)
+        /// <param name="classDeclarationNode"></param>
+        /// <param name="semanticModel"></param>
+        public PropertyDeclaration(PropertyDeclarationSyntax propertyDeclarationNode, SemanticModel semanticModel)
+            : base(propertyDeclarationNode, semanticModel)
         {
         }
 

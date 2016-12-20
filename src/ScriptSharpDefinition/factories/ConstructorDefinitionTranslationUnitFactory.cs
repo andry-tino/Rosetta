@@ -64,7 +64,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         {
             get
             {
-                var helper = new ConstructorDeclaration(this.Node as ConstructorDeclarationSyntax);
+                var helper = this.CreateHelper(this.Node as ConstructorDeclarationSyntax, null); // Semantic model not needed
 
                 if (helper.Visibility.IsExposedVisibility())
                 {
@@ -91,6 +91,20 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         protected override ITranslationUnit CreateTranslationUnit(VisibilityToken visibility)
         {
             return ConstructorDefinitionTranslationUnit.Create(visibility);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Must be a type derived from <see cref="ConstructorDeclaration"/>.
+        /// </remarks>
+        protected override Rosetta.AST.Helpers.ConstructorDeclaration CreateHelper(ConstructorDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new Rosetta.ScriptSharp.Definition.AST.Helpers.ConstructorDeclaration(node, semanticModel);
         }
     }
 }

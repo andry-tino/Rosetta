@@ -42,7 +42,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Helpers
         /// <returns></returns>
         protected override Rosetta.AST.Helpers.TypeReference CreateTypeReferenceHelper(TypeSyntax node, SemanticModel semanticModel)
         {
-            return new TypeReference(node, semanticModel);
+            return new Rosetta.ScriptSharp.Definition.AST.Helpers.TypeReference(node, semanticModel);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Helpers
         /// <returns></returns>
         protected override Rosetta.AST.Helpers.Parameter CreateParameterHelper(ParameterSyntax node, SemanticModel semanticModel)
         {
-            return new Parameter(node, semanticModel);
+            return new Rosetta.ScriptSharp.Definition.AST.Helpers.Parameter(node, semanticModel);
         }
     }
 }

@@ -69,11 +69,22 @@ namespace Rosetta.AST.Helpers
                 if (this.parameters == null)
                 {
                     this.parameters = this.ConstructorDeclarationSyntaxNode.ParameterList.Parameters.Select(
-                        (ParameterSyntax p) => new Parameter(p)).ToList();
+                        (ParameterSyntax p) => this.CreateParameterHelper(p, this.SemanticModel)).ToList();
                 }
 
                 return this.parameters;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        protected virtual Parameter CreateParameterHelper(ParameterSyntax node, SemanticModel semanticModel)
+        {
+            return new Parameter(node, semanticModel);
         }
 
         private ConstructorDeclarationSyntax ConstructorDeclarationSyntaxNode

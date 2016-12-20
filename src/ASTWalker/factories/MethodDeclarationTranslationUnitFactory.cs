@@ -99,6 +99,9 @@ namespace Rosetta.AST.Factories
         /// <param name="node"></param>
         /// <param name="semanticModel"></param>
         /// <returns></returns>
+        /// <remarks>
+        /// Must be a type derived from <see cref="MethodDeclaration"/>.
+        /// </remarks>
         protected virtual MethodDeclaration CreateHelper(MethodDeclarationSyntax node, SemanticModel semanticModel)
         {
             return new MethodDeclaration(node, semanticModel);

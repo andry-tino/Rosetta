@@ -1,16 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6E9055D2-5279-40C3-AA0C-E3A18002C39D}</ProjectGuid>
+    <ProjectGuid>{0AD9D8BB-359E-408D-B136-48CB1EE72836}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta</RootNamespace>
-    <AssemblyName>Rosetta.Mocks</AssemblyName>
+    <RootNamespace>Rosetta.ScriptSharp.Definition.AST.Factories.UnitTests</RootNamespace>
+    <AssemblyName>Rosetta.ScriptSharpDefinition.ASTWalker.Factories.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,16 +34,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeAnalysis.Common.1.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
@@ -102,31 +97,26 @@
       <HintPath>..\..\packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
+    <Compile Include="ConstructorDefinitionTUFTest.cs" />
+    <Compile Include="MethodDefinitionTUFTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="translation\MockedArgumentDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedClassDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedConditionalStatementTranslationUnit.cs" />
-    <Compile Include="translation\MockedConstructorDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedConstructorDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedEnumTranslationUnit.cs" />
-    <Compile Include="translation\MockedInterfaceDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedLocalDeclarationStatementTranslationUnit.cs" />
-    <Compile Include="translation\MockedMethodDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedMethodDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedModuleTranslationUnit.cs" />
-    <Compile Include="translation\MockedProgramTranslationUnit.cs" />
-    <Compile Include="translation\MockedPropertyDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedVariableDeclarationTranslationUnit.cs" />
-    <Compile Include="walkers\MockedClassASTWalker.cs" />
-    <Compile Include="walkers\MockedConditionalStatementASTWalker.cs" />
-    <Compile Include="walkers\MockedConstructorASTWalker.cs" />
-    <Compile Include="walkers\MockedEnumASTWalker.cs" />
-    <Compile Include="walkers\MockedInterfaceASTWalker.cs" />
-    <Compile Include="walkers\MockedMethodASTWalker.cs" />
-    <Compile Include="walkers\MockedNamespaceASTWalker.cs" />
-    <Compile Include="walkers\MockedProgramASTWalker.cs" />
+    <Compile Include="PropertyDefinitionTUFTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ASTWalker\ASTWalker.csproj">
@@ -141,8 +131,34 @@
       <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
       <Name>TranslationUnits</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mocks\Mocks.csproj">
+      <Project>{6e9055d2-5279-40c3-aa0c-e3a18002c39d}</Project>
+      <Name>Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\resources\TestUtils\TestUtils.csproj">
+      <Project>{0678abb3-50ce-453f-8eb5-1f21f10061b3}</Project>
+      <Name>TestUtils</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
