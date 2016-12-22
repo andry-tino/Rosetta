@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6E9055D2-5279-40C3-AA0C-E3A18002C39D}</ProjectGuid>
+    <ProjectGuid>{CE0C7EA4-8BFD-43DF-8682-0AB211799F1E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta</RootNamespace>
-    <AssemblyName>Rosetta.Mocks</AssemblyName>
+    <RootNamespace>Rosetta.ScriptSharp</RootNamespace>
+    <AssemblyName>Rosetta.ScriptSharp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,16 +29,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeAnalysis.Common.1.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
@@ -102,47 +92,32 @@
       <HintPath>..\..\packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="helpers\BaseTypeReference.cs" />
+    <Compile Include="helpers\ClassDeclaration.cs" />
+    <Compile Include="helpers\ConstructorDeclaration.cs" />
+    <Compile Include="helpers\MethodDeclaration.cs" />
+    <Compile Include="helpers\Parameter.cs" />
+    <Compile Include="helpers\PropertyDeclaration.cs" />
+    <Compile Include="helpers\ScriptNamespaceAttributeDecoration.cs" />
+    <Compile Include="helpers\TypeReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="translation\MockedArgumentDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedClassDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedConditionalStatementTranslationUnit.cs" />
-    <Compile Include="translation\MockedConstructorDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedConstructorDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedEnumTranslationUnit.cs" />
-    <Compile Include="translation\MockedInterfaceDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedLocalDeclarationStatementTranslationUnit.cs" />
-    <Compile Include="translation\MockedMethodDeclarationTranslationUnit.cs" />
-    <Compile Include="translation\MockedMethodDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedModuleTranslationUnit.cs" />
-    <Compile Include="translation\MockedProgramTranslationUnit.cs" />
-    <Compile Include="translation\MockedPropertyDefinitionTranslationUnit.cs" />
-    <Compile Include="translation\MockedVariableDeclarationTranslationUnit.cs" />
-    <Compile Include="walkers\MockedClassASTWalker.cs" />
-    <Compile Include="walkers\MockedConditionalStatementASTWalker.cs" />
-    <Compile Include="walkers\MockedConstructorASTWalker.cs" />
-    <Compile Include="walkers\MockedEnumASTWalker.cs" />
-    <Compile Include="walkers\MockedInterfaceASTWalker.cs" />
-    <Compile Include="walkers\MockedMethodASTWalker.cs" />
-    <Compile Include="walkers\MockedNamespaceASTWalker.cs" />
-    <Compile Include="walkers\MockedProgramASTWalker.cs" />
+    <Compile Include="transformation\ScriptNamespaceBasedASTTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ASTWalker\ASTWalker.csproj">
+    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ASTWalker\ASTWalker.csproj">
       <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
       <Name>ASTWalker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\ScriptSharp.Definition\ScriptSharp.Definition.csproj">
-      <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
-      <Name>ScriptSharp.Definition</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\TranslationUnits\TranslationUnits.csproj">
-      <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
-      <Name>TranslationUnits</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

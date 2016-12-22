@@ -10,8 +10,8 @@ param(
 	'ASTWalker.Helpers.UnitTests\bin\Debug\Rosetta.ASTWalker.Helpers.UnitTests.dll', 
 	'TranslationUnits.UnitTests\bin\Debug\Rosetta.TranslationUnits.UnitTests.dll', 
 	'Runner.UnitTests\bin\Debug\Rosetta.Runner.UnitTests.dll',
-	'ScriptSharpDefinition.ASTWalker.Factories.UnitTests\bin\Debug\Rosetta.ScriptSharpDefinition.ASTWalker.Factories.UnitTests.dll',
-	'ScriptSharpDefinition.ASTWalker.UnitTests\bin\Debug\Rosetta.ScriptSharpDefinition.ASTWalker.UnitTests.dll'
+	'ScriptSharp.Definition.ASTWalker.Factories.UnitTests\bin\Debug\Rosetta.ScriptSharp.Definition.ASTWalker.Factories.UnitTests.dll',
+	'ScriptSharp.Definition.ASTWalker.UnitTests\bin\Debug\Rosetta.ScriptSharp.Definition.ASTWalker.UnitTests.dll'
   )
 );
 

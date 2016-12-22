@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{29B55553-B8C5-45A3-87F7-893ECE5EBF9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Rosetta.ScriptSharp.Definition.BuildTask.Example</RootNamespace>
+    <AssemblyName>Rosetta.ScriptSharp.Definition.BuildTask.Example</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ScriptSharp.Definition.BuildTask\ScriptSharp.Definition.BuildTask.csproj">
+      <Project>{ff0c1c5b-8ce3-480f-b3c3-4ea5d69c209e}</Project>
+      <Name>ScriptSharp.Definition.BuildTask</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GenerateTypeScriptDefinitions.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="GenerateTypeScriptDefinitions.targets" />
+  <Target Name="CreateOutFolder" BeforeTargets="GenerateTypeScriptDefinitionFiles;GenerateTypeScriptDefinitionBundle;GenerateTypeScriptDefinitionBundleWithAssembly;GenerateTypeScriptDefinitionBundleWithIncludes" Condition="'$(SkipBuildTaskTest)' == ''">
+    <MakeDir Directories=".\out" />
+    <MakeDir Directories=".\out\bundle" />
+    <MakeDir Directories=".\out\bundle_a" />
+    <MakeDir Directories=".\out\bundle_i" />
+  </Target>
+  <ItemGroup>
+    <TypeScriptDefinitionReference Include="file1.d.ts" />
+    <TypeScriptDefinitionReference Include="file2.d.ts" />
+  </ItemGroup>
+  <Target Name="GenerateTypeScriptDefinitionFiles" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
+    <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out" />
+  </Target>
+  <Target Name="GenerateTypeScriptDefinitionBundle" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
+    <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out\bundle" CreateBundle="true" BundleName="ProjectBundle" />
+  </Target>
+  <Target Name="GenerateTypeScriptDefinitionBundleWithAssembly" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
+    <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out\bundle_a" CreateBundle="true" AssemblyPath="$(OutputPath)\$(AssemblyName).dll" BundleName="ProjectBundle" />
+  </Target>
+  <Target Name="GenerateTypeScriptDefinitionBundleWithIncludes" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
+    <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out\bundle_i" CreateBundle="true" References="@(TypeScriptDefinitionReference)" BundleName="ProjectBundle" />
+  </Target>
+</Project>

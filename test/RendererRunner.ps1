@@ -13,7 +13,7 @@ param(
 # Handling output folders, if they already exist, remove them and all their content (TODO)
 $RenderPathTranslationUnits = "$OutputPath\TranslationUnits.Renderings";
 $RenderPathAST = "$OutputPath\ASTWalker.Renderings";
-$RendererPathASTSSDef = "$OutputPath\ScriptSharpDefinition.ASTWalker.Renderings";
+$RendererPathASTSSDef = "$OutputPath\ScriptSharp.Definition.ASTWalker.Renderings";
 
 if (test-path $RenderPathTranslationUnits)
 {
@@ -32,7 +32,7 @@ new-item "$RendererPathASTSSDef" -type directory | out-null;
 # Defining locations where to fetch tests
 $RendererExecPathTranslationUnits = "$WorkspacePath\test\renderers\TranslationUnits.Renderings\bin\Debug\Rosetta.TranslationUnits.Renderings.exe";
 $RendererExecPathAST = "$WorkspacePath\test\renderers\ASTWalker.Renderings\bin\Debug\Rosetta.ASTWalker.Renderings.exe";
-$RendererExecPathASTSSDef = "$WorkspacePath\test\renderers\ScriptSharpDefinition.ASTWalker.Renderings\bin\Debug\Rosetta.ScriptSharpDefinition.ASTWalker.Renderings.exe";
+$RendererExecPathASTSSDef = "$WorkspacePath\test\renderers\ScriptSharp.Definition.ASTWalker.Renderings\bin\Debug\Rosetta.ScriptSharp.Definition.ASTWalker.Renderings.exe";
 
 # ----------------------------------------------------------------
 # Running renderers for Translation units

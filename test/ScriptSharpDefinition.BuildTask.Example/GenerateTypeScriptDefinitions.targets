@@ -1,8 +1,0 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">  
-
-	<UsingTask
-		TaskName="Rosetta.ScriptSharp.Definition.BuildTask.GenerateDefinitionsBuildTask"
-		AssemblyFile="$(OutputPath)\Rosetta.ScriptSharpDefinitionBuildTask.dll" 
-	/>
-	
-</Project>
