@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// BaseTypeReferenceTest.cs
+/// TypeReferenceTest.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -20,7 +20,7 @@ namespace Rosetta.AST.Helpers.UnitTests
     /// Tests for <see cref="BaseTypeReference"/> and the <see cref="TypeReference"/> classes.
     /// </summary>
     [TestClass]
-    public class BaseTypeReferenceTest
+    public class TypeReferenceTest
     {
         private static SyntaxTree Class2SyntaxTree;
         private static SemanticModel Class2SemanticModel;

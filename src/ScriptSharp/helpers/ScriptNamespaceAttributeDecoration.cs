@@ -7,18 +7,19 @@ namespace Rosetta.ScriptSharp.AST.Helpers
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    ///Decorates <see cref="AttributeDecoration"/>.
+    /// Decorates <see cref="AttributeDecoration"/>.
     /// </summary>
+    /// <remarks>
+    /// This is a syntax helper which is used to retrieve info on the ScriptNamespace
+    /// attribute from a mere syntax point of view.
+    /// </remarks>
     public class ScriptNamespaceAttributeDecoration
     {
-        public const string ScriptNamespaceFullName = "ScriptNamespace";
+        public const string ScriptNamespaceFullName = "ScriptNamespace"; // TODO: Find namespace used by ScriptSharp for this class
         public const string ScriptNamespaceName = "ScriptNamespace";
 
         private AttributeDecoration attribute;

@@ -6,8 +6,6 @@
 namespace Rosetta.ScriptSharp.AST.Helpers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -62,11 +60,10 @@ namespace Rosetta.ScriptSharp.AST.Helpers
                         string overriddenName = null;
                         foreach (var attributeData in attributeDatas)
                         {
-                            var attribute = new AttributeSemantics(attributeData);
-                            if (attribute.AttributeClassName.Contains(ScriptNamespaceAttributeDecoration.ScriptNamespaceName) && attribute.ConstructorArguments.Count() > 0)
+                            var scriptNamespaceHelper = new ScriptNamespaceAttributeOnType(new AttributeSemantics(attributeData));
+                            if (scriptNamespaceHelper.HasScriptNamespaceAttributeDecoration)
                             {
-                                // Limitation: We consider this usage of the attribute: `[ScriptNamespace("SomeName")]`
-                                overriddenName = attribute.ConstructorArguments.First().Value.ToString();
+                                overriddenName = scriptNamespaceHelper.OverridenName;
                             }
                         }
 

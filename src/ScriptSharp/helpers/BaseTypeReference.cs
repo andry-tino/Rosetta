@@ -10,6 +10,8 @@ namespace Rosetta.ScriptSharp.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Helpers;
+
     /// <summary>
     ///Decorates <see cref="AttributeDecoration"/>.
     /// </summary>
@@ -37,7 +39,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// Type kind will be stored statically.
         /// </remarks>
         public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, SemanticModel semanticModel)
-            : this(baseTypeSyntaxNode, semanticModel, TypeKind.Unknown)
+            : this(baseTypeSyntaxNode, semanticModel, Microsoft.CodeAnalysis.TypeKind.Unknown)
         {
         }
 
@@ -50,7 +52,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// <remarks>
         /// Type kind will be stored statically.
         /// </remarks>
-        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, SemanticModel semanticModel, TypeKind kind)
+        public BaseTypeReference(BaseTypeSyntax baseTypeSyntaxNode, SemanticModel semanticModel, Microsoft.CodeAnalysis.TypeKind kind)
             : base(baseTypeSyntaxNode, semanticModel, kind)
         {
         }
@@ -69,14 +71,14 @@ namespace Rosetta.ScriptSharp.AST.Helpers
                     var symbol = this.SemanticModel.GetSymbolInfo(this.BaseTypeSyntaxNode.Type).Symbol;
                     if (symbol != null)
                     {
-                        var attributes = symbol.GetAttributes();
+                        var attributeDatas = symbol.GetAttributes();
                         string overriddenName = null;
-                        foreach (var attribute in attributes)
+                        foreach (var attributeData in attributeDatas)
                         {
-                            if (attribute.AttributeClass.Name.Contains(ScriptNamespaceAttributeDecoration.ScriptNamespaceName) && attribute.ConstructorArguments.Length > 0)
+                            var scriptNamespaceHelper = new ScriptNamespaceAttributeOnType(new AttributeSemantics(attributeData));
+                            if (scriptNamespaceHelper.HasScriptNamespaceAttributeDecoration)
                             {
-                                // Limitation: We consider this usage of the attribute: `[ScriptNamespace("SomeName")]`
-                                overriddenName = attribute.ConstructorArguments[0].Value.ToString();
+                                overriddenName = scriptNamespaceHelper.OverridenName;
                             }
                         }
 
