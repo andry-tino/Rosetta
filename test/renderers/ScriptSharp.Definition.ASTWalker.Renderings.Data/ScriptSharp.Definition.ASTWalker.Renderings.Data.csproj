@@ -100,6 +100,7 @@
     <Compile Include="ClassesWithScriptNamespace.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumsWithScriptNamespace.cs" />
+    <Compile Include="Fields.cs" />
     <Compile Include="FieldsWithPreserveName.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="InterfacesWithScriptNamespace.cs" />

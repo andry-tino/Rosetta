@@ -157,7 +157,6 @@
     <Compile Include="utilities\MultiPurposeASTWalker.cs" />
     <Compile Include="utilities\SemanticUtilities.cs" />
     <Compile Include="utilities\TypeMappings.cs" />
-    <Compile Include="utilities\VisibilityUtilities.cs" />
     <Compile Include="walkers\ASTWalker.cs" />
     <Compile Include="walkers\ASTWalkerContext.cs" />
     <Compile Include="walkers\BlockASTWalker.cs" />

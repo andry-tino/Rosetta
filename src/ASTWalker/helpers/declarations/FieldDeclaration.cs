@@ -6,13 +6,13 @@
 namespace Rosetta.AST.Helpers
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    using Rosetta.Translation;
+    using Rosetta.AST.Helpers;
     using Rosetta.AST.Utilities;
+    using Rosetta.Translation;
 
     /// <summary>
     /// Helper for accessing interface in AST
@@ -56,9 +56,8 @@ namespace Rosetta.AST.Helpers
                     // No visibility modifier specified
                     return VisibilityToken.None;
                 }
-
-                // TODO: Handle all modifiers
-                return this.FieldDeclarationSyntaxNode.Modifiers[0].GetVibilityToken();
+                
+                return this.FieldDeclarationSyntaxNode.Modifiers.Get();
             }
         }
 
