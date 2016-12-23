@@ -77,7 +77,7 @@ namespace Rosetta.AST.Helpers
             }
         }
 
-        private MethodDeclarationSyntax MethodDeclarationSyntaxNode
+        protected MethodDeclarationSyntax MethodDeclarationSyntaxNode
         {
             get { return this.SyntaxNode as MethodDeclarationSyntax; }
         }

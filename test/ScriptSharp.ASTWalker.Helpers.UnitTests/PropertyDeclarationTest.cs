@@ -33,43 +33,57 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
         {
         }
 
-        /// <summary>
-        /// Tests that we render the name and full name when not specifying the semantic model and when doing so.
-        /// </summary>
         [TestMethod]
         public void NameConvertedAccordingToScriptSharpRules()
         {
-            var tree = CSharpSyntaxTree.ParseText(@"
+            TestName(@"
             public class MyClass {
                 public string MyProperty { 
                     get { return null; }
                     set { }
                 }
             }
-            ");
-
-            var node = new NodeLocator(tree).LocateFirst(typeof(PropertyDeclarationSyntax));
-            Assert.IsNotNull(node);
-
-            var propertyDeclarationNode = node as PropertyDeclarationSyntax;
-            Assert.IsNotNull(propertyDeclarationNode);
-
-            var helper = new PropertyDeclaration(propertyDeclarationNode);
-
-            Assert.AreEqual("myProperty", helper.Name, "Name was not converted according to ScriptSharp rules!");
+            ", "myProperty");
         }
 
-        /// <summary>
-        /// Tests that we render the name and full name when not specifying the semantic model and when doing so.
-        /// </summary>
         [TestMethod]
         public void NameOnAutoPropertyConvertedAccordingToScriptSharpRules()
         {
-            var tree = CSharpSyntaxTree.ParseText(@"
+            TestName(@"
             public class MyClass {
                 public string MyProperty { get; set; }
             }
-            ");
+            ", "myProperty");
+        }
+
+        [TestMethod]
+        public void WhenPreserveNameAttributeDetectedThenRenderNameAsItIs()
+        {
+            TestName(@"
+            public class MyClass {
+                [PreserveName]
+                public string MyProperty { 
+                    get { return null; }
+                    set { }
+                }
+            }
+            ", "MyProperty");
+        }
+
+        [TestMethod]
+        public void WhenPreserveNameAttributeDetectedOnAutoPropertyThenRenderNameAsItIs()
+        {
+            TestName(@"
+            public class MyClass {
+                [PreserveName]
+                public string MyProperty { get; set; }
+            }
+            ", "MyProperty");
+        }
+
+        private static void TestName(string source, string expectedName)
+        {
+            var tree = CSharpSyntaxTree.ParseText(source);
 
             var node = new NodeLocator(tree).LocateFirst(typeof(PropertyDeclarationSyntax));
             Assert.IsNotNull(node);
@@ -79,7 +93,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
 
             var helper = new PropertyDeclaration(propertyDeclarationNode);
 
-            Assert.AreEqual("myProperty", helper.Name, "Name was not converted according to ScriptSharp rules!");
+            Assert.AreEqual(expectedName, helper.Name, "Name was not converted according to ScriptSharp rules!");
         }
     }
 }

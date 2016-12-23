@@ -10,6 +10,8 @@ namespace Rosetta.ScriptSharp.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Helpers;
+
     /// <summary>
     /// Helper for parameters.
     /// </summary>
@@ -37,6 +39,23 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// <summary>
         /// Gets the name of the variable.
         /// </summary>
-        public override string Name => base.Name.ToScriptSharpName();
+        public override string Name => this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
+
+        private bool ShouldPreserveName
+        {
+            get
+            {
+                var attributes = new AttributeLists(this.FieldDeclarationSyntaxNode).Attributes;
+                foreach (var attribute in attributes)
+                {
+                    if (PreserveNameAttributeDecoration.IsPreserveNameAttributeDecoration(attribute))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
     }
 }

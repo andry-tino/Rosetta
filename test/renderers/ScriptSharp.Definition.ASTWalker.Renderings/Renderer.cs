@@ -37,7 +37,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
                     DataProvider.InterfacesDefinitionMethodsProvider,
                     DataProvider.ClassesWithScriptNamespaceDefinitionMethodsProvider,
                     DataProvider.EnumsWithScriptNamespaceDefinitionMethodsProvider,
-                    DataProvider.InterfacesWithScriptNamespaceDefinitionMethodsProvider
+                    DataProvider.InterfacesWithScriptNamespaceDefinitionMethodsProvider,
+                    DataProvider.MethodsWithPreserveNameDefinitionMethodsProvider,
+                    DataProvider.PropertiesWithPreserveNameDefinitionMethodsProvider,
+                    DataProvider.FieldsWithPreserveNameDefinitionMethodsProvider
                 };
             }
         }

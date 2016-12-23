@@ -99,12 +99,13 @@
     <Compile Include="helpers\BaseTypeReference.cs" />
     <Compile Include="helpers\ClassDeclaration.cs" />
     <Compile Include="helpers\ConstructorDeclaration.cs" />
+    <Compile Include="helpers\decorators\PreserveNameAttributeDecoration.cs" />
     <Compile Include="helpers\FieldDeclaration.cs" />
     <Compile Include="helpers\MethodDeclaration.cs" />
     <Compile Include="helpers\Parameter.cs" />
     <Compile Include="helpers\PropertyDeclaration.cs" />
-    <Compile Include="helpers\ScriptNamespaceAttributeDecoration.cs" />
-    <Compile Include="helpers\ScriptNamespaceAttributeOnType.cs" />
+    <Compile Include="helpers\decorators\ScriptNamespaceAttributeDecoration.cs" />
+    <Compile Include="helpers\decorators\ScriptNamespaceAttributeOnType.cs" />
     <Compile Include="helpers\TypeReference.cs" />
     <Compile Include="helpers\utilities\SyntaxUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

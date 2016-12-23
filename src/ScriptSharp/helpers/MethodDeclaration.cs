@@ -10,6 +10,8 @@ namespace Rosetta.ScriptSharp.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Helpers;
+
     /// <summary>
     /// Helper for methods.
     /// </summary>
@@ -37,8 +39,8 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// <summary>
         /// Gets the name of the type.
         /// </summary>
-        public override string Name => base.Name.ToScriptSharpName();
-
+        public override string Name => this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
+        
         /// <summary>
         /// 
         /// </summary>
@@ -59,6 +61,23 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         protected override Rosetta.AST.Helpers.Parameter CreateParameterHelper(ParameterSyntax node, SemanticModel semanticModel)
         {
             return new Rosetta.ScriptSharp.AST.Helpers.Parameter(node, semanticModel);
+        }
+
+        private bool ShouldPreserveName
+        {
+            get
+            {
+                var attributes = new AttributeLists(this.MethodDeclarationSyntaxNode).Attributes;
+                foreach (var attribute in attributes)
+                {
+                    if (PreserveNameAttributeDecoration.IsPreserveNameAttributeDecoration(attribute))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
     }
 }

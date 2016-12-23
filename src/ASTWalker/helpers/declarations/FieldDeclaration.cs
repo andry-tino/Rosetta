@@ -78,7 +78,7 @@ namespace Rosetta.AST.Helpers
             get { return this.variableDeclaration.Type; }
         }
 
-        private FieldDeclarationSyntax FieldDeclarationSyntaxNode
+        protected FieldDeclarationSyntax FieldDeclarationSyntaxNode
         {
             get { return this.SyntaxNode as FieldDeclarationSyntax; }
         }

@@ -10,6 +10,8 @@ namespace Rosetta.ScriptSharp.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Helpers;
+
     /// <summary>
     ///Decorates <see cref="AttributeDecoration"/>.
     /// </summary>
@@ -37,7 +39,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// <summary>
         /// Gets the name of the type.
         /// </summary>
-        public override string Name => base.Name.ToScriptSharpName();
+        public override string Name => this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
 
         /// <summary>
         /// 
@@ -48,6 +50,23 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         protected override Rosetta.AST.Helpers.TypeReference CreateTypeReferenceHelper(TypeSyntax node, SemanticModel semanticModel)
         {
             return new Rosetta.ScriptSharp.AST.Helpers.TypeReference(node, semanticModel);
+        }
+
+        private bool ShouldPreserveName
+        {
+            get
+            {
+                var attributes = new AttributeLists(this.PropertyDeclarationSyntaxNode).Attributes;
+                foreach (var attribute in attributes)
+                {
+                    if (PreserveNameAttributeDecoration.IsPreserveNameAttributeDecoration(attribute))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
     }
 }

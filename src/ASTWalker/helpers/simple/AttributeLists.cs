@@ -19,6 +19,9 @@ namespace Rosetta.AST.Helpers
     /// </remarks>
     public class AttributeLists : Helper
     {
+        // TODO: This class does not accept a semantic model at constrcution time. In future it might do so in order to pass it to `AttributeDecorator`
+        //       when this component will use the semantic model to detect the specific attribute it is referring to.
+
         private SyntaxList<AttributeListSyntax> attributeLists;
 
         // Cached values
@@ -27,22 +30,39 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeLists"/> class.
         /// </summary>
-        /// <param name="syntaxNode"></param>
+        /// <param name="syntaxNode">The <see cref="BaseTypeDeclarationSyntax"/> from which attributes will be extracted.</param>
         public AttributeLists(BaseTypeDeclarationSyntax syntaxNode)
-            : this(syntaxNode, null)
+            : base(syntaxNode)
         {
+            this.attributeLists = syntaxNode.AttributeLists;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeLists"/> class.
         /// </summary>
-        /// <param name="syntaxNode"></param>
-        /// <param name="semanticModel"></param>
-        /// <remarks>
-        /// When providing the semantic model, some properites will be devised from that.
-        /// </remarks>
-        public AttributeLists(BaseTypeDeclarationSyntax syntaxNode, SemanticModel semanticModel)
-            : base(syntaxNode, semanticModel)
+        /// <param name="syntaxNode">The <see cref="MethodDeclarationSyntax"/> from which attributes will be extracted.</param>
+        public AttributeLists(MethodDeclarationSyntax syntaxNode)
+            : base(syntaxNode)
+        {
+            this.attributeLists = syntaxNode.AttributeLists;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttributeLists"/> class.
+        /// </summary>
+        /// <param name="syntaxNode">The <see cref="FieldDeclarationSyntax"/> from which attributes will be extracted.</param>
+        public AttributeLists(FieldDeclarationSyntax syntaxNode)
+            : base(syntaxNode)
+        {
+            this.attributeLists = syntaxNode.AttributeLists;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttributeLists"/> class.
+        /// </summary>
+        /// <param name="syntaxNode">The <see cref="PropertyDeclarationSyntax"/> from which attributes will be extracted.</param>
+        public AttributeLists(PropertyDeclarationSyntax syntaxNode)
+            : base(syntaxNode)
         {
             this.attributeLists = syntaxNode.AttributeLists;
         }

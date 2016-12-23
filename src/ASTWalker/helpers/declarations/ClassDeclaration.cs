@@ -77,7 +77,7 @@ namespace Rosetta.AST.Helpers
         {
             get
             {
-                return new AttributeLists(this.SyntaxNode as ClassDeclarationSyntax, this.SemanticModel);
+                return new AttributeLists(this.SyntaxNode as ClassDeclarationSyntax);
             }
         }
 

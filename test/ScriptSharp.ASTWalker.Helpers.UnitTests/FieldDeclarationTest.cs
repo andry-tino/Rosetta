@@ -33,17 +33,29 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
         {
         }
 
-        /// <summary>
-        /// Tests that we render the name and full name when not specifying the semantic model and when doing so.
-        /// </summary>
         [TestMethod]
         public void NameConvertedAccordingToScriptSharpRules()
         {
-            var tree = CSharpSyntaxTree.ParseText(@"
+            TestName(@"
             public class MyClass {
                 int MyField;
             }
-            ");
+            ", "myField");
+        }
+
+        public void WhenPreserveNameAttributeDetectedThenRenderNameAsItIs()
+        {
+            TestName(@"
+            public class MyClass {
+                [PreserveName]
+                int MyField;
+            }
+            ", "MyField");
+        }
+
+        private static void TestName(string source, string expectedName)
+        {
+            var tree = CSharpSyntaxTree.ParseText(source);
 
             var node = new NodeLocator(tree).LocateFirst(typeof(FieldDeclarationSyntax));
             Assert.IsNotNull(node);
@@ -53,7 +65,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
 
             var helper = new FieldDeclaration(fieldDeclarationNode);
 
-            Assert.AreEqual("myField", helper.Name, "Name was not converted according to ScriptSharp rules!");
+            Assert.AreEqual(expectedName, helper.Name, "Name was not converted according to ScriptSharp rules!");
         }
     }
 }

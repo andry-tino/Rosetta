@@ -100,8 +100,11 @@
     <Compile Include="ClassesWithScriptNamespace.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumsWithScriptNamespace.cs" />
+    <Compile Include="FieldsWithPreserveName.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="InterfacesWithScriptNamespace.cs" />
+    <Compile Include="MethodsWithPreserveName.cs" />
+    <Compile Include="PropertiesWithPreserveName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
