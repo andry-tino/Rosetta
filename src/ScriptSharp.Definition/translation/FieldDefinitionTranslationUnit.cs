@@ -71,7 +71,5 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                 return string.Empty;
             }
         }
-
-        protected override string RenderedName => this.Name.Translate().ToScriptSharpName();
     }
 }

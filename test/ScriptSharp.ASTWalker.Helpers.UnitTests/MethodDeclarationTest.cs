@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// TypeReferenceTest.cs
+/// MethodDeclarationTest.cs
 /// Andrea Tino - 2016
 /// </summary>
 
@@ -18,10 +18,10 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
     using Rosetta.Tests.Utils;
 
     /// <summary>
-    /// Tests for the <see cref="TypeReference"/> classes.
+    /// Tests for the <see cref="MethodDeclaration"/> classes.
     /// </summary>
     [TestClass]
-    public class TypeReferenceTest
+    public class MethodDeclarationTest
     {
         [ClassInitialize]
         public static void Initialize(TestContext context)
@@ -37,24 +37,13 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
         /// Tests that we render the name and full name when not specifying the semantic model and when doing so.
         /// </summary>
         [TestMethod]
-        public void ScriptNamespaceRetrievedOnReturnType()
+        public void NameConvertedAccordingToScriptSharpRules()
         {
             var tree = CSharpSyntaxTree.ParseText(@"
-            namespace Namespace1 {
-                [ScriptNamespace(""OverridenNamespace"")]
-                public class Class1 { }
-                public class Class2 {
-                    public Class1 MyMethod() { return null; }
-                }
+            public class MyClass {
+                public void MyMethod() { }
             }
             ");
-
-            // Loading MSCoreLib
-            var semanticModel = (CSharpCompilation.Create("TestAssembly")
-                .AddReferences(
-                    MetadataReference.CreateFromFile(
-                    typeof(object).Assembly.Location))
-                .AddSyntaxTrees(tree).AddScriptNamespaceReference().GetSemanticModel(tree));
 
             var node = new NodeLocator(tree).LocateFirst(typeof(MethodDeclarationSyntax));
             Assert.IsNotNull(node);
@@ -62,9 +51,9 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
             var methodDeclarationNode = node as MethodDeclarationSyntax;
             Assert.IsNotNull(methodDeclarationNode);
 
-            var typeReference = new MethodDeclaration(methodDeclarationNode, semanticModel).ReturnType as TypeReference;
+            var helper = new MethodDeclaration(methodDeclarationNode);
 
-            Assert.AreEqual("OverridenNamespace.Class1", typeReference.FullName, "ScriptNamespace overriden namespace not detected!");
+            Assert.AreEqual("myMethod", helper.Name, "Name was not converted according to ScriptSharp rules!");
         }
     }
 }

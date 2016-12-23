@@ -116,6 +116,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FieldDeclarationTest.cs" />
+    <Compile Include="MethodDeclarationTest.cs" />
+    <Compile Include="PropertyDeclarationTest.cs" />
     <Compile Include="TypeReferenceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

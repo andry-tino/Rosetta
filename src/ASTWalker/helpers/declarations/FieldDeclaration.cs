@@ -65,7 +65,7 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the name of the variable.
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get { return this.variableDeclaration.Names[0]; }
         }

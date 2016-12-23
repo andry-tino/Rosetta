@@ -35,6 +35,11 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         }
 
         /// <summary>
+        /// Gets the name of the type.
+        /// </summary>
+        public override string Name => base.Name.ToScriptSharpName();
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="node"></param>

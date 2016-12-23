@@ -52,7 +52,7 @@ namespace Rosetta.AST.Factories
                 return null;
             }
 
-            var helper = new FieldDeclaration(this.Node as FieldDeclarationSyntax, this.SemanticModel);
+            var helper = this.CreateHelper(this.Node as FieldDeclarationSyntax, this.SemanticModel);
 
             var fieldDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
@@ -81,6 +81,20 @@ namespace Rosetta.AST.Factories
             VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name)
         {
             return FieldDeclarationTranslationUnit.Create(visibility, type, name);
+        }
+
+        /// <summary>
+        /// Creates the proper helper.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Must return a type deriving from <see cref="FieldDeclaration"/>.
+        /// </remarks>
+        protected virtual FieldDeclaration CreateHelper(FieldDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new FieldDeclaration(this.Node as FieldDeclarationSyntax, this.SemanticModel);
         }
     }
 }

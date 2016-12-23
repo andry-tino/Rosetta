@@ -55,10 +55,7 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the name.
         /// </summary>
-        public string Name
-        {
-            get { return this.PropertyDeclarationSyntaxNode.Identifier.ValueText; }
-        }
+        public virtual string Name => this.PropertyDeclarationSyntaxNode.Identifier.ValueText;
 
         /// <summary>
         /// Gets the name of the type.

@@ -53,18 +53,12 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the name of the type.
         /// </summary>
-        public string Name
-        {
-            get { return this.MethodDeclarationSyntaxNode.Identifier.ValueText; }
-        }
+        public virtual string Name => this.MethodDeclarationSyntaxNode.Identifier.ValueText;
 
         /// <summary>
         /// Gets the return type.
         /// </summary>
-        public TypeReference ReturnType
-        {
-            get { return this.CreateTypeReferenceHelper(this.MethodDeclarationSyntaxNode.ReturnType, this.SemanticModel); }
-        }
+        public TypeReference ReturnType => this.CreateTypeReferenceHelper(this.MethodDeclarationSyntaxNode.ReturnType, this.SemanticModel);
 
         /// <summary>
         /// Gets the list of parameters.

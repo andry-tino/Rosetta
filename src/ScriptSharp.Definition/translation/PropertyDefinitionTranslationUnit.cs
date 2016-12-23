@@ -149,8 +149,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             }
         }
 
-        // ScriptSharp makes first letter lowercase
-        private string RenderedName => this.Name.Translate().ToScriptSharpName();
+        private string RenderedName => this.Name.Translate();
 
         private string RenderedGetterMethodName => $"{Lexems.GetKeyword}_{this.RenderedName}";
 

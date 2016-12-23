@@ -92,5 +92,19 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         {
             return FieldDefinitionTranslationUnit.Create(visibility, type, name);
         }
+
+        /// <summary>
+        /// Creates the proper helper.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="semanticModel"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Must return a type deriving from <see cref="FieldDeclaration"/>.
+        /// </remarks>
+        protected override Rosetta.AST.Helpers.FieldDeclaration CreateHelper(FieldDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new Rosetta.ScriptSharp.AST.Helpers.FieldDeclaration(this.Node as FieldDeclarationSyntax, this.SemanticModel);
+        }
     }
 }

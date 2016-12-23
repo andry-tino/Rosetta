@@ -3,7 +3,7 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.ScriptSharp.Definition.Translation
+namespace Rosetta.ScriptSharp.AST.Helpers
 {
     using System;
     using System.Linq;
