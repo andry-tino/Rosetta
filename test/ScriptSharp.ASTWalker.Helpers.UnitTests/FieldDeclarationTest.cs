@@ -43,6 +43,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
             ", "myField");
         }
 
+        [TestMethod]
         public void WhenPreserveNameAttributeDetectedThenRenderNameAsItIs()
         {
             TestName(@"
