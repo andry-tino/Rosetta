@@ -85,9 +85,6 @@ namespace Rosetta.ScriptSharp.AST.Transformers
             compilation = this.newCompilation;
             tree = this.newNode.SyntaxTree as CSharpSyntaxTree;
 
-            //var diagnostics = this.compilation.GetSemanticModel(this.tree).GetDiagnostics(); // TBR, used to check errors
-            //var newDiagnostics = this.newCompilation.GetSemanticModel(this.newTree).GetDiagnostics(); // TBR, used to check errors
-
             // 5. Clean resources
             this.CleanUp();
         }
@@ -204,7 +201,6 @@ namespace Rosetta.ScriptSharp.AST.Transformers
         {
             return tree.GetRoot().
                      DescendantNodesAndSelf()
-                     /*.Where(node => node as ClassDeclarationSyntax != null || node as InterfaceDeclarationSyntax != null)*/
                      .Where(node => node.ToString().Contains("INotifyCompletion"))
                      .Select(node => new KeyValuePair<SyntaxNode, ISymbol>(node, model.GetSymbolInfo(node).Symbol ?? model.GetDeclaredSymbol(node)));
         }
@@ -246,7 +242,8 @@ namespace Rosetta.ScriptSharp.AST.Transformers
         /// A rearrangement of the AST and a replacement of classes into new namespaces need to happen, this will mess up the references, 
         /// thus we need to transplant the using directives in the new tree as well.
         /// 
-        /// TODO: This approach generates a lot of duplicated using directives. It is not harmful. Make it better.
+        /// TODO: This approach generates a lot of duplicated using directives. 
+        ///       It is not harmful though but it is impacting performances. Make it better.
         /// </summary>
         private void RetrieveAllUsingDirectivesAndCopyAtRootLevel()
         {
@@ -266,7 +263,7 @@ namespace Rosetta.ScriptSharp.AST.Transformers
             // Copying at root level in the new node
             newNode = newNode.AddUsings(usingDirectives.ToArray());
 
-            // Add using directives for namespaces of types which has been overriden
+            // Add using directives for namespaces of types which have been overriden
             var additionalNamespaces = this.GetOriginalNamespaces().Select(ns => SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(ns)).NormalizeWhitespace());
             newNode = newNode.AddUsings(additionalNamespaces.ToArray());
         }
@@ -300,7 +297,6 @@ namespace Rosetta.ScriptSharp.AST.Transformers
             this.newTree = this.newNode.SyntaxTree as CSharpSyntaxTree;
 
             this.newCompilation = this.compilation.ReplaceSyntaxTree(this.tree, this.newTree);
-            this.newCompilation.GetSemanticModel(this.newTree); // NOT NEEDED
         }
 
         private void RetrieveEmptyNamespaces()

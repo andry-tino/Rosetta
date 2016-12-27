@@ -85,6 +85,19 @@ namespace Rosetta.Tests.Utils
             return nodes.ToArray();
         }
 
+        /// <summary>
+        /// Find a node given type and condition.
+        /// </summary>
+        /// <param name="nodeType"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public IEnumerable<SyntaxNode> LocateAll(Type nodeType, Func<SyntaxNode, bool> condition)
+        {
+            var results = this.LocateAll(nodeType);
+
+            return results.Where(node => condition(node));
+        }
+
         private static void ValidateInputType(Type type)
         {
             if (!type.IsSubclassOf(typeof(SyntaxNode)))

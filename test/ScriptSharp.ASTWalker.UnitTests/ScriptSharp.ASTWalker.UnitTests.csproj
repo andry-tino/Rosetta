@@ -1,20 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CB3FF60E-AF76-471A-98A3-DFED31A10E94}</ProjectGuid>
+    <ProjectGuid>{357C3727-BB67-4559-8583-8DC196C1A5A9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.AST</RootNamespace>
-    <AssemblyName>Rosetta.ASTWalker</AssemblyName>
+    <RootNamespace>Rosetta.ScriptSharp.AST.UnitTests</RootNamespace>
+    <AssemblyName>Rosetta.ScriptSharp.ASTWalker.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,16 +27,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -102,104 +101,57 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ASTExtractor.cs" />
-    <Compile Include="cs-ts-converters\VisibilityConverter.cs" />
-    <Compile Include="exceptions\UnsupportedSyntaxException.cs" />
-    <Compile Include="factories\ClassDeclarationTranslationUnitFactory.cs" />
-    <Compile Include="factories\ConstructorDeclarationTranslationUnitFactory.cs" />
-    <Compile Include="factories\EnumMemberTranslationUnitFactory.cs" />
-    <Compile Include="factories\EnumTranslationUnitFactory.cs" />
-    <Compile Include="factories\FieldDeclarationTranslationUnitFactory.cs" />
-    <Compile Include="factories\InterfaceDeclarationTranslationUnitFactory.cs" />
-    <Compile Include="factories\MethodDeclarationTranslationUnitFactory.cs" />
-    <Compile Include="factories\ModuleTranslationUnitFactory.cs" />
-    <Compile Include="factories\ProgramTranslationUnitFactory.cs" />
-    <Compile Include="factories\PropertyDeclarationTranslationUnitFactory.cs" />
-    <Compile Include="factories\TranslationUnitFactory.cs" />
-    <Compile Include="helpers\declarations\ConstructorDeclaration.cs" />
-    <Compile Include="helpers\declarations\EnumDeclaration.cs" />
-    <Compile Include="helpers\declarations\EnumMemberDeclaration.cs" />
-    <Compile Include="helpers\declarations\FieldDeclaration.cs" />
-    <Compile Include="helpers\declarations\MethodDeclaration.cs" />
-    <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
-    <Compile Include="helpers\declarations\PropertyDeclaration.cs" />
-    <Compile Include="helpers\declarations\VariableDeclaration.cs" />
-    <Compile Include="helpers\directives\UsingDirective.cs" />
-    <Compile Include="helpers\exceptions\SymbolNotFoundException.cs" />
-    <Compile Include="helpers\expressions\AssignmentExpression.cs" />
-    <Compile Include="helpers\expressions\BinaryExpression.cs" />
-    <Compile Include="helpers\expressions\ExpressionTranslationUnitBuilder.cs" />
-    <Compile Include="helpers\expressions\IdentifierExpression.cs" />
-    <Compile Include="helpers\expressions\InvokationExpression.cs" />
-    <Compile Include="helpers\expressions\LiteralExpression.cs" />
-    <Compile Include="helpers\expressions\MemberAccessExpression.cs" />
-    <Compile Include="helpers\expressions\ParenthesizedExpression.cs" />
-    <Compile Include="helpers\expressions\UnaryExpression.cs" />
-    <Compile Include="helpers\Helper.cs" />
-    <Compile Include="helpers\SemanticHelper.cs" />
-    <Compile Include="helpers\SemanticUtils.cs" />
-    <Compile Include="helpers\simple\Argument.cs" />
-    <Compile Include="helpers\simple\AttributeArgument.cs" />
-    <Compile Include="helpers\simple\AttributeArgumentSemantics.cs" />
-    <Compile Include="helpers\simple\AttributeDecoration.cs" />
-    <Compile Include="helpers\simple\AttributeLists.cs" />
-    <Compile Include="helpers\simple\AttributeSemantics.cs" />
-    <Compile Include="helpers\simple\TypeReference.cs" />
-    <Compile Include="helpers\statements\ExpressionStatement.cs" />
-    <Compile Include="helpers\statements\ReturnStatement.cs" />
-    <Compile Include="helpers\statements\ConditionalStatement.cs" />
-    <Compile Include="helpers\statements\ThrowStatement.cs" />
-    <Compile Include="helpers\simple\Parameter.cs" />
-    <Compile Include="helpers\SymbolHelper.cs" />
-    <Compile Include="IASTTransformer.cs" />
-    <Compile Include="ProgramWrapper.cs" />
-    <Compile Include="transformers\ClassInDifferentNamespaceASTTransformer.cs" />
-    <Compile Include="transformers\ClassWithAttributeInDifferentNamespaceASTTransformer.cs" />
-    <Compile Include="utilities\MultiPurposeASTWalker.cs" />
-    <Compile Include="utilities\SemanticUtilities.cs" />
-    <Compile Include="utilities\TypeMappings.cs" />
-    <Compile Include="walkers\ASTWalker.cs" />
-    <Compile Include="walkers\ASTWalkerContext.cs" />
-    <Compile Include="walkers\BlockASTWalker.cs" />
-    <Compile Include="walkers\ClassASTWalker.cs" />
-    <Compile Include="helpers\declarations\ClassDeclaration.cs" />
-    <Compile Include="helpers\declarations\InheritableDeclaration.cs" />
-    <Compile Include="helpers\declarations\InterfaceDeclaration.cs" />
-    <Compile Include="helpers\Modifiers.cs" />
-    <Compile Include="helpers\simple\BaseTypeReference.cs" />
-    <Compile Include="helpers\simple\TypeKind.cs" />
-    <Compile Include="IASTWalker.cs" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="ScriptNamespaceBasedASTTransformerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types.cs" />
-    <Compile Include="WalkerEventArgs.cs" />
-    <Compile Include="walkers\ConstructorASTWalker.cs" />
-    <Compile Include="walkers\EnumASTWalker.cs" />
-    <Compile Include="walkers\InterfaceASTWalker.cs" />
-    <Compile Include="walkers\MethodASTWalker.cs" />
-    <Compile Include="walkers\NamespaceASTWalker.cs" />
-    <Compile Include="walkers\ProgramASTWalker.cs" />
-    <Compile Include="walkers\PropertyASTWalker.cs" />
-    <Compile Include="walkers\statements\ConditionalStatementASTWalker.cs" />
-    <Compile Include="walkers\statements\ExpressionStatementASTWalker.cs" />
-    <Compile Include="walkers\statements\KeywordStatementASTWalker.cs" />
-    <Compile Include="walkers\statements\LocalDeclarationStatementASTWalker.cs" />
-    <Compile Include="walkers\statements\StatementASTWalker.cs" />
-    <Compile Include="walkers\statements\StatementASTWalkerBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TranslationUnits\TranslationUnits.csproj">
-      <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
-      <Name>TranslationUnits</Name>
+    <ProjectReference Include="..\..\src\ASTWalker\ASTWalker.csproj">
+      <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
+      <Name>ASTWalker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\ScriptSharp\ScriptSharp.csproj">
+      <Project>{ce0c7ea4-8bfd-43df-8682-0ab211799f1e}</Project>
+      <Name>ScriptSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\resources\TestUtils\TestUtils.csproj">
+      <Project>{0678abb3-50ce-453f-8eb5-1f21f10061b3}</Project>
+      <Name>TestUtils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

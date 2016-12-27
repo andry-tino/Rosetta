@@ -105,6 +105,7 @@
     <Compile Include="ast\ASTWalkerNodeTypeOperationExecutor.cs" />
     <Compile Include="ast\NodeFinder.cs" />
     <Compile Include="ast\NodeLocator.cs" />
+    <Compile Include="ast\SyntaxNodeHelper.cs" />
     <Compile Include="filesystem\FileType.cs" />
     <Compile Include="filesystem\FileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

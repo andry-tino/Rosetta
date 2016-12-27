@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp", "src\ScriptSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp.ASTWalker.Helpers.UnitTests", "test\ScriptSharp.ASTWalker.Helpers.UnitTests\ScriptSharp.ASTWalker.Helpers.UnitTests.csproj", "{6C5B3AEB-F258-44B1-B80E-51BF6EF5511D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp.ASTWalker.UnitTests", "test\ScriptSharp.ASTWalker.UnitTests\ScriptSharp.ASTWalker.UnitTests.csproj", "{357C3727-BB67-4559-8583-8DC196C1A5A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -319,6 +321,14 @@ Global
 		{6C5B3AEB-F258-44B1-B80E-51BF6EF5511D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C5B3AEB-F258-44B1-B80E-51BF6EF5511D}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C5B3AEB-F258-44B1-B80E-51BF6EF5511D}.Release|x86.Build.0 = Release|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Debug|x86.Build.0 = Debug|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Release|x86.ActiveCfg = Release|Any CPU
+		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -356,6 +366,7 @@ Global
 		{0AD9D8BB-359E-408D-B136-48CB1EE72836} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
 		{CE0C7EA4-8BFD-43DF-8682-0AB211799F1E} = {1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}
 		{6C5B3AEB-F258-44B1-B80E-51BF6EF5511D} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
+		{357C3727-BB67-4559-8583-8DC196C1A5A9} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
