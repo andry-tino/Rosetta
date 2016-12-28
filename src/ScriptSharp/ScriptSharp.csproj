@@ -108,6 +108,7 @@
     <Compile Include="helpers\decorators\ScriptNamespaceAttributeOnType.cs" />
     <Compile Include="helpers\TypeReference.cs" />
     <Compile Include="helpers\utilities\SyntaxUtility.cs" />
+    <Compile Include="helpers\VariableDeclaration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="transformation\ScriptNamespaceBasedASTTransformer.cs" />
   </ItemGroup>

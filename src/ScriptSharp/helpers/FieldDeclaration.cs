@@ -41,6 +41,18 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// </summary>
         public override string Name => this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
 
+        /// <summary>
+        /// Creates the variable declaration helper.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// Must return a type derived from <see cref="VariableDeclaration"/>.
+        /// </remarks>
+        protected override Rosetta.AST.Helpers.VariableDeclaration CreateVariableDeclarationHelper(VariableDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new Rosetta.ScriptSharp.AST.Helpers.VariableDeclaration(node, semanticModel);
+        }
+
         private bool ShouldPreserveName
         {
             get

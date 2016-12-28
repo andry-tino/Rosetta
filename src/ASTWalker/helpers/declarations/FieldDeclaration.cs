@@ -19,7 +19,7 @@ namespace Rosetta.AST.Helpers
     /// </summary>
     public class FieldDeclaration : Helper
     {
-        // Acting as a decorated element
+        // Acting as a decorated element (lazily initialized)
         private VariableDeclaration variableDeclaration;
 
         /// <summary>
@@ -39,7 +39,6 @@ namespace Rosetta.AST.Helpers
         public FieldDeclaration(FieldDeclarationSyntax syntaxNode, SemanticModel semanticModel)
             : base(syntaxNode, semanticModel)
         {
-            this.variableDeclaration = new VariableDeclaration(syntaxNode.Declaration);
         }
 
         /// <summary>
@@ -66,15 +65,37 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         public virtual string Name
         {
-            get { return this.variableDeclaration.Names[0]; }
+            get { return this.VariableDeclaration.Names[0]; }
         }
 
         /// <summary>
         /// Gets the type of the variable.
         /// </summary>
-        public string Type
+        public virtual TypeReference Type => this.VariableDeclaration.Type;
+
+        protected VariableDeclaration VariableDeclaration
         {
-            get { return this.variableDeclaration.Type; }
+            get
+            {
+                if (this.variableDeclaration == null)
+                {
+                    this.variableDeclaration = this.CreateVariableDeclarationHelper(this.FieldDeclarationSyntaxNode.Declaration, this.SemanticModel);
+                }
+
+                return this.variableDeclaration;
+            }
+        }
+
+        /// <summary>
+        /// Creates the variable declaration helper.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// Must return a type derived from <see cref="VariableDeclaration"/>.
+        /// </remarks>
+        protected virtual VariableDeclaration CreateVariableDeclarationHelper(VariableDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new VariableDeclaration(node, semanticModel);
         }
 
         protected FieldDeclarationSyntax FieldDeclarationSyntaxNode

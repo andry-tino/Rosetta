@@ -78,7 +78,7 @@ namespace Rosetta.AST
                 : new ExpressionTranslationUnitBuilder(expression, semanticModel).Build();
 
             var variableDeclarationTranslationUnit = VariableDeclarationTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.Create(variableDeclaration.Type),
+                TypeIdentifierTranslationUnit.Create(variableDeclaration.Type.Name),
                 IdentifierTranslationUnit.Create(variableDeclaration.Names[0]),
                 expressionTranslationUnit);
 

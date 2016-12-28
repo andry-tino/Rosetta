@@ -12,8 +12,6 @@ namespace Rosetta.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    using Rosetta.Translation;
-
     /// <summary>
     /// Helper for accessing interface in AST
     /// </summary>
@@ -56,14 +54,7 @@ namespace Rosetta.AST.Helpers
         /// <remarks>
         /// Might be null.
         /// </remarks>
-        public string Type
-        {
-            get
-            {
-                //return this.SemanticModel.GetSymbolInfo(this.VariableDeclarationSyntaxNode.Type).Symbol.Name;
-                return this.VariableDeclarationSyntaxNode.Type.ToString();
-            }
-        }
+        public virtual TypeReference Type => new TypeReference(this.VariableDeclarationSyntaxNode.Type, this.SemanticModel);
 
         /// <summary>
         /// Gets the expression representing the assignment values.
@@ -81,7 +72,7 @@ namespace Rosetta.AST.Helpers
             }
         }
 
-        private VariableDeclarationSyntax VariableDeclarationSyntaxNode
+        protected VariableDeclarationSyntax VariableDeclarationSyntaxNode
         {
             get { return this.SyntaxNode as VariableDeclarationSyntax; }
         }
