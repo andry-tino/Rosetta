@@ -72,6 +72,13 @@ namespace Rosetta.ScriptSharp.AST.Helpers
                             return $"{overriddenName}.{symbol.Name}";
                         }
                     }
+
+                    // Trying to get the type
+                    var type = this.SemanticModel.GetTypeInfo(this.TypeSyntaxNode).Type;
+                    if (type != null)
+                    {
+                        var attributeDatas = type.GetAttributes();
+                    }
                 }
 
                 return base.FullName;
