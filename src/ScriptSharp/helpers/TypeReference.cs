@@ -53,6 +53,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers
             {
                 if (this.SemanticModel != null)
                 {
+                    // Trying to get the symbol
                     var symbol = this.SemanticModel.GetSymbolInfo(this.TypeSyntaxNode).Symbol;
                     if (symbol != null)
                     {
