@@ -67,6 +67,9 @@
     <TypeScriptDefinitionReference Include="file1.d.ts" />
     <TypeScriptDefinitionReference Include="file2.d.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
   <Target Name="GenerateTypeScriptDefinitionFiles" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
     <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out" />
   </Target>
