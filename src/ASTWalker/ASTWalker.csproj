@@ -137,7 +137,6 @@
     <Compile Include="helpers\expressions\UnaryExpression.cs" />
     <Compile Include="helpers\Helper.cs" />
     <Compile Include="helpers\SemanticHelper.cs" />
-    <Compile Include="helpers\SemanticUtils.cs" />
     <Compile Include="helpers\simple\Argument.cs" />
     <Compile Include="helpers\simple\AttributeArgument.cs" />
     <Compile Include="helpers\simple\AttributeArgumentSemantics.cs" />
@@ -191,6 +190,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RoslynUtils\RoslynUtils.csproj">
+      <Project>{5eeedbfb-9d44-43a3-a6ef-310008004c91}</Project>
+      <Name>RoslynUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TranslationUnits\TranslationUnits.csproj">
       <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
       <Name>TranslationUnits</Name>

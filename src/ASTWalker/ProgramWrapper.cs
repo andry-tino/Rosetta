@@ -11,6 +11,7 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST.Helpers;
+    using Rosetta.Utils;
 
     /// <summary>
     /// Acts like a wrapper for <see cref="ProgramASTWalker"/> in order to provide 

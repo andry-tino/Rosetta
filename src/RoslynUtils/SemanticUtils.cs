@@ -3,12 +3,10 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.AST.Helpers
+namespace Rosetta.Utils
 {
     using System;
     using System.Collections.Generic;
-    using System.Reflection;
-    using System.IO;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
@@ -65,7 +63,11 @@ namespace Rosetta.AST.Helpers
             return CSharpCompilation.Create(name, new[] { sourceTree }, references);
         }
 
-        private static PortableExecutableReference GetMsCoreLibMetadataReference()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static PortableExecutableReference GetMsCoreLibMetadataReference()
         {
             var assembly = typeof(object).Assembly;
 

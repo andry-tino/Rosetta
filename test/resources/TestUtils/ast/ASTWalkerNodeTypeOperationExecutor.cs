@@ -15,19 +15,29 @@ namespace Rosetta.Tests.Utils
     /// </summary>
     public class ASTWalkerNodeTypeOperationExecutor : CSharpSyntaxWalker
     {
-        private Type type;
-        private Action<SyntaxNode> operation;
+        private readonly Type type;
+        private readonly Action<SyntaxNode> operation;
+
+        /// <summary>
+        /// This variable if <code>true</code> indicates that we should navigate the whole tree. 
+        /// If <code>false</code> it indicates that we should resurse ONLY for type <see cref="type"/>.
+        /// </summary>
+        private readonly bool recurse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ASTWalkerNodeTypeOperationExecutor"/> class.
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="type"></param>
-        /// <param name="operation"></param>
+        /// <param name="node">The node to start the search from.</param>
+        /// <param name="type">The type to look for.</param>
+        /// <param name="operation">The operation to execute for each found node.</param>
+        /// <param name="recurse">
+        /// If <c>true</c>, the search process will proceed recursively inside nodes, otherwise only 
+        /// the nodes of type <see cref="type"/> will be inspected.
+        /// </param>
         /// <remarks>
         /// The walker will walk through all nodes as depth level.
         /// </remarks>
-        public ASTWalkerNodeTypeOperationExecutor(SyntaxNode node, Type type, Action<SyntaxNode> operation) 
+        public ASTWalkerNodeTypeOperationExecutor(SyntaxNode node, Type type, Action<SyntaxNode> operation, bool recurse = true) 
             : base(SyntaxWalkerDepth.Node)
         {
             if (node == null)
@@ -46,6 +56,7 @@ namespace Rosetta.Tests.Utils
             this.Root = node;
             this.type = type;
             this.operation = operation;
+            this.recurse = recurse;
         }
 
         /// <summary>
@@ -68,7 +79,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAccessorDeclaration(AccessorDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAccessorDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(AccessorDeclarationSyntax))) base.VisitAccessorDeclaration(node);
         }
 
         /// <summary>
@@ -78,7 +89,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAccessorList(AccessorListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAccessorList(node);
+            if (this.ShouldCallBaseMethod(typeof(AccessorListSyntax))) base.VisitAccessorList(node);
         }
 
         /// <summary>
@@ -88,7 +99,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAliasQualifiedName(AliasQualifiedNameSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAliasQualifiedName(node);
+            if (this.ShouldCallBaseMethod(typeof(AliasQualifiedNameSyntax))) base.VisitAliasQualifiedName(node);
         }
         /// <summary>
         /// 
@@ -97,7 +108,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAnonymousMethodExpression(AnonymousMethodExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAnonymousMethodExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(AnonymousMethodExpressionSyntax))) base.VisitAnonymousMethodExpression(node);
         }
 
         /// <summary>
@@ -107,7 +118,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAnonymousObjectCreationExpression(AnonymousObjectCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAnonymousObjectCreationExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(AnonymousObjectCreationExpressionSyntax))) base.VisitAnonymousObjectCreationExpression(node);
         }
 
         /// <summary>
@@ -117,7 +128,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAnonymousObjectMemberDeclarator(AnonymousObjectMemberDeclaratorSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAnonymousObjectMemberDeclarator(node);
+            if (this.ShouldCallBaseMethod(typeof(AnonymousObjectMemberDeclaratorSyntax))) base.VisitAnonymousObjectMemberDeclarator(node);
         }
 
         /// <summary>
@@ -127,7 +138,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitArgument(ArgumentSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitArgument(node);
+            if (this.ShouldCallBaseMethod(typeof(ArgumentSyntax))) base.VisitArgument(node);
         }
 
         /// <summary>
@@ -137,7 +148,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitArgumentList(ArgumentListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitArgumentList(node);
+            if (this.ShouldCallBaseMethod(typeof(ArgumentListSyntax))) base.VisitArgumentList(node);
         }
 
         /// <summary>
@@ -147,7 +158,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitArrayCreationExpression(ArrayCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitArrayCreationExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ArrayCreationExpressionSyntax))) base.VisitArrayCreationExpression(node);
         }
 
         /// <summary>
@@ -157,7 +168,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitArrayRankSpecifier(ArrayRankSpecifierSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitArrayRankSpecifier(node);
+            if (this.ShouldCallBaseMethod(typeof(ArrayRankSpecifierSyntax))) base.VisitArrayRankSpecifier(node);
         }
 
         /// <summary>
@@ -167,7 +178,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitArrayType(ArrayTypeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitArrayType(node);
+            if (this.ShouldCallBaseMethod(typeof(ArrayTypeSyntax))) base.VisitArrayType(node);
         }
 
         /// <summary>
@@ -177,7 +188,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitArrowExpressionClause(ArrowExpressionClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitArrowExpressionClause(node);
+            if (this.ShouldCallBaseMethod(typeof(ArrowExpressionClauseSyntax))) base.VisitArrowExpressionClause(node);
         }
 
         /// <summary>
@@ -187,7 +198,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAssignmentExpression(AssignmentExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAssignmentExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(AssignmentExpressionSyntax))) base.VisitAssignmentExpression(node);
         }
 
         /// <summary>
@@ -197,7 +208,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAttribute(AttributeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAttribute(node);
+            if (this.ShouldCallBaseMethod(typeof(AttributeSyntax))) base.VisitAttribute(node);
         }
 
         /// <summary>
@@ -207,7 +218,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAttributeArgument(AttributeArgumentSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAttributeArgument(node);
+            if (this.ShouldCallBaseMethod(typeof(AttributeArgumentSyntax))) base.VisitAttributeArgument(node);
         }
 
         /// <summary>
@@ -217,7 +228,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAttributeArgumentList(AttributeArgumentListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAttributeArgumentList(node);
+            if (this.ShouldCallBaseMethod(typeof(AttributeArgumentListSyntax))) base.VisitAttributeArgumentList(node);
         }
 
         /// <summary>
@@ -227,7 +238,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAttributeList(AttributeListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAttributeList(node);
+            if (this.ShouldCallBaseMethod(typeof(AttributeListSyntax))) base.VisitAttributeList(node);
         }
 
         /// <summary>
@@ -237,7 +248,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAttributeTargetSpecifier(AttributeTargetSpecifierSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAttributeTargetSpecifier(node);
+            if (this.ShouldCallBaseMethod(typeof(AttributeTargetSpecifierSyntax))) base.VisitAttributeTargetSpecifier(node);
         }
 
         /// <summary>
@@ -247,7 +258,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitAwaitExpression(AwaitExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitAwaitExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(AwaitExpressionSyntax))) base.VisitAwaitExpression(node);
         }
 
         /// <summary>
@@ -257,7 +268,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBadDirectiveTrivia(BadDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBadDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(BadDirectiveTriviaSyntax))) base.VisitBadDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -267,7 +278,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBaseExpression(BaseExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBaseExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(BaseExpressionSyntax))) base.VisitBaseExpression(node);
         }
 
         /// <summary>
@@ -277,7 +288,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBaseList(BaseListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBaseList(node);
+            if (this.ShouldCallBaseMethod(typeof(BaseListSyntax))) base.VisitBaseList(node);
         }
 
         /// <summary>
@@ -287,7 +298,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBinaryExpression(BinaryExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBinaryExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(BinaryExpressionSyntax))) base.VisitBinaryExpression(node);
         }
 
         /// <summary>
@@ -297,7 +308,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBlock(BlockSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBlock(node);
+            if (this.ShouldCallBaseMethod(typeof(BlockSyntax))) base.VisitBlock(node);
         }
 
         /// <summary>
@@ -307,7 +318,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBracketedArgumentList(BracketedArgumentListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBracketedArgumentList(node);
+            if (this.ShouldCallBaseMethod(typeof(BracketedArgumentListSyntax))) base.VisitBracketedArgumentList(node);
         }
 
         /// <summary>
@@ -317,7 +328,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBracketedParameterList(BracketedParameterListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBracketedParameterList(node);
+            if (this.ShouldCallBaseMethod(typeof(BracketedParameterListSyntax))) base.VisitBracketedParameterList(node);
         }
 
         /// <summary>
@@ -327,7 +338,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitBreakStatement(BreakStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitBreakStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(BreakStatementSyntax))) base.VisitBreakStatement(node);
         }
 
         /// <summary>
@@ -337,7 +348,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCaseSwitchLabel(CaseSwitchLabelSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCaseSwitchLabel(node);
+            if (this.ShouldCallBaseMethod(typeof(CaseSwitchLabelSyntax))) base.VisitCaseSwitchLabel(node);
         }
 
         /// <summary>
@@ -347,7 +358,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCastExpression(CastExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCastExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(CastExpressionSyntax))) base.VisitCastExpression(node);
         }
 
         /// <summary>
@@ -357,7 +368,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCatchClause(CatchClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCatchClause(node);
+            if (this.ShouldCallBaseMethod(typeof(CatchClauseSyntax))) base.VisitCatchClause(node);
         }
 
         /// <summary>
@@ -367,7 +378,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCatchDeclaration(CatchDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCatchDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(CatchDeclarationSyntax))) base.VisitCatchDeclaration(node);
         }
 
         /// <summary>
@@ -377,7 +388,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCatchFilterClause(CatchFilterClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCatchFilterClause(node);
+            if (this.ShouldCallBaseMethod(typeof(CatchFilterClauseSyntax))) base.VisitCatchFilterClause(node);
         }
 
         /// <summary>
@@ -387,7 +398,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCheckedExpression(CheckedExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCheckedExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(CheckedExpressionSyntax))) base.VisitCheckedExpression(node);
         }
 
         /// <summary>
@@ -397,7 +408,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCheckedStatement(CheckedStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCheckedStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(CheckedStatementSyntax))) base.VisitCheckedStatement(node);
         }
 
         /// <summary>
@@ -407,7 +418,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitClassDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(ClassDeclarationSyntax))) base.VisitClassDeclaration(node);
         }
 
         /// <summary>
@@ -417,7 +428,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitClassOrStructConstraint(ClassOrStructConstraintSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitClassOrStructConstraint(node);
+            if (this.ShouldCallBaseMethod(typeof(ClassOrStructConstraintSyntax))) base.VisitClassOrStructConstraint(node);
         }
 
         /// <summary>
@@ -427,7 +438,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCompilationUnit(CompilationUnitSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCompilationUnit(node);
+            if (this.ShouldCallBaseMethod(typeof(CompilationUnitSyntax))) base.VisitCompilationUnit(node);
         }
 
         /// <summary>
@@ -437,7 +448,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitConditionalAccessExpression(ConditionalAccessExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitConditionalAccessExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ConditionalAccessExpressionSyntax))) base.VisitConditionalAccessExpression(node);
         }
 
         /// <summary>
@@ -447,7 +458,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitConditionalExpression(ConditionalExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitConditionalExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ConditionalExpressionSyntax))) base.VisitConditionalExpression(node);
         }
 
         /// <summary>
@@ -457,7 +468,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitConstructorConstraint(ConstructorConstraintSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitConstructorConstraint(node);
+            if (this.ShouldCallBaseMethod(typeof(ConstructorConstraintSyntax))) base.VisitConstructorConstraint(node);
         }
 
         /// <summary>
@@ -467,7 +478,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitConstructorDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(ConstructorDeclarationSyntax))) base.VisitConstructorDeclaration(node);
         }
 
         /// <summary>
@@ -477,7 +488,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitConstructorInitializer(ConstructorInitializerSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitConstructorInitializer(node);
+            if (this.ShouldCallBaseMethod(typeof(ConstructorInitializerSyntax))) base.VisitConstructorInitializer(node);
         }
 
         /// <summary>
@@ -487,7 +498,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitContinueStatement(ContinueStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitContinueStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(ContinueStatementSyntax))) base.VisitContinueStatement(node);
         }
 
         /// <summary>
@@ -497,7 +508,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitConversionOperatorDeclaration(ConversionOperatorDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitConversionOperatorDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(ConversionOperatorDeclarationSyntax))) base.VisitConversionOperatorDeclaration(node);
         }
 
         /// <summary>
@@ -507,7 +518,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitConversionOperatorMemberCref(ConversionOperatorMemberCrefSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitConversionOperatorMemberCref(node);
+            if (this.ShouldCallBaseMethod(typeof(ConversionOperatorMemberCrefSyntax))) base.VisitConversionOperatorMemberCref(node);
         }
         /// <summary>
         /// 
@@ -516,7 +527,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCrefBracketedParameterList(CrefBracketedParameterListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCrefBracketedParameterList(node);
+            if (this.ShouldCallBaseMethod(typeof(CrefBracketedParameterListSyntax))) base.VisitCrefBracketedParameterList(node);
         }
 
         /// <summary>
@@ -526,7 +537,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCrefParameter(CrefParameterSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCrefParameter(node);
+            if (this.ShouldCallBaseMethod(typeof(CrefParameterSyntax))) base.VisitCrefParameter(node);
         }
 
         /// <summary>
@@ -536,7 +547,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitCrefParameterList(CrefParameterListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitCrefParameterList(node);
+            if (this.ShouldCallBaseMethod(typeof(CrefParameterListSyntax))) base.VisitCrefParameterList(node);
         }
 
         /// <summary>
@@ -546,7 +557,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitDefaultExpression(DefaultExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitDefaultExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(DefaultExpressionSyntax))) base.VisitDefaultExpression(node);
         }
 
         /// <summary>
@@ -556,7 +567,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitDefaultSwitchLabel(DefaultSwitchLabelSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitDefaultSwitchLabel(node);
+            if (this.ShouldCallBaseMethod(typeof(DefaultSwitchLabelSyntax))) base.VisitDefaultSwitchLabel(node);
         }
 
         /// <summary>
@@ -566,7 +577,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitDefineDirectiveTrivia(DefineDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitDefineDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(DefineDirectiveTriviaSyntax))) base.VisitDefineDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -576,7 +587,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitDelegateDeclaration(DelegateDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitDelegateDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(DelegateDeclarationSyntax))) base.VisitDelegateDeclaration(node);
         }
 
         /// <summary>
@@ -586,7 +597,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitDestructorDeclaration(DestructorDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitDestructorDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(DestructorDeclarationSyntax))) base.VisitDestructorDeclaration(node);
         }
 
         /// <summary>
@@ -596,7 +607,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitDocumentationCommentTrivia(DocumentationCommentTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitDocumentationCommentTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(DocumentationCommentTriviaSyntax))) base.VisitDocumentationCommentTrivia(node);
         }
 
         /// <summary>
@@ -606,7 +617,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitDoStatement(DoStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitDoStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(DoStatementSyntax))) base.VisitDoStatement(node);
         }
 
         /// <summary>
@@ -616,7 +627,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitElementAccessExpression(ElementAccessExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitElementAccessExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ElementAccessExpressionSyntax))) base.VisitElementAccessExpression(node);
         }
 
         /// <summary>
@@ -626,7 +637,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitElementBindingExpression(ElementBindingExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitElementBindingExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ElementBindingExpressionSyntax))) base.VisitElementBindingExpression(node);
         }
 
         /// <summary>
@@ -636,7 +647,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitElifDirectiveTrivia(ElifDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitElifDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(ElifDirectiveTriviaSyntax))) base.VisitElifDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -646,7 +657,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitElseClause(ElseClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitElseClause(node);
+            if (this.ShouldCallBaseMethod(typeof(ElseClauseSyntax))) base.VisitElseClause(node);
         }
 
         /// <summary>
@@ -656,7 +667,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitElseDirectiveTrivia(ElseDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitElseDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(ElseDirectiveTriviaSyntax))) base.VisitElseDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -666,7 +677,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEmptyStatement(EmptyStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEmptyStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(EmptyStatementSyntax))) base.VisitEmptyStatement(node);
         }
 
         /// <summary>
@@ -676,7 +687,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEndIfDirectiveTrivia(EndIfDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEndIfDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(EndIfDirectiveTriviaSyntax))) base.VisitEndIfDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -686,7 +697,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEndRegionDirectiveTrivia(EndRegionDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEndRegionDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(EndRegionDirectiveTriviaSyntax))) base.VisitEndRegionDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -696,7 +707,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEnumDeclaration(EnumDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEnumDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(EnumDeclarationSyntax))) base.VisitEnumDeclaration(node);
         }
 
         /// <summary>
@@ -706,7 +717,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEnumMemberDeclaration(EnumMemberDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEnumMemberDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(EnumMemberDeclarationSyntax))) base.VisitEnumMemberDeclaration(node);
         }
 
         /// <summary>
@@ -716,7 +727,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEqualsValueClause(EqualsValueClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEqualsValueClause(node);
+            if (this.ShouldCallBaseMethod(typeof(EqualsValueClauseSyntax))) base.VisitEqualsValueClause(node);
         }
 
         /// <summary>
@@ -726,7 +737,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitErrorDirectiveTrivia(ErrorDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitErrorDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(ErrorDirectiveTriviaSyntax))) base.VisitErrorDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -736,7 +747,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEventDeclaration(EventDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEventDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(EventDeclarationSyntax))) base.VisitEventDeclaration(node);
         }
 
         /// <summary>
@@ -746,7 +757,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitEventFieldDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(EventFieldDeclarationSyntax))) base.VisitEventFieldDeclaration(node);
         }
 
         /// <summary>
@@ -756,7 +767,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitExplicitInterfaceSpecifier(ExplicitInterfaceSpecifierSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitExplicitInterfaceSpecifier(node);
+            if (this.ShouldCallBaseMethod(typeof(ExplicitInterfaceSpecifierSyntax))) base.VisitExplicitInterfaceSpecifier(node);
         }
 
         /// <summary>
@@ -766,7 +777,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitExpressionStatement(ExpressionStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitExpressionStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(ExpressionStatementSyntax))) base.VisitExpressionStatement(node);
         }
 
         /// <summary>
@@ -776,7 +787,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitExternAliasDirective(ExternAliasDirectiveSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitExternAliasDirective(node);
+            if (this.ShouldCallBaseMethod(typeof(ExternAliasDirectiveSyntax))) base.VisitExternAliasDirective(node);
         }
 
         /// <summary>
@@ -786,7 +797,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitFieldDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(FieldDeclarationSyntax))) base.VisitFieldDeclaration(node);
         }
 
         /// <summary>
@@ -796,7 +807,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitFinallyClause(FinallyClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitFinallyClause(node);
+            if (this.ShouldCallBaseMethod(typeof(FinallyClauseSyntax))) base.VisitFinallyClause(node);
         }
 
         /// <summary>
@@ -806,7 +817,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitFixedStatement(FixedStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitFixedStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(FixedStatementSyntax))) base.VisitFixedStatement(node);
         }
 
         /// <summary>
@@ -816,7 +827,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitForEachStatement(ForEachStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitForEachStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(ForEachStatementSyntax))) base.VisitForEachStatement(node);
         }
 
         /// <summary>
@@ -826,7 +837,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitForStatement(ForStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitForStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(ForStatementSyntax))) base.VisitForStatement(node);
         }
 
         /// <summary>
@@ -836,7 +847,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitFromClause(FromClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitFromClause(node);
+            if (this.ShouldCallBaseMethod(typeof(FromClauseSyntax))) base.VisitFromClause(node);
         }
 
         /// <summary>
@@ -846,7 +857,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitGenericName(GenericNameSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitGenericName(node);
+            if (this.ShouldCallBaseMethod(typeof(GenericNameSyntax))) base.VisitGenericName(node);
         }
 
         /// <summary>
@@ -856,7 +867,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitGlobalStatement(GlobalStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitGlobalStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(GlobalStatementSyntax))) base.VisitGlobalStatement(node);
         }
 
         /// <summary>
@@ -866,7 +877,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitGotoStatement(GotoStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitGotoStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(GotoStatementSyntax))) base.VisitGotoStatement(node);
         }
 
         /// <summary>
@@ -876,7 +887,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitGroupClause(GroupClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitGroupClause(node);
+            if (this.ShouldCallBaseMethod(typeof(GroupClauseSyntax))) base.VisitGroupClause(node);
         }
 
         /// <summary>
@@ -886,7 +897,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitIdentifierName(IdentifierNameSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitIdentifierName(node);
+            if (this.ShouldCallBaseMethod(typeof(IdentifierNameSyntax))) base.VisitIdentifierName(node);
         }
 
         /// <summary>
@@ -896,7 +907,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitIfDirectiveTrivia(IfDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitIfDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(IfDirectiveTriviaSyntax))) base.VisitIfDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -906,7 +917,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitIfStatement(IfStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitIfStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(IfStatementSyntax))) base.VisitIfStatement(node);
         }
 
         /// <summary>
@@ -916,7 +927,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitImplicitArrayCreationExpression(ImplicitArrayCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitImplicitArrayCreationExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ImplicitArrayCreationExpressionSyntax))) base.VisitImplicitArrayCreationExpression(node);
         }
 
         /// <summary>
@@ -926,7 +937,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitImplicitElementAccess(ImplicitElementAccessSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitImplicitElementAccess(node);
+            if (this.ShouldCallBaseMethod(typeof(ImplicitElementAccessSyntax))) base.VisitImplicitElementAccess(node);
         }
 
         /// <summary>
@@ -936,7 +947,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitIncompleteMember(IncompleteMemberSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitIncompleteMember(node);
+            if (this.ShouldCallBaseMethod(typeof(IncompleteMemberSyntax))) base.VisitIncompleteMember(node);
         }
 
         /// <summary>
@@ -946,7 +957,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitIndexerDeclaration(IndexerDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitIndexerDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(IndexerDeclarationSyntax))) base.VisitIndexerDeclaration(node);
         }
 
         /// <summary>
@@ -956,7 +967,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitIndexerMemberCref(IndexerMemberCrefSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitIndexerMemberCref(node);
+            if (this.ShouldCallBaseMethod(typeof(IndexerMemberCrefSyntax))) base.VisitIndexerMemberCref(node);
         }
 
         /// <summary>
@@ -966,7 +977,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInitializerExpression(InitializerExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInitializerExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(InitializerExpressionSyntax))) base.VisitInitializerExpression(node);
         }
 
         /// <summary>
@@ -976,7 +987,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInterfaceDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(InterfaceDeclarationSyntax))) base.VisitInterfaceDeclaration(node);
         }
 
         /// <summary>
@@ -986,7 +997,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInterpolatedStringExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(InterpolatedStringExpressionSyntax))) base.VisitInterpolatedStringExpression(node);
         }
 
         /// <summary>
@@ -996,7 +1007,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInterpolatedStringText(InterpolatedStringTextSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInterpolatedStringText(node);
+            if (this.ShouldCallBaseMethod(typeof(InterpolatedStringTextSyntax))) base.VisitInterpolatedStringText(node);
         }
 
         /// <summary>
@@ -1006,7 +1017,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInterpolation(InterpolationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInterpolation(node);
+            if (this.ShouldCallBaseMethod(typeof(InterpolationSyntax))) base.VisitInterpolation(node);
         }
 
         /// <summary>
@@ -1016,7 +1027,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInterpolationAlignmentClause(InterpolationAlignmentClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInterpolationAlignmentClause(node);
+            if (this.ShouldCallBaseMethod(typeof(InterpolationAlignmentClauseSyntax))) base.VisitInterpolationAlignmentClause(node);
         }
 
         /// <summary>
@@ -1026,7 +1037,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInterpolationFormatClause(InterpolationFormatClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInterpolationFormatClause(node);
+            if (this.ShouldCallBaseMethod(typeof(InterpolationFormatClauseSyntax))) base.VisitInterpolationFormatClause(node);
         }
 
         /// <summary>
@@ -1036,7 +1047,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitInvocationExpression(InvocationExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitInvocationExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(InvocationExpressionSyntax))) base.VisitInvocationExpression(node);
         }
 
         /// <summary>
@@ -1046,7 +1057,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitJoinClause(JoinClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitJoinClause(node);
+            if (this.ShouldCallBaseMethod(typeof(JoinClauseSyntax))) base.VisitJoinClause(node);
         }
 
         /// <summary>
@@ -1056,7 +1067,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitJoinIntoClause(JoinIntoClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitJoinIntoClause(node);
+            if (this.ShouldCallBaseMethod(typeof(JoinIntoClauseSyntax))) base.VisitJoinIntoClause(node);
         }
 
         /// <summary>
@@ -1066,7 +1077,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitLabeledStatement(LabeledStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitLabeledStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(LabeledStatementSyntax))) base.VisitLabeledStatement(node);
         }
 
         /// <summary>
@@ -1076,7 +1087,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitLetClause(LetClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitLetClause(node);
+            if (this.ShouldCallBaseMethod(typeof(LetClauseSyntax))) base.VisitLetClause(node);
         }
 
         /// <summary>
@@ -1086,7 +1097,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitLineDirectiveTrivia(LineDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitLineDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(LineDirectiveTriviaSyntax))) base.VisitLineDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1096,7 +1107,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitLiteralExpression(LiteralExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitLiteralExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(LiteralExpressionSyntax))) base.VisitLiteralExpression(node);
         }
 
         /// <summary>
@@ -1106,7 +1117,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitLocalDeclarationStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(LocalDeclarationStatementSyntax))) base.VisitLocalDeclarationStatement(node);
         }
 
         /// <summary>
@@ -1116,7 +1127,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitLockStatement(LockStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitLockStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(LockStatementSyntax))) base.VisitLockStatement(node);
         }
 
         /// <summary>
@@ -1126,7 +1137,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitMakeRefExpression(MakeRefExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitMakeRefExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(MakeRefExpressionSyntax))) base.VisitMakeRefExpression(node);
         }
 
         /// <summary>
@@ -1136,7 +1147,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitMemberAccessExpression(MemberAccessExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitMemberAccessExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(MemberAccessExpressionSyntax))) base.VisitMemberAccessExpression(node);
         }
 
         /// <summary>
@@ -1146,7 +1157,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitMemberBindingExpression(MemberBindingExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitMemberBindingExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(MemberBindingExpressionSyntax))) base.VisitMemberBindingExpression(node);
         }
 
         /// <summary>
@@ -1156,7 +1167,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitMethodDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(MethodDeclarationSyntax))) base.VisitMethodDeclaration(node);
         }
 
         /// <summary>
@@ -1166,7 +1177,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitNameColon(NameColonSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitNameColon(node);
+            if (this.ShouldCallBaseMethod(typeof(NameColonSyntax))) base.VisitNameColon(node);
         }
 
         /// <summary>
@@ -1176,7 +1187,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitNameEquals(NameEqualsSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitNameEquals(node);
+            if (this.ShouldCallBaseMethod(typeof(NameEqualsSyntax))) base.VisitNameEquals(node);
         }
 
         /// <summary>
@@ -1186,7 +1197,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitNameMemberCref(NameMemberCrefSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitNameMemberCref(node);
+            if (this.ShouldCallBaseMethod(typeof(NameMemberCrefSyntax))) base.VisitNameMemberCref(node);
         }
 
         /// <summary>
@@ -1196,7 +1207,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitNamespaceDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(NamespaceDeclarationSyntax))) base.VisitNamespaceDeclaration(node);
         }
 
         /// <summary>
@@ -1206,7 +1217,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitNullableType(NullableTypeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitNullableType(node);
+            if (this.ShouldCallBaseMethod(typeof(NullableTypeSyntax))) base.VisitNullableType(node);
         }
 
         /// <summary>
@@ -1216,7 +1227,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitObjectCreationExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ObjectCreationExpressionSyntax))) base.VisitObjectCreationExpression(node);
         }
 
         /// <summary>
@@ -1226,7 +1237,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitOmittedArraySizeExpression(OmittedArraySizeExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitOmittedArraySizeExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(OmittedArraySizeExpressionSyntax))) base.VisitOmittedArraySizeExpression(node);
         }
 
         /// <summary>
@@ -1236,7 +1247,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitOmittedTypeArgument(OmittedTypeArgumentSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitOmittedTypeArgument(node);
+            if (this.ShouldCallBaseMethod(typeof(OmittedTypeArgumentSyntax))) base.VisitOmittedTypeArgument(node);
         }
 
         /// <summary>
@@ -1246,7 +1257,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitOperatorDeclaration(OperatorDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitOperatorDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(OperatorDeclarationSyntax))) base.VisitOperatorDeclaration(node);
         }
 
         /// <summary>
@@ -1256,7 +1267,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitOperatorMemberCref(OperatorMemberCrefSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitOperatorMemberCref(node);
+            if (this.ShouldCallBaseMethod(typeof(OperatorMemberCrefSyntax))) base.VisitOperatorMemberCref(node);
         }
 
         /// <summary>
@@ -1266,7 +1277,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitOrderByClause(OrderByClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitOrderByClause(node);
+            if (this.ShouldCallBaseMethod(typeof(OrderByClauseSyntax))) base.VisitOrderByClause(node);
         }
 
         /// <summary>
@@ -1276,7 +1287,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitOrdering(OrderingSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitOrdering(node);
+            if (this.ShouldCallBaseMethod(typeof(OrderingSyntax))) base.VisitOrdering(node);
         }
 
         /// <summary>
@@ -1286,7 +1297,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitParameter(ParameterSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitParameter(node);
+            if (this.ShouldCallBaseMethod(typeof(ParameterSyntax))) base.VisitParameter(node);
         }
 
         /// <summary>
@@ -1296,7 +1307,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitParameterList(ParameterListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitParameterList(node);
+            if (this.ShouldCallBaseMethod(typeof(ParameterListSyntax))) base.VisitParameterList(node);
         }
 
         /// <summary>
@@ -1306,7 +1317,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitParenthesizedExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ParenthesizedExpressionSyntax))) base.VisitParenthesizedExpression(node);
         }
 
         /// <summary>
@@ -1316,7 +1327,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitParenthesizedLambdaExpression(ParenthesizedLambdaExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitParenthesizedLambdaExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ParenthesizedLambdaExpressionSyntax))) base.VisitParenthesizedLambdaExpression(node);
         }
 
         /// <summary>
@@ -1326,7 +1337,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitPointerType(PointerTypeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitPointerType(node);
+            if (this.ShouldCallBaseMethod(typeof(PointerTypeSyntax))) base.VisitPointerType(node);
         }
 
         /// <summary>
@@ -1336,7 +1347,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitPostfixUnaryExpression(PostfixUnaryExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitPostfixUnaryExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(PostfixUnaryExpressionSyntax))) base.VisitPostfixUnaryExpression(node);
         }
 
         /// <summary>
@@ -1346,7 +1357,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitPragmaChecksumDirectiveTrivia(PragmaChecksumDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitPragmaChecksumDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(PragmaChecksumDirectiveTriviaSyntax))) base.VisitPragmaChecksumDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1356,7 +1367,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitPragmaWarningDirectiveTrivia(PragmaWarningDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitPragmaWarningDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(PragmaWarningDirectiveTriviaSyntax))) base.VisitPragmaWarningDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1366,7 +1377,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitPredefinedType(PredefinedTypeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitPredefinedType(node);
+            if (this.ShouldCallBaseMethod(typeof(PredefinedTypeSyntax))) base.VisitPredefinedType(node);
         }
 
         /// <summary>
@@ -1376,7 +1387,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitPrefixUnaryExpression(PrefixUnaryExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitPrefixUnaryExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(PrefixUnaryExpressionSyntax))) base.VisitPrefixUnaryExpression(node);
         }
 
         /// <summary>
@@ -1386,7 +1397,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitPropertyDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(PropertyDeclarationSyntax))) base.VisitPropertyDeclaration(node);
         }
 
         /// <summary>
@@ -1396,7 +1407,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitQualifiedCref(QualifiedCrefSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitQualifiedCref(node);
+            if (this.ShouldCallBaseMethod(typeof(QualifiedCrefSyntax))) base.VisitQualifiedCref(node);
         }
 
         /// <summary>
@@ -1406,7 +1417,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitQualifiedName(QualifiedNameSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitQualifiedName(node);
+            if (this.ShouldCallBaseMethod(typeof(QualifiedNameSyntax))) base.VisitQualifiedName(node);
         }
 
         /// <summary>
@@ -1416,7 +1427,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitQueryBody(QueryBodySyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitQueryBody(node);
+            if (this.ShouldCallBaseMethod(typeof(QueryBodySyntax))) base.VisitQueryBody(node);
         }
 
         /// <summary>
@@ -1426,7 +1437,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitQueryContinuation(QueryContinuationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitQueryContinuation(node);
+            if (this.ShouldCallBaseMethod(typeof(QueryContinuationSyntax))) base.VisitQueryContinuation(node);
         }
 
         /// <summary>
@@ -1436,7 +1447,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitQueryExpression(QueryExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitQueryExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(QueryExpressionSyntax))) base.VisitQueryExpression(node);
         }
 
         /// <summary>
@@ -1446,7 +1457,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitReferenceDirectiveTrivia(ReferenceDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitReferenceDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(ReferenceDirectiveTriviaSyntax))) base.VisitReferenceDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1456,7 +1467,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitRefTypeExpression(RefTypeExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitRefTypeExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(RefTypeExpressionSyntax))) base.VisitRefTypeExpression(node);
         }
 
         /// <summary>
@@ -1466,7 +1477,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitRefValueExpression(RefValueExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitRefValueExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(RefValueExpressionSyntax))) base.VisitRefValueExpression(node);
         }
 
         /// <summary>
@@ -1476,7 +1487,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitRegionDirectiveTrivia(RegionDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitRegionDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(RegionDirectiveTriviaSyntax))) base.VisitRegionDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1486,7 +1497,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitReturnStatement(ReturnStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitReturnStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(ReturnStatementSyntax))) base.VisitReturnStatement(node);
         }
 
         /// <summary>
@@ -1496,7 +1507,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitSelectClause(SelectClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitSelectClause(node);
+            if (this.ShouldCallBaseMethod(typeof(SelectClauseSyntax))) base.VisitSelectClause(node);
         }
 
         /// <summary>
@@ -1506,7 +1517,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitSimpleBaseType(SimpleBaseTypeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitSimpleBaseType(node);
+            if (this.ShouldCallBaseMethod(typeof(SimpleBaseTypeSyntax))) base.VisitSimpleBaseType(node);
         }
 
         /// <summary>
@@ -1516,7 +1527,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitSimpleLambdaExpression(SimpleLambdaExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitSimpleLambdaExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(SimpleLambdaExpressionSyntax))) base.VisitSimpleLambdaExpression(node);
         }
 
         /// <summary>
@@ -1526,7 +1537,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitSizeOfExpression(SizeOfExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitSizeOfExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(SizeOfExpressionSyntax))) base.VisitSizeOfExpression(node);
         }
 
         /// <summary>
@@ -1536,7 +1547,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitSkippedTokensTrivia(SkippedTokensTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitSkippedTokensTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(SkippedTokensTriviaSyntax))) base.VisitSkippedTokensTrivia(node);
         }
 
         /// <summary>
@@ -1546,7 +1557,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitStackAllocArrayCreationExpression(StackAllocArrayCreationExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitStackAllocArrayCreationExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(StackAllocArrayCreationExpressionSyntax))) base.VisitStackAllocArrayCreationExpression(node);
         }
 
         /// <summary>
@@ -1556,7 +1567,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitStructDeclaration(StructDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitStructDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(StructDeclarationSyntax))) base.VisitStructDeclaration(node);
         }
 
         /// <summary>
@@ -1566,7 +1577,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitSwitchSection(SwitchSectionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitSwitchSection(node);
+            if (this.ShouldCallBaseMethod(typeof(SwitchSectionSyntax))) base.VisitSwitchSection(node);
         }
 
         /// <summary>
@@ -1576,7 +1587,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitSwitchStatement(SwitchStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitSwitchStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(SwitchStatementSyntax))) base.VisitSwitchStatement(node);
         }
 
         /// <summary>
@@ -1586,7 +1597,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitThisExpression(ThisExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitThisExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(ThisExpressionSyntax))) base.VisitThisExpression(node);
         }
 
         /// <summary>
@@ -1596,7 +1607,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitThrowStatement(ThrowStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitThrowStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(ThrowStatementSyntax))) base.VisitThrowStatement(node);
         }
 
         /// <summary>
@@ -1606,7 +1617,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTryStatement(TryStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTryStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(TryStatementSyntax))) base.VisitTryStatement(node);
         }
 
         /// <summary>
@@ -1616,7 +1627,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTypeArgumentList(TypeArgumentListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTypeArgumentList(node);
+            if (this.ShouldCallBaseMethod(typeof(TypeArgumentListSyntax))) base.VisitTypeArgumentList(node);
         }
 
         /// <summary>
@@ -1626,7 +1637,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTypeConstraint(TypeConstraintSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTypeConstraint(node);
+            if (this.ShouldCallBaseMethod(typeof(TypeConstraintSyntax))) base.VisitTypeConstraint(node);
         }
 
         /// <summary>
@@ -1636,7 +1647,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTypeCref(TypeCrefSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTypeCref(node);
+            if (this.ShouldCallBaseMethod(typeof(TypeCrefSyntax))) base.VisitTypeCref(node);
         }
 
         /// <summary>
@@ -1646,7 +1657,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTypeOfExpression(TypeOfExpressionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTypeOfExpression(node);
+            if (this.ShouldCallBaseMethod(typeof(TypeOfExpressionSyntax))) base.VisitTypeOfExpression(node);
         }
 
         /// <summary>
@@ -1656,7 +1667,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTypeParameter(TypeParameterSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTypeParameter(node);
+            if (this.ShouldCallBaseMethod(typeof(TypeParameterSyntax))) base.VisitTypeParameter(node);
         }
 
         /// <summary>
@@ -1666,7 +1677,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTypeParameterConstraintClause(TypeParameterConstraintClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTypeParameterConstraintClause(node);
+            if (this.ShouldCallBaseMethod(typeof(TypeParameterConstraintClauseSyntax))) base.VisitTypeParameterConstraintClause(node);
         }
         /// <summary>
         /// 
@@ -1675,7 +1686,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitTypeParameterList(TypeParameterListSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitTypeParameterList(node);
+            if (this.ShouldCallBaseMethod(typeof(TypeParameterListSyntax))) base.VisitTypeParameterList(node);
         }
 
         /// <summary>
@@ -1685,7 +1696,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitUndefDirectiveTrivia(UndefDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitUndefDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(UndefDirectiveTriviaSyntax))) base.VisitUndefDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1695,7 +1706,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitUnsafeStatement(UnsafeStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitUnsafeStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(UnsafeStatementSyntax))) base.VisitUnsafeStatement(node);
         }
 
         /// <summary>
@@ -1705,7 +1716,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitUsingDirective(UsingDirectiveSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitUsingDirective(node);
+            if (this.ShouldCallBaseMethod(typeof(UsingDirectiveSyntax))) base.VisitUsingDirective(node);
         }
 
         /// <summary>
@@ -1715,7 +1726,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitUsingStatement(UsingStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitUsingStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(UsingStatementSyntax))) base.VisitUsingStatement(node);
         }
 
         /// <summary>
@@ -1725,7 +1736,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitVariableDeclaration(node);
+            if (this.ShouldCallBaseMethod(typeof(VariableDeclarationSyntax))) base.VisitVariableDeclaration(node);
         }
 
         /// <summary>
@@ -1735,7 +1746,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitVariableDeclarator(VariableDeclaratorSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitVariableDeclarator(node);
+            if (this.ShouldCallBaseMethod(typeof(VariableDeclaratorSyntax))) base.VisitVariableDeclarator(node);
         }
 
         /// <summary>
@@ -1745,7 +1756,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitWarningDirectiveTrivia(WarningDirectiveTriviaSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitWarningDirectiveTrivia(node);
+            if (this.ShouldCallBaseMethod(typeof(WarningDirectiveTriviaSyntax))) base.VisitWarningDirectiveTrivia(node);
         }
 
         /// <summary>
@@ -1755,7 +1766,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitWhereClause(WhereClauseSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitWhereClause(node);
+            if (this.ShouldCallBaseMethod(typeof(WhereClauseSyntax))) base.VisitWhereClause(node);
         }
 
         /// <summary>
@@ -1765,7 +1776,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitWhileStatement(WhileStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitWhileStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(WhileStatementSyntax))) base.VisitWhileStatement(node);
         }
 
         /// <summary>
@@ -1775,7 +1786,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlCDataSection(XmlCDataSectionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlCDataSection(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlCDataSectionSyntax))) base.VisitXmlCDataSection(node);
         }
 
         /// <summary>
@@ -1785,7 +1796,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlComment(XmlCommentSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlComment(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlCommentSyntax))) base.VisitXmlComment(node);
         }
 
         /// <summary>
@@ -1795,7 +1806,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlCrefAttribute(XmlCrefAttributeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlCrefAttribute(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlCrefAttributeSyntax))) base.VisitXmlCrefAttribute(node);
         }
 
         /// <summary>
@@ -1805,7 +1816,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlElement(XmlElementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlElement(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlElementSyntax))) base.VisitXmlElement(node);
         }
 
         /// <summary>
@@ -1815,7 +1826,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlElementEndTag(XmlElementEndTagSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlElementEndTag(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlElementEndTagSyntax))) base.VisitXmlElementEndTag(node);
         }
 
         /// <summary>
@@ -1825,7 +1836,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlElementStartTag(XmlElementStartTagSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlElementStartTag(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlElementStartTagSyntax))) base.VisitXmlElementStartTag(node);
         }
 
         /// <summary>
@@ -1835,7 +1846,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlEmptyElement(XmlEmptyElementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlEmptyElement(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlEmptyElementSyntax))) base.VisitXmlEmptyElement(node);
         }
 
         /// <summary>
@@ -1845,7 +1856,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlName(XmlNameSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlName(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlNameSyntax))) base.VisitXmlName(node);
         }
 
         /// <summary>
@@ -1855,7 +1866,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlNameAttribute(XmlNameAttributeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlNameAttribute(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlNameAttributeSyntax))) base.VisitXmlNameAttribute(node);
         }
 
         /// <summary>
@@ -1865,7 +1876,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlPrefix(XmlPrefixSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlPrefix(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlPrefixSyntax))) base.VisitXmlPrefix(node);
         }
 
         /// <summary>
@@ -1875,7 +1886,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlProcessingInstruction(XmlProcessingInstructionSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlProcessingInstruction(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlProcessingInstructionSyntax))) base.VisitXmlProcessingInstruction(node);
         }
 
         /// <summary>
@@ -1885,7 +1896,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlText(XmlTextSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlText(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlTextSyntax))) base.VisitXmlText(node);
         }
 
         /// <summary>
@@ -1895,7 +1906,7 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitXmlTextAttribute(XmlTextAttributeSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitXmlTextAttribute(node);
+            if (this.ShouldCallBaseMethod(typeof(XmlTextAttributeSyntax))) base.VisitXmlTextAttribute(node);
         }
         
         /// <summary>
@@ -1905,8 +1916,15 @@ namespace Rosetta.Tests.Utils
         sealed public override void VisitYieldStatement(YieldStatementSyntax node)
         {
             this.OnNodeVisited(node, this.type.IsInstanceOfType(node));
-            base.VisitYieldStatement(node);
+            if (this.ShouldCallBaseMethod(typeof(YieldStatementSyntax))) base.VisitYieldStatement(node);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <returns></returns>
+        private bool ShouldCallBaseMethod(Type type) => this.recurse || type == this.type;
 
         private void OnNodeVisited(SyntaxNode node, bool condition)
         {

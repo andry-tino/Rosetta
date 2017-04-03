@@ -41,13 +41,14 @@ namespace Rosetta.Tests.Utils
         /// Gets the first occurrance of a node type in the AST.
         /// </summary>
         /// <param name="nodeType">The node type to look for.</param>
+        /// <param name="recurse">If <c>true</c>, the search process will proceed recursively inside nodes, otherwise only the first level will be inspected.</param>
         /// <returns>A <see cref="SyntaxNode"/>.</returns>
-        public SyntaxNode LocateFirst(Type nodeType)
+        public SyntaxNode LocateFirst(Type nodeType, bool recurse = true)
         {
             ValidateInputType(nodeType);
 
             List<SyntaxNode> nodes = new List<SyntaxNode>();
-            var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node));
+            var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node), recurse);
             astExecutor.Start();
 
             return nodes.Count > 0 ? nodes[0] : null;
@@ -57,13 +58,14 @@ namespace Rosetta.Tests.Utils
         /// Gets the last occurrance of a node type in the AST.
         /// </summary>
         /// <param name="nodeType">The node type to look for.</param>
+        /// <param name="recurse">If <c>true</c>, the search process will proceed recursively inside nodes, otherwise only the first level will be inspected.</param>
         /// <returns>A <see cref="SyntaxNode"/>.</returns>
-        public SyntaxNode LocateLast(Type nodeType)
+        public SyntaxNode LocateLast(Type nodeType, bool recurse = true)
         {
             ValidateInputType(nodeType);
 
             List<SyntaxNode> nodes = new List<SyntaxNode>();
-            var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node));
+            var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node), recurse);
             astExecutor.Start();
 
             return nodes.Count > 0 ? nodes[nodes.Count - 1] : null;
@@ -73,13 +75,14 @@ namespace Rosetta.Tests.Utils
         /// Gets all occurrances of a node type in the AST.
         /// </summary>
         /// <param name="nodeType">The node type to look for.</param>
+        /// <param name="recurse">If <c>true</c>, the search process will proceed recursively inside nodes, otherwise only the first level will be inspected.</param>
         /// <returns>A <see cref="SyntaxNode"/>.</returns>
-        public IEnumerable<SyntaxNode> LocateAll(Type nodeType)
+        public IEnumerable<SyntaxNode> LocateAll(Type nodeType, bool recurse = true)
         {
             ValidateInputType(nodeType);
 
             List<SyntaxNode> nodes = new List<SyntaxNode>();
-            var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node));
+            var astExecutor = new ASTWalkerNodeTypeOperationExecutor(this.Root, nodeType, (node) => nodes.Add(node), recurse);
             astExecutor.Start();
 
             return nodes.ToArray();
@@ -88,12 +91,13 @@ namespace Rosetta.Tests.Utils
         /// <summary>
         /// Find a node given type and condition.
         /// </summary>
-        /// <param name="nodeType"></param>
-        /// <param name="condition"></param>
+        /// <param name="nodeType">The node type to look for.</param>
+        /// <param name="condition">The condition for picking the node or not.</param>
+        /// <param name="recurse">If <c>true</c>, the search process will proceed recursively inside nodes, otherwise only the first level will be inspected.</param>
         /// <returns></returns>
-        public IEnumerable<SyntaxNode> LocateAll(Type nodeType, Func<SyntaxNode, bool> condition)
+        public IEnumerable<SyntaxNode> LocateAll(Type nodeType, Func<SyntaxNode, bool> condition, bool recurse = true)
         {
-            var results = this.LocateAll(nodeType);
+            var results = this.LocateAll(nodeType, recurse);
 
             return results.Where(node => condition(node));
         }

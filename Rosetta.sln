@@ -81,6 +81,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp.ASTWalker.Helpe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp.ASTWalker.UnitTests", "test\ScriptSharp.ASTWalker.UnitTests\ScriptSharp.ASTWalker.UnitTests.csproj", "{357C3727-BB67-4559-8583-8DC196C1A5A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflection", "src\Reflection\Reflection.csproj", "{20C3AA07-7E56-4E13-A932-B8D69A94525A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflection.UnitTests", "test\Reflection.UnitTests\Reflection.UnitTests.csproj", "{DDDF0D92-88D4-4027-B9AE-E29D34257064}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynUtils", "src\RoslynUtils\RoslynUtils.csproj", "{5EEEDBFB-9D44-43A3-A6EF-310008004C91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -329,6 +335,30 @@ Global
 		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Release|x86.ActiveCfg = Release|Any CPU
 		{357C3727-BB67-4559-8583-8DC196C1A5A9}.Release|x86.Build.0 = Release|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Debug|x86.Build.0 = Debug|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Release|x86.ActiveCfg = Release|Any CPU
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A}.Release|x86.Build.0 = Release|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Debug|x86.Build.0 = Debug|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Release|x86.ActiveCfg = Release|Any CPU
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064}.Release|x86.Build.0 = Release|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Debug|x86.Build.0 = Debug|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Release|x86.ActiveCfg = Release|Any CPU
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -367,6 +397,9 @@ Global
 		{CE0C7EA4-8BFD-43DF-8682-0AB211799F1E} = {1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}
 		{6C5B3AEB-F258-44B1-B80E-51BF6EF5511D} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
 		{357C3727-BB67-4559-8583-8DC196C1A5A9} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
+		{20C3AA07-7E56-4E13-A932-B8D69A94525A} = {1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}
+		{DDDF0D92-88D4-4027-B9AE-E29D34257064} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
+		{5EEEDBFB-9D44-43A3-A6EF-310008004C91} = {1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
