@@ -15,12 +15,16 @@ namespace Rosetta.Tests.ScriptSharp.Utils
     public static class ScriptNamespaceAttributeHelper
     {
         private const string Source = @"
-            using System;
-            [AttributeUsage(AttributeTargets.All)]
-            public class ScriptNamespace : Attribute {
+            [System.AttributeUsage(System.AttributeTargets.All)]
+            public class ScriptNamespace : System.Attribute {
                 public ScriptNamespace(string ns) { }
             }
         ";
+
+        /// <summary>
+        /// Gets the code for the atribute.
+        /// </summary>
+        public static string AttributeSourceCode => Source;
 
         /// <summary>
         /// Adds a reference to the ScriptNamespace attribute that can appear in tests.

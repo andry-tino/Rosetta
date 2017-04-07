@@ -20,6 +20,11 @@ namespace Rosetta.Reflection
     /// Builds an AST from an assembly.
     /// This class will return also the semantic model associated to the generated tree connected to the assembly the tree was generated from.
     /// </summary>
+    /// <remarks>
+    /// Limitations:
+    /// - Supports only classes, interfaces, enums and structs.
+    /// - Does not support nested types. Only types in namespaces are supported.
+    /// </remarks>
     public class ASTBuilder : IASTBuilder
     {
         private readonly Assembly assembly;
@@ -87,24 +92,24 @@ namespace Rosetta.Reflection
             };
         }
 
-        protected virtual MemberDeclarationSyntax BuildClassNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildClassNode(System.Reflection.TypeInfo type)
         {
-            return BuildNode(type, SyntaxFactory.ClassDeclaration);
+            return this.BuildNode(type, SyntaxFactory.ClassDeclaration);
         }
 
-        protected virtual MemberDeclarationSyntax BuildStructNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildStructNode(System.Reflection.TypeInfo type)
         {
-            return BuildNode(type, SyntaxFactory.StructDeclaration);
+            return this.BuildNode(type, SyntaxFactory.StructDeclaration);
         }
 
-        protected virtual MemberDeclarationSyntax BuildEnumNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildEnumNode(System.Reflection.TypeInfo type)
         {
-            return BuildNode(type, SyntaxFactory.EnumDeclaration);
+            return this.BuildNode(type, SyntaxFactory.EnumDeclaration);
         }
 
-        protected virtual MemberDeclarationSyntax BuildInterfaceNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildInterfaceNode(System.Reflection.TypeInfo type)
         {
-            return BuildNode(type, SyntaxFactory.InterfaceDeclaration);
+            return this.BuildNode(type, SyntaxFactory.InterfaceDeclaration);
         }
 
         private Compilation BuildCompilationUnit(SyntaxTree tree)
@@ -123,9 +128,9 @@ namespace Rosetta.Reflection
             return CSharpCompilation.Create("GeneratedCompilation", new[] { tree }, references);
         }
 
-        private static MemberDeclarationSyntax BuildNode(System.Reflection.TypeInfo type, RoslynNodeFactory factory)
+        private MemberDeclarationSyntax BuildNode(System.Reflection.TypeInfo type, RoslynNodeFactory factory)
         {
-            var helper = new Namespace(type);
+            var helper = this.CreateNamespaceHelper(type);
 
             MemberDeclarationSyntax node = null;
 
@@ -134,7 +139,7 @@ namespace Rosetta.Reflection
 
             if (namespaceNode != null)
             {
-                namespaceNode.AddMembers(typeNode);
+                namespaceNode = namespaceNode.AddMembers(typeNode);
                 node = namespaceNode;
             }
             else
@@ -143,6 +148,11 @@ namespace Rosetta.Reflection
             }
 
             return node;
+        }
+
+        protected virtual Namespace CreateNamespaceHelper(System.Reflection.TypeInfo type)
+        {
+            return new Namespace(type);
         }
 
         #region Types

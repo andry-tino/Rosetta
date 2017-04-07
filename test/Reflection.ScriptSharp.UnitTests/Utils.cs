@@ -3,7 +3,7 @@
 /// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Reflection.UnitTests
+namespace Rosetta.Reflection.ScriptSharp.UnitTests
 {
     using System;
     using System.Reflection;
@@ -12,6 +12,7 @@ namespace Rosetta.Reflection.UnitTests
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.Tests.Utils;
+    using Rosetta.Tests.ScriptSharp.Utils;
 
     /// <summary>
     /// Utilities.
@@ -25,9 +26,9 @@ namespace Rosetta.Reflection.UnitTests
         /// <returns></returns>
         public static SyntaxNode ExtractASTRoot(this string source)
         {
-            Assembly assembly = AsmlDasml.Assemble(source);
+            Assembly assembly = AsmlDasml.Assemble(source, ScriptNamespaceAttributeHelper.AttributeSourceCode);
 
-            var builder = new ASTBuilder(assembly);
+            var builder = new ASTBuilder(assembly); // ScriptSharp Reflector
             var astInfo = builder.Build();
 
             // Getting the AST node

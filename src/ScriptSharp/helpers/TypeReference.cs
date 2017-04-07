@@ -43,7 +43,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         }
 
         /// <summary>
-        /// Gets the base type name.
+        /// Gets the type name.
         /// 
         /// TODO: Improve the logic of this method in order to abstract a common component for semantically detecting the ScriptNamespace
         /// </summary>
