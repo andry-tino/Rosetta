@@ -59,12 +59,15 @@ namespace Rosetta.Reflection
             }
         }
 
+        protected virtual IASTBuilder CreateASTBuilder(Assembly assembly) => new ASTBuilder(assembly);
+
         private void Initialize()
         {
             Assembly assembly = null;
             try
             {
-                assembly = Assembly.LoadFrom(this.assemblyPath);
+                //assembly = Assembly.LoadFrom(this.assemblyPath);
+                assembly = Assembly.ReflectionOnlyLoadFrom(this.assemblyPath);
             }
             catch (FileNotFoundException ex)
             {
@@ -75,7 +78,7 @@ namespace Rosetta.Reflection
                 throw new InvalidOperationException("Invalid assembly path", ex);
             }
 
-            var builder = new ASTBuilder(assembly);
+            var builder = this.CreateASTBuilder(assembly);
             var astInfo = builder.Build();
 
             // Getting the AST node

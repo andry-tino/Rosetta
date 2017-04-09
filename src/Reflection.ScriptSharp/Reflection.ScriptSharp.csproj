@@ -104,6 +104,7 @@
     <Compile Include="ASTBuilder.cs" />
     <Compile Include="helpers\Namespace.cs" />
     <Compile Include="helpers\ScriptNamespaceAttributeDecoration.cs" />
+    <Compile Include="ProgramWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,10 +8,6 @@ namespace Rosetta.Reflection.ScriptSharp
     using System;
     using System.Reflection;
 
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
     using Rosetta.Reflection.ScriptSharp.Helpers;
 
     /// <summary>

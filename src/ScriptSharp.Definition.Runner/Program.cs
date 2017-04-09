@@ -11,6 +11,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 
     using Rosetta.Executable;
     using Rosetta.Executable.Exceptions;
+    using Rosetta.Translation;
 
     using Mono.Options;
 
@@ -22,6 +23,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
     /// </remarks>
     internal partial class Program : Executable
     {
+        protected const string Extension = "d.ts";
+
         protected static Program instance;
 
         protected string filePath = null;                       // File to convert
@@ -139,6 +142,12 @@ namespace Rosetta.ScriptSharp.Definition.Runner
                     return;
                 }
 
+                if (this.filePath == null && this.assemblyPath != null)
+                {
+                    this.ConvertAssembly();
+                    return;
+                }
+
                 // If we get to here, then basically nothing happens, the user needs to specify options
                 this.HandleNoFeasibleExecution();
             }
@@ -210,6 +219,30 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             Console.WriteLine();
             Console.WriteLine("Options:");
             this.options.WriteOptionDescriptions(Console.Out);
+        }
+
+        private string GeneratePrependedText()
+        {
+            if (this.includes.Count() == 0)
+            {
+                return string.Empty;
+            }
+
+            ITranslationUnit references = CreateReferencesGroupTranslationUnit(this.includes);
+            return $"{references.Translate()}{Lexems.Newline}{Lexems.Newline}";
+        }
+
+        private static ITranslationUnit CreateReferencesGroupTranslationUnit(IEnumerable<string> paths)
+        {
+            // TODO: Change to use a factory
+            var statementsGroup = ReferencesGroupTranslationUnit.Create();
+
+            foreach (var path in paths)
+            {
+                statementsGroup.AddStatement(ReferenceTranslationUnit.Create(path));
+            }
+
+            return statementsGroup;
         }
     }
 }

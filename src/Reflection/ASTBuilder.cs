@@ -9,6 +9,7 @@ namespace Rosetta.Reflection
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using System.Text;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -58,7 +59,24 @@ namespace Rosetta.Reflection
                 return this.astInfo;
             }
 
-            var types = this.assembly.DefinedTypes;
+            IEnumerable<System.Reflection.TypeInfo> types = null;
+            try
+            {
+                types = this.assembly.DefinedTypes;
+            }
+            catch(ReflectionTypeLoadException ex)
+            {
+                // Rethrow by emitting all errors
+                var errorMessage = new StringBuilder();
+                errorMessage.AppendLine($"Error loading defined types in assembly {this.assembly.FullName}. Found {ex.LoaderExceptions.Length} errors:");
+
+                foreach (var innerException in ex.LoaderExceptions)
+                {
+                    errorMessage.AppendLine($"{innerException.GetType().Name} - {innerException.HResult}: {innerException.Message}");
+                }
+
+                throw new InvalidOperationException(errorMessage.ToString(), ex);
+            }
 
             var nodes = new List<MemberDeclarationSyntax>();
             var numberOfClasses = 0;

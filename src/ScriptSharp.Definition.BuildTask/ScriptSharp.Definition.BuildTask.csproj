@@ -44,15 +44,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenerateBundleTask.cs" />
+    <Compile Include="GenerateBundleWithReflectionTask.cs" />
     <Compile Include="GenerateDefinitionsBuildTask.cs" />
     <Compile Include="GenerateFilesTask.cs" />
     <Compile Include="GenerateTaskBase.cs" />
+    <Compile Include="GenerateTaskFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Executable\Executable.csproj">
       <Project>{2d805f02-16c6-4a45-9837-210c0f20b4a4}</Project>
       <Name>Executable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reflection.ScriptSharp\Reflection.ScriptSharp.csproj">
+      <Project>{ff06d702-db9f-45e2-b641-317f9dc3f3b9}</Project>
+      <Name>Reflection.ScriptSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reflection\Reflection.csproj">
+      <Project>{20c3aa07-7e56-4e13-a932-b8d69a94525a}</Project>
+      <Name>Reflection</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScriptSharp.Definition\ScriptSharp.Definition.csproj">
       <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>

@@ -21,7 +21,6 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <summary>
         /// Gets or sets the collection of source files to generate definition files from.
         /// </summary>
-        [Required]
         public ITaskItem[] Files { get; set; }
 
         /// <summary>
@@ -91,8 +90,15 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
             try
             {
-                this.Log.LogMessage("Generating TypeScript definitions for {0} file{1}...", 
-                    this.Files.Count(), this.Files.Count() > 1 ? "s" : string.Empty);
+                if (this.SourceFiles != null)
+                {
+                    this.Log.LogMessage("Generating TypeScript definitions for {0} file{1}...",
+                        this.Files.Count(), this.Files.Count() > 1 ? "s" : string.Empty);
+                }
+                else
+                {
+                    this.Log.LogMessage("Generating TypeScript definitions...");
+                }
 
                 this.CreateTask().Run();
             }
@@ -128,9 +134,13 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 
         private GenerateTaskBase CreateTask()
         {
-            return this.CreateBundle
-                ? new GenerateBundleTask(this.SourceFiles, this.OutputFolder, this.AssemblyPath, this.ReferencedFiles, this.BundleName)
-                : new GenerateFilesTask(this.SourceFiles, this.OutputFolder, this.AssemblyPath, this.ReferencedFiles) as GenerateTaskBase;
+            return new GenerateTaskFactory(
+                this.SourceFiles, 
+                this.OutputFolder, 
+                this.AssemblyPath, 
+                this.ReferencedFiles,
+                this.CreateBundle ? this.BundleName : null)
+                .Create();
         }
     }
 }

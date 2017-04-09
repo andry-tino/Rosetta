@@ -16,6 +16,8 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
     /// </summary>
     public class GenerateBundleTask : GenerateTaskBase
     {
+        private const string DefaultBundleName = "Bundle";
+
         private readonly string bundleName;
 
         private List<FileConversionInfo> outputs;
@@ -23,10 +25,10 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateBundleTask"/> class.
         /// </summary>
-        /// <param name="sourceFiles"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="bundleName"></param>
-        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string bundleName = "Bundle") 
+        /// <param name="sourceFiles">The collection of paths to the files to consider.</param>
+        /// <param name="outputFolder">The folder where to emit generated files.</param>
+        /// <param name="bundleName">The name of the bundle.</param>
+        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string bundleName = null) 
             : this(sourceFiles, outputFolder, null, null, bundleName)
         {
         }
@@ -34,11 +36,11 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateBundleTask"/> class.
         /// </summary>
-        /// <param name="sourceFiles"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="assemblyPath"></param>
-        /// <param name="bundleName"></param>
-        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath, string bundleName = "Bundle")
+        /// <param name="sourceFiles">The collection of paths to the files to consider.</param>
+        /// <param name="outputFolder">The folder where to emit generated files.</param>
+        /// <param name="assemblyPath">The path to the assembly providing information on symbols in source files.</param>
+        /// <param name="bundleName">The name of the bundle.</param>
+        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath, string bundleName = null)
             : this(sourceFiles, outputFolder, assemblyPath, null, bundleName)
         {
         }
@@ -46,15 +48,15 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateBundleTask"/> class.
         /// </summary>
-        /// <param name="sourceFiles"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="assemblyPath"></param>
-        /// <param name="references"></param>
-        /// <param name="bundleName"></param>
-        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath, IEnumerable<string> references, string bundleName = "Bundle")
+        /// <param name="sourceFiles">The collection of paths to the files to consider.</param>
+        /// <param name="outputFolder">The folder where to emit generated files.</param>
+        /// <param name="assemblyPath">The path to the assembly providing information on symbols in source files.</param>
+        /// <param name="references">Additional references to add in the emitted bundle.</param>
+        /// <param name="bundleName">The name of the bundle.</param>
+        public GenerateBundleTask(IEnumerable<string> sourceFiles, string outputFolder, string assemblyPath, IEnumerable<string> references, string bundleName = null)
             : base(sourceFiles, outputFolder, assemblyPath, references)
         {
-            this.bundleName = bundleName;
+            this.bundleName = bundleName ?? DefaultBundleName;
 
             this.outputs = new List<FileConversionInfo>();
         }
@@ -65,19 +67,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         /// <returns></returns>
         public override void Run()
         {
-            foreach (var file in this.sourceFiles)
-            {
-                this.ConvertFile(file);
-            }
-
-            var chuncks = this.outputs.Select(output => string.Join(Environment.NewLine, new[] {
-                $"/**",
-                $" * File: {output.FileName}",
-                $" */",
-                $"{output.FileConversion}",
-                string.Empty }));
-
-            var bundle = string.Join(Environment.NewLine, chuncks);
+            var bundle = this.GenerateOutput();
 
             // Handling references
             bundle = this.GeneratePrependedText() + bundle;
@@ -91,6 +81,23 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
             }
 
             FileManager.WriteToFile(bundle, outputPath, this.bundleName + "." + extension);
+        }
+
+        protected virtual string GenerateOutput()
+        {
+            foreach (var file in this.sourceFiles)
+            {
+                this.ConvertFile(file);
+            }
+
+            var chuncks = this.outputs.Select(output => string.Join(Environment.NewLine, new[] {
+                $"/**",
+                $" * File: {output.FileName}",
+                $" */",
+                $"{output.FileConversion}",
+                string.Empty }));
+
+            return string.Join(Environment.NewLine, chuncks);
         }
 
         private void ConvertFile(string filePath)

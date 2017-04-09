@@ -57,13 +57,19 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="GenerateTypeScriptDefinitions.targets" />
-  <Target Name="CreateOutFolder" BeforeTargets="GenerateTypeScriptDefinitionFiles;GenerateTypeScriptDefinitionBundle;GenerateTypeScriptDefinitionBundleWithAssembly;GenerateTypeScriptDefinitionBundleWithIncludes" Condition="'$(SkipBuildTaskTest)' == ''">
+  <Target Name="CreateOutFolder" BeforeTargets="GenerateTypeScriptDefinitionFiles;GenerateTypeScriptDefinitionBundle;GenerateTypeScriptDefinitionBundleWithAssembly;GenerateTypeScriptDefinitionBundleWithAssemblyReflection;GenerateTypeScriptDefinitionBundleWithIncludes" Condition="'$(SkipBuildTaskTest)' == ''">
     <MakeDir Directories=".\out" />
     <MakeDir Directories=".\out\bundle" />
     <MakeDir Directories=".\out\bundle_a" />
+	<MakeDir Directories=".\out\bundle_r" />
     <MakeDir Directories=".\out\bundle_i" />
   </Target>
   <ItemGroup>
+	<!-- 
+		Important: Do not remove these files. 
+		They do not exist and it is fine, they serve only to the purpose of testing 
+		reference injection 
+	-->
     <TypeScriptDefinitionReference Include="file1.d.ts" />
     <TypeScriptDefinitionReference Include="file2.d.ts" />
   </ItemGroup>
@@ -78,6 +84,9 @@
   </Target>
   <Target Name="GenerateTypeScriptDefinitionBundleWithAssembly" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
     <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out\bundle_a" CreateBundle="true" AssemblyPath="$(OutputPath)\$(AssemblyName).dll" BundleName="ProjectBundle" />
+  </Target>
+  <Target Name="GenerateTypeScriptDefinitionBundleWithAssemblyReflection" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
+    <GenerateDefinitionsBuildTask OutputFolder=".\out\bundle_r" CreateBundle="true" AssemblyPath="$(OutputPath)\$(AssemblyName).dll" BundleName="ProjectBundle" />
   </Target>
   <Target Name="GenerateTypeScriptDefinitionBundleWithIncludes" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(SkipBuildTaskTest)' == ''">
     <GenerateDefinitionsBuildTask Files="@(Compile)" OutputFolder=".\out\bundle_i" CreateBundle="true" References="@(TypeScriptDefinitionReference)" BundleName="ProjectBundle" />
