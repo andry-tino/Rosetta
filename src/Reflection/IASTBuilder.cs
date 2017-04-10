@@ -7,8 +7,6 @@ namespace Rosetta.Reflection
 {
     using System;
 
-    using Microsoft.CodeAnalysis;
-
     /// <summary>
     /// Abstraction for building an AST from an assembly.
     /// </summary>

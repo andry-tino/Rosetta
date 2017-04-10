@@ -25,7 +25,7 @@ namespace Rosetta.Reflection.UnitTests
         /// <returns></returns>
         public static SyntaxNode ExtractASTRoot(this string source)
         {
-            Assembly assembly = AsmlDasml.Assemble(source);
+            Assembly assembly = new AsmlDasmlAssemblyLoader(source).Load();
 
             var builder = new ASTBuilder(assembly);
             var astInfo = builder.Build();
@@ -40,5 +40,32 @@ namespace Rosetta.Reflection.UnitTests
 
             return generatedTree.GetRoot();
         }
+
+        #region Types
+
+        /// <summary>
+        /// Assembly loader based on <see cref="AsmlDasml"/>.
+        /// </summary>
+        public class AsmlDasmlAssemblyLoader : IAssemblyLoader
+        {
+            private readonly string source;
+
+            public AsmlDasmlAssemblyLoader(string source)
+            {
+                if (source == null)
+                {
+                    throw new ArgumentNullException(nameof(source));
+                }
+
+                this.source = source;
+            }
+
+            public Assembly Load()
+            {
+                return AsmlDasml.Assemble(this.source);
+            }
+        }
+
+        #endregion
     }
 }

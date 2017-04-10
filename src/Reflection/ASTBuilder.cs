@@ -8,6 +8,7 @@ namespace Rosetta.Reflection
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Text;
 
@@ -66,7 +67,6 @@ namespace Rosetta.Reflection
             }
             catch(ReflectionTypeLoadException ex)
             {
-                // Rethrow by emitting all errors
                 var errorMessage = new StringBuilder();
                 errorMessage.AppendLine($"Error loading defined types in assembly {this.assembly.FullName}. Found {ex.LoaderExceptions.Length} errors:");
 
@@ -75,7 +75,14 @@ namespace Rosetta.Reflection
                     errorMessage.AppendLine($"{innerException.GetType().Name} - {innerException.HResult}: {innerException.Message}");
                 }
 
-                throw new InvalidOperationException(errorMessage.ToString(), ex);
+                // Try to get all the available types
+                types = ex.Types.Where(t => t != null).Select(IntrospectionExtensions.GetTypeInfo);
+
+                if (types == null || types.Count() == 0)
+                {
+                    // Rethrow by emitting all errors
+                    throw new InvalidOperationException(errorMessage.ToString(), ex);
+                }
             }
 
             var nodes = new List<MemberDeclarationSyntax>();

@@ -26,7 +26,7 @@ namespace Rosetta.Reflection.ScriptSharp.UnitTests
         /// <returns></returns>
         public static SyntaxNode ExtractASTRoot(this string source)
         {
-            Assembly assembly = AsmlDasml.Assemble(source, ScriptNamespaceAttributeHelper.AttributeSourceCode);
+            Assembly assembly = new AsmlDasmlAssemblyLoader(source, ScriptNamespaceAttributeHelper.AttributeSourceCode).Load();
 
             var builder = new ASTBuilder(assembly); // ScriptSharp Reflector
             var astInfo = builder.Build();
@@ -41,5 +41,34 @@ namespace Rosetta.Reflection.ScriptSharp.UnitTests
 
             return generatedTree.GetRoot();
         }
+
+        #region Types
+
+        /// <summary>
+        /// Assembly loader based on <see cref="AsmlDasml"/>.
+        /// </summary>
+        public class AsmlDasmlAssemblyLoader : IAssemblyLoader
+        {
+            private readonly string source;
+            private readonly string additionalSource;
+
+            public AsmlDasmlAssemblyLoader(string source, string additionalSource = null)
+            {
+                if (source == null)
+                {
+                    throw new ArgumentNullException(nameof(source));
+                }
+
+                this.source = source;
+                this.additionalSource = additionalSource ?? string.Empty;
+            }
+
+            public Assembly Load()
+            {
+                return AsmlDasml.Assemble(this.source, this.additionalSource);
+            }
+        }
+
+        #endregion
     }
 }

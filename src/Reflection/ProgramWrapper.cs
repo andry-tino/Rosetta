@@ -66,8 +66,8 @@ namespace Rosetta.Reflection
             Assembly assembly = null;
             try
             {
-                //assembly = Assembly.LoadFrom(this.assemblyPath);
-                assembly = Assembly.ReflectionOnlyLoadFrom(this.assemblyPath);
+                //assembly = new FSAssemblyLoader(this.assemblyPath).Load(); // Loads as a normal assembly
+                assembly = new ReflectionContextFSAssemblyLoader(this.assemblyPath).Load(); // Loads only for inspection
             }
             catch (FileNotFoundException ex)
             {

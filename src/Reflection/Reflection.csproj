@@ -109,10 +109,13 @@
   <ItemGroup>
     <Compile Include="ASTBuilder.cs" />
     <Compile Include="ASTInfo.cs" />
+    <Compile Include="FSAssemblyLoader.cs" />
     <Compile Include="helpers\Namespace.cs" />
+    <Compile Include="IAssemblyLoader.cs" />
     <Compile Include="IASTBuilder.cs" />
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionContextFSAssemblyLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
