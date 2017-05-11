@@ -9,7 +9,6 @@ namespace Rosetta.Tests.Utils
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -26,9 +25,21 @@ namespace Rosetta.Tests.Utils
         ///       http://stackoverflow.com/questions/43140897/cannot-create-a-compilation-in-roslyn-from-source-code/43146257#43146257
         /// </summary>
         /// <param name="source"></param>
+        /// <param name="assemblyStreamPackager"></param>
+        /// <param name="additionalSource"></param>
         /// <returns></returns>
-        public static Assembly Assemble(this string source, string additionalSource = "")
+        public static object Assemble(this string source, AssemblyStreamPackager assemblyStreamPackager, string additionalSource = "")
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (assemblyStreamPackager == null)
+            {
+                throw new ArgumentNullException(nameof(assemblyStreamPackager));
+            }
+
             // Adding entry point
             var finalSource = source + @"
                 public class Program {
@@ -48,7 +59,7 @@ namespace Rosetta.Tests.Utils
 
             CSharpCompilation compilation = CSharpCompilation.Create("TestCompilation", new[] { tree }, references);
 
-            Assembly assembly = null;
+            object assembly = null;
             using (var stream = new MemoryStream())
             {
                 var emitResult = compilation.Emit(stream);
@@ -61,10 +72,23 @@ namespace Rosetta.Tests.Utils
                 }
 
                 stream.Seek(0, SeekOrigin.Begin);
-                assembly = Assembly.Load(stream.ToArray());
+
+                // Package
+                assembly = assemblyStreamPackager(stream);
             }
 
             return assembly;
         }
+
+        #region Types
+
+        /// <summary>
+        /// Logic used to package an assembl stream into an <see cref="object"/> able to provide access to that assembly.
+        /// </summary>
+        /// <param name="assemblyStream"></param>
+        /// <returns></returns>
+        public delegate object AssemblyStreamPackager(Stream assemblyStream);
+
+        #endregion
     }
 }

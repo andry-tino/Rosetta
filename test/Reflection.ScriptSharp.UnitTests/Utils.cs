@@ -6,13 +6,14 @@
 namespace Rosetta.Reflection.ScriptSharp.UnitTests
 {
     using System;
-    using System.Reflection;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
+    using Rosetta.Reflection.Proxies;
     using Rosetta.Tests.Utils;
     using Rosetta.Tests.ScriptSharp.Utils;
+    using System.IO;
 
     /// <summary>
     /// Utilities.
@@ -26,7 +27,7 @@ namespace Rosetta.Reflection.ScriptSharp.UnitTests
         /// <returns></returns>
         public static SyntaxNode ExtractASTRoot(this string source)
         {
-            Assembly assembly = new AsmlDasmlAssemblyLoader(source, ScriptNamespaceAttributeHelper.AttributeSourceCode).Load();
+            IAssemblyProxy assembly = new AsmlDasmlAssemblyLoader(source, ScriptNamespaceAttributeHelper.AttributeSourceCode).Load();
 
             var builder = new ASTBuilder(assembly); // ScriptSharp Reflector
             var astInfo = builder.Build();
@@ -51,7 +52,7 @@ namespace Rosetta.Reflection.ScriptSharp.UnitTests
         {
             private readonly string source;
             private readonly string additionalSource;
-
+            
             public AsmlDasmlAssemblyLoader(string source, string additionalSource = null)
             {
                 if (source == null)
@@ -63,9 +64,11 @@ namespace Rosetta.Reflection.ScriptSharp.UnitTests
                 this.additionalSource = additionalSource ?? string.Empty;
             }
 
-            public Assembly Load()
+            public Stream RawAssembly => null;
+
+            public IAssemblyProxy Load()
             {
-                return AsmlDasml.Assemble(this.source, this.additionalSource);
+                return AsmlDasml.Assemble(this.source, stream => new MonoStreamAssemblyLoader(stream).Load(), this.additionalSource) as IAssemblyProxy;
             }
         }
 

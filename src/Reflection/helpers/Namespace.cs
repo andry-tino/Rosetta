@@ -6,20 +6,21 @@
 namespace Rosetta.Reflection.Helpers
 {
     using System;
-    using System.Reflection;
+
+    using Rosetta.Reflection.Proxies;
 
     /// <summary>
     /// Helper for <see cref="TypeInfo"/> in order to retrieve information about its namespace.
     /// </summary>
     public class Namespace
     {
-        private readonly TypeInfo type;
+        private readonly ITypeInfoProxy type;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Namespace"/> class.
         /// </summary>
         /// <param name="type"></param>
-        public Namespace(TypeInfo type)
+        public Namespace(ITypeInfoProxy type)
         {
             if (type == null)
             {
@@ -42,9 +43,9 @@ namespace Rosetta.Reflection.Helpers
         /// </summary>
         public bool Exists => this.FullName != null && this.FullName != "";
 
-        protected TypeInfo Type => this.type;
+        protected ITypeInfoProxy Type => this.type;
 
-        private static void CheckType(TypeInfo type)
+        private static void CheckType(ITypeInfoProxy type)
         {
             if (type.IsClass) return;
             if (type.IsValueType) return;

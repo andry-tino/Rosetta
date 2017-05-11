@@ -7,7 +7,8 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
 {
     using System;
     using System.Collections.Generic;
-    using System.Reflection;
+
+    using Rosetta.Reflection.Proxies;
 
     /// <summary>
     /// Helper for <see cref="TypeInfo"/> in order to retrieve information about its namespace.
@@ -21,7 +22,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
         /// Initializes a new instance of the <see cref="Namespace"/> class.
         /// </summary>
         /// <param name="type"></param>
-        public Namespace(TypeInfo type) : base(type)
+        public Namespace(ITypeInfoProxy type) : base(type)
         {
         }
 
@@ -40,7 +41,17 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
                 {
                     this.fullName = base.FullName;
 
-                    foreach (CustomAttributeData attribute in this.Type.CustomAttributes)
+                    IEnumerable<ICustomAttributeDataProxy> customAttributes = null;
+                    try
+                    {
+                        customAttributes = this.Type.CustomAttributes;
+                    } catch (TypeLoadException e)
+                    {
+                        // Could not access the attributes NEEDED???
+                        return this.fullName;
+                    }
+
+                    foreach (ICustomAttributeDataProxy attribute in customAttributes)
                     {
                         if (ScriptNamespaceAttributeDecoration.IsScriptNamespaceAttributeDecoration(attribute.AttributeType))
                         {

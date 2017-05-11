@@ -59,6 +59,22 @@
       <HintPath>..\..\packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
@@ -85,13 +101,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Reflection.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+	<Reference Include="System.Reflection.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Reflection.Metadata.1.2.0\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Reflection">
+	<Reference Include="System.Reflection">
       <HintPath>..\..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -107,17 +121,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="assembly-proxying\ICustomAttributeDataProxy.cs" />
+    <Compile Include="assembly-proxying\ICustomAttributeTypedArgumentProxy.cs" />
+    <Compile Include="assembly-proxying\ITypeInfoProxy.cs" />
+    <Compile Include="assembly-proxying\ITypeProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoAssemblyProxy.cs" />
+    <Compile Include="assembly-proxying\IAssemblyProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoCustomAttributeDataProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoCustomAttributeTypedArgumentProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoTypeInfoProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoTypeProxy.cs" />
     <Compile Include="ASTBuilder.cs" />
     <Compile Include="ASTInfo.cs" />
-    <Compile Include="FSAssemblyLoader.cs" />
+    <Compile Include="loading\MonoFSAssemblyLoader.cs" />
     <Compile Include="helpers\Namespace.cs" />
-    <Compile Include="IAssemblyLoader.cs" />
+    <Compile Include="loading\IAssemblyLoader.cs" />
     <Compile Include="IASTBuilder.cs" />
+    <Compile Include="loading\MonoStreamAssemblyLoader.cs" />
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReflectionContextFSAssemblyLoader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +155,7 @@
       <Name>TranslationUnits</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

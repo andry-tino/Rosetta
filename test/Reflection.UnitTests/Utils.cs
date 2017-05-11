@@ -6,11 +6,12 @@
 namespace Rosetta.Reflection.UnitTests
 {
     using System;
-    using System.Reflection;
+    using System.IO;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
+    using Rosetta.Reflection.Proxies;
     using Rosetta.Tests.Utils;
 
     /// <summary>
@@ -25,7 +26,7 @@ namespace Rosetta.Reflection.UnitTests
         /// <returns></returns>
         public static SyntaxNode ExtractASTRoot(this string source)
         {
-            Assembly assembly = new AsmlDasmlAssemblyLoader(source).Load();
+            IAssemblyProxy assembly = new AsmlDasmlAssemblyLoader(source).Load();
 
             var builder = new ASTBuilder(assembly);
             var astInfo = builder.Build();
@@ -60,9 +61,11 @@ namespace Rosetta.Reflection.UnitTests
                 this.source = source;
             }
 
-            public Assembly Load()
+            public Stream RawAssembly => null;
+
+            public IAssemblyProxy Load()
             {
-                return AsmlDasml.Assemble(this.source);
+                return AsmlDasml.Assemble(this.source, stream => new MonoStreamAssemblyLoader(stream).Load()) as IAssemblyProxy;
             }
         }
 

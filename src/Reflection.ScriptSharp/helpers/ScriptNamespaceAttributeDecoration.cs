@@ -6,9 +6,8 @@
 namespace Rosetta.Reflection.ScriptSharp.Helpers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+
+    using Rosetta.Reflection.Proxies;
 
     /// <summary>
     /// Abstraction for building an AST from an assembly.
@@ -18,7 +17,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
         public const string ScriptNamespaceName = "ScriptNamespace";
         public const string ScriptNamespaceFullName = "ScriptNamespace"; // TODO: Find namespace used by ScriptSharp for this class
 
-        private readonly CustomAttributeData attributeData;
+        private readonly ICustomAttributeDataProxy attributeData;
 
         // Cached values
         private string overridenNamespace;
@@ -27,7 +26,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
         /// Initializes a new instance of the <see cref="Namespace"/> class.
         /// </summary>
         /// <param name="attributeData"></param>
-        public ScriptNamespaceAttributeDecoration(CustomAttributeData attributeData)
+        public ScriptNamespaceAttributeDecoration(ICustomAttributeDataProxy attributeData)
         {
             if (attributeData == null)
             {
@@ -71,7 +70,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns></returns>
-        public static bool IsScriptNamespaceAttributeDecoration(Type attribute)
+        public static bool IsScriptNamespaceAttributeDecoration(ITypeProxy attribute)
         {
             return attribute.Name == ScriptNamespaceFullName;
         }

@@ -6,7 +6,9 @@
 namespace Rosetta.Reflection.ScriptSharp
 {
     using System;
-    using System.Reflection;
+    using System.IO;
+
+    using Rosetta.Reflection.Proxies;
 
     /// <summary>
     /// Initiates the translation.
@@ -22,6 +24,6 @@ namespace Rosetta.Reflection.ScriptSharp
         {
         }
 
-        protected override IASTBuilder CreateASTBuilder(Assembly assembly) => new ASTBuilder(assembly);
+        protected override IASTBuilder CreateASTBuilder(IAssemblyProxy assembly, Stream rawAssembly) => new ASTBuilder(assembly, rawAssembly);
     }
 }

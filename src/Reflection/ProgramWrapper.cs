@@ -7,11 +7,12 @@ namespace Rosetta.Reflection
 {
     using System;
     using System.IO;
-    using System.Reflection;
+
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST;
+    using Rosetta.Reflection.Proxies;
 
     /// <summary>
     /// Initiates the translation.
@@ -59,26 +60,17 @@ namespace Rosetta.Reflection
             }
         }
 
-        protected virtual IASTBuilder CreateASTBuilder(Assembly assembly) => new ASTBuilder(assembly);
+        protected virtual IASTBuilder CreateASTBuilder(IAssemblyProxy assembly, Stream rawAssembly) => new ASTBuilder(assembly, rawAssembly);
+
+        protected virtual IAssemblyLoader CreateAssemblyLoader(string assemblyPath) => new MonoFSAssemblyLoader(assemblyPath);
 
         private void Initialize()
         {
-            Assembly assembly = null;
-            try
-            {
-                //assembly = new FSAssemblyLoader(this.assemblyPath).Load(); // Loads as a normal assembly
-                assembly = new ReflectionContextFSAssemblyLoader(this.assemblyPath).Load(); // Loads only for inspection
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw new InvalidOperationException("Invalid assembly path", ex);
-            }
-            catch (FileLoadException ex)
-            {
-                throw new InvalidOperationException("Invalid assembly path", ex);
-            }
+            LoadedAssembly loadedAssembly = this.LoadAssembly();
+            IAssemblyProxy assembly = loadedAssembly.AssemblyProxy;
+            Stream rawAssembly = loadedAssembly.RawAssembly;
 
-            var builder = this.CreateASTBuilder(assembly);
+            var builder = this.CreateASTBuilder(assembly, rawAssembly);
             var astInfo = builder.Build();
 
             // Getting the AST node
@@ -102,5 +94,47 @@ namespace Rosetta.Reflection
 
             this.initialized = true;
         }
+
+        private LoadedAssembly LoadAssembly()
+        {
+            IAssemblyProxy assembly = null;
+            Stream rawAssembly = null;
+
+            try
+            {
+                var loader = this.CreateAssemblyLoader(this.assemblyPath);
+
+                assembly = loader.Load();
+                rawAssembly = loader.RawAssembly;
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new InvalidOperationException("Invalid assembly path", ex);
+            }
+            catch (FileLoadException ex)
+            {
+                throw new InvalidOperationException("Invalid assembly path", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"An error occurred while loading assembly at {this.assemblyPath}", ex);
+            }
+
+            return new LoadedAssembly
+            {
+                AssemblyProxy = assembly,
+                RawAssembly = rawAssembly
+            };
+        }
+
+        #region Types
+
+        private class LoadedAssembly
+        {
+            public IAssemblyProxy AssemblyProxy { get; set; }
+            public Stream RawAssembly { get; set; }
+        }
+
+        #endregion
     }
 }

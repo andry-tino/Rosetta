@@ -8,15 +8,14 @@ namespace Rosetta.Reflection
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
+    using System.Runtime.Serialization.Formatters.Binary;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.Reflection.Helpers;
+    using Rosetta.Reflection.Proxies;
 
     /// <summary>
     /// Builds an AST from an assembly.
@@ -29,7 +28,8 @@ namespace Rosetta.Reflection
     /// </remarks>
     public class ASTBuilder : IASTBuilder
     {
-        private readonly Assembly assembly;
+        private readonly IAssemblyProxy assembly;
+        private readonly Stream rawAssembly;
 
         // Cached quantities
         private ASTInfo astInfo;
@@ -39,7 +39,11 @@ namespace Rosetta.Reflection
         /// This class builds a plain tree from all the types in the assembly.
         /// </summary>
         /// <param name="assembly">The path to the assembly.</param>
-        public ASTBuilder(Assembly assembly)
+        /// <param name="rawAssembly">
+        /// The raw assembly to be used to create the <see cref="Compilation"/> object. 
+        /// If not provided, the builder will return an <see cref="ASTInfo"/> where <see cref="ASTInfo.CompilationUnit"/> is <code>null</code>.
+        /// </param>
+        public ASTBuilder(IAssemblyProxy assembly, Stream rawAssembly = null)
         {
             if (assembly == null)
             {
@@ -47,6 +51,7 @@ namespace Rosetta.Reflection
             }
 
             this.assembly = assembly;
+            this.rawAssembly = rawAssembly;
         }
 
         /// <summary>
@@ -60,29 +65,14 @@ namespace Rosetta.Reflection
                 return this.astInfo;
             }
 
-            IEnumerable<System.Reflection.TypeInfo> types = null;
+            IEnumerable<ITypeInfoProxy> types = null;
             try
             {
                 types = this.assembly.DefinedTypes;
             }
-            catch(ReflectionTypeLoadException ex)
+            catch(Exception ex)
             {
-                var errorMessage = new StringBuilder();
-                errorMessage.AppendLine($"Error loading defined types in assembly {this.assembly.FullName}. Found {ex.LoaderExceptions.Length} errors:");
-
-                foreach (var innerException in ex.LoaderExceptions)
-                {
-                    errorMessage.AppendLine($"{innerException.GetType().Name} - {innerException.HResult}: {innerException.Message}");
-                }
-
-                // Try to get all the available types
-                types = ex.Types.Where(t => t != null).Select(IntrospectionExtensions.GetTypeInfo);
-
-                if (types == null || types.Count() == 0)
-                {
-                    // Rethrow by emitting all errors
-                    throw new InvalidOperationException(errorMessage.ToString(), ex);
-                }
+                throw new InvalidOperationException("An error occurred while trying to load defined types", ex);
             }
 
             var nodes = new List<MemberDeclarationSyntax>();
@@ -117,43 +107,42 @@ namespace Rosetta.Reflection
             };
         }
 
-        private MemberDeclarationSyntax BuildClassNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildClassNode(ITypeInfoProxy type)
         {
             return this.BuildNode(type, SyntaxFactory.ClassDeclaration);
         }
 
-        private MemberDeclarationSyntax BuildStructNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type)
         {
             return this.BuildNode(type, SyntaxFactory.StructDeclaration);
         }
 
-        private MemberDeclarationSyntax BuildEnumNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type)
         {
             return this.BuildNode(type, SyntaxFactory.EnumDeclaration);
         }
 
-        private MemberDeclarationSyntax BuildInterfaceNode(System.Reflection.TypeInfo type)
+        private MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type)
         {
             return this.BuildNode(type, SyntaxFactory.InterfaceDeclaration);
         }
 
         private Compilation BuildCompilationUnit(SyntaxTree tree)
         {
-            var references = new List<MetadataReference>();
-            
-            using (var stream = new MemoryStream())
+            if (this.rawAssembly == null)
             {
-                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                bf.Serialize(stream, this.assembly);
-
-                var metadataReference = MetadataReference.CreateFromStream(stream);
-                references.Add(metadataReference);
+                return null;
             }
-            
+
+            var references = new List<MetadataReference>();
+
+            var metadataReference = MetadataReference.CreateFromStream(this.rawAssembly);
+            references.Add(metadataReference);
+
             return CSharpCompilation.Create("GeneratedCompilation", new[] { tree }, references);
         }
 
-        private MemberDeclarationSyntax BuildNode(System.Reflection.TypeInfo type, RoslynNodeFactory factory)
+        private MemberDeclarationSyntax BuildNode(ITypeInfoProxy type, RoslynNodeFactory factory)
         {
             var helper = this.CreateNamespaceHelper(type);
 
@@ -175,7 +164,7 @@ namespace Rosetta.Reflection
             return node;
         }
 
-        protected virtual Namespace CreateNamespaceHelper(System.Reflection.TypeInfo type)
+        protected virtual Namespace CreateNamespaceHelper(ITypeInfoProxy type)
         {
             return new Namespace(type);
         }
