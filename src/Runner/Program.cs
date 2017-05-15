@@ -22,6 +22,8 @@ namespace Rosetta.Runner
     /// </remarks>
     internal partial class Program : Executable
     {
+        protected const string DefaultFileName = "Output";
+
         protected static Program instance;
 
         protected string filePath = null;                       // File to convert
@@ -221,5 +223,7 @@ namespace Rosetta.Runner
             Console.WriteLine("Options:");
             this.options.WriteOptionDescriptions(Console.Out);
         }
+
+        protected string FileName => string.IsNullOrEmpty(this.fileName) ? DefaultFileName : this.fileName;
     }
 }

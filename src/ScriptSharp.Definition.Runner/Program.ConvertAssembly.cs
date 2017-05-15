@@ -30,7 +30,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
                 throw new InvalidOperationException($"Folder '{outputPath}' does not exists!");
             }
 
-            FileManager.WriteToFile(output, outputPath, this.fileName + "." + Extension);
+            FileManager.WriteToFile(output, outputPath, $"{this.FileName}.{Extension}");
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Rosetta.Runner
                 AssemblyPath = this.assemblyPath,
                 OutputDirectory = this.outputFolder,
                 Extension = Extension,
-                FileName = this.fileName
+                FileName = this.FileName
             });
         }
 

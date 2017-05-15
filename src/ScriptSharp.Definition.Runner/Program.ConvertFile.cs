@@ -24,7 +24,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
                 AssemblyPath = this.assemblyPath,
                 OutputDirectory = this.outputFolder,
                 Extension = Extension,
-                FileName = this.fileName,
+                FileName = this.FileName,
                 References = this.includes
             };
 

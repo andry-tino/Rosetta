@@ -24,6 +24,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
     internal partial class Program : Executable
     {
         protected const string Extension = "d.ts";
+        protected const string DefaultFileName = "Definition";
 
         protected static Program instance;
 
@@ -220,6 +221,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             Console.WriteLine("Options:");
             this.options.WriteOptionDescriptions(Console.Out);
         }
+
+        protected string FileName => string.IsNullOrEmpty(this.fileName) ? DefaultFileName : this.fileName;
 
         private string GeneratePrependedText()
         {
