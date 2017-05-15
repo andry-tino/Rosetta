@@ -22,12 +22,14 @@ namespace Rosetta.AST.Helpers
         private readonly ExpressionSyntax node;
         private readonly SemanticModel semanticModel;
 
+        // TODO: This class is a factory and should be moved there.
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpressionTranslationUnitBuilder"/> class.
         /// </summary>
         /// <param name="node">The node</param>
         /// <param name="semanticModel">The semantic model</param>
-        public ExpressionTranslationUnitBuilder(ExpressionSyntax node, SemanticModel semanticModel)
+        public ExpressionTranslationUnitBuilder(ExpressionSyntax node, SemanticModel semanticModel = null)
         {
             if (node == null)
             {

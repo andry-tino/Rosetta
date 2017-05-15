@@ -119,6 +119,7 @@
     <Compile Include="ClassDeclarationTUFTest.cs" />
     <Compile Include="ConstructorDeclarationTUFTest.cs" />
     <Compile Include="EnumTUFTest.cs" />
+    <Compile Include="ExpressionTranslationUnitBuilderTest.cs" />
     <Compile Include="InterfaceDeclarationTUFTest.cs" />
     <Compile Include="MethodDeclarationTUFTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
