@@ -14,8 +14,8 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
     /// </summary>
     public class ScriptNamespaceAttributeDecoration
     {
-        public const string ScriptNamespaceName = "ScriptNamespace";
-        public const string ScriptNamespaceFullName = "ScriptNamespace"; // TODO: Find namespace used by ScriptSharp for this class
+        public const string ScriptNamespaceName = "ScriptNamespaceAttribute";
+        public const string ScriptNamespaceFullName = "ScriptNamespaceAttribute"; // TODO: Find namespace used by ScriptSharp for this class
 
         private readonly ICustomAttributeDataProxy attributeData;
 

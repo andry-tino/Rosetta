@@ -16,8 +16,8 @@ namespace Rosetta.Tests.ScriptSharp.Utils
     {
         private const string Source = @"
             [System.AttributeUsage(System.AttributeTargets.All)]
-            public class ScriptNamespace : System.Attribute {
-                public ScriptNamespace(string ns) { }
+            public class ScriptNamespaceAttribute : System.Attribute {
+                public ScriptNamespaceAttribute(string ns) { }
             }
         ";
 

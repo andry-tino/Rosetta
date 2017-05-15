@@ -41,15 +41,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
                 {
                     this.fullName = base.FullName;
 
-                    IEnumerable<ICustomAttributeDataProxy> customAttributes = null;
-                    try
-                    {
-                        customAttributes = this.Type.CustomAttributes;
-                    } catch (TypeLoadException e)
-                    {
-                        // Could not access the attributes NEEDED???
-                        return this.fullName;
-                    }
+                    IEnumerable<ICustomAttributeDataProxy> customAttributes = this.Type.CustomAttributes;
 
                     foreach (ICustomAttributeDataProxy attribute in customAttributes)
                     {
