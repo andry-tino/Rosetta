@@ -67,10 +67,44 @@ namespace Rosetta.Reflection.Proxies
         public string Name => this.typeDefinition.Name;
 
         /// <summary>
+        /// Gets a value indicating whether the type is declared public.
+        /// </summary>
+        public bool IsPublic => this.typeDefinition.IsPublic;
+
+        /// <summary>
+        /// Gets a value indicating whether the type is not declared public.
+        /// </summary>
+        public bool IsNotPublic => this.typeDefinition.IsNotPublic;
+
+        /// <summary>
         /// Gets a collection that contains this member's custom attributes.
         /// </summary>
-        public IEnumerable<ICustomAttributeDataProxy> CustomAttributes => this.typeDefinition.CustomAttributes.Select(customAttribute => new MonoCustomAttributeDataProxy(customAttribute));
+        public IEnumerable<ICustomAttributeDataProxy> CustomAttributes => this.typeDefinition.HasCustomAttributes 
+            ? this.typeDefinition.CustomAttributes.Select(customAttribute => new MonoCustomAttributeDataProxy(customAttribute)) 
+            : null;
 
+        /// <summary>
+        /// Gets a collection of the interfaces implemented by the current type.
+        /// </summary>
+        public IEnumerable<ITypeProxy> ImplementedInterfaces => this.typeDefinition.HasInterfaces 
+            ? this.typeDefinition.Interfaces.Select(@interface => new MonoTypeProxy(@interface)) 
+            : null;
+
+        /// <summary>
+        /// Gets the type from which the current Type directly inherits.
+        /// </summary>
+        public ITypeProxy BaseType => this.typeDefinition.BaseType != null 
+            ? new MonoTypeProxy(this.typeDefinition.BaseType) 
+            : null;
+
+        /// <summary>
+        /// Gets a collection of the methods defined by the current type.
+        /// </summary>
+        public IEnumerable<IMethodInfoProxy> DeclaredMethods => this.typeDefinition.HasMethods 
+            ? this.typeDefinition.Methods.Select(method => new MonoMethodInfoProxy(method)) 
+            : null;
+
+        // Used by debugger
         private string MetadataType
         {
             get

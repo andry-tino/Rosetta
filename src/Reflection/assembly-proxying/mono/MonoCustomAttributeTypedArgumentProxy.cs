@@ -39,8 +39,10 @@ namespace Rosetta.Reflection.Proxies
 
         private string StringValue => this.Value.ToString();
 
+        // Used by debugger
         private string StringArumentTypeName => this.customAttributeArgument.Type.Name;
 
+        // Used by debugger
         private string StringArumentTypeFullName => this.customAttributeArgument.Type.FullName;
     }
 }

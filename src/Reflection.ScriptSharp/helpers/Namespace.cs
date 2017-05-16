@@ -11,7 +11,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
     using Rosetta.Reflection.Proxies;
 
     /// <summary>
-    /// Helper for <see cref="TypeInfo"/> in order to retrieve information about its namespace.
+    /// Helper for <see cref="ITypeInfoProxy"/> in order to retrieve information about its namespace.
     /// </summary>
     public class Namespace : Rosetta.Reflection.Helpers.Namespace
     {
@@ -43,14 +43,17 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
 
                     IEnumerable<ICustomAttributeDataProxy> customAttributes = this.Type.CustomAttributes;
 
-                    foreach (ICustomAttributeDataProxy attribute in customAttributes)
+                    if (customAttributes != null)
                     {
-                        if (ScriptNamespaceAttributeDecoration.IsScriptNamespaceAttributeDecoration(attribute.AttributeType))
+                        foreach (ICustomAttributeDataProxy attribute in customAttributes)
                         {
-                            var helper = new ScriptNamespaceAttributeDecoration(attribute);
-                            this.fullName = helper.OverridenNamespace;
+                            if (ScriptNamespaceAttributeDecoration.IsScriptNamespaceAttributeDecoration(attribute.AttributeType))
+                            {
+                                var helper = new ScriptNamespaceAttributeDecoration(attribute);
+                                this.fullName = helper.OverridenNamespace;
 
-                            break;
+                                break;
+                            }
                         }
                     }
                 }

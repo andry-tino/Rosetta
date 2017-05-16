@@ -13,6 +13,9 @@ namespace Rosetta.Reflection.Proxies
     /// <summary>
     /// Proxy for type incapsulating Mono.
     /// </summary>
+    /// <remarks>
+    /// The difference with <see cref="MonoTypeInfoProxy"/> is that this one does not provide info about the type definition.
+    /// </remarks>
     [DebuggerDisplay("TypeName = {Name}", Name = "Type {Name,nq} (Mono proxy)")]
     public class MonoTypeProxy : ITypeProxy
     {
@@ -36,5 +39,10 @@ namespace Rosetta.Reflection.Proxies
         /// Gets the name of the type.
         /// </summary>
         public string Name => this.typeReference.Name;
+
+        /// <summary>
+        /// Gets the full name of the type.
+        /// </summary>
+        public string FullName => this.typeReference.FullName;
     }
 }

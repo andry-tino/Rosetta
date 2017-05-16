@@ -45,8 +45,10 @@ namespace Rosetta.Reflection.Proxies
         public IEnumerable<ICustomAttributeTypedArgumentProxy> ConstructorArguments => 
             this.customAttribute.ConstructorArguments.Select(arg => new MonoCustomAttributeTypedArgumentProxy(arg));
 
+        // Used by debugger
         private string AttributeTypeName => this.customAttribute.AttributeType.Name;
 
+        // Used by debugger
         private string AttributeTypeFullName => this.customAttribute.AttributeType.FullName;
     }
 }

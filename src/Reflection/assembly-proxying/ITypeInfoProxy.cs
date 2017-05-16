@@ -46,8 +46,33 @@ namespace Rosetta.Reflection.Proxies
         string Name { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the type is declared public.
+        /// </summary>
+        bool IsPublic { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the type is not declared public.
+        /// </summary>
+        bool IsNotPublic { get; }
+
+        /// <summary>
         /// Gets a collection that contains this member's custom attributes.
         /// </summary>
         IEnumerable<ICustomAttributeDataProxy> CustomAttributes { get; }
+
+        /// <summary>
+        /// Gets a collection of the interfaces implemented by the current type.
+        /// </summary>
+        IEnumerable<ITypeProxy> ImplementedInterfaces { get; }
+
+        /// <summary>
+        /// Gets the type from which the current Type directly inherits.
+        /// </summary>
+        ITypeProxy BaseType { get; }
+
+        /// <summary>
+        /// Gets a collection of the methods defined by the current type.
+        /// </summary>
+        IEnumerable<IMethodInfoProxy> DeclaredMethods { get; }
     }
 }

@@ -8,12 +8,12 @@ namespace Rosetta.Reflection
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Helpers;
     using Rosetta.Reflection.Proxies;
 
@@ -26,7 +26,7 @@ namespace Rosetta.Reflection
     /// - Supports only classes, interfaces, enums and structs.
     /// - Does not support nested types. Only types in namespaces are supported.
     /// </remarks>
-    public class ASTBuilder : IASTBuilder
+    public partial class ASTBuilder : IASTBuilder
     {
         private readonly IAssemblyProxy assembly;
         private readonly Stream rawAssembly;
@@ -109,7 +109,7 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildClassNode(ITypeInfoProxy type)
         {
-            return this.BuildNode(type, SyntaxFactory.ClassDeclaration);
+            return this.BuildNode(type, this.BuildClassNodeCore(type));
         }
 
         private MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type)
@@ -142,6 +142,12 @@ namespace Rosetta.Reflection
             return CSharpCompilation.Create("GeneratedCompilation", new[] { tree }, references);
         }
 
+        private MemberDeclarationSyntax BuildClassNodeCore(ITypeInfoProxy type)
+        {
+            return new ClassDeclarationSyntaxFactory(type).Create();
+        }
+
+        // TODO: Remove this once all core methods have been built
         private MemberDeclarationSyntax BuildNode(ITypeInfoProxy type, RoslynNodeFactory factory)
         {
             var helper = this.CreateNamespaceHelper(type);
@@ -149,7 +155,33 @@ namespace Rosetta.Reflection
             MemberDeclarationSyntax node = null;
 
             var namespaceNode = helper.Exists ? SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(helper.FullName)) : null;
-            var typeNode = factory(type.Name);
+            var typeNode = factory(type.Name); // Creates the node to put in the namespace (if any)
+            
+            if (namespaceNode != null)
+            {
+                namespaceNode = namespaceNode.AddMembers(typeNode);
+                node = namespaceNode;
+            }
+            else
+            {
+                node = typeNode;
+            }
+
+            return node;
+        }
+
+        /// <summary>
+        /// Places the built node in the right namespace.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="typeNode"></param>
+        /// <returns></returns>
+        private MemberDeclarationSyntax BuildNode(ITypeInfoProxy type, MemberDeclarationSyntax typeNode)
+        {
+            var helper = this.CreateNamespaceHelper(type);
+            var namespaceNode = helper.Exists ? SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(helper.FullName)) : null;
+
+            MemberDeclarationSyntax node = null;
 
             if (namespaceNode != null)
             {
@@ -171,11 +203,7 @@ namespace Rosetta.Reflection
 
         #region Types
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="typeName"></param>
-        /// <returns></returns>
+        // TODO: Remove it once we get rid of old implementation of BuildNode
         protected delegate MemberDeclarationSyntax RoslynNodeFactory(string typeName);
 
         #endregion

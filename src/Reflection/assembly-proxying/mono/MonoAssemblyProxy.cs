@@ -39,6 +39,7 @@ namespace Rosetta.Reflection.Proxies
         /// </summary>
         public IEnumerable<ITypeInfoProxy> DefinedTypes => this.moduleDefinition.Types.Select(type => new MonoTypeInfoProxy(type));
 
+        // Used by debugger
         private string AssemblyName => this.moduleDefinition.FullyQualifiedName;
     }
 }

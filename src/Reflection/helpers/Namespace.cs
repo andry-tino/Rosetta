@@ -10,7 +10,7 @@ namespace Rosetta.Reflection.Helpers
     using Rosetta.Reflection.Proxies;
 
     /// <summary>
-    /// Helper for <see cref="TypeInfo"/> in order to retrieve information about its namespace.
+    /// Helper for <see cref="ITypeInfoProxy"/> in order to retrieve information about its namespace.
     /// </summary>
     public class Namespace
     {

@@ -42,6 +42,63 @@ namespace Rosetta.Reflection.UnitTests
             return generatedTree.GetRoot();
         }
 
+        /// <summary>
+        /// Finds a <see cref="ITypeInfoProxy"/> into an <see cref="IAssemblyProxy"/> by looking at the name (partial match).
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public static ITypeInfoProxy LocateType(this IAssemblyProxy assembly, string typeName)
+        {
+            foreach (var type in assembly.DefinedTypes)
+            {
+                if (type.Name.Contains(typeName))
+                {
+                    return type;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Finds a <see cref="IMethodInfoProxy"/> into an <see cref="ITypeInfoProxy"/> by looking at the name (partial match).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
+        public static IMethodInfoProxy LocateMethod(this ITypeInfoProxy type, string methodName)
+        {
+            foreach (var method in type.DeclaredMethods)
+            {
+                if (method.Name.Contains(methodName))
+                {
+                    return method;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks that a modifier is present in the list.
+        /// </summary>
+        /// <param name="modifiers"></param>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        public static bool CheckModifier(this SyntaxTokenList modifiers, SyntaxKind kind)
+        {
+            foreach (var modifier in modifiers)
+            {
+                if (modifier.Kind() == kind)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #region Types
 
         /// <summary>
