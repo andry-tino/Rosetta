@@ -37,6 +37,8 @@ namespace Rosetta.AST.Factories.UnitTests
         {
         }
 
+        #region Simple expressions
+
         [TestMethod]
         public void NumericLiteralExpression()
         {
@@ -62,6 +64,20 @@ namespace Rosetta.AST.Factories.UnitTests
             Test("true");
         }
 
+        [TestMethod]
+        public void ObjectCreationExpression()
+        {
+            Test("new Exception()", "new Exception()");
+        }
+
+        #endregion
+
+        #region Compound expressions
+
+        // TODO
+
+        #endregion
+
         private static void Test(string expression)
         {
             Test(expression, expression);
@@ -74,10 +90,11 @@ namespace Rosetta.AST.Factories.UnitTests
 
             // Generate
             ITranslationUnit translationUnit = new ExpressionTranslationUnitBuilder(expressionNode).Build();
+            string translation = translationUnit.Translate();
 
             // Asserting
-            Assert.AreEqual(expectedExpression, translationUnit.Translate(), 
-                $"Expression '{expression}' does not match with expected '{expectedExpression}'");
+            Assert.AreEqual(expectedExpression, translation, 
+                $"Expression '{translation}' does not match with expected '{expectedExpression}'");
         }
     }
 }

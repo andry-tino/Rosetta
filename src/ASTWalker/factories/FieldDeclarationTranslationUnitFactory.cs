@@ -56,7 +56,7 @@ namespace Rosetta.AST.Factories
 
             var fieldDeclaration = this.CreateTranslationUnit(
                 helper.Visibility,
-                TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType()), 
+                TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType()), // TODO: Create a factory for type reference
                 IdentifierTranslationUnit.Create(helper.Name));
 
             return fieldDeclaration;

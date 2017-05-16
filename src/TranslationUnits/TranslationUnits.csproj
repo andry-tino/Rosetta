@@ -49,6 +49,7 @@
     <Compile Include="compound\expressions\ExpressionTranslationUnit.cs" />
     <Compile Include="compound\expressions\InvokationExpressionTranslationUnit.cs" />
     <Compile Include="compound\expressions\MemberAccessExpressionTranslationUnit.cs" />
+    <Compile Include="compound\expressions\ObjectCreationExpressionTranslationUnit.cs" />
     <Compile Include="compound\expressions\ParenthesizedExpressionTranslationUnit.cs" />
     <Compile Include="compound\expressions\UnaryExpressionTranslationUnit.cs" />
     <Compile Include="compound\InterfaceDeclarationTranslationUnit.cs" />

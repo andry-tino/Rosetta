@@ -344,6 +344,27 @@ namespace Rosetta.Translation.Renderings.Data
             return MemberAccessExpressionTranslationUnit.Create(IdentifierTranslationUnit.Create(memberName), accessMethod);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="invokeeName"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
+        public static ITranslationUnit BuildObjectCreationExpressionTranslationUnit(ITranslationUnit type, ITranslationUnit[] arguments)
+        {
+            var translationUnit = ObjectCreationExpressionTranslationUnit.Create(type);
+
+            if (arguments != null)
+            {
+                foreach (ITranslationUnit argument in arguments)
+                {
+                    translationUnit.AddArgument(argument);
+                }
+            }
+
+            return translationUnit;
+        }
+
         #endregion
 
         #region Statements

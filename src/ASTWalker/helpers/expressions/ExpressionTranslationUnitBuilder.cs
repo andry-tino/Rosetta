@@ -10,6 +10,7 @@ namespace Rosetta.AST.Helpers
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Utilities;
     using Rosetta.Translation;
 
     /// <summary>
@@ -93,6 +94,7 @@ namespace Rosetta.AST.Helpers
                     }
                     return BuildLiteralExpressionTranslationUnit(literalExpression, this.semanticModel);
 
+                // Identifiers
                 case SyntaxKind.IdentifierName:
                     var identifierNameExpression = this.node as IdentifierNameSyntax;
                     if (identifierNameExpression == null)
@@ -101,6 +103,7 @@ namespace Rosetta.AST.Helpers
                     }
                     return BuildIdentifierNameExpressionTranslationUnit(identifierNameExpression, this.semanticModel);
 
+                // Invocation
                 case SyntaxKind.InvocationExpression:
                     var invokationExpression = this.node as InvocationExpressionSyntax;
                     if (invokationExpression == null)
@@ -109,14 +112,14 @@ namespace Rosetta.AST.Helpers
                     }
                     return BuildInvokationExpressionTranslationUnit(invokationExpression, this.semanticModel);
 
-                // TODO: Enable when object creation and invocation have been completed
-                //case SyntaxKind.ObjectCreationExpression:
-                //    var objectCreationExpression = this.node as ObjectCreationExpressionSyntax;
-                //    if (objectCreationExpression == null)
-                //    {
-                //        throw new InvalidCastException("Unable to correctly cast expected object creation expression to object creation expression!");
-                //    }
-                //    return BuildObjectCreationExpressionTranslationUnit(objectCreationExpression);
+                // Object creation (new)
+                case SyntaxKind.ObjectCreationExpression:
+                    var objectCreationExpression = this.node as ObjectCreationExpressionSyntax;
+                    if (objectCreationExpression == null)
+                    {
+                        throw new InvalidCastException("Unable to correctly cast expected object creation expression to object creation expression!");
+                    }
+                    return BuildObjectCreationExpressionTranslationUnit(objectCreationExpression, this.semanticModel);
 
                 // Parenthetical
                 case SyntaxKind.ParenthesizedExpression:
@@ -160,6 +163,8 @@ namespace Rosetta.AST.Helpers
         }
 
         #region Builder methods
+
+        // TODO: Each one of this method is basically a factory, we should create those factories and use them here
 
         private static ITranslationUnit BuildBinaryExpressionTranslationUnit(BinaryExpressionSyntax expression, SemanticModel semanticModel)
         {
@@ -276,6 +281,23 @@ namespace Rosetta.AST.Helpers
             }
 
             throw new InvalidOperationException(string.Format("Cannot build a literal expression for token type {0}!", token.Kind()));
+        }
+        
+        private static ITranslationUnit BuildObjectCreationExpressionTranslationUnit(ObjectCreationExpressionSyntax expression, SemanticModel semanticModel)
+        {
+            ObjectCreationExpression helper = new ObjectCreationExpression(expression, semanticModel);
+            
+            var translationUnit = ObjectCreationExpressionTranslationUnit.Create(
+                TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType())); // TODO: Create factory for TypeReference
+
+            foreach (var argument in helper.Arguments)
+            {
+                var argumentTranslationUnit = new ExpressionTranslationUnitBuilder(argument.Expression, semanticModel).Build();
+
+                translationUnit.AddArgument(argumentTranslationUnit);
+            }
+
+            return translationUnit;
         }
 
         private static ITranslationUnit BuildParenthesizedExpressionTranslationUnit(ParenthesizedExpressionSyntax expression, SemanticModel semanticModel)

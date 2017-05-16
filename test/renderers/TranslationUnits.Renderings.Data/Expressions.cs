@@ -89,6 +89,21 @@ namespace Rosetta.Translation.Renderings.Data
         }
     }
 
+    namespace ObjectCreationExpressions
+    {
+        public class Expressions
+        {
+            [RenderingResource("ObjectCreationExpressions.ParameterlessCtor.ts")]
+            public string ParameterlessCtor()
+            {
+                var translationUnit = TranslationUnitBuilder.BuildObjectCreationExpressionTranslationUnit(
+                    IdentifierTranslationUnit.Create("MyType"), new ITranslationUnit[] { });
+
+                return translationUnit.Translate();
+            }
+        }
+    }
+
     namespace InvokationExpressions
     {
         public class Expressions

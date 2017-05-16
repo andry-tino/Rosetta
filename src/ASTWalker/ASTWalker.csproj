@@ -133,6 +133,7 @@
     <Compile Include="helpers\expressions\InvokationExpression.cs" />
     <Compile Include="helpers\expressions\LiteralExpression.cs" />
     <Compile Include="helpers\expressions\MemberAccessExpression.cs" />
+    <Compile Include="helpers\expressions\ObjectCreationExpression.cs" />
     <Compile Include="helpers\expressions\ParenthesizedExpression.cs" />
     <Compile Include="helpers\expressions\UnaryExpression.cs" />
     <Compile Include="helpers\Helper.cs" />

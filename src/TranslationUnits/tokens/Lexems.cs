@@ -308,6 +308,11 @@ namespace Rosetta.Translation
         public const string VariableDeclaratorKeyword = "var";
 
         /// <summary>
+        /// String rendering constant for new keyword token. 
+        /// </summary>
+        public const string NewKeyword = "new";
+
+        /// <summary>
         /// String rendering constant for this keyword token. 
         /// </summary>
         public const string ThisKeyword = "this";
