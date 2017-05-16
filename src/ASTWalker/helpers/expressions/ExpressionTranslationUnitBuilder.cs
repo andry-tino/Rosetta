@@ -359,14 +359,6 @@ namespace Rosetta.AST.Helpers
             return translationUnit;
         }
 
-        // TODO: Enable once invocation expressions have been completed
-        //private static ITranslationUnit BuildObjectCreationExpressionTranslationUnit(ObjectCreationExpressionSyntax expression, SemanticModel semanticModel)
-        //{
-        //    var helper = new IdentifierExpression(expression, semanticModel);
-
-        //    return IdentifierTranslationUnit.Create(helper.Identifier);
-        //}
-
         private static ITranslationUnit BuildIdentifierNameExpressionTranslationUnit(IdentifierNameSyntax expression, SemanticModel semanticModel)
         {
             var helper = new IdentifierExpression(expression, semanticModel);
