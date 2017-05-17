@@ -51,6 +51,34 @@ namespace Rosetta.Reflection.UnitTests
         }
 
         [TestMethod]
+        public void ImplicitObjectCLassInheritanceIsNotGenerated()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                class MyClass {
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+
+            Assert.IsNotNull(classDefinition);
+
+            // Generating the AST
+            var factory = new ClassDeclarationSyntaxFactory(classDefinition);
+            var syntaxNode = factory.Create();
+
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(ClassDeclarationSyntax), "Expected a class declaration node to be built");
+
+            var baseList = syntaxNode.BaseList;
+            Assert.IsNull(baseList, "No base class should have been generated");
+        }
+
+        [TestMethod]
         public void ClassVisibilityCorrectlyAcquired()
         {
             // Public
