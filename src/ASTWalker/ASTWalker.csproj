@@ -157,6 +157,7 @@
     <Compile Include="transformers\ClassWithAttributeInDifferentNamespaceASTTransformer.cs" />
     <Compile Include="utilities\MultiPurposeASTWalker.cs" />
     <Compile Include="utilities\SemanticUtilities.cs" />
+    <Compile Include="utilities\SyntaxUtilities.cs" />
     <Compile Include="utilities\TypeMappings.cs" />
     <Compile Include="walkers\ASTWalker.cs" />
     <Compile Include="walkers\ASTWalkerContext.cs" />

@@ -133,7 +133,9 @@ namespace Rosetta.AST.Helpers
             {
                 var simpleNameSyntaxNode = this.BaseTypeSyntaxNode.Type as SimpleNameSyntax;
                 
-                return simpleNameSyntaxNode != null ? simpleNameSyntaxNode.Identifier.ValueText : this.BaseTypeSyntaxNode.Type.ToString();
+                return simpleNameSyntaxNode != null 
+                    ? simpleNameSyntaxNode.Identifier.ValueText.StripNamespaceFromTypeName() 
+                    : this.BaseTypeSyntaxNode.Type.ToString().StripNamespaceFromTypeName();
             }
         }
 

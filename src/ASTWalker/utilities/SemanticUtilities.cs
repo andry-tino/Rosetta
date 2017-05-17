@@ -7,7 +7,8 @@ namespace Rosetta.AST.Utilities
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.CodeAnalysis;
+    using System.Linq;
+    
     using Roslyn = Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -15,7 +16,7 @@ namespace Rosetta.AST.Utilities
     using Rosetta.AST.Helpers;
 
     /// <summary>
-    /// Walks a class AST node.
+    /// Utilities for handling semantics.
     /// </summary>
     public static class SemanticUtilities
     {
@@ -31,7 +32,8 @@ namespace Rosetta.AST.Utilities
         {
             if (!CanSeparateClassAndInterfacesBasedOnNames(baseTypes))
             {
-                throw new ArgumentException(nameof(baseTypes), "The provided collection of base types cannot be evaluated via this approach");
+                var names = baseTypes.Select(baseType => new BaseTypeReference(baseType).Name).Aggregate((i, j) => $"{i}; {j}");
+                throw new ArgumentException(nameof(baseTypes), $"The provided collection of base types: [{names}] cannot be evaluated with this approach");
             }
 
             var infos = new List<BaseTypeInfo>();
