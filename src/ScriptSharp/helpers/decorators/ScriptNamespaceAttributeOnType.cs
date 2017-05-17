@@ -48,6 +48,13 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// <summary>
         /// Gets the value of the overriden namespace in the attribute.
         /// </summary>
-        public string OverridenName => this.attribute.ConstructorArguments.First().Value.ToString();
+        public string OverridenName
+        {
+            get
+            {
+                var ctorArgs = this.attribute.ConstructorArguments;
+                return ctorArgs.First().Value.ToString();
+            }
+        }
     }
 }

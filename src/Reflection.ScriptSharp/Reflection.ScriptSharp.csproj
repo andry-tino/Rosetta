@@ -85,7 +85,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Configuration" />
-	<Reference Include="System.Reflection.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Reflection.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Reflection.Metadata.1.2.0\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -108,9 +108,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ASTWalker\ASTWalker.csproj">
+      <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
+      <Name>ASTWalker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Reflection\Reflection.csproj">
       <Project>{20c3aa07-7e56-4e13-a932-b8d69a94525a}</Project>
       <Name>Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScriptSharp.Definition\ScriptSharp.Definition.csproj">
+      <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
+      <Name>ScriptSharp.Definition</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

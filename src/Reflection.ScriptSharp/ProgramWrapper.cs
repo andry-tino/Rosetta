@@ -8,7 +8,12 @@ namespace Rosetta.Reflection.ScriptSharp
     using System;
     using System.IO;
 
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+
+    using Rosetta.AST;
     using Rosetta.Reflection.Proxies;
+    using Rosetta.ScriptSharp.Definition.AST;
 
     /// <summary>
     /// Initiates the translation.
@@ -25,5 +30,7 @@ namespace Rosetta.Reflection.ScriptSharp
         }
 
         protected override IASTBuilder CreateASTBuilder(IAssemblyProxy assembly, Stream rawAssembly) => new ASTBuilder(assembly, rawAssembly);
+
+        protected override IASTWalker CreateASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel) => ProgramDefinitionASTWalker.Create(node, null, semanticModel);
     }
 }

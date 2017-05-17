@@ -22,7 +22,7 @@ namespace Rosetta.Reflection
         private readonly string assemblyPath;
 
         // Lazy loaded or cached quantities
-        private ProgramASTWalker walker;
+        private IASTWalker walker;
         private CSharpSyntaxTree tree;
         private SemanticModel semanticModel;
         private string output;
@@ -64,6 +64,8 @@ namespace Rosetta.Reflection
 
         protected virtual IAssemblyLoader CreateAssemblyLoader(string assemblyPath) => new MonoFSAssemblyLoader(assemblyPath);
 
+        protected virtual IASTWalker CreateASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel) => ProgramASTWalker.Create(node, null, semanticModel);
+
         private void Initialize()
         {
             LoadedAssembly loadedAssembly = this.LoadAssembly();
@@ -84,10 +86,11 @@ namespace Rosetta.Reflection
             var node = this.tree.GetRoot();
 
             // Loading the semantic model
+            // TODO: Seems like the semantic model has a reference to the ScriptNamespace attribute, check why this happens
             this.semanticModel = astInfo.CompilationUnit.GetSemanticModel(this.tree);
 
             // Creating the walker
-            this.walker = ProgramASTWalker.Create(node, null, this.semanticModel);
+            this.walker = this.CreateASTWalker(node, this.semanticModel);
 
             // Translating
             this.output = this.walker.Walk().Translate();
