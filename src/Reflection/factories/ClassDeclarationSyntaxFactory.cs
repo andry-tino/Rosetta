@@ -53,7 +53,8 @@ namespace Rosetta.Reflection.Factories
             // Base type
             var baseType = this.classInfo.BaseType;
 
-            if (baseType != null)
+            // Filter out the SYstem.Object class
+            if (baseType != null && new ObjectClass(baseType).Is)
             {
                 classNode = classNode.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(baseType.FullName)));
             }
@@ -70,6 +71,7 @@ namespace Rosetta.Reflection.Factories
             }
 
             // Constructors
+            // TODO: Enable
             //var ctors = type.DeclaredMethods;
 
             //if (ctors != null)

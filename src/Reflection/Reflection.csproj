@@ -139,6 +139,7 @@
     <Compile Include="ASTInfo.cs" />
     <Compile Include="factories\ClassDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactory.cs" />
+    <Compile Include="helpers\ObjectClass.cs" />
     <Compile Include="helpers\Visibility.cs" />
     <Compile Include="loading\MonoFSAssemblyLoader.cs" />
     <Compile Include="helpers\Namespace.cs" />

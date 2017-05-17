@@ -46,6 +46,11 @@ namespace Rosetta.Reflection.Proxies
         string Name { get; }
 
         /// <summary>
+        /// Gets the fully qualified name of the type, including its namespace but not its assembly.
+        /// </summary>
+        string FullName { get; }
+
+        /// <summary>
         /// Gets a value indicating whether the type is declared public.
         /// </summary>
         bool IsPublic { get; }
