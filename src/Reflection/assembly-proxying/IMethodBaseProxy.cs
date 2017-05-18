@@ -14,11 +14,6 @@ namespace Rosetta.Reflection.Proxies
     public interface IMethodBaseProxy
     {
         /// <summary>
-        /// Gets the name of the current member.
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
         /// Gets the parameters of the specified method or constructor.
         /// </summary>
         IEnumerable<IParameterInfoProxy> Parameters { get; }

@@ -7,6 +7,7 @@ namespace Rosetta.Reflection.UnitTests
 {
     using System;
     using System.IO;
+    using System.Linq;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -74,6 +75,25 @@ namespace Rosetta.Reflection.UnitTests
                 if (method.Name.Contains(methodName))
                 {
                     return method;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Finds a <see cref="IConstructorInfoProxy"/> into an <see cref="ITypeInfoProxy"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="argsNum"></param>
+        /// <returns></returns>
+        public static IConstructorInfoProxy LocateConstructor(this ITypeInfoProxy type, int argsNum)
+        {
+            foreach (var ctor in type.DeclaredConstructors)
+            {
+                if ((argsNum == 0 && ctor.Parameters == null) || ctor.Parameters.Count() == argsNum)
+                {
+                    return ctor;
                 }
             }
 

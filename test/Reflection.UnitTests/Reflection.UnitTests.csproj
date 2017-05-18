@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="Class.cs" />
     <Compile Include="factories\ClassDeclarationSyntaxFactoryTest.cs" />
+    <Compile Include="factories\ConstructorDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="helpers\ObjectClassTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

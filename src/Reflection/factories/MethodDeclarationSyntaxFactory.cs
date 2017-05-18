@@ -24,7 +24,7 @@ namespace Rosetta.Reflection.Factories
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationSyntaxFactory"/> class.
         /// </summary>
-        /// <param name="classInfo"></param>
+        /// <param name="methodInfo"></param>
         public MethodDeclarationSyntaxFactory(IMethodInfoProxy methodInfo)
         {
             if (methodInfo == null)

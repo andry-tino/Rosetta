@@ -71,16 +71,15 @@ namespace Rosetta.Reflection.Factories
             }
 
             // Constructors
-            // TODO: Enable
-            //var ctors = type.DeclaredMethods;
+            var ctors = this.classInfo.DeclaredConstructors;
 
-            //if (ctors != null)
-            //{
-            //    foreach (var ctor in ctors)
-            //    {
-            //        classNode.AddMembers(SyntaxFactory.ConstructorDeclaration());
-            //    }
-            //}
+            if (ctors != null)
+            {
+                foreach (var ctor in ctors)
+                {
+                    classNode = classNode.AddMembers(new ConstructorDeclarationSyntaxFactory(ctor, this.classInfo).Create());
+                }
+            }
 
             // Methods
             var methods = this.classInfo.DeclaredMethods;

@@ -23,7 +23,7 @@ namespace Rosetta.Reflection.UnitTests
     public class ClassDeclarationSyntaxFactoryTest
     {
         [TestMethod]
-        public void ClassNameCorrectlyAcquired()
+        public void NameCorrectlyAcquired()
         {
             // Assembling some code
             IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
@@ -51,7 +51,7 @@ namespace Rosetta.Reflection.UnitTests
         }
 
         [TestMethod]
-        public void ImplicitObjectCLassInheritanceIsNotGenerated()
+        public void ImplicitObjectClassInheritanceIsNotGenerated()
         {
             // Assembling some code
             IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
@@ -79,7 +79,7 @@ namespace Rosetta.Reflection.UnitTests
         }
 
         [TestMethod]
-        public void ClassVisibilityCorrectlyAcquired()
+        public void VisibilityCorrectlyAcquired()
         {
             // Public
             TestVisibility(@"

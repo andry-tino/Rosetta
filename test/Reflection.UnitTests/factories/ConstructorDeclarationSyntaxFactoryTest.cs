@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// MethodDeclarationSyntaxFactoryTest.cs
+/// ConstructorDeclarationSyntaxFactoryTest.cs
 /// Andrea Tino - 2017
 /// </summary>
 
@@ -20,16 +20,16 @@ namespace Rosetta.Reflection.UnitTests
     /// 
     /// </summary>
     [TestClass]
-    public class MethodDeclarationSyntaxFactoryTest
+    public class ConstructorDeclarationSyntaxFactoryTest
     {
         [TestMethod]
-        public void NameCorrectlyAcquired()
+        public void ConstructorCorrectlyAcquired()
         {
             // Assembling some code
             IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
                 namespace MyNamespace {
                     public class MyClass {
-                        public void MyMethod() {
+                        public MyClass() {
                         }
                     }
                 }
@@ -42,19 +42,16 @@ namespace Rosetta.Reflection.UnitTests
             ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
             Assert.IsNotNull(classDefinition);
 
-            // Locating the method
-            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod("MyMethod");
-            Assert.IsNotNull(methodDeclaration);
+            // Locating the ctor
+            IConstructorInfoProxy ctorDeclaration = classDefinition.LocateConstructor(0);
+            Assert.IsNotNull(ctorDeclaration);
 
             // Generating the AST
-            var factory = new MethodDeclarationSyntaxFactory(methodDeclaration);
+            var factory = new ConstructorDeclarationSyntaxFactory(ctorDeclaration, classDefinition);
             var syntaxNode = factory.Create();
-            
-            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
-            Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
 
-            var name = syntaxNode.Identifier.Text;
-            Assert.AreEqual("MyMethod", name, "Method name not correctly acquired");
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
         }
 
         [TestMethod]
@@ -64,7 +61,7 @@ namespace Rosetta.Reflection.UnitTests
             TestVisibility(@"
                 namespace MyNamespace {
                     public class MyClass {
-                        public void MyMethod() {
+                        public MyClass() {
                         }
                     }
                 }
@@ -74,8 +71,7 @@ namespace Rosetta.Reflection.UnitTests
             TestVisibility(@"
                 namespace MyNamespace {
                     public class MyClass {
-                        private void MyMethod() {
-                            var number = 0;
+                        private MyClass() {
                         }
                     }
                 }
@@ -85,7 +81,7 @@ namespace Rosetta.Reflection.UnitTests
             TestVisibility(@"
                 namespace MyNamespace {
                     public class MyClass {
-                        protected void MyMethod() {
+                        protected MyClass() {
                         }
                     }
                 }
@@ -95,7 +91,7 @@ namespace Rosetta.Reflection.UnitTests
             TestVisibility(@"
                 namespace MyNamespace {
                     public class MyClass {
-                        void MyMethod() {
+                        MyClass() {
                         }
                     }
                 }
@@ -105,33 +101,15 @@ namespace Rosetta.Reflection.UnitTests
         [TestMethod]
         public void DummyBody()
         {
-            // Void
-            TestDummyBody(@"
-                namespace MyNamespace {
-                    public class MyClass {
-                        void MyMethod() {
-                            var number = 0;
-                        }
-                    }
-                }
-            ");
-
-            // With return
-            TestDummyBody(@"
-                namespace MyNamespace {
-                    public class MyClass {
-                        int MyMethod() {
-                            return 0;
-                        }
-                    }
-                }
-            ");
-        }
-
-        private static void TestDummyBody(string source)
-        {
             // Assembling some code
-            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(source);
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                namespace MyNamespace {
+                    public class MyClass {
+                        MyClass() {
+                        }
+                    }
+                }
+            ");
 
             // Loading the assembly
             IAssemblyProxy assembly = assemblyLoader.Load();
@@ -141,15 +119,15 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(classDefinition);
 
             // Locating the method
-            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod("MyMethod");
-            Assert.IsNotNull(methodDeclaration);
+            IConstructorInfoProxy ctorDeclaration = classDefinition.LocateConstructor(0);
+            Assert.IsNotNull(ctorDeclaration);
 
             // Generating the AST
-            var factory = new MethodDeclarationSyntaxFactory(methodDeclaration);
+            var factory = new ConstructorDeclarationSyntaxFactory(ctorDeclaration, classDefinition);
             var syntaxNode = factory.Create();
 
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
-            Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
 
             var body = syntaxNode.Body;
             Assert.IsNotNull(body, "Expected a body");
@@ -176,19 +154,19 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(classDefinition);
 
             // Locating the method
-            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod("MyMethod");
-            Assert.IsNotNull(methodDeclaration);
+            IConstructorInfoProxy ctorDeclaration = classDefinition.LocateConstructor(0);
+            Assert.IsNotNull(ctorDeclaration);
 
             // Generating the AST
-            var factory = new MethodDeclarationSyntaxFactory(methodDeclaration);
+            var factory = new ConstructorDeclarationSyntaxFactory(ctorDeclaration, classDefinition);
             var syntaxNode = factory.Create();
 
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
-            Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
 
             var modifiers = syntaxNode.Modifiers;
 
-            Assert.IsTrue(Utils.CheckModifier(modifiers, expectedVisibility), "Method does not have correct visibility");
+            Assert.IsTrue(Utils.CheckModifier(modifiers, expectedVisibility), "Constructor does not have correct visibility");
         }
     }
 }

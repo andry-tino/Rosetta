@@ -13,6 +13,11 @@ namespace Rosetta.Reflection.Proxies
     public interface IMethodInfoProxy : IMethodBaseProxy
     {
         /// <summary>
+        /// Gets the name of the current member.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Gets the return type of this method.
         /// </summary>
         ITypeProxy ReturnType { get; }
