@@ -48,7 +48,7 @@ namespace Rosetta.Reflection.UnitTests
 
             // Generating the AST
             var factory = new ConstructorDeclarationSyntaxFactory(ctorDeclaration, classDefinition);
-            var syntaxNode = factory.Create();
+            var syntaxNode = factory.Create() as ConstructorDeclarationSyntax;
 
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
@@ -65,7 +65,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.PublicKeyword);
+            ", "MyClass", SyntaxKind.PublicKeyword);
 
             // Private
             TestVisibility(@"
@@ -75,7 +75,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.PrivateKeyword);
+            ", "MyClass", SyntaxKind.PrivateKeyword);
 
             // Protected
             TestVisibility(@"
@@ -85,7 +85,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.ProtectedKeyword);
+            ", "MyClass", SyntaxKind.ProtectedKeyword);
 
             // Implicitely private
             TestVisibility(@"
@@ -95,7 +95,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.PrivateKeyword);
+            ", "MyClass", SyntaxKind.PrivateKeyword);
         }
 
         [TestMethod]
@@ -129,7 +129,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
 
-            var body = syntaxNode.Body;
+            var constructorDeclarationSyntaxNode = syntaxNode as ConstructorDeclarationSyntax;
+
+            var body = constructorDeclarationSyntaxNode.Body;
             Assert.IsNotNull(body, "Expected a body");
 
             var statements = body.Statements;
@@ -141,7 +143,7 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsInstanceOfType(statement, typeof(ThrowStatementSyntax), "Expected a throw statement");
         }
 
-        private static void TestVisibility(string source, SyntaxKind expectedVisibility)
+        private static void TestVisibility(string source, string className, SyntaxKind expectedVisibility)
         {
             // Assembling some code
             IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(source);
@@ -150,7 +152,7 @@ namespace Rosetta.Reflection.UnitTests
             IAssemblyProxy assembly = assemblyLoader.Load();
 
             // Locating the class
-            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            ITypeInfoProxy classDefinition = assembly.LocateType(className);
             Assert.IsNotNull(classDefinition);
 
             // Locating the method
@@ -164,7 +166,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
 
-            var modifiers = syntaxNode.Modifiers;
+            var constructorDeclarationSyntaxNode = syntaxNode as ConstructorDeclarationSyntax;
+
+            var modifiers = constructorDeclarationSyntaxNode.Modifiers;
 
             Assert.IsTrue(Utils.CheckModifier(modifiers, expectedVisibility), "Constructor does not have correct visibility");
         }

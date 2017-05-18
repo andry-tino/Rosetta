@@ -53,7 +53,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
 
-            var name = syntaxNode.Identifier.Text;
+            var methodDeclarationSyntaxNode = syntaxNode as MethodDeclarationSyntax;
+
+            var name = methodDeclarationSyntaxNode.Identifier.Text;
             Assert.AreEqual("MyMethod", name, "Method name not correctly acquired");
         }
 
@@ -68,7 +70,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.PublicKeyword);
+            ", "MyClass", "MyMethod", SyntaxKind.PublicKeyword);
 
             // Private
             TestVisibility(@"
@@ -79,7 +81,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.PrivateKeyword);
+            ", "MyClass", "MyMethod", SyntaxKind.PrivateKeyword);
 
             // Protected
             TestVisibility(@"
@@ -89,7 +91,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.ProtectedKeyword);
+            ", "MyClass", "MyMethod", SyntaxKind.ProtectedKeyword);
 
             // Implicitely private
             TestVisibility(@"
@@ -99,7 +101,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ", SyntaxKind.PrivateKeyword);
+            ", "MyClass", "MyMethod", SyntaxKind.PrivateKeyword);
         }
 
         [TestMethod]
@@ -114,7 +116,7 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ");
+            ", "MyClass", "MyMethod");
 
             // With return
             TestDummyBody(@"
@@ -125,10 +127,10 @@ namespace Rosetta.Reflection.UnitTests
                         }
                     }
                 }
-            ");
+            ", "MyClass", "MyMethod");
         }
 
-        private static void TestDummyBody(string source)
+        private static void TestDummyBody(string source, string className, string methodName)
         {
             // Assembling some code
             IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(source);
@@ -137,11 +139,11 @@ namespace Rosetta.Reflection.UnitTests
             IAssemblyProxy assembly = assemblyLoader.Load();
 
             // Locating the class
-            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            ITypeInfoProxy classDefinition = assembly.LocateType(className);
             Assert.IsNotNull(classDefinition);
 
             // Locating the method
-            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod("MyMethod");
+            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod(methodName);
             Assert.IsNotNull(methodDeclaration);
 
             // Generating the AST
@@ -151,7 +153,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
 
-            var body = syntaxNode.Body;
+            var methodDeclarationSyntaxNode = syntaxNode as MethodDeclarationSyntax;
+
+            var body = methodDeclarationSyntaxNode.Body;
             Assert.IsNotNull(body, "Expected a body");
 
             var statements = body.Statements;
@@ -163,7 +167,7 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsInstanceOfType(statement, typeof(ThrowStatementSyntax), "Expected a throw statement");
         }
 
-        private static void TestVisibility(string source, SyntaxKind expectedVisibility)
+        private static void TestVisibility(string source, string className, string methodName, SyntaxKind expectedVisibility)
         {
             // Assembling some code
             IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(source);
@@ -172,11 +176,11 @@ namespace Rosetta.Reflection.UnitTests
             IAssemblyProxy assembly = assemblyLoader.Load();
 
             // Locating the class
-            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            ITypeInfoProxy classDefinition = assembly.LocateType(className);
             Assert.IsNotNull(classDefinition);
 
             // Locating the method
-            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod("MyMethod");
+            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod(methodName);
             Assert.IsNotNull(methodDeclaration);
 
             // Generating the AST
@@ -186,7 +190,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
 
-            var modifiers = syntaxNode.Modifiers;
+            var methodDeclarationSyntaxNode = syntaxNode as MethodDeclarationSyntax;
+
+            var modifiers = methodDeclarationSyntaxNode.Modifiers;
 
             Assert.IsTrue(Utils.CheckModifier(modifiers, expectedVisibility), "Method does not have correct visibility");
         }

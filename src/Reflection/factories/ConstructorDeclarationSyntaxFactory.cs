@@ -17,10 +17,10 @@ namespace Rosetta.Reflection.Factories
     /// <summary>
     /// Factory for generating a <see cref="ConstructorDeclarationSyntax"/>.
     /// </summary>
-    public class ConstructorDeclarationSyntaxFactory
+    public class ConstructorDeclarationSyntaxFactory : ISyntaxFactory
     {
-        private ITypeInfoProxy classInfo;
-        private IConstructorInfoProxy ctorInfo;
+        private readonly ITypeInfoProxy classInfo;
+        private readonly IConstructorInfoProxy ctorInfo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstructorDeclarationSyntaxFactory"/> class.
@@ -47,7 +47,7 @@ namespace Rosetta.Reflection.Factories
         /// Creates the <see cref="ConstructorDeclarationSyntax"/>.
         /// </summary>
         /// <returns></returns>
-        public ConstructorDeclarationSyntax Create()
+        public SyntaxNode Create()
         {
             var ctorDeclaration = SyntaxFactory.ConstructorDeclaration(this.classInfo.Name);
 

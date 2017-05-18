@@ -46,7 +46,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(ClassDeclarationSyntax), "Expected a class declaration node to be built");
 
-            var name = syntaxNode.Identifier.Text;
+            var classDeclarationSyntaxNode = syntaxNode as ClassDeclarationSyntax;
+
+            var name = classDeclarationSyntaxNode.Identifier.Text;
             Assert.AreEqual("MyClass", name, "Class name not correctly acquired");
         }
 
@@ -74,7 +76,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(ClassDeclarationSyntax), "Expected a class declaration node to be built");
 
-            var baseList = syntaxNode.BaseList;
+            var classDeclarationSyntaxNode = syntaxNode as ClassDeclarationSyntax;
+
+            var baseList = classDeclarationSyntaxNode.BaseList;
             Assert.IsNull(baseList, "No base class should have been generated");
         }
 
@@ -87,7 +91,7 @@ namespace Rosetta.Reflection.UnitTests
                     public class MyClass {
                     }
                 }
-            ", SyntaxKind.PublicKeyword);
+            ", "MyClass", SyntaxKind.PublicKeyword);
 
             // Implicitely internal
             TestVisibility(@"
@@ -95,10 +99,14 @@ namespace Rosetta.Reflection.UnitTests
                     class MyClass {
                     }
                 }
-            ", null);
+            ", "MyClass", null);
         }
 
-        private static void TestVisibility(string source, SyntaxKind? expectedVisibility)
+        // TODO: Missing test for base class
+
+        // TODO: Missing test for implemented interfaces
+
+        private static void TestVisibility(string source, string className, SyntaxKind? expectedVisibility)
         {
             // Assembling some code
             IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(source);
@@ -107,7 +115,7 @@ namespace Rosetta.Reflection.UnitTests
             IAssemblyProxy assembly = assemblyLoader.Load();
 
             // Locating the class
-            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            ITypeInfoProxy classDefinition = assembly.LocateType(className);
 
             Assert.IsNotNull(classDefinition);
 
@@ -118,7 +126,9 @@ namespace Rosetta.Reflection.UnitTests
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(ClassDeclarationSyntax), "Expected a class declaration node to be built");
 
-            var modifiers = syntaxNode.Modifiers;
+            var classDeclarationSyntaxNode = syntaxNode as ClassDeclarationSyntax;
+
+            var modifiers = classDeclarationSyntaxNode.Modifiers;
 
             if (expectedVisibility.HasValue)
             {

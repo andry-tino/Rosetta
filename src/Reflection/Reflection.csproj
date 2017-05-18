@@ -143,6 +143,8 @@
     <Compile Include="ASTInfo.cs" />
     <Compile Include="factories\ClassDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\ConstructorDeclarationSyntaxFactory.cs" />
+    <Compile Include="factories\InterfaceDeclarationSyntaxFactory.cs" />
+    <Compile Include="factories\ISyntaxFactory.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactory.cs" />
     <Compile Include="helpers\ObjectClass.cs" />
     <Compile Include="helpers\Visibility.cs" />

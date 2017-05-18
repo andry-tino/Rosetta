@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Visibility.cs
+/// ClassDeclarationSyntaxFactory.cs
 /// Andrea Tino - 2017
 /// </summary>
 
@@ -17,9 +17,9 @@ namespace Rosetta.Reflection.Factories
     /// <summary>
     /// Factory for generating a <see cref="ClassDeclarationSyntax"/>.
     /// </summary>
-    public class ClassDeclarationSyntaxFactory
+    public class ClassDeclarationSyntaxFactory : ISyntaxFactory
     {
-        private ITypeInfoProxy classInfo;
+        private readonly ITypeInfoProxy classInfo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDeclarationSyntaxFactory"/> class.
@@ -39,7 +39,7 @@ namespace Rosetta.Reflection.Factories
         /// Creates the <see cref="ClassDeclarationSyntax"/>.
         /// </summary>
         /// <returns></returns>
-        public ClassDeclarationSyntax Create()
+        public SyntaxNode Create()
         {
             var classNode = SyntaxFactory.ClassDeclaration(this.classInfo.Name);
 
@@ -52,14 +52,13 @@ namespace Rosetta.Reflection.Factories
 
             // Base type
             var baseType = this.classInfo.BaseType;
-
-            // Filter out the SYstem.Object class
-            if (baseType != null && !(new ObjectClass(baseType).Is))
+            
+            if (baseType != null && !(new ObjectClass(baseType).Is)) // Filter out the System.Object class
             {
                 classNode = classNode.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(baseType.FullName)));
             }
 
-            // Interfaces
+            // Interface implementations
             var interfaces = this.classInfo.ImplementedInterfaces;
 
             if (interfaces != null)
@@ -77,7 +76,7 @@ namespace Rosetta.Reflection.Factories
             {
                 foreach (var ctor in ctors)
                 {
-                    classNode = classNode.AddMembers(new ConstructorDeclarationSyntaxFactory(ctor, this.classInfo).Create());
+                    classNode = classNode.AddMembers(new ConstructorDeclarationSyntaxFactory(ctor, this.classInfo).Create() as ConstructorDeclarationSyntax);
                 }
             }
 
@@ -88,9 +87,12 @@ namespace Rosetta.Reflection.Factories
             {
                 foreach (var method in methods)
                 {
-                    classNode = classNode.AddMembers(new MethodDeclarationSyntaxFactory(method).Create());
+                    classNode = classNode.AddMembers(new MethodDeclarationSyntaxFactory(method).Create() as MethodDeclarationSyntax);
                 }
             }
+
+            // Properties
+            // TODO
 
             return classNode;
         }

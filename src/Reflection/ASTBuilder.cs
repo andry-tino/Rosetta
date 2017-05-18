@@ -112,16 +112,18 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type)
         {
-            return this.BuildNode(type, SyntaxFactory.StructDeclaration);
+            return this.BuildNode(type, this.BuildInterfaceNodeCore(type));
         }
 
         private MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type)
         {
+            // TODO
             return this.BuildNode(type, SyntaxFactory.EnumDeclaration);
         }
 
         private MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type)
         {
+            // TODO
             return this.BuildNode(type, SyntaxFactory.InterfaceDeclaration);
         }
 
@@ -138,7 +140,12 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildClassNodeCore(ITypeInfoProxy type)
         {
-            return new ClassDeclarationSyntaxFactory(type).Create();
+            return new ClassDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
+        }
+
+        private MemberDeclarationSyntax BuildInterfaceNodeCore(ITypeInfoProxy type)
+        {
+            return new InterfaceDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
         }
 
         // TODO: Remove this once all core methods have been built

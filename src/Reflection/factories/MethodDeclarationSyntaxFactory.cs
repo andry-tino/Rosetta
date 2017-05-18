@@ -17,15 +17,17 @@ namespace Rosetta.Reflection.Factories
     /// <summary>
     /// Factory for generating a <see cref="MethodDeclarationSyntax"/>.
     /// </summary>
-    public class MethodDeclarationSyntaxFactory
+    public class MethodDeclarationSyntaxFactory : ISyntaxFactory
     {
-        private IMethodInfoProxy methodInfo;
+        private readonly IMethodInfoProxy methodInfo;
+        private readonly bool withBody;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationSyntaxFactory"/> class.
         /// </summary>
         /// <param name="methodInfo"></param>
-        public MethodDeclarationSyntaxFactory(IMethodInfoProxy methodInfo)
+        /// <param name="withBody"></param>
+        public MethodDeclarationSyntaxFactory(IMethodInfoProxy methodInfo, bool withBody = true)
         {
             if (methodInfo == null)
             {
@@ -33,13 +35,14 @@ namespace Rosetta.Reflection.Factories
             }
 
             this.methodInfo = methodInfo;
+            this.withBody = withBody;
         }
 
         /// <summary>
         /// Creates the <see cref="MethodDeclarationSyntax"/>.
         /// </summary>
         /// <returns></returns>
-        public MethodDeclarationSyntax Create()
+        public SyntaxNode Create()
         {
             var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(this.methodInfo.ReturnType.FullName), this.methodInfo.Name);
 
@@ -59,7 +62,10 @@ namespace Rosetta.Reflection.Factories
             }
 
             // Dummy body
-            methodDeclaration = methodDeclaration.WithBody(DummyBody.GenerateForMerhod());
+            if (this.withBody)
+            {
+                methodDeclaration = methodDeclaration.WithBody(DummyBody.GenerateForMerhod());
+            }
 
             return methodDeclaration;
         }
