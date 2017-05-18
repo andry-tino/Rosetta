@@ -17,10 +17,19 @@ namespace Rosetta.Reflection
     public static class DummyBody
     {
         /// <summary>
-        /// 
+        /// Generates the dummy body for methods.
         /// </summary>
         /// <returns></returns>
         public static BlockSyntax GenerateForMerhod()
+        {
+            return SyntaxFactory.Block(GenerateNotImplementedThrowable());
+        }
+
+        /// <summary>
+        /// Generates the dummy body for properties.
+        /// </summary>
+        /// <returns></returns>
+        public static BlockSyntax GenerateForProperty()
         {
             return SyntaxFactory.Block(GenerateNotImplementedThrowable());
         }

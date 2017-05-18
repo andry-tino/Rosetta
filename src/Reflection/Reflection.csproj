@@ -127,6 +127,7 @@
     <Compile Include="assembly-proxying\IMethodBaseProxy.cs" />
     <Compile Include="assembly-proxying\IMethodInfoProxy.cs" />
     <Compile Include="assembly-proxying\IParameterInfoProxy.cs" />
+    <Compile Include="assembly-proxying\IPropertyInfoProxy.cs" />
     <Compile Include="assembly-proxying\ITypeInfoProxy.cs" />
     <Compile Include="assembly-proxying\ITypeProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoAssemblyProxy.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="assembly-proxying\mono\MonoMethodBaseProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoMethodInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoParameterInfoProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoPropertyInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoTypeInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoTypeProxy.cs" />
     <Compile Include="ASTBuilder.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="factories\InterfaceDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\ISyntaxFactory.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactory.cs" />
+    <Compile Include="factories\PropertyDeclarationSyntaxFactory.cs" />
     <Compile Include="helpers\ObjectClass.cs" />
     <Compile Include="helpers\Visibility.cs" />
     <Compile Include="loading\MonoFSAssemblyLoader.cs" />

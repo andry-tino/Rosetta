@@ -24,6 +24,7 @@ namespace Rosetta.Reflection.Proxies
             : base(monoMethodDefinition)
         {
         }
+
         /// <summary>
         /// Gets the return type of this method.
         /// </summary>

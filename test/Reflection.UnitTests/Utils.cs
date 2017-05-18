@@ -82,6 +82,25 @@ namespace Rosetta.Reflection.UnitTests
         }
 
         /// <summary>
+        /// Finds a <see cref="IPropertyInfoProxy"/> into an <see cref="ITypeInfoProxy"/> by looking at the name (partial match).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public static IPropertyInfoProxy LocateProperty(this ITypeInfoProxy type, string propertyName)
+        {
+            foreach (var property in type.DeclaredProperties)
+            {
+                if (property.Name.Contains(propertyName))
+                {
+                    return property;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Finds a <see cref="IConstructorInfoProxy"/> into an <see cref="ITypeInfoProxy"/>.
         /// </summary>
         /// <param name="type"></param>

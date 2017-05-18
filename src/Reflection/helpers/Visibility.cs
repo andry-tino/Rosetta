@@ -20,6 +20,7 @@ namespace Rosetta.Reflection.Helpers
     {
         private readonly ITypeInfoProxy type;
         private readonly IMethodBaseProxy methodBase;
+        private readonly IPropertyInfoProxy property;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Visibility"/> class.
@@ -33,6 +34,20 @@ namespace Rosetta.Reflection.Helpers
             }
 
             this.methodBase = methodBase;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Visibility"/> class.
+        /// </summary>
+        /// <param name="property">The <see cref="IPropertyInfoProxy"/> to analyze.</param>
+        public Visibility(IPropertyInfoProxy property)
+        {
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
+
+            this.property = property;
         }
 
         /// <summary>
@@ -61,6 +76,16 @@ namespace Rosetta.Reflection.Helpers
                     if (this.methodBase.IsPrivate) return SyntaxKind.PrivateKeyword;
                     if (this.methodBase.IsFamily) return SyntaxKind.ProtectedKeyword;
                     if (this.methodBase.IsPublic) return SyntaxKind.PublicKeyword;
+
+                    // Methods in classes are by default private unless otherwise specify
+                    return SyntaxKind.PrivateKeyword;
+                }
+
+                if (this.property != null)
+                {
+                    if (this.property.IsPrivate) return SyntaxKind.PrivateKeyword;
+                    if (this.property.IsFamily) return SyntaxKind.ProtectedKeyword;
+                    if (this.property.IsPublic) return SyntaxKind.PublicKeyword;
 
                     // Methods in classes are by default private unless otherwise specify
                     return SyntaxKind.PrivateKeyword;

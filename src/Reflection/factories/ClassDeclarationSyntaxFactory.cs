@@ -92,7 +92,15 @@ namespace Rosetta.Reflection.Factories
             }
 
             // Properties
-            // TODO
+            var properties = this.classInfo.DeclaredProperties;
+
+            if (properties != null)
+            {
+                foreach (var property in properties)
+                {
+                    classNode = classNode.AddMembers(new PropertyDeclarationSyntaxFactory(property).Create() as PropertyDeclarationSyntax);
+                }
+            }
 
             return classNode;
         }

@@ -113,6 +113,13 @@ namespace Rosetta.Reflection.Proxies
             : null;
 
         /// <summary>
+        /// Gets a collection of the properties defined by the current type.
+        /// </summary>
+        public IEnumerable<IPropertyInfoProxy> DeclaredProperties => this.typeDefinition.HasProperties
+            ? this.typeDefinition.Properties.Select(prop => new MonoPropertyInfoProxy(prop))
+            : null;
+
+        /// <summary>
         /// Gets a collection of the constructors defined by the current type.
         /// </summary>
         public IEnumerable<IConstructorInfoProxy> DeclaredConstructors => this.typeDefinition.HasMethods && this.typeDefinition.Methods.Where(method => method.IsConstructor).Count() > 0
