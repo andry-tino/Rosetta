@@ -121,16 +121,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="assembly-proxying\IConstructorInfoProxy.cs" />
     <Compile Include="assembly-proxying\ICustomAttributeDataProxy.cs" />
     <Compile Include="assembly-proxying\ICustomAttributeTypedArgumentProxy.cs" />
+    <Compile Include="assembly-proxying\IMethodBaseProxy.cs" />
     <Compile Include="assembly-proxying\IMethodInfoProxy.cs" />
     <Compile Include="assembly-proxying\IParameterInfoProxy.cs" />
     <Compile Include="assembly-proxying\ITypeInfoProxy.cs" />
     <Compile Include="assembly-proxying\ITypeProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoAssemblyProxy.cs" />
     <Compile Include="assembly-proxying\IAssemblyProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoConstructorInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoCustomAttributeDataProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoCustomAttributeTypedArgumentProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoMethodBaseProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoMethodInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoParameterInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoTypeInfoProxy.cs" />

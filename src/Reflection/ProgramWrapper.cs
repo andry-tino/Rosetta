@@ -27,6 +27,7 @@ namespace Rosetta.Reflection
         private SemanticModel semanticModel;
         private string output;
         private bool initialized;
+        private string info;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramWrapper"/> class.
@@ -47,6 +48,12 @@ namespace Rosetta.Reflection
             this.assemblyPath = assemblyPath;
         }
 
+        /// <summary>
+        /// Gets the output of the generation.
+        /// </summary>
+        /// <remarks>
+        /// Generation is lazy and triggered here if this is the first time this property or <see cref="Info"/> is invoked.
+        /// </remarks>
         public string Output
         {
             get
@@ -57,6 +64,25 @@ namespace Rosetta.Reflection
                 }
 
                 return this.output;
+            }
+        }
+
+        /// <summary>
+        /// Gets the diagnostic info of the generation.
+        /// </summary>
+        /// <remarks>
+        /// Generation is lazy and triggered here if this is the first time this property or <see cref="Output"/> is invoked.
+        /// </remarks>
+        public string Info
+        {
+            get
+            {
+                if (!this.initialized)
+                {
+                    this.Initialize();
+                }
+
+                return this.info;
             }
         }
 
@@ -91,6 +117,9 @@ namespace Rosetta.Reflection
 
             // Translating
             this.output = this.walker.Walk().Translate();
+
+            // Some info
+            this.info = $"AST generation: classes={astInfo.ClassCount}, interfaces={astInfo.InterfaceCount}, enums={astInfo.EnumCount}, structs={astInfo.StructCount}";
 
             this.initialized = true;
         }

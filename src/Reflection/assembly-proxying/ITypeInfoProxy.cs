@@ -79,5 +79,10 @@ namespace Rosetta.Reflection.Proxies
         /// Gets a collection of the methods defined by the current type.
         /// </summary>
         IEnumerable<IMethodInfoProxy> DeclaredMethods { get; }
+
+        /// <summary>
+        /// Gets a collection of the constructors defined by the current type.
+        /// </summary>
+        IEnumerable<IConstructorInfoProxy> DeclaredConstructors { get; }
     }
 }

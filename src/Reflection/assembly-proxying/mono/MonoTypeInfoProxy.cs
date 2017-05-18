@@ -106,7 +106,14 @@ namespace Rosetta.Reflection.Proxies
         /// Gets a collection of the methods defined by the current type.
         /// </summary>
         public IEnumerable<IMethodInfoProxy> DeclaredMethods => this.typeDefinition.HasMethods 
-            ? this.typeDefinition.Methods.Select(method => new MonoMethodInfoProxy(method)) 
+            ? this.typeDefinition.Methods.Where(method => !method.IsConstructor).Select(method => new MonoMethodInfoProxy(method)) 
+            : null;
+
+        /// <summary>
+        /// Gets a collection of the constructors defined by the current type.
+        /// </summary>
+        public IEnumerable<IConstructorInfoProxy> DeclaredConstructors => this.typeDefinition.HasMethods && this.typeDefinition.Methods.Where(method => method.IsConstructor).Count() > 0
+            ? this.typeDefinition.Methods.Where(method => method.IsConstructor).Select(method => new MonoConstructorInfoProxy(method))
             : null;
 
         // Used by debugger
