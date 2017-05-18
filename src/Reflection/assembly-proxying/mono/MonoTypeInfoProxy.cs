@@ -106,7 +106,10 @@ namespace Rosetta.Reflection.Proxies
         /// Gets a collection of the methods defined by the current type.
         /// </summary>
         public IEnumerable<IMethodInfoProxy> DeclaredMethods => this.typeDefinition.HasMethods 
-            ? this.typeDefinition.Methods.Where(method => !method.IsConstructor).Select(method => new MonoMethodInfoProxy(method)) 
+            ? this.typeDefinition.Methods
+                .Where(method => !method.IsConstructor)                 // Filter out constructors
+                .Where(method => !method.IsGetter && !method.IsSetter)  // Filter out getters and setters as Mono parses IL and it sees them as methods
+                .Select(method => new MonoMethodInfoProxy(method)) 
             : null;
 
         /// <summary>
