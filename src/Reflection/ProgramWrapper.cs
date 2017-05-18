@@ -60,7 +60,7 @@ namespace Rosetta.Reflection
             }
         }
 
-        protected virtual IASTBuilder CreateASTBuilder(IAssemblyProxy assembly, Stream rawAssembly) => new ASTBuilder(assembly, rawAssembly);
+        protected virtual IASTBuilder CreateASTBuilder(IAssemblyProxy assembly) => new ASTBuilder(assembly);
 
         protected virtual IAssemblyLoader CreateAssemblyLoader(string assemblyPath) => new MonoFSAssemblyLoader(assemblyPath);
 
@@ -68,11 +68,9 @@ namespace Rosetta.Reflection
 
         private void Initialize()
         {
-            LoadedAssembly loadedAssembly = this.LoadAssembly();
-            IAssemblyProxy assembly = loadedAssembly.AssemblyProxy;
-            Stream rawAssembly = loadedAssembly.RawAssembly;
+            IAssemblyProxy assembly = this.LoadAssembly();
 
-            var builder = this.CreateASTBuilder(assembly, rawAssembly);
+            var builder = this.CreateASTBuilder(assembly);
             var astInfo = builder.Build();
 
             // Getting the AST node
@@ -85,9 +83,8 @@ namespace Rosetta.Reflection
 
             var node = this.tree.GetRoot();
 
-            // Loading the semantic model
-            // TODO: Seems like the semantic model has a reference to the ScriptNamespace attribute, check why this happens
-            this.semanticModel = astInfo.CompilationUnit.GetSemanticModel(this.tree);
+            // Referencing the semantic model
+            this.semanticModel = astInfo.SemanticModel;
 
             // Creating the walker
             this.walker = this.CreateASTWalker(node, this.semanticModel);
@@ -98,17 +95,14 @@ namespace Rosetta.Reflection
             this.initialized = true;
         }
 
-        private LoadedAssembly LoadAssembly()
+        private IAssemblyProxy LoadAssembly()
         {
             IAssemblyProxy assembly = null;
-            Stream rawAssembly = null;
 
             try
             {
                 var loader = this.CreateAssemblyLoader(this.assemblyPath);
-
                 assembly = loader.Load();
-                rawAssembly = loader.RawAssembly;
             }
             catch (FileNotFoundException ex)
             {
@@ -123,21 +117,7 @@ namespace Rosetta.Reflection
                 throw new InvalidOperationException($"An error occurred while loading assembly at {this.assemblyPath}", ex);
             }
 
-            return new LoadedAssembly
-            {
-                AssemblyProxy = assembly,
-                RawAssembly = rawAssembly
-            };
+            return assembly;
         }
-
-        #region Types
-
-        private class LoadedAssembly
-        {
-            public IAssemblyProxy AssemblyProxy { get; set; }
-            public Stream RawAssembly { get; set; }
-        }
-
-        #endregion
     }
 }

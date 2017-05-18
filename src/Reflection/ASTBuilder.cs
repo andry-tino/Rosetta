@@ -7,7 +7,6 @@ namespace Rosetta.Reflection
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -29,7 +28,6 @@ namespace Rosetta.Reflection
     public partial class ASTBuilder : IASTBuilder
     {
         private readonly IAssemblyProxy assembly;
-        private readonly Stream rawAssembly;
 
         // Cached quantities
         private ASTInfo astInfo;
@@ -39,11 +37,7 @@ namespace Rosetta.Reflection
         /// This class builds a plain tree from all the types in the assembly.
         /// </summary>
         /// <param name="assembly">The path to the assembly.</param>
-        /// <param name="rawAssembly">
-        /// The raw assembly to be used to create the <see cref="Compilation"/> object. 
-        /// If not provided, the builder will return an <see cref="ASTInfo"/> where <see cref="ASTInfo.CompilationUnit"/> is <code>null</code>.
-        /// </param>
-        public ASTBuilder(IAssemblyProxy assembly, Stream rawAssembly = null)
+        public ASTBuilder(IAssemblyProxy assembly)
         {
             if (assembly == null)
             {
@@ -51,7 +45,6 @@ namespace Rosetta.Reflection
             }
 
             this.assembly = assembly;
-            this.rawAssembly = rawAssembly;
         }
 
         /// <summary>
@@ -60,17 +53,22 @@ namespace Rosetta.Reflection
         /// <returns>A <see cref="SyntaxTree"/> mapping the types in the assembly.</returns>
         public ASTInfo Build()
         {
-            if (this.astInfo != null)
+            if (this.astInfo == null)
             {
-                return this.astInfo;
+                this.astInfo = this.BuildASTInfo();
             }
 
+            return this.astInfo;
+        }
+
+        private ASTInfo BuildASTInfo()
+        {
             IEnumerable<ITypeInfoProxy> types = null;
             try
             {
                 types = this.assembly.DefinedTypes;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new InvalidOperationException("An error occurred while trying to load defined types", ex);
             }
@@ -99,7 +97,7 @@ namespace Rosetta.Reflection
             return new ASTInfo()
             {
                 Tree = tree,
-                CompilationUnit = this.BuildCompilationUnit(tree),
+                SemanticModel = this.RetrieveSemanticModel(tree),
                 ClassCount = numberOfStructs,
                 InterfaceCount = numberOfInterfaces,
                 EnumCount = numberOfEnums,
@@ -127,19 +125,15 @@ namespace Rosetta.Reflection
             return this.BuildNode(type, SyntaxFactory.InterfaceDeclaration);
         }
 
-        private Compilation BuildCompilationUnit(SyntaxTree tree)
+        private SemanticModel RetrieveSemanticModel(SyntaxTree tree)
         {
-            if (this.rawAssembly == null)
-            {
-                return null;
-            }
+            var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
 
-            var references = new List<MetadataReference>();
+            var compilation = CSharpCompilation.Create("RosettaReflectionCompilation",
+                syntaxTrees: new[] { tree },
+                references: new[] { mscorlib });
 
-            var metadataReference = MetadataReference.CreateFromStream(this.rawAssembly);
-            references.Add(metadataReference);
-
-            return CSharpCompilation.Create("GeneratedCompilation", new[] { tree }, references);
+            return compilation.GetSemanticModel(tree);
         }
 
         private MemberDeclarationSyntax BuildClassNodeCore(ITypeInfoProxy type)

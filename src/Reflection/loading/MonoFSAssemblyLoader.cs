@@ -6,7 +6,6 @@
 namespace Rosetta.Reflection
 {
     using System;
-    using System.IO;
 
     using Mono.Cecil;
 
@@ -18,9 +17,6 @@ namespace Rosetta.Reflection
     public class MonoFSAssemblyLoader : IAssemblyLoader
     {
         private readonly string assemblyPath;
-
-        // Cached quantities
-        private Stream rawAssembly;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MonoFSAssemblyLoader"/> class.
@@ -42,20 +38,8 @@ namespace Rosetta.Reflection
         /// <returns>An <see cref="Assembly"/> after loading it from a source.</returns>
         public IAssemblyProxy Load()
         {
-            this.LoadStream();
-
             return this.LoadCore();
         }
-
-        /// <summary>
-        /// Gets the raw assembly stream.
-        /// </summary>
-        /// <remarks>
-        /// This property will return a value only after <see cref="Load"/> has been called. 
-        /// The value corresponds to the raw assembly relatively to the last call to <see cref="Load"/>. 
-        /// If <see cref="Load"/> was not called at least once, this property will return <code>null</code>.
-        /// </remarks>
-        public Stream RawAssembly => this.rawAssembly;
 
         protected string AssemblyPath => this.assemblyPath;
 
@@ -73,17 +57,6 @@ namespace Rosetta.Reflection
             }
 
             return new MonoAssemblyProxy(module);
-        }
-
-        protected virtual void LoadStream()
-        {
-            using (FileStream fs = File.OpenRead(this.AssemblyPath))
-            {
-                MemoryStream ms = new MemoryStream();
-                fs.CopyTo(ms);
-
-                this.rawAssembly = ms;
-            }
         }
     }
 }

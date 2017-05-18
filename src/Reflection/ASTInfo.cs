@@ -21,9 +21,9 @@ namespace Rosetta.Reflection
 
         /// <summary>
         /// Gets or sets the compilation unit.
-        /// This miht be null.
+        /// This might be null.
         /// </summary>
-        public Compilation CompilationUnit { get; set; }
+        public SemanticModel SemanticModel { get; set; }
 
         /// <summary>
         /// Gets or sets the number of generated classes.

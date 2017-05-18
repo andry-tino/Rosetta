@@ -6,7 +6,6 @@
 namespace Rosetta.Reflection.ScriptSharp
 {
     using System;
-    using System.IO;
 
     using Rosetta.Reflection.Proxies;
     using Rosetta.Reflection.ScriptSharp.Helpers;
@@ -23,12 +22,8 @@ namespace Rosetta.Reflection.ScriptSharp
         /// namespace substitution attribute <code>ScriptNamespace</code>.
         /// </summary>
         /// <param name="assembly">The assembly.</param>
-        /// <param name="rawAssembly">
-        /// The raw assembly to be used to create the <see cref="Compilation"/> object. 
-        /// If not provided, the builder will return an <see cref="ASTInfo"/> where <see cref="ASTInfo.CompilationUnit"/> is <code>null</code>.
-        /// </param>
-        public ASTBuilder(IAssemblyProxy assembly, Stream rawAssembly = null) 
-            : base(assembly, rawAssembly)
+        public ASTBuilder(IAssemblyProxy assembly) 
+            : base(assembly)
         {
         }
 
