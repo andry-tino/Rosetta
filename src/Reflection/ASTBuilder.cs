@@ -112,7 +112,8 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type)
         {
-            return this.BuildNode(type, this.BuildInterfaceNodeCore(type));
+            // TODO
+            return this.BuildNode(type, SyntaxFactory.StructDeclaration);
         }
 
         private MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type)
@@ -123,8 +124,7 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type)
         {
-            // TODO
-            return this.BuildNode(type, SyntaxFactory.InterfaceDeclaration);
+            return this.BuildNode(type, this.BuildInterfaceNodeCore(type));
         }
 
         private SemanticModel RetrieveSemanticModel(SyntaxTree tree)

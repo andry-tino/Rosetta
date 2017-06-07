@@ -108,9 +108,7 @@ namespace Rosetta.Reflection.UnitTests
             ", "IMyInterface", null);
         }
 
-        // TODO: Missing test for base class
-
-        // TODO: Missing test for implemented interfaces
+        // TODO: Missing test for extended interfaces
 
         private static void TestVisibility(string source, string interfaceName, SyntaxKind? expectedVisibility)
         {
