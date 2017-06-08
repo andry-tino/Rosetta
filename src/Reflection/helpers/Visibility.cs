@@ -21,6 +21,9 @@ namespace Rosetta.Reflection.Helpers
         private readonly ITypeInfoProxy type;
         private readonly IMethodBaseProxy methodBase;
         private readonly IPropertyInfoProxy property;
+        private readonly IFieldInfoProxy field;
+
+        // TODO: Add MemberInfo ad move Public, Private and Family there
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Visibility"/> class.
@@ -34,6 +37,20 @@ namespace Rosetta.Reflection.Helpers
             }
 
             this.methodBase = methodBase;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Visibility"/> class.
+        /// </summary>
+        /// <param name="field">The <see cref="IFieldInfoProxy"/> to analyze.</param>
+        public Visibility(IFieldInfoProxy field)
+        {
+            if (field == null)
+            {
+                throw new ArgumentNullException(nameof(field));
+            }
+
+            this.field = field;
         }
 
         /// <summary>
@@ -78,6 +95,16 @@ namespace Rosetta.Reflection.Helpers
                     if (this.methodBase.IsPublic) return SyntaxKind.PublicKeyword;
 
                     // Methods in classes are by default private unless otherwise specify
+                    return SyntaxKind.PrivateKeyword;
+                }
+
+                if (this.field != null)
+                {
+                    if (this.field.IsPrivate) return SyntaxKind.PrivateKeyword;
+                    if (this.field.IsFamily) return SyntaxKind.ProtectedKeyword;
+                    if (this.field.IsPublic) return SyntaxKind.PublicKeyword;
+
+                    // Fields in classes are by default private unless otherwise specify
                     return SyntaxKind.PrivateKeyword;
                 }
 

@@ -13,7 +13,7 @@ namespace Rosetta.Reflection.Proxies
     using Mono.Cecil;
 
     /// <summary>
-    /// Proxy for Assembly incapsulating Mono.
+    /// Proxy for parameter info incapsulating Mono.
     /// </summary>
     [DebuggerDisplay("Method {Name,nq}", Name = "Method {Name,nq} (Mono proxy)")]
     public class MonoParameterInfoProxy : IParameterInfoProxy

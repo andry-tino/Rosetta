@@ -126,6 +126,13 @@ namespace Rosetta.Reflection.Proxies
             ? this.typeDefinition.Methods.Where(method => method.IsConstructor).Select(method => new MonoConstructorInfoProxy(method))
             : null;
 
+        /// <summary>
+        /// Gets a collection of the fields defined by the current type.
+        /// </summary>
+        public IEnumerable<IFieldInfoProxy> DeclaredFields => this.typeDefinition.HasFields && this.typeDefinition.Fields.Where(field => field.IsStatic).Count() > 0
+            ? this.typeDefinition.Fields.Where(method => method.IsStatic).Select(field => new MonoFieldInfoProxy(field))
+            : null;
+
         // Used by debugger
         private string MetadataType
         {

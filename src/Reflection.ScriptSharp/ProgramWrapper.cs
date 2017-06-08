@@ -19,6 +19,8 @@ namespace Rosetta.Reflection.ScriptSharp
     /// </summary>
     public class ProgramWrapper : Rosetta.Reflection.ProgramWrapper
     {
+        // TODO: Rename this whole assembly into Reflection.ScriptSharp.Definition
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramWrapper"/> class.
         /// </summary>

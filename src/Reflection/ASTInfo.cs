@@ -44,5 +44,14 @@ namespace Rosetta.Reflection
         /// Gets or sets the number of generated interfaces.
         /// </summary>
         public int InterfaceCount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"classes={this.ClassCount}, interfaces={this.InterfaceCount}, enums={this.EnumCount}, structs={this.StructCount}";
+        }
     }
 }

@@ -119,7 +119,7 @@ namespace Rosetta.Reflection
             this.output = this.walker.Walk().Translate();
 
             // Some info
-            this.info = $"AST generation: classes={astInfo.ClassCount}, interfaces={astInfo.InterfaceCount}, enums={astInfo.EnumCount}, structs={astInfo.StructCount}";
+            this.info = $"AST generation: {astInfo.ToString()}";
 
             this.initialized = true;
         }

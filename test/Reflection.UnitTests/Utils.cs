@@ -25,12 +25,22 @@ namespace Rosetta.Reflection.UnitTests
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static SyntaxNode ExtractASTRoot(this string source)
+        public static ASTInfo BuildAST(this string source)
         {
             IAssemblyProxy assembly = new AsmlDasmlAssemblyLoader(source).Load();
-
             var builder = new ASTBuilder(assembly);
-            var astInfo = builder.Build();
+
+            return builder.Build();
+        }
+
+        /// <summary>
+        /// From source code, generates the assembly via Roslyn and generates the AST from the assembly using the <see cref="IASTBuilder"/>.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static SyntaxNode ExtractASTRoot(this string source)
+        {
+            var astInfo = BuildAST(source);
 
             // Getting the AST node
             var generatedTree = astInfo.Tree as CSharpSyntaxTree;

@@ -124,6 +124,7 @@
     <Compile Include="assembly-proxying\IConstructorInfoProxy.cs" />
     <Compile Include="assembly-proxying\ICustomAttributeDataProxy.cs" />
     <Compile Include="assembly-proxying\ICustomAttributeTypedArgumentProxy.cs" />
+    <Compile Include="assembly-proxying\IFieldInfoProxy.cs" />
     <Compile Include="assembly-proxying\IMethodBaseProxy.cs" />
     <Compile Include="assembly-proxying\IMethodInfoProxy.cs" />
     <Compile Include="assembly-proxying\IParameterInfoProxy.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="assembly-proxying\mono\MonoConstructorInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoCustomAttributeDataProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoCustomAttributeTypedArgumentProxy.cs" />
+    <Compile Include="assembly-proxying\mono\MonoFieldInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoMethodBaseProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoMethodInfoProxy.cs" />
     <Compile Include="assembly-proxying\mono\MonoParameterInfoProxy.cs" />
@@ -145,11 +147,16 @@
     <Compile Include="ASTInfo.cs" />
     <Compile Include="factories\ClassDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\ConstructorDeclarationSyntaxFactory.cs" />
+    <Compile Include="factories\EnumDeclarationSyntaxFactory.cs" />
+    <Compile Include="factories\FieldDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\InterfaceDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\ISyntaxFactory.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\PropertyDeclarationSyntaxFactory.cs" />
+    <Compile Include="helpers\EnumClass.cs" />
+    <Compile Include="helpers\NativeClass.cs" />
     <Compile Include="helpers\ObjectClass.cs" />
+    <Compile Include="helpers\ValueTypeClass.cs" />
     <Compile Include="helpers\Visibility.cs" />
     <Compile Include="loading\MonoFSAssemblyLoader.cs" />
     <Compile Include="helpers\Namespace.cs" />
@@ -159,6 +166,7 @@
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utilities\DummyBody.cs" />
+    <Compile Include="utilities\NativeTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

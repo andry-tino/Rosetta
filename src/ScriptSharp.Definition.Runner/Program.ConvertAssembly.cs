@@ -17,7 +17,9 @@ namespace Rosetta.ScriptSharp.Definition.Runner
     {
         protected virtual void ConvertAssembly()
         {
-            var output = new ProgramWrapper(this.assemblyPath).Output;
+            var program = new ProgramWrapper(this.assemblyPath);
+            var output = program.Output;
+            var info = program.Info; // To display
 
             // Handling references
             output = this.GeneratePrependedText() + output;
@@ -31,6 +33,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             }
 
             FileManager.WriteToFile(output, outputPath, $"{this.FileName}.{Extension}");
+
+            Console.WriteLine($"Definition generated from assembly: {info}.");
         }
     }
 }

@@ -79,15 +79,17 @@ namespace Rosetta.Reflection
             var numberOfEnums = 0;
             var numberOfStructs = 0;
 
+            // Some types, like enum, are identified in metadata as classes inheriting from 
+            // System.Enum, so we need to pay attention to that
             foreach (var type in types)
             {
-                if (type.IsClass) { nodes.Add(this.BuildClassNode(type)); numberOfClasses++; continue; }
+                if (type.IsNativeClassType()) { nodes.Add(this.BuildClassNode(type)); numberOfClasses++; continue; }
 
-                if (type.IsValueType) { nodes.Add(this.BuildStructNode(type)); numberOfStructs++; continue; }
+                if (type.IsNativeStructType()) { nodes.Add(this.BuildStructNode(type)); numberOfStructs++; continue; }
 
                 if (type.IsInterface) { nodes.Add(this.BuildInterfaceNode(type)); numberOfInterfaces++; continue; }
 
-                if (type.IsEnum) { nodes.Add(this.BuildEnumNode(type)); numberOfEnums++; continue; }
+                if (type.IsNativeEnumType()) { nodes.Add(this.BuildEnumNode(type)); numberOfEnums++; continue; }
             }
 
             // Use collected nodes to build a tree containing them all in the root.
@@ -98,7 +100,7 @@ namespace Rosetta.Reflection
             {
                 Tree = tree,
                 SemanticModel = this.RetrieveSemanticModel(tree),
-                ClassCount = numberOfStructs,
+                ClassCount = numberOfClasses,
                 InterfaceCount = numberOfInterfaces,
                 EnumCount = numberOfEnums,
                 StructCount = numberOfStructs
@@ -118,8 +120,7 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type)
         {
-            // TODO
-            return this.BuildNode(type, SyntaxFactory.EnumDeclaration);
+            return this.BuildNode(type, this.BuildEnumNodeCore(type));
         }
 
         private MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type)
@@ -148,7 +149,13 @@ namespace Rosetta.Reflection
             return new InterfaceDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
         }
 
-        // TODO: Remove this once all core methods have been built
+        private MemberDeclarationSyntax BuildEnumNodeCore(ITypeInfoProxy type)
+        {
+            return new EnumDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
+        }
+
+        // TODO: Remove this once all core methods have been built. 
+        //       This thing only generates the Roslyn node without any further processing
         private MemberDeclarationSyntax BuildNode(ITypeInfoProxy type, RoslynNodeFactory factory)
         {
             var helper = this.CreateNamespaceHelper(type);

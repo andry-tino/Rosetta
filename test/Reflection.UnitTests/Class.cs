@@ -7,7 +7,7 @@ namespace Rosetta.Reflection.UnitTests
 {
     using System;
     using System.Linq;
-    using System.Collections.Generic;
+
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

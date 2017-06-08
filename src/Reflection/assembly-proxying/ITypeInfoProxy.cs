@@ -89,5 +89,10 @@ namespace Rosetta.Reflection.Proxies
         /// Gets a collection of the constructors defined by the current type.
         /// </summary>
         IEnumerable<IConstructorInfoProxy> DeclaredConstructors { get; }
+
+        /// <summary>
+        /// Gets a collection of the fields defined by the current type.
+        /// </summary>
+        IEnumerable<IFieldInfoProxy> DeclaredFields { get; }
     }
 }
