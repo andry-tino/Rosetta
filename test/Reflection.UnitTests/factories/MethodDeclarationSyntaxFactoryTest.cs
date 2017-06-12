@@ -157,6 +157,54 @@ namespace Rosetta.Reflection.Factories.UnitTests
         }
 
         [TestMethod]
+        public void StaticModifierCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                namespace MyNamespace {
+                    public class MyClass {
+                        public static int MyMethod1() {
+                            return 0;
+                        }
+                        public int MyMethod2() {
+                            return 0;
+                        }
+                    }
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            Assert.IsNotNull(classDefinition);
+
+            Action<string, bool> CheckStatic = (methodName, expected) => 
+            {
+                // Locating the method
+                IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod(methodName);
+                Assert.IsNotNull(methodDeclaration);
+
+                // Generating the AST
+                var factory = new MethodDeclarationSyntaxFactory(methodDeclaration);
+                var syntaxNode = factory.Create() as MethodDeclarationSyntax;
+
+                Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+                Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
+
+                var modifiers = syntaxNode.Modifiers;
+                Assert.IsNotNull(modifiers);
+
+                var staticModifier = modifiers.Where(modifier => modifier.Kind() == SyntaxKind.StaticKeyword);
+                Assert.AreEqual(expected ? 1 : 0, staticModifier.Count(), expected ? "Expected one static modifier" : "No static modifier expected");
+            };
+
+            CheckStatic("MyMethod1", true);
+            CheckStatic("MyMethod2", false);
+        }
+
+        [TestMethod]
         public void VisibilityCorrectlyAcquired()
         {
             // Public

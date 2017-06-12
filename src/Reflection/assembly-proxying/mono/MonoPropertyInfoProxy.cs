@@ -115,5 +115,10 @@ namespace Rosetta.Reflection.Proxies
                 throw new InvalidOperationException("A property must at least have a getter or a setter");
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the member is static.
+        /// </summary>
+        public bool IsStatic => this.propertyDefinition.GetMethod.IsStatic; // Relying on the getter, both must be the same
     }
 }

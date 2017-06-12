@@ -63,6 +63,58 @@ namespace Rosetta.Reflection.Factories.UnitTests
         }
 
         [TestMethod]
+        public void StaticModifierCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                namespace MyNamespace {
+                    public class MyClass {
+                        public static int MyProperty1 {
+                            get { return 0; }
+                            set { }
+                        }
+                        public int MyProperty2 {
+                            get { return 0; }
+                            set { }
+                        }
+                    }
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            Assert.IsNotNull(classDefinition);
+
+            Action<string, bool> CheckStatic = (propertyName, expected) =>
+            {
+                // Locating the property
+                IPropertyInfoProxy propertyDeclaration = classDefinition.LocateProperty(propertyName);
+                Assert.IsNotNull(propertyDeclaration);
+
+                // Generating the AST
+                var factory = new PropertyDeclarationSyntaxFactory(propertyDeclaration);
+                var syntaxNode = factory.Create();
+
+                Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+                Assert.IsInstanceOfType(syntaxNode, typeof(PropertyDeclarationSyntax), "Expected a property declaration node to be built");
+
+                var propertyDeclarationSyntaxNode = syntaxNode as PropertyDeclarationSyntax;
+
+                var modifiers = propertyDeclarationSyntaxNode.Modifiers;
+                Assert.IsNotNull(modifiers);
+
+                var staticModifier = modifiers.Where(modifier => modifier.Kind() == SyntaxKind.StaticKeyword);
+                Assert.AreEqual(expected ? 1 : 0, staticModifier.Count(), expected ? "Expected one static modifier" : "No static modifier expected");
+            };
+
+            CheckStatic("MyProperty1", true);
+            CheckStatic("MyProperty2", false);
+        }
+
+        [TestMethod]
         public void ReturnTypeCorrectlyAcquired()
         {
             // Assembling some code

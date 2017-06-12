@@ -47,6 +47,9 @@ namespace Rosetta.Reflection.Factories
             var propertyDeclaration = SyntaxFactory.PropertyDeclaration(SyntaxFactory.ParseTypeName(
                 this.GetTypeFullName(this.PropertyInfo.PropertyType)), this.PropertyInfo.Name);
 
+            // Defining modifiers
+            propertyDeclaration = this.HandleModifiers(propertyDeclaration);
+
             // Defining accessibility
             propertyDeclaration = this.HandleAccessibility(propertyDeclaration);
 
@@ -62,6 +65,18 @@ namespace Rosetta.Reflection.Factories
         protected IPropertyInfoProxy PropertyInfo => this.propertyInfo;
 
         protected bool WithBody => this.withBody;
+
+        private PropertyDeclarationSyntax HandleModifiers(PropertyDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            if (this.PropertyInfo.IsStatic)
+            {
+                newNode = newNode.AddModifiers(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
+            }
+
+            return newNode;
+        }
 
         private PropertyDeclarationSyntax HandleAccessibility(PropertyDeclarationSyntax node)
         {

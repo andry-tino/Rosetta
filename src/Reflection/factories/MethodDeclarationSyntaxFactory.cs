@@ -47,6 +47,9 @@ namespace Rosetta.Reflection.Factories
             var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(
                 this.GetReturnTypeFullName(this.MethodInfo.ReturnType)), this.MethodInfo.Name);
 
+            // Defining modifiers
+            methodDeclaration = this.HandleModifiers(methodDeclaration);
+
             // Defining accessibility
             methodDeclaration = this.HandleAccessibility(methodDeclaration);
 
@@ -62,6 +65,18 @@ namespace Rosetta.Reflection.Factories
         protected IMethodInfoProxy MethodInfo => this.methodInfo;
 
         protected bool WithBody => this.withBody;
+
+        private MethodDeclarationSyntax HandleModifiers(MethodDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            if (this.MethodInfo.IsStatic)
+            {
+                newNode = newNode.AddModifiers(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
+            }
+
+            return newNode;
+        }
 
         private MethodDeclarationSyntax HandleAccessibility(MethodDeclarationSyntax node)
         {
