@@ -18,7 +18,7 @@ namespace Rosetta.Reflection.UnitTests
     /// <summary>
     /// Utilities.
     /// </summary>
-    internal static class Utils
+    public static class Utils
     {
         /// <summary>
         /// From source code, generates the assembly via Roslyn and generates the AST from the assembly using the <see cref="IASTBuilder"/>.

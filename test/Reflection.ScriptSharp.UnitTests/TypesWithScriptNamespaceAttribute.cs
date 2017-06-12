@@ -14,36 +14,48 @@ namespace Rosetta.Reflection.ScriptSharp.UnitTests
 
     using Rosetta.Tests.Utils;
 
-    /// <summary>
-    /// 
-    /// </summary>
     [TestClass]
     public class TypesWithScriptNamespaceAttribute
     {
         [TestMethod]
         public void ClassWithScriptNamespaceAttribute()
         {
-            var node = (@"
+            TestClassWithScriptNamespaceAttribute(@"
                 namespace Root.MyNamespace1 {
                     [ScriptNamespace(""NewNamespace"")]
                     public class MyClass {
                     }
                 }
-            ").ExtractASTRoot();
+            ", "MyClass", "NewNamespace");
+        }
+
+        [TestMethod]
+        public void NoNamespacedClassWithScriptNamespaceAttribute()
+        {
+            TestClassWithScriptNamespaceAttribute(@"
+                [ScriptNamespace(""NewNamespace"")]
+                public class MyClass {
+                }
+            ", "MyClass", "NewNamespace");
+        }
+
+        private static void TestClassWithScriptNamespaceAttribute(string source, string className, string newNamespaceName)
+        {
+            var node = (source).ExtractASTRoot();
 
             var namespaces = new NodeLocator(node).LocateAll(typeof(NamespaceDeclarationSyntax), true);
             Assert.AreEqual(1, namespaces.Count(), "Expecting only one namespace at root level");
 
             var @namespace = namespaces.First() as NamespaceDeclarationSyntax;
             var namespaceName = @namespace.Name.ToString();
-            Assert.AreEqual("NewNamespace", namespaceName, "Wrong namespace name");
+            Assert.AreEqual(newNamespaceName, namespaceName, "Wrong namespace name");
 
             var classes = new NodeLocator(@namespace).LocateAll(typeof(ClassDeclarationSyntax), true);
             Assert.AreEqual(1, classes.Count(), "Expecting only one class in namespace");
 
             var @class = classes.First() as ClassDeclarationSyntax;
-            var className = @class.Identifier.Text;
-            Assert.AreEqual("MyClass", className, "Wrong class name");
+            var name = @class.Identifier.Text;
+            Assert.AreEqual(className, name, "Wrong class name");
         }
     }
 }

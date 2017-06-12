@@ -3,7 +3,7 @@
 /// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Reflection.UnitTests
+namespace Rosetta.Reflection.Factories.UnitTests
 {
     using System;
     using System.Linq;
@@ -15,6 +15,7 @@ namespace Rosetta.Reflection.UnitTests
 
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
+    using Rosetta.Reflection.UnitTests;
 
     /// <summary>
     /// 
@@ -50,6 +51,97 @@ namespace Rosetta.Reflection.UnitTests
 
             var name = classDeclarationSyntaxNode.Identifier.Text;
             Assert.AreEqual("MyClass", name, "Class name not correctly acquired");
+        }
+
+        [TestMethod]
+        public void BaseTypeNameCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                class MyBaseClass {
+                }
+                class MyClass : MyBaseClass {
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+
+            Assert.IsNotNull(classDefinition);
+
+            // Generating the AST
+            var factory = new ClassDeclarationSyntaxFactory(classDefinition);
+            var syntaxNode = factory.Create();
+
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(ClassDeclarationSyntax), "Expected a class declaration node to be built");
+
+            var classDeclarationSyntaxNode = syntaxNode as ClassDeclarationSyntax;
+            var baseList = classDeclarationSyntaxNode.BaseList.Types;
+
+            Assert.AreEqual(1, baseList.Count, "Expected one base class only");
+
+            var baseType = classDeclarationSyntaxNode.BaseList.Types.First();
+            var baseTypeIdentifier = baseType.Type as IdentifierNameSyntax;
+
+            Assert.IsNotNull(baseTypeIdentifier, "Identifier expected");
+
+            var baseTypeName = baseTypeIdentifier.ToString();
+            Assert.AreEqual("MyBaseClass", baseTypeName, "Base type full name not correct");
+        }
+
+        [TestMethod]
+        public void InterfaceNamesCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                interface MyInterface1 {
+                }
+                interface MyInterface2 {
+                }
+                interface MyInterface3 {
+                }
+                class MyClass : MyInterface1, MyInterface2, MyInterface3 {
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+
+            Assert.IsNotNull(classDefinition);
+
+            // Generating the AST
+            var factory = new ClassDeclarationSyntaxFactory(classDefinition);
+            var syntaxNode = factory.Create();
+
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(ClassDeclarationSyntax), "Expected a class declaration node to be built");
+
+            var classDeclarationSyntaxNode = syntaxNode as ClassDeclarationSyntax;
+            var baseList = classDeclarationSyntaxNode.BaseList.Types;
+
+            Assert.AreEqual(3, baseList.Count, "Expected 3 interfaces");
+
+            Action<int, string> NameChecker = (index, expectedName) =>
+            {
+                var baseType = classDeclarationSyntaxNode.BaseList.Types.ElementAt(index);
+                var baseTypeIdentifier = baseType.Type as IdentifierNameSyntax;
+
+                Assert.IsNotNull(baseTypeIdentifier, "Identifier expected");
+
+                var baseTypeName = baseTypeIdentifier.ToString();
+                Assert.AreEqual(expectedName, baseTypeName, "Base type full name not correct");
+            };
+
+            NameChecker(0, "MyInterface1");
+            NameChecker(1, "MyInterface2");
+            NameChecker(2, "MyInterface3");
         }
 
         [TestMethod]
@@ -101,10 +193,6 @@ namespace Rosetta.Reflection.UnitTests
                 }
             ", "MyClass", null);
         }
-
-        // TODO: Missing test for base class
-
-        // TODO: Missing test for implemented interfaces
 
         private static void TestVisibility(string source, string className, SyntaxKind? expectedVisibility)
         {

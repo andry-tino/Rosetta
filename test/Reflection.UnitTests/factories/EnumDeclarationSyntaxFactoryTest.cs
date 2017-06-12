@@ -3,7 +3,7 @@
 /// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Reflection.UnitTests
+namespace Rosetta.Reflection.Factories.UnitTests
 {
     using System;
     using System.Linq;
@@ -15,6 +15,7 @@ namespace Rosetta.Reflection.UnitTests
 
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
+    using Rosetta.Reflection.UnitTests;
 
     /// <summary>
     /// 

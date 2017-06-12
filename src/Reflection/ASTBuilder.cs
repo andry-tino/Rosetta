@@ -25,7 +25,7 @@ namespace Rosetta.Reflection
     /// - Supports only classes, interfaces, enums and structs.
     /// - Does not support nested types. Only types in namespaces are supported.
     /// </remarks>
-    public partial class ASTBuilder : IASTBuilder
+    public class ASTBuilder : IASTBuilder
     {
         private readonly IAssemblyProxy assembly;
 
@@ -61,12 +61,14 @@ namespace Rosetta.Reflection
             return this.astInfo;
         }
 
+        protected IAssemblyProxy Assembly => this.assembly;
+
         private ASTInfo BuildASTInfo()
         {
             IEnumerable<ITypeInfoProxy> types = null;
             try
             {
-                types = this.assembly.DefinedTypes;
+                types = this.Assembly.DefinedTypes;
             }
             catch (Exception ex)
             {
@@ -141,17 +143,17 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildClassNodeCore(ITypeInfoProxy type)
         {
-            return new ClassDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
+            return this.CreateClassDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
         }
 
         private MemberDeclarationSyntax BuildInterfaceNodeCore(ITypeInfoProxy type)
         {
-            return new InterfaceDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
+            return this.CreateInterfaceDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
         }
 
         private MemberDeclarationSyntax BuildEnumNodeCore(ITypeInfoProxy type)
         {
-            return new EnumDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
+            return this.CreateEnumDeclarationSyntaxFactory(type).Create() as MemberDeclarationSyntax;
         }
 
         // TODO: Remove this once all core methods have been built. 
@@ -208,6 +210,15 @@ namespace Rosetta.Reflection
         {
             return new Namespace(type);
         }
+
+        protected virtual ISyntaxFactory CreateClassDeclarationSyntaxFactory(ITypeInfoProxy typeInfo) 
+            => new ClassDeclarationSyntaxFactory(typeInfo);
+
+        protected virtual ISyntaxFactory CreateInterfaceDeclarationSyntaxFactory(ITypeInfoProxy typeInfo)
+            => new InterfaceDeclarationSyntaxFactory(typeInfo);
+
+        protected virtual ISyntaxFactory CreateEnumDeclarationSyntaxFactory(ITypeInfoProxy typeInfo)
+            => new EnumDeclarationSyntaxFactory(typeInfo);
 
         #region Types
 

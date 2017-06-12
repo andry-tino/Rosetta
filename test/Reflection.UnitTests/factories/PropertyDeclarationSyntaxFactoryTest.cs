@@ -3,7 +3,7 @@
 /// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Reflection.UnitTests
+namespace Rosetta.Reflection.Factories.UnitTests
 {
     using System;
     using System.Linq;
@@ -15,6 +15,7 @@ namespace Rosetta.Reflection.UnitTests
 
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
+    using Rosetta.Reflection.UnitTests;
 
     /// <summary>
     /// 
@@ -59,6 +60,47 @@ namespace Rosetta.Reflection.UnitTests
 
             var name = propertyDeclarationSyntaxNode.Identifier.Text;
             Assert.AreEqual("MyProperty", name, "Property name not correctly acquired");
+        }
+
+        [TestMethod]
+        public void ReturnTypeCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                namespace MyNamespace {
+                    public class MyClass {
+                        public int MyProperty {
+                            get { return 0; }
+                            set { }
+                        }
+                    }
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            Assert.IsNotNull(classDefinition);
+
+            // Locating the property
+            IPropertyInfoProxy propertyDeclaration = classDefinition.LocateProperty("MyProperty");
+            Assert.IsNotNull(propertyDeclaration);
+
+            // Generating the AST
+            var factory = new PropertyDeclarationSyntaxFactory(propertyDeclaration);
+            var syntaxNode = factory.Create() as PropertyDeclarationSyntax;
+
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(PropertyDeclarationSyntax), "Expected a property declaration node to be built");
+
+            var returnType = syntaxNode.Type;
+            Assert.IsNotNull(returnType);
+
+            var typeIdentifier = returnType as QualifiedNameSyntax;
+            Assert.IsNotNull(typeIdentifier, "Type expected to be qualified name");
+            Assert.AreEqual("System.Int32", typeIdentifier.ToString(), "Parameter name does not match");
         }
 
         [TestMethod]

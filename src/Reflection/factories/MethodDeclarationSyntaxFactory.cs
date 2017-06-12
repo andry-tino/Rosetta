@@ -44,30 +44,66 @@ namespace Rosetta.Reflection.Factories
         /// <returns></returns>
         public SyntaxNode Create()
         {
-            var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(this.methodInfo.ReturnType.FullName), this.methodInfo.Name);
+            var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(
+                this.GetReturnTypeFullName(this.MethodInfo.ReturnType)), this.MethodInfo.Name);
 
             // Defining accessibility
-            methodDeclaration = methodDeclaration.AddModifiers(SyntaxFactory.Token(new Visibility(this.methodInfo).Token));
+            methodDeclaration = this.HandleAccessibility(methodDeclaration);
 
             // Defining parameters
-            var parameters = this.methodInfo.Parameters;
+            methodDeclaration = this.HandleParameters(methodDeclaration);
+
+            // Dummy body
+            methodDeclaration = this.HandleBody(methodDeclaration);
+
+            return methodDeclaration;
+        }
+
+        protected IMethodInfoProxy MethodInfo => this.methodInfo;
+
+        protected bool WithBody => this.withBody;
+
+        private MethodDeclarationSyntax HandleAccessibility(MethodDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            newNode = newNode.AddModifiers(SyntaxFactory.Token(new Visibility(this.MethodInfo).Token));
+
+            return newNode;
+        }
+
+        private MethodDeclarationSyntax HandleParameters(MethodDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var parameters = this.MethodInfo.Parameters;
 
             if (parameters != null)
             {
                 foreach (var parameter in parameters)
                 {
-                    methodDeclaration = methodDeclaration.AddParameterListParameters(SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Name))
-                        .WithType(SyntaxFactory.ParseTypeName(parameter.ParameterType.FullName)));
+                    newNode = newNode.AddParameterListParameters(SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Name))
+                        .WithType(SyntaxFactory.ParseTypeName(this.GetParameterTypeFullName(parameter.ParameterType))));
                 }
             }
 
-            // Dummy body
-            if (this.withBody)
+            return newNode;
+        }
+
+        private MethodDeclarationSyntax HandleBody(MethodDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            if (this.WithBody)
             {
-                methodDeclaration = methodDeclaration.WithBody(DummyBody.GenerateForMerhod());
+                newNode = newNode.WithBody(DummyBody.GenerateForMerhod());
             }
 
-            return methodDeclaration;
+            return newNode;
         }
+
+        protected virtual string GetReturnTypeFullName(ITypeProxy type) => type.FullName;
+
+        protected virtual string GetParameterTypeFullName(ITypeProxy type) => type.FullName;
     }
 }

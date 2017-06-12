@@ -17,6 +17,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
     {
         // Cached values
         private string fullName;
+        private bool? hasScriptNamespaceOverride;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Namespace"/> class.
@@ -25,6 +26,8 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
         public Namespace(ITypeInfoProxy type) : base(type)
         {
         }
+
+        // TODO: Remove redundant logic
 
         /// <summary>
         /// Gets the full name of the namespace associated with the type.
@@ -59,6 +62,38 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
                 }
 
                 return this.fullName;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the underlying <see cref="ITypeInfoProxy"/> has a 
+        /// namespace override because of the ScriptNamespace attribute.
+        /// </summary>
+        public bool HasScriptNamespaceOverride
+        {
+            get
+            {
+                if (!this.hasScriptNamespaceOverride.HasValue)
+                {
+                    this.hasScriptNamespaceOverride = false;
+
+                    IEnumerable<ICustomAttributeDataProxy> customAttributes = this.Type.CustomAttributes;
+
+                    if (customAttributes != null)
+                    {
+                        foreach (ICustomAttributeDataProxy attribute in customAttributes)
+                        {
+                            if (ScriptNamespaceAttributeDecoration.IsScriptNamespaceAttributeDecoration(attribute.AttributeType))
+                            {
+                                this.hasScriptNamespaceOverride = true;
+
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return this.hasScriptNamespaceOverride.Value;
             }
         }
     }

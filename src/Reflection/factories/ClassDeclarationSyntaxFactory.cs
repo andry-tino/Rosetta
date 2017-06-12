@@ -41,68 +41,137 @@ namespace Rosetta.Reflection.Factories
         /// <returns></returns>
         public SyntaxNode Create()
         {
-            var classNode = SyntaxFactory.ClassDeclaration(this.classInfo.Name);
+            var classNode = SyntaxFactory.ClassDeclaration(this.ClassInfo.Name);
 
             // Defining accessibility
-            var visibility = new Visibility(this.classInfo).Token;
-            if (visibility != SyntaxKind.None)
-            {
-                classNode = classNode.AddModifiers(SyntaxFactory.Token(visibility));
-            }
+            classNode = this.HandleAccessibility(classNode);
 
             // Base type
-            var baseType = this.classInfo.BaseType;
-            
-            if (baseType != null && !(new ObjectClass(baseType).Is)) // Filter out the System.Object class
-            {
-                classNode = classNode.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(baseType.FullName)));
-            }
+            classNode = this.HandleBaseType(classNode);
 
             // Interface implementations
-            var interfaces = this.classInfo.ImplementedInterfaces;
+            classNode = this.HandleInterfaceImplementations(classNode);
+
+            // Constructors
+            classNode = this.HandleConstructors(classNode);
+
+            // Methods
+            classNode = this.HandleMethods(classNode);
+
+            // Properties
+            classNode = this.HandleProperties(classNode);
+
+            return classNode;
+        }
+
+        protected ITypeInfoProxy ClassInfo => this.classInfo;
+
+        private ClassDeclarationSyntax HandleAccessibility(ClassDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var visibility = new Visibility(this.ClassInfo).Token;
+            if (visibility != SyntaxKind.None)
+            {
+                newNode = newNode.AddModifiers(SyntaxFactory.Token(visibility));
+            }
+
+            return newNode;
+        }
+
+        private ClassDeclarationSyntax HandleBaseType(ClassDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var baseType = this.ClassInfo.BaseType;
+
+            if (baseType != null && !(new ObjectClass(baseType).Is)) // Filter out the System.Object class
+            {
+                newNode = newNode.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(this.GetBaseTypeFullName(baseType))));
+            }
+
+            return newNode;
+        }
+
+        private ClassDeclarationSyntax HandleInterfaceImplementations(ClassDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var interfaces = this.ClassInfo.ImplementedInterfaces;
 
             if (interfaces != null)
             {
                 foreach (var @interface in interfaces)
                 {
-                    classNode = classNode.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(@interface.FullName)));
+                    newNode = newNode.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(this.GetInterfaceFullName(@interface))));
                 }
             }
 
-            // Constructors
-            var ctors = this.classInfo.DeclaredConstructors;
+            return newNode;
+        }
+
+        private ClassDeclarationSyntax HandleConstructors(ClassDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var ctors = this.ClassInfo.DeclaredConstructors;
 
             if (ctors != null)
             {
                 foreach (var ctor in ctors)
                 {
-                    classNode = classNode.AddMembers(new ConstructorDeclarationSyntaxFactory(ctor, this.classInfo).Create() as ConstructorDeclarationSyntax);
+                    newNode = newNode.AddMembers(this.CreateConstructorDeclarationSyntaxFactory(ctor).Create() as ConstructorDeclarationSyntax);
                 }
             }
 
-            // Methods
-            var methods = this.classInfo.DeclaredMethods;
+            return newNode;
+        }
+
+        private ClassDeclarationSyntax HandleMethods(ClassDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var methods = this.ClassInfo.DeclaredMethods;
 
             if (methods != null)
             {
                 foreach (var method in methods)
                 {
-                    classNode = classNode.AddMembers(new MethodDeclarationSyntaxFactory(method).Create() as MethodDeclarationSyntax);
+                    newNode = newNode.AddMembers(this.CreateMethodDeclarationSyntaxFactory(method).Create() as MethodDeclarationSyntax);
                 }
             }
 
-            // Properties
-            var properties = this.classInfo.DeclaredProperties;
+            return newNode;
+        }
+
+        private ClassDeclarationSyntax HandleProperties(ClassDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var properties = this.ClassInfo.DeclaredProperties;
 
             if (properties != null)
             {
                 foreach (var property in properties)
                 {
-                    classNode = classNode.AddMembers(new PropertyDeclarationSyntaxFactory(property).Create() as PropertyDeclarationSyntax);
+                    newNode = newNode.AddMembers(this.CreatePropertyDeclarationSyntaxFactory(property).Create() as PropertyDeclarationSyntax);
                 }
             }
 
-            return classNode;
+            return newNode;
         }
+
+        protected virtual string GetBaseTypeFullName(ITypeProxy type) => type.FullName;
+
+        protected virtual string GetInterfaceFullName(ITypeProxy type) => type.FullName;
+
+        protected virtual ISyntaxFactory CreateConstructorDeclarationSyntaxFactory(IConstructorInfoProxy ctorInfo) 
+            => new ConstructorDeclarationSyntaxFactory(ctorInfo, this.ClassInfo);
+
+        protected virtual ISyntaxFactory CreateMethodDeclarationSyntaxFactory(IMethodInfoProxy methodInfo)
+            => new MethodDeclarationSyntaxFactory(methodInfo);
+
+        protected virtual ISyntaxFactory CreatePropertyDeclarationSyntaxFactory(IPropertyInfoProxy propertyInfo)
+            => new PropertyDeclarationSyntaxFactory(propertyInfo);
     }
 }

@@ -3,7 +3,7 @@
 /// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Reflection.UnitTests
+namespace Rosetta.Reflection.Factories.UnitTests
 {
     using System;
     using System.Linq;
@@ -15,6 +15,7 @@ namespace Rosetta.Reflection.UnitTests
 
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
+    using Rosetta.Reflection.UnitTests;
 
     /// <summary>
     /// 
@@ -57,6 +58,102 @@ namespace Rosetta.Reflection.UnitTests
 
             var name = methodDeclarationSyntaxNode.Identifier.Text;
             Assert.AreEqual("MyMethod", name, "Method name not correctly acquired");
+        }
+
+        [TestMethod]
+        public void ArgumentsCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                namespace MyNamespace {
+                    public class MyClass {
+                        public void MyMethod(string param1, int param2, double param3) {
+                        }
+                    }
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            Assert.IsNotNull(classDefinition);
+
+            // Locating the ctor
+            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod("MyMethod");
+            Assert.IsNotNull(methodDeclaration);
+
+            // Generating the AST
+            var factory = new MethodDeclarationSyntaxFactory(methodDeclaration);
+            var syntaxNode = factory.Create() as MethodDeclarationSyntax;
+
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
+
+            var args = syntaxNode.ParameterList.Parameters;
+            Assert.AreEqual(3, args.Count, "Expected 3 parameters");
+
+            Action<int, string, string> ParamChecker = (index, expectedName, expectedTypeFullName) =>
+            {
+                var @param = args[index];
+                Assert.IsNotNull(@param, "Parameter expected");
+
+                var identifier = @param.Identifier;
+                Assert.IsNotNull(identifier, "Identifier expected");
+                Assert.AreEqual(identifier.ToString(), expectedName, "Parameter name does not match");
+
+                var type = @param.Type;
+                Assert.IsNotNull(type, "Type expected");
+
+                var typeIdentifier = type as QualifiedNameSyntax;
+                Assert.IsNotNull(typeIdentifier, "Type expected to be qualified name");
+                Assert.AreEqual(type.ToString(), expectedTypeFullName, "Parameter name does not match");
+            };
+
+            ParamChecker(0, "param1", "System.String");
+            ParamChecker(1, "param2", "System.Int32");
+            ParamChecker(2, "param3", "System.Double");
+        }
+
+        [TestMethod]
+        public void ReturnTypeCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                namespace MyNamespace {
+                    public class MyClass {
+                        public int MyMethod() {
+                            return 0;
+                        }
+                    }
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            Assert.IsNotNull(classDefinition);
+
+            // Locating the method
+            IMethodInfoProxy methodDeclaration = classDefinition.LocateMethod("MyMethod");
+            Assert.IsNotNull(methodDeclaration);
+
+            // Generating the AST
+            var factory = new MethodDeclarationSyntaxFactory(methodDeclaration);
+            var syntaxNode = factory.Create() as MethodDeclarationSyntax;
+
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(MethodDeclarationSyntax), "Expected a method declaration node to be built");
+
+            var returnType = syntaxNode.ReturnType;
+            Assert.IsNotNull(returnType);
+
+            var typeIdentifier = returnType as QualifiedNameSyntax;
+            Assert.IsNotNull(typeIdentifier, "Type expected to be qualified name");
+            Assert.AreEqual("System.Int32", typeIdentifier.ToString(), "Parameter name does not match");
         }
 
         [TestMethod]

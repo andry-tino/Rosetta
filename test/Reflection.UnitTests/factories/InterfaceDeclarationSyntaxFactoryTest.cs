@@ -3,7 +3,7 @@
 /// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Reflection.UnitTests
+namespace Rosetta.Reflection.Factories.UnitTests
 {
     using System;
     using System.Linq;
@@ -15,6 +15,7 @@ namespace Rosetta.Reflection.UnitTests
 
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
+    using Rosetta.Reflection.UnitTests;
 
     /// <summary>
     /// 
@@ -50,6 +51,53 @@ namespace Rosetta.Reflection.UnitTests
 
             var name = interfaceDeclarationSyntaxNode.Identifier.Text;
             Assert.AreEqual("IMyInterface", name, "Interface name not correctly acquired");
+        }
+
+        [TestMethod]
+        public void ExtendedInterfacesCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                interface MyExtendedInterface1 {
+                }
+                interface MyExtendedInterface2 {
+                }
+                interface MyExtendedInterface3 {
+                }
+                interface MyInterface : MyExtendedInterface1, MyExtendedInterface2, MyExtendedInterface3 {
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy interfaceDefinition = assembly.LocateType("MyInterface");
+            Assert.IsNotNull(interfaceDefinition);
+
+            // Generating the AST
+            var factory = new InterfaceDeclarationSyntaxFactory(interfaceDefinition);
+            var syntaxNode = factory.Create() as InterfaceDeclarationSyntax;
+
+            Assert.IsNotNull(syntaxNode, "An interface declaration node was expected to be built");
+
+            var baseList = syntaxNode.BaseList.Types;
+            Assert.AreEqual(3, baseList.Count, "Expected 3 extended interfaces");
+
+            Action<int, string> ExtendedInterfaceChecker = (index, expectedName) =>
+            {
+                var baseType = baseList.ElementAt(index);
+                var baseTypeIdentifier = baseType.Type as IdentifierNameSyntax;
+
+                Assert.IsNotNull(baseTypeIdentifier, "Identifier expected");
+
+                var baseTypeName = baseTypeIdentifier.ToString();
+                Assert.AreEqual(expectedName, baseTypeName, "Base type full name not correct");
+            };
+
+            ExtendedInterfaceChecker(0, "MyExtendedInterface1");
+            ExtendedInterfaceChecker(1, "MyExtendedInterface2");
+            ExtendedInterfaceChecker(2, "MyExtendedInterface3");
         }
 
         [TestMethod]
@@ -107,8 +155,6 @@ namespace Rosetta.Reflection.UnitTests
                 }
             ", "IMyInterface", null);
         }
-
-        // TODO: Missing test for extended interfaces
 
         private static void TestVisibility(string source, string interfaceName, SyntaxKind? expectedVisibility)
         {

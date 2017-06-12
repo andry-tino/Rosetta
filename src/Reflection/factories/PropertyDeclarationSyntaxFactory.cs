@@ -44,24 +44,56 @@ namespace Rosetta.Reflection.Factories
         /// <returns></returns>
         public SyntaxNode Create()
         {
-            var propertyDeclaration = SyntaxFactory.PropertyDeclaration(SyntaxFactory.ParseTypeName(this.propertyInfo.PropertyType.FullName), this.propertyInfo.Name);
+            var propertyDeclaration = SyntaxFactory.PropertyDeclaration(SyntaxFactory.ParseTypeName(
+                this.GetTypeFullName(this.PropertyInfo.PropertyType)), this.PropertyInfo.Name);
 
             // Defining accessibility
-            propertyDeclaration = propertyDeclaration.AddModifiers(SyntaxFactory.Token(new Visibility(this.propertyInfo).Token));
+            propertyDeclaration = this.HandleAccessibility(propertyDeclaration);
 
             // Defining getter
-            if (this.propertyInfo.CanRead)
-            {
-                propertyDeclaration = propertyDeclaration.AddAccessorListAccessors(CreateAccessor(true, this.withBody));
-            }
+            propertyDeclaration = this.HandleGetter(propertyDeclaration);
 
             // Defining setter
-            if (this.propertyInfo.CanWrite)
-            {
-                propertyDeclaration = propertyDeclaration.AddAccessorListAccessors(CreateAccessor(false, this.withBody));
-            }
+            propertyDeclaration = this.HandleSetter(propertyDeclaration);
 
             return propertyDeclaration;
+        }
+
+        protected IPropertyInfoProxy PropertyInfo => this.propertyInfo;
+
+        protected bool WithBody => this.withBody;
+
+        private PropertyDeclarationSyntax HandleAccessibility(PropertyDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            newNode = newNode.AddModifiers(SyntaxFactory.Token(new Visibility(this.PropertyInfo).Token));
+
+            return newNode;
+        }
+
+        private PropertyDeclarationSyntax HandleGetter(PropertyDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            if (this.PropertyInfo.CanRead)
+            {
+                newNode = newNode.AddAccessorListAccessors(CreateAccessor(true, this.WithBody));
+            }
+
+            return newNode;
+        }
+
+        private PropertyDeclarationSyntax HandleSetter(PropertyDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            if (this.PropertyInfo.CanWrite)
+            {
+                newNode = newNode.AddAccessorListAccessors(CreateAccessor(false, this.WithBody));
+            }
+
+            return newNode;
         }
 
         private static AccessorDeclarationSyntax CreateAccessor(bool read, bool withBody)
@@ -79,5 +111,7 @@ namespace Rosetta.Reflection.Factories
 
             return accessor;
         }
+
+        protected virtual string GetTypeFullName(ITypeProxy type) => type.FullName;
     }
 }

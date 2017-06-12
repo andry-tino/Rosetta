@@ -49,27 +49,60 @@ namespace Rosetta.Reflection.Factories
         /// <returns></returns>
         public SyntaxNode Create()
         {
-            var ctorDeclaration = SyntaxFactory.ConstructorDeclaration(this.classInfo.Name);
+            var ctorDeclaration = SyntaxFactory.ConstructorDeclaration(this.ClassInfo.Name);
 
             // Defining accessibility
-            ctorDeclaration = ctorDeclaration.AddModifiers(SyntaxFactory.Token(new Visibility(this.ctorInfo).Token));
+            ctorDeclaration = this.HandleAccessibility(ctorDeclaration);
 
             // Defining parameters
-            var parameters = this.ctorInfo.Parameters;
+            ctorDeclaration = this.HandleParameters(ctorDeclaration);
+
+            // Dummy body
+            ctorDeclaration = this.HandleBody(ctorDeclaration);
+
+            return ctorDeclaration;
+        }
+
+        protected ITypeInfoProxy ClassInfo => this.classInfo;
+
+        protected IConstructorInfoProxy CtorInfo => this.ctorInfo;
+
+        private ConstructorDeclarationSyntax HandleAccessibility(ConstructorDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            newNode = newNode.AddModifiers(SyntaxFactory.Token(new Visibility(this.CtorInfo).Token));
+
+            return newNode;
+        }
+
+        private ConstructorDeclarationSyntax HandleParameters(ConstructorDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var parameters = this.CtorInfo.Parameters;
 
             if (parameters != null)
             {
                 foreach (var parameter in parameters)
                 {
-                    ctorDeclaration = ctorDeclaration.AddParameterListParameters(SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Name))
-                        .WithType(SyntaxFactory.ParseTypeName(parameter.ParameterType.FullName)));
+                    newNode = newNode.AddParameterListParameters(SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Name))
+                        .WithType(SyntaxFactory.ParseTypeName(this.GetParameterTypeFullName(parameter.ParameterType))));
                 }
             }
 
-            // Dummy body
-            ctorDeclaration = ctorDeclaration.WithBody(DummyBody.GenerateForMerhod());
-
-            return ctorDeclaration;
+            return newNode;
         }
+
+        private ConstructorDeclarationSyntax HandleBody(ConstructorDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            newNode = newNode.WithBody(DummyBody.GenerateForMerhod());
+
+            return newNode;
+        }
+
+        protected virtual string GetParameterTypeFullName(ITypeProxy type) => type.FullName;
     }
 }

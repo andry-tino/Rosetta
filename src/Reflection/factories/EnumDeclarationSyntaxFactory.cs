@@ -41,27 +41,47 @@ namespace Rosetta.Reflection.Factories
         /// <returns></returns>
         public SyntaxNode Create()
         {
-            var enumNode = SyntaxFactory.EnumDeclaration(this.enumInfo.Name);
+            var enumNode = SyntaxFactory.EnumDeclaration(this.EnumInfo.Name);
 
             // Defining accessibility
-            var visibility = new Visibility(this.enumInfo).Token;
-            if (visibility != SyntaxKind.None)
-            {
-                enumNode = enumNode.AddModifiers(SyntaxFactory.Token(visibility));
-            }
+            enumNode = this.HandleAccessibility(enumNode);
 
             // Values
-            var values = this.enumInfo.DeclaredFields;
+            enumNode = this.HandleValues(enumNode);
+
+            return enumNode;
+        }
+
+        protected ITypeInfoProxy EnumInfo => this.enumInfo;
+
+        private EnumDeclarationSyntax HandleAccessibility(EnumDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var visibility = new Visibility(this.EnumInfo).Token;
+            if (visibility != SyntaxKind.None)
+            {
+                newNode = newNode.AddModifiers(SyntaxFactory.Token(visibility));
+            }
+
+            return newNode;
+        }
+
+        private EnumDeclarationSyntax HandleValues(EnumDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var values = this.EnumInfo.DeclaredFields;
 
             if (values != null)
             {
                 foreach (var value in values)
                 {
-                    enumNode = enumNode.AddMembers(SyntaxFactory.EnumMemberDeclaration(value.Name));
+                    newNode = newNode.AddMembers(SyntaxFactory.EnumMemberDeclaration(value.Name));
                 }
             }
 
-            return enumNode;
+            return newNode;
         }
     }
 }

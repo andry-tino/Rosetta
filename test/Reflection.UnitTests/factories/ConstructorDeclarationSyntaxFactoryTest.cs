@@ -3,7 +3,7 @@
 /// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Reflection.UnitTests
+namespace Rosetta.Reflection.Factories.UnitTests
 {
     using System;
     using System.Linq;
@@ -15,6 +15,7 @@ namespace Rosetta.Reflection.UnitTests
 
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
+    using Rosetta.Reflection.UnitTests;
 
     /// <summary>
     /// 
@@ -52,6 +53,62 @@ namespace Rosetta.Reflection.UnitTests
 
             Assert.IsNotNull(syntaxNode, "A node was expected to be built");
             Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
+        }
+
+        [TestMethod]
+        public void ArgumentsCorrectlyAcquired()
+        {
+            // Assembling some code
+            IAssemblyLoader assemblyLoader = new Utils.AsmlDasmlAssemblyLoader(@"
+                namespace MyNamespace {
+                    public class MyClass {
+                        public MyClass(string param1, int param2, double param3) {
+                        }
+                    }
+                }
+            ");
+
+            // Loading the assembly
+            IAssemblyProxy assembly = assemblyLoader.Load();
+
+            // Locating the class
+            ITypeInfoProxy classDefinition = assembly.LocateType("MyClass");
+            Assert.IsNotNull(classDefinition);
+
+            // Locating the ctor
+            IConstructorInfoProxy ctorDeclaration = classDefinition.LocateConstructor(3);
+            Assert.IsNotNull(ctorDeclaration);
+
+            // Generating the AST
+            var factory = new ConstructorDeclarationSyntaxFactory(ctorDeclaration, classDefinition);
+            var syntaxNode = factory.Create() as ConstructorDeclarationSyntax;
+
+            Assert.IsNotNull(syntaxNode, "A node was expected to be built");
+            Assert.IsInstanceOfType(syntaxNode, typeof(ConstructorDeclarationSyntax), "Expected a constructor declaration node to be built");
+
+            var args = syntaxNode.ParameterList.Parameters;
+            Assert.AreEqual(3, args.Count, "Expected 3 parameters");
+
+            Action<int, string, string> ParamChecker = (index, expectedName, expectedTypeFullName) =>
+            {
+                var @param = args[index];
+                Assert.IsNotNull(@param, "Parameter expected");
+
+                var identifier = @param.Identifier;
+                Assert.IsNotNull(identifier, "Identifier expected");
+                Assert.AreEqual(identifier.ToString(), expectedName, "Parameter name does not match");
+
+                var type = @param.Type;
+                Assert.IsNotNull(type, "Type expected");
+
+                var typeIdentifier = type as QualifiedNameSyntax;
+                Assert.IsNotNull(typeIdentifier, "Type expected to be qualified name");
+                Assert.AreEqual(type.ToString(), expectedTypeFullName, "Parameter name does not match");
+            };
+
+            ParamChecker(0, "param1", "System.String");
+            ParamChecker(1, "param2", "System.Int32");
+            ParamChecker(2, "param3", "System.Double");
         }
 
         [TestMethod]

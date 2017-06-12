@@ -42,15 +42,28 @@ namespace Rosetta.Reflection.Factories
         /// <returns></returns>
         public SyntaxNode Create()
         {
-            var varDeclaration = SyntaxFactory.VariableDeclaration(SyntaxFactory.ParseTypeName(this.fieldInfo.FieldType.FullName), 
+            var varDeclaration = SyntaxFactory.VariableDeclaration(SyntaxFactory.ParseTypeName(this.GetTypeFullName(this.FieldInfo.FieldType)), 
                 new SeparatedSyntaxList<VariableDeclaratorSyntax>()
-                    .Add(SyntaxFactory.VariableDeclarator(this.fieldInfo.Name)));
+                    .Add(SyntaxFactory.VariableDeclarator(this.FieldInfo.Name)));
             var fieldDeclaration = SyntaxFactory.FieldDeclaration(varDeclaration);
 
             // Defining accessibility
-            fieldDeclaration = fieldDeclaration.AddModifiers(SyntaxFactory.Token(new Visibility(this.fieldInfo).Token));
+            fieldDeclaration = this.HandleAccessibility(fieldDeclaration);
 
             return fieldDeclaration;
         }
+
+        protected IFieldInfoProxy FieldInfo => this.fieldInfo;
+
+        private FieldDeclarationSyntax HandleAccessibility(FieldDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            newNode = newNode.AddModifiers(SyntaxFactory.Token(new Visibility(this.FieldInfo).Token));
+
+            return newNode;
+        }
+
+        protected virtual string GetTypeFullName(ITypeProxy type) => type.FullName;
     }
 }

@@ -7,8 +7,10 @@ namespace Rosetta.Reflection.ScriptSharp
 {
     using System;
 
+    using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
     using Rosetta.Reflection.ScriptSharp.Helpers;
+    using ScriptSharpFactories = Rosetta.Reflection.ScriptSharp.Factories;
 
     /// <summary>
     /// Builds an AST from an assembly.
@@ -16,6 +18,8 @@ namespace Rosetta.Reflection.ScriptSharp
     /// </summary>
     public class ASTBuilder : Rosetta.Reflection.ASTBuilder
     {
+        private ITypeLookup lookup;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ASTBuilder"/> class.
         /// This class builds a plain tree from all the types in the assembly and considers the ScriptSharp 
@@ -25,7 +29,14 @@ namespace Rosetta.Reflection.ScriptSharp
         public ASTBuilder(IAssemblyProxy assembly) 
             : base(assembly)
         {
+            this.lookup = new LinearSearchTypeLookup(assembly);
         }
+
+        protected override ISyntaxFactory CreateClassDeclarationSyntaxFactory(ITypeInfoProxy typeInfo)
+            => new ScriptSharpFactories.ClassDeclarationSyntaxFactory(typeInfo, this.lookup);
+
+        protected override ISyntaxFactory CreateInterfaceDeclarationSyntaxFactory(ITypeInfoProxy typeInfo)
+            => new ScriptSharpFactories.InterfaceDeclarationSyntaxFactory(typeInfo, this.lookup);
 
         protected override Rosetta.Reflection.Helpers.Namespace CreateNamespaceHelper(ITypeInfoProxy type)
         {
