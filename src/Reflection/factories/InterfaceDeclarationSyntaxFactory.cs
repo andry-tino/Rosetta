@@ -53,7 +53,8 @@ namespace Rosetta.Reflection.Factories
             interfaceNode = this.HandleMethods(interfaceNode);
 
             // Properties
-            // TODO
+            // Note: Properties are actually handled as methods from metadata so they will appear as methods
+            //       In case necessary, adopt a proper strategy
 
             return interfaceNode;
         }
