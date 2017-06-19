@@ -31,7 +31,7 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Public));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Public));
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.ProtectedKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Protected));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Protected));
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PrivateKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Private));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Private));
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.InternalKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Internal));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Internal));
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Public));
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Static));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Public));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Static));
         }
 
         /// <summary>
@@ -92,8 +92,8 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.ProtectedKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Protected));
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Static));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Protected));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Static));
         }
 
         /// <summary>
@@ -105,8 +105,8 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PrivateKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Private));
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Static));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Private));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Static));
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Rosetta.AST.Helpers.UnitTests
             var syntaxTokenList = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.InternalKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword));
             var visibilityToken = Modifiers.Get(syntaxTokenList);
 
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Internal));
-            Assert.IsTrue(visibilityToken.HasFlag(VisibilityToken.Static));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Internal));
+            Assert.IsTrue(visibilityToken.HasFlag(ModifierTokens.Static));
         }
     }
 }

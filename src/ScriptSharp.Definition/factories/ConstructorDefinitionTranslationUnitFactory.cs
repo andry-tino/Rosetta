@@ -66,12 +66,12 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             {
                 var helper = this.CreateHelper(this.Node as ConstructorDeclarationSyntax, null); // Semantic model not needed
 
-                if (helper.Visibility.IsExposedVisibility())
+                if (helper.Modifiers.IsExposedVisibility())
                 {
                     return false;
                 }
 
-                if (this.createWhenProtected && helper.Visibility.HasFlag(VisibilityToken.Protected))
+                if (this.createWhenProtected && helper.Modifiers.HasFlag(ModifierTokens.Protected))
                 {
                     return false;
                 }
@@ -86,11 +86,11 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// <remarks>
         /// Must return a type inheriting from <see cref="MethodSignatureDeclarationTranslationUnit"/>.
         /// </remarks>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <returns></returns>
-        protected override ITranslationUnit CreateTranslationUnit(VisibilityToken visibility)
+        protected override ITranslationUnit CreateTranslationUnit(ModifierTokens modifiers)
         {
-            return ConstructorDefinitionTranslationUnit.Create(visibility);
+            return ConstructorDefinitionTranslationUnit.Create(modifiers);
         }
 
         /// <summary>

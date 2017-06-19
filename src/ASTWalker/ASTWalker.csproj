@@ -103,7 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASTExtractor.cs" />
-    <Compile Include="cs-ts-converters\VisibilityConverter.cs" />
     <Compile Include="exceptions\UnsupportedSyntaxException.cs" />
     <Compile Include="factories\ClassDeclarationTranslationUnitFactory.cs" />
     <Compile Include="factories\ConstructorDeclarationTranslationUnitFactory.cs" />

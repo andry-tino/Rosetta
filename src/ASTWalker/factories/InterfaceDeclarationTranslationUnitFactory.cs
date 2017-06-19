@@ -68,7 +68,7 @@ namespace Rosetta.AST.Factories
         /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        protected virtual ITranslationUnit CreateTranslationUnit(VisibilityToken visibility, ITranslationUnit name)
+        protected virtual ITranslationUnit CreateTranslationUnit(ModifierTokens visibility, ITranslationUnit name)
         {
             return InterfaceDeclarationTranslationUnit.Create(visibility, name);
         }

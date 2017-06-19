@@ -64,7 +64,7 @@ namespace Rosetta.Translation
         /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static EnumTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name)
+        public static EnumTranslationUnit Create(ModifierTokens visibility, ITranslationUnit name)
         {
             if (name == null)
             {
@@ -73,7 +73,7 @@ namespace Rosetta.Translation
 
             return new EnumTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = visibility,
                 Name = name
             };
         }
@@ -198,7 +198,7 @@ namespace Rosetta.Translation
         
         protected virtual string RenderedVisibilityModifier
         {
-            get { return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
+            get { return this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
         }
 
         protected virtual bool ShouldRenderMembers

@@ -26,173 +26,173 @@ namespace Rosetta.Translation.UnitTests
         [TestMethod]
         public void Public()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Public;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Public;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Public), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Static), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Public), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Static), "A flag was not expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void Protected()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Protected;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Protected;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Public), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Protected), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Static), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Public), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Protected), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Static), "A flag was not expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void Private()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Private;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Private;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Public), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Private), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Static), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Public), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Private), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Static), "A flag was not expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void Internal()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Internal;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Internal;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Public), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Static), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Public), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Static), "A flag was not expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void Static()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Static;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Static;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Public), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Static), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Public), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Static), "A flag was expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void StaticPublic()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Static;
-            source |= VisibilityToken.Public;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Static;
+            source |= ModifierTokens.Public;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Public), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Static), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Public), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Static), "A flag was expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void StaticProtected()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Static;
-            source |= VisibilityToken.Protected;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Static;
+            source |= ModifierTokens.Protected;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Public), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Protected), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Static), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Public), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Protected), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Static), "A flag was expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void StaticPrivate()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Static;
-            source |= VisibilityToken.Private;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Static;
+            source |= ModifierTokens.Private;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Public), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Private), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Static), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Public), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Private), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Static), "A flag was expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void StaticInternal()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Static;
-            source |= VisibilityToken.Internal;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Static;
+            source |= ModifierTokens.Internal;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Public), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Static), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Public), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Static), "A flag was expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void InternalProtected()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Internal;
-            source |= VisibilityToken.Protected;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Internal;
+            source |= ModifierTokens.Protected;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Public), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Static), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Public), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Static), "A flag was not expected in the equivalent modifiers list.");
         }
 
         [TestMethod]
         public void StaticInternalProtected()
         {
-            VisibilityToken source = VisibilityToken.None;
-            source |= VisibilityToken.Static;
-            source |= VisibilityToken.Internal;
-            source |= VisibilityToken.Protected;
+            ModifierTokens source = ModifierTokens.None;
+            source |= ModifierTokens.Static;
+            source |= ModifierTokens.Internal;
+            source |= ModifierTokens.Protected;
 
-            VisibilityToken equivalent = source.ConvertToTypeScriptEquivalent();
+            ModifierTokens equivalent = source.ConvertToTypeScriptEquivalent();
 
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Public), "A flag was expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Protected), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Private), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsFalse(equivalent.HasFlag(VisibilityToken.Internal), "A flag was not expected in the equivalent modifiers list.");
-            Assert.IsTrue(equivalent.HasFlag(VisibilityToken.Static), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Public), "A flag was expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Protected), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Private), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsFalse(equivalent.HasFlag(ModifierTokens.Internal), "A flag was not expected in the equivalent modifiers list.");
+            Assert.IsTrue(equivalent.HasFlag(ModifierTokens.Static), "A flag was expected in the equivalent modifiers list.");
         }
     }
 }

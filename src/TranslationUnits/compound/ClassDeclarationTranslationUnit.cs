@@ -82,7 +82,7 @@ namespace Rosetta.Translation
         /// <param name="name"></param>
         /// <param name="baseClassName"></param>
         /// <returns></returns>
-        public static ClassDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name, ITranslationUnit baseClassName)
+        public static ClassDeclarationTranslationUnit Create(ModifierTokens visibility, ITranslationUnit name, ITranslationUnit baseClassName)
         {
             if (name == null)
             {
@@ -91,7 +91,7 @@ namespace Rosetta.Translation
 
             return new ClassDeclarationTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = visibility,
                 Name = name,
                 BaseClassName = baseClassName
             };
@@ -344,7 +344,7 @@ namespace Rosetta.Translation
 
         protected virtual string RenderedVisibilityModifier
         {
-            get { return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
+            get { return this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(); }
         }
 
         /// <summary>

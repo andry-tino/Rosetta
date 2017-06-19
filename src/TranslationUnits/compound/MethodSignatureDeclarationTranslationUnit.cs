@@ -25,7 +25,7 @@ namespace Rosetta.Translation
         /// Initializes a new instance of the <see cref="MethodSignatureDeclarationTranslationUnit"/> class.
         /// </summary>
         protected MethodSignatureDeclarationTranslationUnit() 
-            : this(IdentifierTranslationUnit.Empty, VisibilityToken.None)
+            : this(IdentifierTranslationUnit.Empty, ModifierTokens.None)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="name"></param>
         /// <param name="visibility"></param>
-        protected MethodSignatureDeclarationTranslationUnit(ITranslationUnit name, VisibilityToken visibility) 
+        protected MethodSignatureDeclarationTranslationUnit(ITranslationUnit name, ModifierTokens visibility) 
             : base(name, visibility)
         {
             this.ReturnType = null;
@@ -80,11 +80,11 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static MethodSignatureDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
+        public static MethodSignatureDeclarationTranslationUnit Create(ModifierTokens modifiers, ITranslationUnit returnType, ITranslationUnit name)
         {
             if (name == null)
             {
@@ -93,7 +93,7 @@ namespace Rosetta.Translation
 
             return new MethodSignatureDeclarationTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 Name = name,
                 ReturnType = returnType
             };
@@ -162,7 +162,7 @@ namespace Rosetta.Translation
 
         #endregion
 
-        protected virtual string RenderedVisibilityModifier => this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
+        protected virtual string RenderedVisibilityModifier => this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
 
         protected virtual bool ShouldRenderReturnType => !this.IsVoid;
 

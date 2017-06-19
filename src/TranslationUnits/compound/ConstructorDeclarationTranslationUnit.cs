@@ -43,13 +43,13 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <returns></returns>
-        public static ConstructorDeclarationTranslationUnit Create(VisibilityToken visibility)
+        public static ConstructorDeclarationTranslationUnit Create(ModifierTokens modifiers)
         {
             return new ConstructorDeclarationTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 ReturnType = null
             };
         }
@@ -78,7 +78,7 @@ namespace Rosetta.Translation
 
             // Opening declaration: <visibility> constructor(<params>) {
             writer.WriteLine("{0}{1}{2} {3}",
-                this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
+                this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
                 Lexems.ConstructorKeyword,
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.OpenCurlyBracket);

@@ -22,7 +22,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string IntPrivateMember()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMemberTranslationUnit(
-                VisibilityToken.Private, Lexems.NumberType, "intMember");
+                ModifierTokens.Private, Lexems.NumberType, "intMember");
 
             return translationUnit.Translate();
         }
@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string StringPublicMember()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMemberTranslationUnit(
-                VisibilityToken.Public, Lexems.StringType, "stringMember");
+                ModifierTokens.Public, Lexems.StringType, "stringMember");
 
             return translationUnit.Translate();
         }
@@ -48,7 +48,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string StringMember()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMemberTranslationUnit(
-                VisibilityToken.None, Lexems.StringType, "stringMember");
+                ModifierTokens.None, Lexems.StringType, "stringMember");
 
             return translationUnit.Translate();
         }

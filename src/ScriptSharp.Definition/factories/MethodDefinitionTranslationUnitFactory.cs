@@ -66,12 +66,12 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             {
                 var helper = new MethodDeclaration(this.Node as MethodDeclarationSyntax);
 
-                if (helper.Visibility.IsExposedVisibility())
+                if (helper.Modifiers.IsExposedVisibility())
                 {
                     return false;
                 }
 
-                if (this.createWhenProtected && helper.Visibility.HasFlag(VisibilityToken.Protected))
+                if (this.createWhenProtected && helper.Modifiers.HasFlag(ModifierTokens.Protected))
                 {
                     return false;
                 }
@@ -91,7 +91,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// <param name="name"></param>
         /// <returns></returns>
         protected override ITranslationUnit CreateTranslationUnit(
-            VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
+            ModifierTokens visibility, ITranslationUnit returnType, ITranslationUnit name)
         {
             return MethodDefinitionTranslationUnit.Create(visibility, returnType, name);
         }

@@ -44,7 +44,7 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the visibility of the field.
         /// </summary>
-        public VisibilityToken Visibility
+        public ModifierTokens Modifiers
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Rosetta.AST.Helpers
                 if (modifiers.Count == 0)
                 {
                     // No visibility modifier specified
-                    return VisibilityToken.None;
+                    return ModifierTokens.None;
                 }
                 
                 return this.FieldDeclarationSyntaxNode.Modifiers.Get();

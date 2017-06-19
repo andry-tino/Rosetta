@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// VisibilityToken.cs
+/// ModifierTokens.cs
 /// Andrea Tino - 2015
 /// </summary>
 
@@ -10,7 +10,7 @@ namespace Rosetta.Translation
     /// <summary>
     /// Enumerating all possible visibilities.
     /// 
-    /// TODO: Rename into "Modifiers".
+    /// TODO: Rename into "ModifierTokens".
     /// </summary>
     /// <remarks>
     /// For getting the corresponding C# keyword, use extension <see cref="TokenUtility.ToString(VisibilityToken)"/>.
@@ -19,7 +19,7 @@ namespace Rosetta.Translation
     /// those not supported by TypeScript will be transformed and adapted in translation units.
     /// </remarks>
     [Flags]
-    public enum VisibilityToken
+    public enum ModifierTokens
     {
         /// <summary>
         /// 

@@ -22,7 +22,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleEmptyMethod()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodSignatureTranslationUnit(
-                VisibilityToken.Public, null, "SimpleMethodSignature");
+                ModifierTokens.Public, null, "SimpleMethodSignature");
 
             return translationUnit.Translate();
         }
@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethodWithReturn()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodSignatureTranslationUnit(
-                VisibilityToken.Public, Lexems.StringType, "MethodSignatureWithReturn");
+                ModifierTokens.Public, Lexems.StringType, "MethodSignatureWithReturn");
 
             return translationUnit.Translate();
         }
@@ -48,7 +48,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethod1Argument()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodSignatureTranslationUnit(
-                VisibilityToken.Public, null, "MethodSignature1Argument") as MethodSignatureDeclarationTranslationUnit;
+                ModifierTokens.Public, null, "MethodSignature1Argument") as MethodSignatureDeclarationTranslationUnit;
 
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
@@ -64,7 +64,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethod2Arguments()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodSignatureTranslationUnit(
-                VisibilityToken.Public, null, "MethodSignature2Arguments") as MethodSignatureDeclarationTranslationUnit;
+                ModifierTokens.Public, null, "MethodSignature2Arguments") as MethodSignatureDeclarationTranslationUnit;
 
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
@@ -82,7 +82,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethodManyArguments()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodSignatureTranslationUnit(
-                VisibilityToken.Public, null, "MethodSignatureManyArguments") as MethodSignatureDeclarationTranslationUnit;
+                ModifierTokens.Public, null, "MethodSignatureManyArguments") as MethodSignatureDeclarationTranslationUnit;
 
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));

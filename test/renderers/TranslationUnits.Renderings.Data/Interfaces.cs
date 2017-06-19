@@ -22,7 +22,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleEmptyInterface()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildInterfaceTranslationUnit(
-                VisibilityToken.Public, "SimpleEmptyInterface");
+                ModifierTokens.Public, "SimpleEmptyInterface");
 
             return translationUnit.Translate();
         }
@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyInterfaceWithOneExtendedInterface()
         {
             var translationUnit = TranslationUnitBuilder.BuildInterfaceTranslationUnit(
-                VisibilityToken.Public, "EmptyInterfaceWithOneExtendedInterface")
+                ModifierTokens.Public, "EmptyInterfaceWithOneExtendedInterface")
                 as InterfaceDeclarationTranslationUnit;
 
             translationUnit.AddExtendedInterface("Interface1");
@@ -51,7 +51,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyInterfaceWithManyExtendedInterfaces()
         {
             var translationUnit = TranslationUnitBuilder.BuildInterfaceTranslationUnit(
-                VisibilityToken.Public, "EmptyInterfaceWithManyExtendedInterfaces")
+                ModifierTokens.Public, "EmptyInterfaceWithManyExtendedInterfaces")
                 as InterfaceDeclarationTranslationUnit;
 
             translationUnit.AddExtendedInterface("Interface1");
@@ -69,7 +69,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderInterfaceWithSignatures()
         {
             var translationUnit = TranslationUnitBuilder.BuildInterfaceTranslationUnit(
-                VisibilityToken.Public, "ClassWithEmptyMethods")
+                ModifierTokens.Public, "ClassWithEmptyMethods")
                 as InterfaceDeclarationTranslationUnit;
 
             translationUnit.AddSignature("Method1");

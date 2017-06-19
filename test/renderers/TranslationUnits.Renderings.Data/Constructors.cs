@@ -22,7 +22,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleEmptyConstructor()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildConstructorTranslationUnit(
-                VisibilityToken.Public);
+                ModifierTokens.Public);
 
             return translationUnit.Translate();
         }
@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleConstructor()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildConstructorTranslationUnit(
-                VisibilityToken.Public,
+                ModifierTokens.Public,
                 new ITranslationUnit[] {
                     TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.NumberType, "variable1"),
                     TranslationUnitBuilder.BuildVariableDeclarationTranslationUnit(Lexems.StringType, "variable2"),
@@ -53,7 +53,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyConstructor1Argument()
         {
             var translationUnit = TranslationUnitBuilder.BuildConstructorTranslationUnit(
-                VisibilityToken.Public) as MethodDeclarationTranslationUnit;
+                ModifierTokens.Public) as MethodDeclarationTranslationUnit;
 
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
@@ -69,7 +69,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyConstructor2Arguments()
         {
             var translationUnit = TranslationUnitBuilder.BuildConstructorTranslationUnit(
-                VisibilityToken.Public) as MethodDeclarationTranslationUnit;
+                ModifierTokens.Public) as MethodDeclarationTranslationUnit;
 
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
@@ -87,7 +87,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyConstructorManyArguments()
         {
             var translationUnit = TranslationUnitBuilder.BuildConstructorTranslationUnit(
-                VisibilityToken.Public) as MethodDeclarationTranslationUnit;
+                ModifierTokens.Public) as MethodDeclarationTranslationUnit;
 
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));

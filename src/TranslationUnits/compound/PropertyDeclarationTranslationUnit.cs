@@ -32,7 +32,7 @@ namespace Rosetta.Translation
         /// Initializes a new instance of the <see cref="PropertyDeclarationTranslationUnit"/> class.
         /// </summary>
         protected PropertyDeclarationTranslationUnit() 
-            : this(IdentifierTranslationUnit.Empty, IdentifierTranslationUnit.Empty, VisibilityToken.None)
+            : this(IdentifierTranslationUnit.Empty, IdentifierTranslationUnit.Empty, ModifierTokens.None)
         {
         }
 
@@ -41,9 +41,9 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="name"></param>
         /// <param name="returnType"></param>
-        /// <param name="visibility"></param>
-        protected PropertyDeclarationTranslationUnit(ITranslationUnit name, ITranslationUnit returnType, VisibilityToken visibility) 
-            : base(name, visibility)
+        /// <param name="modifiers"></param>
+        protected PropertyDeclarationTranslationUnit(ITranslationUnit name, ITranslationUnit returnType, ModifierTokens modifiers) 
+            : base(name, modifiers)
         {
             // We create empty groups
             this.getStatements = StatementsGroupTranslationUnit.Create();
@@ -75,14 +75,14 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="hasGet"></param>
         /// <param name="hasSet"></param>
         /// <returns></returns>
         public static PropertyDeclarationTranslationUnit Create(
-            VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name, bool hasGet = true, bool hasSet = true)
+            ModifierTokens modifiers, ITranslationUnit type, ITranslationUnit name, bool hasGet = true, bool hasSet = true)
         {
             if (name == null)
             {
@@ -95,7 +95,7 @@ namespace Rosetta.Translation
 
             return new PropertyDeclarationTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 Name = name,
                 type = type
             };
@@ -128,7 +128,7 @@ namespace Rosetta.Translation
                 // Opening declaration: [<visibility>] get <name>() : <type> {
                 // TODO: Handle case of no visibility specified
                 writer.WriteLine("{0}{1} {2}{3} {4} {5} {6}",
-                    this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
+                    this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
                     Lexems.GetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket + Lexems.CloseRoundBracket,
@@ -150,7 +150,7 @@ namespace Rosetta.Translation
 
                 // Opening declaration: [<visibility>] set <name>(value : <type>) {
                 writer.WriteLine("{0}{1} {2}{3}{4}{5} {6}",
-                    this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
+                    this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
                     Lexems.SetKeyword,
                     this.Name.Translate(),
                     Lexems.OpenRoundBracket,

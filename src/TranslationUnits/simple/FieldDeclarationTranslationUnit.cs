@@ -18,7 +18,7 @@ namespace Rosetta.Translation
         /// Initializes a new instance of the <see cref="FieldDeclarationTranslationUnit"/> class.
         /// </summary>
         protected FieldDeclarationTranslationUnit()
-            : this(IdentifierTranslationUnit.Empty, VisibilityToken.None)
+            : this(IdentifierTranslationUnit.Empty, ModifierTokens.None)
         {
         }
 
@@ -26,9 +26,9 @@ namespace Rosetta.Translation
         /// Initializes a new instance of the <see cref="FieldDeclarationTranslationUnit"/> class.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="visibility"></param>
-        protected FieldDeclarationTranslationUnit(ITranslationUnit name, VisibilityToken visibility)
-            : base(name, visibility)
+        /// <param name="modifiers"></param>
+        protected FieldDeclarationTranslationUnit(ITranslationUnit name, ModifierTokens modifiers)
+            : base(name, modifiers)
         {
             this.Type = null;
         }
@@ -36,11 +36,11 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static FieldDeclarationTranslationUnit Create(VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name)
+        public static FieldDeclarationTranslationUnit Create(ModifierTokens modifiers, ITranslationUnit type, ITranslationUnit name)
         {
             if (type == null)
             {
@@ -53,7 +53,7 @@ namespace Rosetta.Translation
 
             return new FieldDeclarationTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 Name = name,
                 Type = type
             };
@@ -75,7 +75,7 @@ namespace Rosetta.Translation
 
             writer.Write("{0}{1} {2} {3}",
                 text => ClassDeclarationCodePerfect.RefineDeclaration(text),
-                this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
+                this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility(),
                 this.RenderedName,
                 Lexems.Colon,
                 this.type.Translate());
@@ -92,7 +92,7 @@ namespace Rosetta.Translation
             set { this.type = value; }
         }
 
-        protected virtual string RenderedVisibilityModifier => TokenUtility.EmitOptionalVisibility(this.Visibility);
+        protected virtual string RenderedVisibilityModifier => TokenUtility.EmitOptionalVisibility(this.Modifiers);
 
         protected virtual string RenderedName => this.Name.Translate();
     }

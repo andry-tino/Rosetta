@@ -27,9 +27,9 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// Initializes a new instance of the <see cref="MethodDefinitionTranslationUnit"/> class.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="visibility"></param>
-        protected MethodDefinitionTranslationUnit(ITranslationUnit name, VisibilityToken visibility) 
-            : base(name, visibility)
+        /// <param name="modifiers"></param>
+        protected MethodDefinitionTranslationUnit(ITranslationUnit name, ModifierTokens modifiers) 
+            : base(name, modifiers)
         {
         }
 
@@ -52,7 +52,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static new MethodDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
+        public static new MethodDefinitionTranslationUnit Create(ModifierTokens modifiers, ITranslationUnit returnType, ITranslationUnit name)
         {
             if (name == null)
             {
@@ -61,7 +61,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
             return new MethodDefinitionTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 Name = name,
                 ReturnType = returnType
             };
@@ -71,10 +71,10 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         {
             get
             {
-                if (this.Visibility.HasFlag(VisibilityToken.Protected))
+                if (this.Modifiers.HasFlag(ModifierTokens.Protected))
                 {
                     // If protected, emit the visibility modifier
-                    return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
+                    return this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
                 }
 
                 return string.Empty;

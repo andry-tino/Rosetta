@@ -49,7 +49,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        protected override ITranslationUnit CreateTranslationUnit(VisibilityToken visibility, ITranslationUnit name)
+        protected override ITranslationUnit CreateTranslationUnit(ModifierTokens visibility, ITranslationUnit name)
         {
             return InterfaceDefinitionTranslationUnit.Create(visibility, name);
         }

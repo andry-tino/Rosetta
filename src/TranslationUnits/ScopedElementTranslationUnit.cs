@@ -15,33 +15,33 @@ namespace Rosetta.Translation
         /// <summary>
         /// The visibility of the element.
         /// </summary>
-        protected VisibilityToken Visibility { get; set; }
+        protected ModifierTokens Modifiers { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
         /// </summary>
         protected ScopedElementTranslationUnit() 
-            : this(VisibilityToken.None)
+            : this(ModifierTokens.None)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
         /// </summary>
-        /// <param name="visibility"></param>
-        protected ScopedElementTranslationUnit(VisibilityToken visibility) 
-            : this(visibility, AutomaticNestingLevel)
+        /// <param name="modifiers"></param>
+        protected ScopedElementTranslationUnit(ModifierTokens modifiers) 
+            : this(modifiers, AutomaticNestingLevel)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScopedElementTranslationUnit"/>.
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="nestingLevel"></param>
-        protected ScopedElementTranslationUnit(VisibilityToken visibility, int nestingLevel) : base(nestingLevel)
+        protected ScopedElementTranslationUnit(ModifierTokens modifiers, int nestingLevel) : base(nestingLevel)
         {
-            this.Visibility = visibility;
+            this.Modifiers = modifiers;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Rosetta.Translation
         protected ScopedElementTranslationUnit(ScopedElementTranslationUnit other) 
             : base(other)
         {
-            this.Visibility = other.Visibility;
+            this.Modifiers = other.Modifiers;
         }
     }
 }

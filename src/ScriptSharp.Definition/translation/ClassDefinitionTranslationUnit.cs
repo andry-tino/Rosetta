@@ -46,7 +46,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <param name="name"></param>
         /// <param name="baseClassName"></param>
         /// <returns></returns>
-        public static new ClassDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name, ITranslationUnit baseClassName)
+        public static new ClassDefinitionTranslationUnit Create(ModifierTokens visibility, ITranslationUnit name, ITranslationUnit baseClassName)
         {
             if (name == null)
             {
@@ -55,7 +55,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
             return new ClassDefinitionTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = visibility,
                 Name = name,
                 BaseClassName = baseClassName
             };

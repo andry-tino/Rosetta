@@ -22,7 +22,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleEmptyNoVisibilityMethod()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.None, null, "SimpleEmptyMethod");
+                ModifierTokens.None, null, "SimpleEmptyMethod");
 
             return translationUnit.Translate();
         }
@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleEmptyMethod()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Public, null, "SimpleEmptyMethod");
+                ModifierTokens.Public, null, "SimpleEmptyMethod");
 
             return translationUnit.Translate();
         }
@@ -48,7 +48,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyProtectedStaticMethod()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Protected | VisibilityToken.Static, null, "EmptyProtectedStaticMethod") as MethodDeclarationTranslationUnit;
+                ModifierTokens.Protected | ModifierTokens.Static, null, "EmptyProtectedStaticMethod") as MethodDeclarationTranslationUnit;
 
             return translationUnit.Translate();
         }
@@ -61,7 +61,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyProtectedInternalMethod()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Protected | VisibilityToken.Internal, null, "EmptyProtectedInternal") as MethodDeclarationTranslationUnit;
+                ModifierTokens.Protected | ModifierTokens.Internal, null, "EmptyProtectedInternal") as MethodDeclarationTranslationUnit;
 
             return translationUnit.Translate();
         }
@@ -74,7 +74,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyProtectedInternalStaticMethod()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Protected | VisibilityToken.Internal | VisibilityToken.Static, null, "EmptyProtectedInternalStatic") as MethodDeclarationTranslationUnit;
+                ModifierTokens.Protected | ModifierTokens.Internal | ModifierTokens.Static, null, "EmptyProtectedInternalStatic") as MethodDeclarationTranslationUnit;
 
             return translationUnit.Translate();
         }
@@ -87,7 +87,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethodWithReturn()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Public, Lexems.StringType, "EmptyMethodWithReturn");
+                ModifierTokens.Public, Lexems.StringType, "EmptyMethodWithReturn");
 
             return translationUnit.Translate();
         }
@@ -100,7 +100,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleMethod()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Public,
+                ModifierTokens.Public,
                 null,
                 "SimpleMethod",
                 new ITranslationUnit[] {
@@ -120,7 +120,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethod1Argument()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Public, null, "EmptyMethod1Argument") as MethodDeclarationTranslationUnit;
+                ModifierTokens.Public, null, "EmptyMethod1Argument") as MethodDeclarationTranslationUnit;
             
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
@@ -136,7 +136,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethod2Arguments()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Public, null, "EmptyMethod2Arguments") as MethodDeclarationTranslationUnit;
+                ModifierTokens.Public, null, "EmptyMethod2Arguments") as MethodDeclarationTranslationUnit;
             
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));
@@ -154,7 +154,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyMethodManyArguments()
         {
             var translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
-                VisibilityToken.Public, null, "EmptyMethodManyArguments") as MethodDeclarationTranslationUnit;
+                ModifierTokens.Public, null, "EmptyMethodManyArguments") as MethodDeclarationTranslationUnit;
             
             translationUnit.AddArgument(ArgumentDefinitionTranslationUnit.Create(
                 TypeIdentifierTranslationUnit.Number, IdentifierTranslationUnit.Create("param1")));

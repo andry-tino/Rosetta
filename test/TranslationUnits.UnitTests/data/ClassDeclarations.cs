@@ -21,7 +21,7 @@ namespace Rosetta.Translation.UnitTests.Data
         {
             get
             {
-                return ClassDeclarationTranslationUnit.Create(VisibilityToken.Public, IdentifierTranslationUnit.Create("SimpleClass"), null);
+                return ClassDeclarationTranslationUnit.Create(ModifierTokens.Public, IdentifierTranslationUnit.Create("SimpleClass"), null);
             }
         }
     }

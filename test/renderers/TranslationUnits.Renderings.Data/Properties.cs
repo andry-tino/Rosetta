@@ -22,7 +22,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleEmptyProperty()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildPropertyTranslationUnit(
-                VisibilityToken.Public, "int", "SimpleProperty");
+                ModifierTokens.Public, "int", "SimpleProperty");
 
             return translationUnit.Translate();
         }
@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleProperty()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildPropertyTranslationUnit(
-                VisibilityToken.Public,
+                ModifierTokens.Public,
                 "int",
                 "SimpleProperty",
                 new ITranslationUnit[] {

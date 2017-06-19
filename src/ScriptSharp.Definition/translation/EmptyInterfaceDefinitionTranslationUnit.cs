@@ -41,7 +41,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static new EmptyInterfaceDefinitionTranslationUnit Create(VisibilityToken visibility, ITranslationUnit name)
+        public static new EmptyInterfaceDefinitionTranslationUnit Create(ModifierTokens visibility, ITranslationUnit name)
         {
             if (name == null)
             {
@@ -50,7 +50,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
             return new EmptyInterfaceDefinitionTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = visibility,
                 Name = name
             };
         }

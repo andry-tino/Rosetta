@@ -66,12 +66,12 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             {
                 var helper = new PropertyDeclaration(this.Node as PropertyDeclarationSyntax);
 
-                if (helper.Visibility.IsExposedVisibility())
+                if (helper.Modifiers.IsExposedVisibility())
                 {
                     return false;
                 }
 
-                if (this.createWhenProtected && helper.Visibility.HasFlag(VisibilityToken.Protected))
+                if (this.createWhenProtected && helper.Modifiers.HasFlag(ModifierTokens.Protected))
                 {
                     return false;
                 }
@@ -83,16 +83,16 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// <summary>
         /// Creates the translation unit.
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="hasGet"></param>
         /// <param name="hasSet"></param>
         /// <returns></returns>
         protected override ITranslationUnit CreateTranslationUnit(
-            VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name, bool hasGet, bool hasSet)
+            ModifierTokens modifiers, ITranslationUnit type, ITranslationUnit name, bool hasGet, bool hasSet)
         {
-            return PropertyDefinitionTranslationUnit.Create(visibility, type, name, hasGet, hasSet);
+            return PropertyDefinitionTranslationUnit.Create(modifiers, type, name, hasGet, hasSet);
         }
 
         /// <summary>

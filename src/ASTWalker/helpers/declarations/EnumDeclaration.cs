@@ -41,7 +41,7 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the visibility associated with the property.
         /// </summary>
-        public VisibilityToken Visibility
+        public ModifierTokens Visibility
         {
             get { return Modifiers.Get(this.EnumDeclarationSyntaxNode.Modifiers); }
         }

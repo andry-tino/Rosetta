@@ -28,8 +28,8 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// </summary>
         /// <param name="name"></param>
         /// <param name="visibility"></param>
-        protected ConstructorDefinitionTranslationUnit(VisibilityToken visibility)
-            : base(IdentifierTranslationUnit.Empty, visibility)
+        protected ConstructorDefinitionTranslationUnit(ModifierTokens modifiers)
+            : base(IdentifierTranslationUnit.Empty, modifiers)
         {
             this.Name = IdentifierTranslationUnit.Create(Lexems.ConstructorKeyword);
         }
@@ -49,13 +49,13 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <returns></returns>
-        public static ConstructorDefinitionTranslationUnit Create(VisibilityToken visibility)
+        public static ConstructorDefinitionTranslationUnit Create(ModifierTokens modifiers)
         {
             return new ConstructorDefinitionTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 Name = IdentifierTranslationUnit.Create(Lexems.ConstructorKeyword),
                 ReturnType = null
             };
@@ -65,10 +65,10 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         {
             get
             {
-                if (this.Visibility.HasFlag(VisibilityToken.Protected))
+                if (this.Modifiers.HasFlag(ModifierTokens.Protected))
                 {
                     // If protected, emit the visibility modifier
-                    return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
+                    return this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
                 }
 
                 return string.Empty;

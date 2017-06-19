@@ -47,7 +47,7 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the visibility associated with the type.
         /// </summary>
-        public virtual VisibilityToken Visibility
+        public virtual ModifierTokens Visibility
         {
             get { return Modifiers.Get(this.TypeDeclarationSyntaxNode.Modifiers); }
         }

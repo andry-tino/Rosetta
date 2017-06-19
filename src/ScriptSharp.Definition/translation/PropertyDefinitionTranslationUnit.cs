@@ -28,7 +28,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// Initializes a new instance of the <see cref="PropertyDefinitionTranslationUnit"/> class.
         /// </summary>
         protected PropertyDefinitionTranslationUnit()
-            : this(IdentifierTranslationUnit.Empty, IdentifierTranslationUnit.Empty, VisibilityToken.None)
+            : this(IdentifierTranslationUnit.Empty, IdentifierTranslationUnit.Empty, ModifierTokens.None)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <param name="name"></param>
         /// <param name="returnType"></param>
         /// <param name="visibility"></param>
-        protected PropertyDefinitionTranslationUnit(ITranslationUnit name, ITranslationUnit returnType, VisibilityToken visibility)
+        protected PropertyDefinitionTranslationUnit(ITranslationUnit name, ITranslationUnit returnType, ModifierTokens visibility)
             : base(name, visibility)
         {
             this.type = returnType;
@@ -65,14 +65,14 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="hasGet"></param>
         /// <param name="hasSet"></param>
         /// <returns></returns>
         public static PropertyDefinitionTranslationUnit Create(
-            VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name, bool hasGet = true, bool hasSet = true)
+            ModifierTokens modifiers, ITranslationUnit type, ITranslationUnit name, bool hasGet = true, bool hasSet = true)
         {
             if (name == null)
             {
@@ -85,7 +85,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
             return new PropertyDefinitionTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 Name = name,
                 type = type
             };
@@ -139,10 +139,10 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         {
             get
             {
-                if (this.Visibility.HasFlag(VisibilityToken.Protected))
+                if (this.Modifiers.HasFlag(ModifierTokens.Protected))
                 {
                     // If protected, emit the visibility modifier
-                    return this.Visibility.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
+                    return this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
                 }
 
                 return string.Empty;

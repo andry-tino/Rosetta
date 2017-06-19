@@ -47,9 +47,9 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Gets the visibility associated with the property.
         /// </summary>
-        public VisibilityToken Visibility
+        public ModifierTokens Modifiers
         {
-            get { return Modifiers.Get(this.PropertyDeclarationSyntaxNode.Modifiers); }
+            get { return Rosetta.AST.Helpers.Modifiers.Get(this.PropertyDeclarationSyntaxNode.Modifiers); }
         }
 
         /// <summary>

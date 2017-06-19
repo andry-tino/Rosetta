@@ -43,58 +43,58 @@ namespace Rosetta.AST.Helpers.UnitTests
                 public class Class1 {
                     public int Field1;
                 }
-            ", new[] { VisibilityToken.Public });
+            ", new[] { ModifierTokens.Public });
 
             TestModifiers(@"
                 public class Class1 {
                     private int Field1;
                 }
-            ", new[] { VisibilityToken.Private });
+            ", new[] { ModifierTokens.Private });
 
             TestModifiers(@"
                 public class Class1 {
                     protected int Field1;
                 }
-            ", new[] { VisibilityToken.Protected });
+            ", new[] { ModifierTokens.Protected });
 
             TestModifiers(@"
                 public class Class1 {
                     internal int Field1;
                 }
-            ", new[] { VisibilityToken.Internal });
+            ", new[] { ModifierTokens.Internal });
 
             TestModifiers(@"
                 public class Class1 {
                     static int Field1;
                 }
-            ", new[] { VisibilityToken.Static });
+            ", new[] { ModifierTokens.Static });
 
             TestModifiers(@"
                 public class Class1 {
                     public static int Field1;
                 }
-            ", new[] { VisibilityToken.Public, VisibilityToken.Static });
+            ", new[] { ModifierTokens.Public, ModifierTokens.Static });
 
             TestModifiers(@"
                 public class Class1 {
                     private static int Field1;
                 }
-            ", new[] { VisibilityToken.Private, VisibilityToken.Static });
+            ", new[] { ModifierTokens.Private, ModifierTokens.Static });
 
             TestModifiers(@"
                 public class Class1 {
                     protected static int Field1;
                 }
-            ", new[] { VisibilityToken.Protected, VisibilityToken.Static });
+            ", new[] { ModifierTokens.Protected, ModifierTokens.Static });
 
             TestModifiers(@"
                 public class Class1 {
                     internal static int Field1;
                 }
-            ", new[] { VisibilityToken.Internal, VisibilityToken.Static });
+            ", new[] { ModifierTokens.Internal, ModifierTokens.Static });
         }
 
-        private static void TestModifiers(string source, VisibilityToken[] expectedModifiers)
+        private static void TestModifiers(string source, ModifierTokens[] expectedModifiers)
         {
             var syntaxTree = CSharpSyntaxTree.ParseText(source);
 
@@ -107,10 +107,10 @@ namespace Rosetta.AST.Helpers.UnitTests
 
             var fieldDeclaration = new FieldDeclaration(fieldDeclarationNode);
 
-            Assert.IsNotNull(fieldDeclaration.Visibility, "Expecting list of visibility tokens not to be null");
+            Assert.IsNotNull(fieldDeclaration.Modifiers, "Expecting list of visibility tokens not to be null");
             foreach (var modifier in expectedModifiers)
             {
-                Assert.IsTrue(fieldDeclaration.Visibility.HasFlag(modifier), $"Visibility modifier {modifier.ToString()} expected");
+                Assert.IsTrue(fieldDeclaration.Modifiers.HasFlag(modifier), $"Visibility modifier {modifier.ToString()} expected");
             }
         }
     }

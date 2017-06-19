@@ -28,7 +28,7 @@ namespace Rosetta.Translation.UnitTests
         [TestMethod]
         public void PublicVisibilityTokenApplied()
         {
-            VisibilityToken visibility = VisibilityToken.Public;
+            ModifierTokens visibility = ModifierTokens.Public;
             ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(
                 visibility, IdentifierTranslationUnit.Create("SampleClass"), null);
 
@@ -44,7 +44,7 @@ namespace Rosetta.Translation.UnitTests
         [TestMethod]
         public void PrivateVisibilityTokenApplied()
         {
-            VisibilityToken visibility = VisibilityToken.Private;
+            ModifierTokens visibility = ModifierTokens.Private;
             ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(
                 visibility, IdentifierTranslationUnit.Create("SampleClass"), null);
 
@@ -60,7 +60,7 @@ namespace Rosetta.Translation.UnitTests
         [TestMethod]
         public void NoVisibilityTokenApplied()
         {
-            VisibilityToken visibility = VisibilityToken.None;
+            ModifierTokens visibility = ModifierTokens.None;
             ITranslationUnit translationUnit = ClassDeclarationTranslationUnit.Create(
                 visibility, IdentifierTranslationUnit.Create("SampleClass"), null);
 

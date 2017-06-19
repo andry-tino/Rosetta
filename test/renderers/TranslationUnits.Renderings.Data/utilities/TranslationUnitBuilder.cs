@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// <param name="name"></param>
         /// <param name="baseClassName"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildClassTranslationUnit(VisibilityToken visibility, string name, string baseClassName)
+        public static ITranslationUnit BuildClassTranslationUnit(ModifierTokens visibility, string name, string baseClassName)
         {
             if (name == null)
             {
@@ -53,7 +53,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// <param name="visibility"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildInterfaceTranslationUnit(VisibilityToken visibility, string name)
+        public static ITranslationUnit BuildInterfaceTranslationUnit(ModifierTokens visibility, string name)
         {
             if (name == null)
             {
@@ -67,12 +67,12 @@ namespace Rosetta.Translation.Renderings.Data
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <param name="statements"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildMethodTranslationUnit(VisibilityToken visibility, string returnType, string name, ITranslationUnit[] statements = null)
+        public static ITranslationUnit BuildMethodTranslationUnit(ModifierTokens modifiers, string returnType, string name, ITranslationUnit[] statements = null)
         {
             if (name == null)
             {
@@ -80,7 +80,7 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             MethodDeclarationTranslationUnit translationUnit =  MethodDeclarationTranslationUnit.Create(
-                visibility, returnType == null ? null : TypeIdentifierTranslationUnit.Create(returnType),
+                modifiers, returnType == null ? null : TypeIdentifierTranslationUnit.Create(returnType),
                 IdentifierTranslationUnit.Create(name));
 
             if (statements != null)
@@ -97,11 +97,11 @@ namespace Rosetta.Translation.Renderings.Data
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildMethodSignatureTranslationUnit(VisibilityToken visibility, string returnType, string name)
+        public static ITranslationUnit BuildMethodSignatureTranslationUnit(ModifierTokens modifiers, string returnType, string name)
         {
             if (name == null)
             {
@@ -109,7 +109,7 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             return MethodSignatureDeclarationTranslationUnit.Create(
-                visibility, returnType == null ? null : TypeIdentifierTranslationUnit.Create(returnType),
+                modifiers, returnType == null ? null : TypeIdentifierTranslationUnit.Create(returnType),
                 IdentifierTranslationUnit.Create(name));
         }
 
@@ -122,7 +122,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// <param name="getStatements"></param>
         /// <param name="setStatements"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildPropertyTranslationUnit(VisibilityToken visibility, string returnType, string name, ITranslationUnit[] getStatements = null, ITranslationUnit[] setStatements = null)
+        public static ITranslationUnit BuildPropertyTranslationUnit(ModifierTokens modifiers, string returnType, string name, ITranslationUnit[] getStatements = null, ITranslationUnit[] setStatements = null)
         {
             if (name == null)
             {
@@ -134,7 +134,7 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             PropertyDeclarationTranslationUnit translationUnit = PropertyDeclarationTranslationUnit.Create(
-                visibility, TypeIdentifierTranslationUnit.Create(returnType), IdentifierTranslationUnit.Create(name), true, true);
+                modifiers, TypeIdentifierTranslationUnit.Create(returnType), IdentifierTranslationUnit.Create(name), true, true);
             
             if (getStatements != null)
             {
@@ -162,12 +162,12 @@ namespace Rosetta.Translation.Renderings.Data
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="statements"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildConstructorTranslationUnit(VisibilityToken visibility, ITranslationUnit[] statements = null)
+        public static ITranslationUnit BuildConstructorTranslationUnit(ModifierTokens modifiers, ITranslationUnit[] statements = null)
         {
-            ConstructorDeclarationTranslationUnit translationUnit = ConstructorDeclarationTranslationUnit.Create(visibility);
+            ConstructorDeclarationTranslationUnit translationUnit = ConstructorDeclarationTranslationUnit.Create(modifiers);
 
             if (statements != null)
             {
@@ -187,7 +187,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ITranslationUnit BuildMemberTranslationUnit(VisibilityToken visibility, string type, string name)
+        public static ITranslationUnit BuildMemberTranslationUnit(ModifierTokens modifiers, string type, string name)
         {
             if (name == null)
             {
@@ -199,7 +199,7 @@ namespace Rosetta.Translation.Renderings.Data
             }
 
             return FieldDeclarationTranslationUnit.Create(
-                visibility, TypeIdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
+                modifiers, TypeIdentifierTranslationUnit.Create(type), IdentifierTranslationUnit.Create(name));
         }
 
         /// <summary>

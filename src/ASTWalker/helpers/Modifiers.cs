@@ -20,36 +20,36 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         /// <param name="tokenList">The <see cref="SyntaxTokenList"/> containing the list of modifiers.</param>
         /// <returns></returns>
-        public static VisibilityToken Get(this SyntaxTokenList tokenList)
+        public static ModifierTokens Get(this SyntaxTokenList tokenList)
         {
             if (tokenList == null)
             {
                 throw new ArgumentNullException("tokenList");
             }
 
-            VisibilityToken visibility = VisibilityToken.None;
+            ModifierTokens visibility = ModifierTokens.None;
 
             foreach (SyntaxToken token in tokenList)
             {
-                if (token.ValueText.CompareTo(TokenUtility.ToString(VisibilityToken.Public)) == 0)
+                if (token.ValueText.CompareTo(TokenUtility.ToString(ModifierTokens.Public)) == 0)
                 {
-                    visibility = visibility | VisibilityToken.Public; continue;
+                    visibility = visibility | ModifierTokens.Public; continue;
                 }
-                if (token.ValueText.CompareTo(TokenUtility.ToString(VisibilityToken.Private)) == 0)
+                if (token.ValueText.CompareTo(TokenUtility.ToString(ModifierTokens.Private)) == 0)
                 {
-                    visibility = visibility | VisibilityToken.Private; continue;
+                    visibility = visibility | ModifierTokens.Private; continue;
                 }
-                if (token.ValueText.CompareTo(TokenUtility.ToString(VisibilityToken.Internal)) == 0)
+                if (token.ValueText.CompareTo(TokenUtility.ToString(ModifierTokens.Internal)) == 0)
                 {
-                    visibility = visibility | VisibilityToken.Internal; continue;
+                    visibility = visibility | ModifierTokens.Internal; continue;
                 }
-                if (token.ValueText.CompareTo(TokenUtility.ToString(VisibilityToken.Protected)) == 0)
+                if (token.ValueText.CompareTo(TokenUtility.ToString(ModifierTokens.Protected)) == 0)
                 {
-                    visibility = visibility | VisibilityToken.Protected; continue;
+                    visibility = visibility | ModifierTokens.Protected; continue;
                 }
-                if (token.ValueText.CompareTo(TokenUtility.ToString(VisibilityToken.Static)) == 0)
+                if (token.ValueText.CompareTo(TokenUtility.ToString(ModifierTokens.Static)) == 0)
                 {
-                    visibility = visibility | VisibilityToken.Static; continue;
+                    visibility = visibility | ModifierTokens.Static; continue;
                 }
             }
 
@@ -61,10 +61,10 @@ namespace Rosetta.AST.Helpers
         /// </summary>
         /// <param name="visibilityToken"></param>
         /// <returns></returns>
-        public static bool IsExposedVisibility(this VisibilityToken visibilityToken)
+        public static bool IsExposedVisibility(this ModifierTokens visibilityToken)
         {
-            return visibilityToken.HasFlag(VisibilityToken.Public) || 
-                   visibilityToken.HasFlag(VisibilityToken.Internal);
+            return visibilityToken.HasFlag(ModifierTokens.Public) || 
+                   visibilityToken.HasFlag(ModifierTokens.Internal);
         }
     }
 }

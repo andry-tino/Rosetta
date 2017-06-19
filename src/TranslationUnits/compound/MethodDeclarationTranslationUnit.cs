@@ -23,7 +23,7 @@ namespace Rosetta.Translation
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodDeclarationTranslationUnit"/> class.
         /// </summary>
-        protected MethodDeclarationTranslationUnit() : base(IdentifierTranslationUnit.Empty, VisibilityToken.None)
+        protected MethodDeclarationTranslationUnit() : base(IdentifierTranslationUnit.Empty, ModifierTokens.None)
         {
             this.statements = new List<ITranslationUnit>();
         }
@@ -44,12 +44,12 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
         public new static MethodDeclarationTranslationUnit Create(
-            VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
+            ModifierTokens modifiers, ITranslationUnit returnType, ITranslationUnit name)
         {
             if (name == null)
             {
@@ -58,7 +58,7 @@ namespace Rosetta.Translation
 
             return new MethodDeclarationTranslationUnit()
             {
-                Visibility = visibility,
+                Modifiers = modifiers,
                 Name = name,
                 ReturnType = returnType
             };

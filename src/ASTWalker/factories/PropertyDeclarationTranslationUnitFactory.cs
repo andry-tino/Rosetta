@@ -55,7 +55,7 @@ namespace Rosetta.AST.Factories
             PropertyDeclaration helper = this.CreateHelper(this.Node as PropertyDeclarationSyntax, this.SemanticModel);
 
             var propertyDeclaration = this.CreateTranslationUnit(
-                helper.Visibility,
+                helper.Modifiers,
                 TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType()),
                 IdentifierTranslationUnit.Create(helper.Name),
                 helper.HasGet,
@@ -75,16 +75,16 @@ namespace Rosetta.AST.Factories
         /// <summary>
         /// Creates the translation unit.
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="hasGet"></param>
         /// <param name="hasSet"></param>
         /// <returns></returns>
         protected virtual ITranslationUnit CreateTranslationUnit(
-            VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name, bool hasGet, bool hasSet)
+            ModifierTokens modifiers, ITranslationUnit type, ITranslationUnit name, bool hasGet, bool hasSet)
         {
-            return PropertyDeclarationTranslationUnit.Create(visibility, type, name, hasGet, hasSet);
+            return PropertyDeclarationTranslationUnit.Create(modifiers, type, name, hasGet, hasSet);
         }
 
         /// <summary>

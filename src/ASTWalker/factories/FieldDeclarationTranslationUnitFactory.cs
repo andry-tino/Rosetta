@@ -55,7 +55,7 @@ namespace Rosetta.AST.Factories
             var helper = this.CreateHelper(this.Node as FieldDeclarationSyntax, this.SemanticModel);
 
             var fieldDeclaration = this.CreateTranslationUnit(
-                helper.Visibility,
+                helper.Modifiers,
                 TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType()), // TODO: Create a factory for type reference
                 IdentifierTranslationUnit.Create(helper.Name));
 
@@ -73,14 +73,14 @@ namespace Rosetta.AST.Factories
         /// <summary>
         /// Creates the translation unit.
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
         protected virtual ITranslationUnit CreateTranslationUnit(
-            VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name)
+            ModifierTokens modifiers, ITranslationUnit type, ITranslationUnit name)
         {
-            return FieldDeclarationTranslationUnit.Create(visibility, type, name);
+            return FieldDeclarationTranslationUnit.Create(modifiers, type, name);
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderSimpleEmptyClass()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "SimpleEmptyClass", null);
+                ModifierTokens.Public, "SimpleEmptyClass", null);
 
             return translationUnit.Translate();
         }
@@ -35,7 +35,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyClassWithInheritance()
         {
             ITranslationUnit translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "EmptyClassWithInheritance", "BaseClass");
+                ModifierTokens.Public, "EmptyClassWithInheritance", "BaseClass");
 
             return translationUnit.Translate();
         }
@@ -48,7 +48,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyClassWithOneInterface()
         {
             var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "EmptyClassWithOneInterface", null)
+                ModifierTokens.Public, "EmptyClassWithOneInterface", null)
                 as ClassDeclarationTranslationUnit;
 
             translationUnit.AddInterface("Interface1");
@@ -64,7 +64,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyClassWithManyInterface()
         {
             var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "EmptyClassWithManyInterface", null)
+                ModifierTokens.Public, "EmptyClassWithManyInterface", null)
                 as ClassDeclarationTranslationUnit;
 
             translationUnit.AddInterface("Interface1");
@@ -82,7 +82,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderEmptyClassWithInheritanceAndManyInterface()
         {
             var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "EmptyClassWithInheritanceAndManyInterface", "BaseClass")
+                ModifierTokens.Public, "EmptyClassWithInheritanceAndManyInterface", "BaseClass")
                 as ClassDeclarationTranslationUnit;
 
             translationUnit.AddInterface("Interface1");
@@ -100,7 +100,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string RenderClassWithEmptyMethods()
         {
             var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "ClassWithEmptyMethods", null)
+                ModifierTokens.Public, "ClassWithEmptyMethods", null)
                 as ClassDeclarationTranslationUnit;
 
             translationUnit.AddEmptyMethod("Method1");
@@ -118,7 +118,7 @@ namespace Rosetta.Translation.Renderings.Data
         public string ClassWithSimpleMethods()
         {
             var translationUnit = TranslationUnitBuilder.BuildClassTranslationUnit(
-                VisibilityToken.Public, "ClassWithSimpleMethods", null)
+                ModifierTokens.Public, "ClassWithSimpleMethods", null)
                 as ClassDeclarationTranslationUnit;
 
             var method1 = translationUnit.AddEmptyMethod("Method1");

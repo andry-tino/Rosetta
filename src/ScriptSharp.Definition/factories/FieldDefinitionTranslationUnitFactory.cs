@@ -66,12 +66,12 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             {
                 var helper = new FieldDeclaration(this.Node as FieldDeclarationSyntax);
                 
-                if (helper.Visibility.IsExposedVisibility())
+                if (helper.Modifiers.IsExposedVisibility())
                 {
                     return false;
                 }
 
-                if (this.createWhenProtected && helper.Visibility.HasFlag(VisibilityToken.Protected))
+                if (this.createWhenProtected && helper.Modifiers.HasFlag(ModifierTokens.Protected))
                 {
                     return false;
                 }
@@ -83,14 +83,14 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         /// <summary>
         /// Creates the translation unit.
         /// </summary>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
         protected override ITranslationUnit CreateTranslationUnit(
-            VisibilityToken visibility, ITranslationUnit type, ITranslationUnit name)
+            ModifierTokens modifiers, ITranslationUnit type, ITranslationUnit name)
         {
-            return FieldDefinitionTranslationUnit.Create(visibility, type, name);
+            return FieldDefinitionTranslationUnit.Create(modifiers, type, name);
         }
 
         /// <summary>

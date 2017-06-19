@@ -55,7 +55,7 @@ namespace Rosetta.AST.Factories
             MethodDeclaration helper = this.CreateHelper(this.Node as MethodDeclarationSyntax, this.SemanticModel);
 
             var methodDeclaration = this.CreateTranslationUnit(
-                helper.Visibility,
+                helper.Modifiers,
                 TypeIdentifierTranslationUnit.Create(helper.ReturnType.FullName.MapType()),
                 IdentifierTranslationUnit.Create(helper.Name)) as MethodSignatureDeclarationTranslationUnit;
 
@@ -83,14 +83,14 @@ namespace Rosetta.AST.Factories
         /// <remarks>
         /// Must return a type inheriting from <see cref="MethodSignatureDeclarationTranslationUnit"/>.
         /// </remarks>
-        /// <param name="visibility"></param>
+        /// <param name="modifiers"></param>
         /// <param name="returnType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
         protected virtual ITranslationUnit CreateTranslationUnit(
-            VisibilityToken visibility, ITranslationUnit returnType, ITranslationUnit name)
+            ModifierTokens modifiers, ITranslationUnit returnType, ITranslationUnit name)
         {
-            return MethodDeclarationTranslationUnit.Create(visibility, returnType, name);
+            return MethodDeclarationTranslationUnit.Create(modifiers, returnType, name);
         }
 
         /// <summary>

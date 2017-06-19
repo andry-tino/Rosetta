@@ -46,24 +46,24 @@ namespace Rosetta.Translation
         /// <summary>
         /// Converts the visibility into the appropriate TypeScript token.
         /// </summary>
-        /// <param name="visibilityToken">The visibility.</param>
+        /// <param name="modifierTokens">The modifiers.</param>
         /// <returns></returns>
-        public static string ToString(this VisibilityToken visibilityToken)
+        public static string ToString(this ModifierTokens modifierTokens)
         {
             string representation = string.Empty;
 
-            if (visibilityToken != VisibilityToken.None)
+            if (modifierTokens != ModifierTokens.None)
             {
                 var modifiers = new List<string>();
 
-                foreach (VisibilityToken flag in Enum.GetValues(typeof(VisibilityToken)))
+                foreach (ModifierTokens flag in Enum.GetValues(typeof(ModifierTokens)))
                 {
-                    if (flag == VisibilityToken.None)
+                    if (flag == ModifierTokens.None)
                     {
                         continue;
                     }
 
-                    if (visibilityToken.HasFlag(flag))
+                    if (modifierTokens.HasFlag(flag))
                     {
                         modifiers.Add(flag.ToString("G").ToLower());
                     }
@@ -78,39 +78,39 @@ namespace Rosetta.Translation
         /// <summary>
         /// Generates a <see cref="VisibilityToken"/> which is fully TypeScript compliant.
         /// </summary>
-        /// <param name="visibilityToken"></param>
+        /// <param name="modifierTokens">The modifiers.</param>
         /// <returns></returns>
-        public static VisibilityToken ConvertToTypeScriptEquivalent(this VisibilityToken visibilityToken)
+        public static ModifierTokens ConvertToTypeScriptEquivalent(this ModifierTokens modifierTokens)
         {
-            VisibilityToken modifiers = VisibilityToken.None;
+            ModifierTokens modifiers = ModifierTokens.None;
 
-            if (visibilityToken.HasFlag(VisibilityToken.Static))
+            if (modifierTokens.HasFlag(ModifierTokens.Static))
             {
-                modifiers |= VisibilityToken.Static;
+                modifiers |= ModifierTokens.Static;
             }
 
-            if (visibilityToken.HasFlag(VisibilityToken.Private))
+            if (modifierTokens.HasFlag(ModifierTokens.Private))
             {
-                modifiers |= VisibilityToken.Private;
+                modifiers |= ModifierTokens.Private;
 
                 return modifiers;
             }
 
-            if (visibilityToken.HasFlag(VisibilityToken.Public))
+            if (modifierTokens.HasFlag(ModifierTokens.Public))
             {
-                modifiers |= VisibilityToken.Public;
+                modifiers |= ModifierTokens.Public;
 
                 return modifiers;
             }
 
-            if (visibilityToken.HasFlag(VisibilityToken.Protected))
+            if (modifierTokens.HasFlag(ModifierTokens.Protected))
             {
-                modifiers |= VisibilityToken.Protected;
+                modifiers |= ModifierTokens.Protected;
 
-                if (visibilityToken.HasFlag(VisibilityToken.Internal))
+                if (modifierTokens.HasFlag(ModifierTokens.Internal))
                 {
-                    modifiers &= ~VisibilityToken.Protected; // Remove protected
-                    modifiers |= VisibilityToken.Public; // Add public
+                    modifiers &= ~ModifierTokens.Protected; // Remove protected
+                    modifiers |= ModifierTokens.Public; // Add public
 
                     return modifiers;
                 }
@@ -118,9 +118,9 @@ namespace Rosetta.Translation
                 return modifiers;
             }
 
-            if (visibilityToken.HasFlag(VisibilityToken.Internal))
+            if (modifierTokens.HasFlag(ModifierTokens.Internal))
             {
-                modifiers |= VisibilityToken.Public;
+                modifiers |= ModifierTokens.Public;
 
                 return modifiers;
             }
@@ -131,13 +131,13 @@ namespace Rosetta.Translation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="visibilityToken"></param>
+        /// <param name="modifierTokens">The modifiers.</param>
         /// <returns></returns>
-        public static string EmitOptionalVisibility(this VisibilityToken visibilityToken)
+        public static string EmitOptionalVisibility(this ModifierTokens modifierTokens)
         {
-            return visibilityToken == VisibilityToken.None ? 
+            return modifierTokens == ModifierTokens.None ? 
                 string.Empty :
-                string.Format("{0} ", ToString(visibilityToken));
+                string.Format("{0} ", ToString(modifierTokens));
         }
 
         /// <summary>

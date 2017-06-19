@@ -22,7 +22,7 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="Name"></param>
         protected MemberTranslationUnit(ITranslationUnit name) 
-            : this(name, VisibilityToken.None)
+            : this(name, ModifierTokens.None)
         {
         }
 
@@ -31,8 +31,8 @@ namespace Rosetta.Translation
         /// </summary>
         /// <param name="name"></param>
         /// <param name="visibility"></param>
-        protected MemberTranslationUnit(ITranslationUnit name, VisibilityToken visibility)
-            : base(visibility)
+        protected MemberTranslationUnit(ITranslationUnit name, ModifierTokens modifiers)
+            : base(modifiers)
         {
             this.Name = name;
         }

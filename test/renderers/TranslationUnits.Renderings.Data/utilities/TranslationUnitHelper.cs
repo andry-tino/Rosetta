@@ -21,7 +21,7 @@ namespace Rosetta.Translation.Renderings.Data
         public static ClassDeclarationTranslationUnit AddClass(this ModuleTranslationUnit translationUnit, string className)
         {
             var classTranslationUnit = ClassDeclarationTranslationUnit.Create(
-                VisibilityToken.Public, IdentifierTranslationUnit.Create(className), null);
+                ModifierTokens.Public, IdentifierTranslationUnit.Create(className), null);
             translationUnit.AddClass(classTranslationUnit);
             return classTranslationUnit;
         }
@@ -36,7 +36,7 @@ namespace Rosetta.Translation.Renderings.Data
         public static ClassDeclarationTranslationUnit AddClass(this ModuleTranslationUnit translationUnit, string className, string baseClassName)
         {
             var classTranslationUnit = ClassDeclarationTranslationUnit.Create(
-                VisibilityToken.Public, IdentifierTranslationUnit.Create(className), IdentifierTranslationUnit.Create(baseClassName));
+                ModifierTokens.Public, IdentifierTranslationUnit.Create(className), IdentifierTranslationUnit.Create(baseClassName));
             translationUnit.AddClass(classTranslationUnit);
             return classTranslationUnit;
         }
@@ -70,7 +70,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// <returns></returns>
         public static MethodDeclarationTranslationUnit AddMethod(this ClassDeclarationTranslationUnit translationUnit, string returnType, string name)
         {
-            var methodTranslationUnit = MethodDeclarationTranslationUnit.Create(VisibilityToken.Public, 
+            var methodTranslationUnit = MethodDeclarationTranslationUnit.Create(ModifierTokens.Public, 
                 returnType != null ? TypeIdentifierTranslationUnit.Create(returnType) : null, 
                 IdentifierTranslationUnit.Create(name));
             translationUnit.AddMethodDeclaration(methodTranslationUnit);
@@ -85,7 +85,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// <returns></returns>
         public static MethodDeclarationTranslationUnit AddEmptyMethod(this ClassDeclarationTranslationUnit translationUnit, string method)
         {
-            var methodDeclaration = MethodDeclarationTranslationUnit.Create(VisibilityToken.Public, null, IdentifierTranslationUnit.Create(method));
+            var methodDeclaration = MethodDeclarationTranslationUnit.Create(ModifierTokens.Public, null, IdentifierTranslationUnit.Create(method));
             translationUnit.AddMethodDeclaration(methodDeclaration);
             return methodDeclaration;
         }
@@ -98,7 +98,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// <returns></returns>
         public static MethodSignatureDeclarationTranslationUnit AddSignature(this InterfaceDeclarationTranslationUnit translationUnit, string signature)
         {
-            var methodSignatureDeclaration = MethodSignatureDeclarationTranslationUnit.Create(VisibilityToken.Public, null, IdentifierTranslationUnit.Create(signature));
+            var methodSignatureDeclaration = MethodSignatureDeclarationTranslationUnit.Create(ModifierTokens.Public, null, IdentifierTranslationUnit.Create(signature));
             translationUnit.AddSignature(methodSignatureDeclaration);
             return methodSignatureDeclaration;
         }

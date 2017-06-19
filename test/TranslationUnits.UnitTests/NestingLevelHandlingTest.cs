@@ -59,7 +59,7 @@ namespace Rosetta.Translation.UnitTests
             TestInitialNestingLevel(translationUnit);
 
             var nestedTranslationUnit = ClassDeclarationTranslationUnit.Create(
-                VisibilityToken.None, IdentifierTranslationUnit.Create("Class1"), null);
+                ModifierTokens.None, IdentifierTranslationUnit.Create("Class1"), null);
 
             translationUnit.AddClass(nestedTranslationUnit);
             TestNestingLevels(translationUnit, nestedTranslationUnit);
@@ -69,11 +69,11 @@ namespace Rosetta.Translation.UnitTests
         public void ClassAddsMethod()
         {
             var translationUnit = ClassDeclarationTranslationUnit.Create(
-                VisibilityToken.None, IdentifierTranslationUnit.Create("Class1"), null);
+                ModifierTokens.None, IdentifierTranslationUnit.Create("Class1"), null);
             TestInitialNestingLevel(translationUnit);
 
             var nestedTranslationUnit = MethodDeclarationTranslationUnit.Create(
-                VisibilityToken.None, null, IdentifierTranslationUnit.Create("Method1"));
+                ModifierTokens.None, null, IdentifierTranslationUnit.Create("Method1"));
 
             translationUnit.AddMethodDeclaration(nestedTranslationUnit);
             TestNestingLevels(translationUnit, nestedTranslationUnit);
@@ -83,7 +83,7 @@ namespace Rosetta.Translation.UnitTests
         public void MethodAddsStatement()
         {
             var translationUnit = MethodDeclarationTranslationUnit.Create(
-                VisibilityToken.None, null, IdentifierTranslationUnit.Create("Method1")); ;
+                ModifierTokens.None, null, IdentifierTranslationUnit.Create("Method1")); ;
             TestInitialNestingLevel(translationUnit);
 
             var nestedTranslationUnit = VariableDeclarationTranslationUnit.Create(
