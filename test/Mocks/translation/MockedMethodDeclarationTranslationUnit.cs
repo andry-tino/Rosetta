@@ -39,5 +39,10 @@ namespace Rosetta.Translation.Mocks
         {
             get { return this.returnType; }
         }
+
+        public new ModifierTokens Modifiers
+        {
+            get { return base.Modifiers; }
+        }
     }
 }
