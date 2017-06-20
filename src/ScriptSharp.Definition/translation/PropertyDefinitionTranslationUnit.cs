@@ -104,10 +104,10 @@ namespace Rosetta.ScriptSharp.Definition.Translation
 
             if (this.hasGet)
             {
-                // Opening declaration: [<visibility>] get <name>() : <type> {
+                // Opening declaration: [<modifiers>] get <name>() : <type> {
                 // TODO: Handle case of no visibility specified
                 writer.WriteLine("{0}{1}{2} {3} {4}{5}",
-                    this.RenderedVisibilityModifier,
+                    this.RenderedModifiers,
                     this.RenderedGetterMethodName,
                     Lexems.OpenRoundBracket + Lexems.CloseRoundBracket,
                     Lexems.Colon,
@@ -120,10 +120,10 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                 var valueParameter = ArgumentDefinitionTranslationUnit.Create(
                     this.type, IdentifierTranslationUnit.Create("value"));
 
-                // Opening declaration: [<visibility>] set <name>(value : <type>) : void {
+                // Opening declaration: [<modifiers>] set <name>(value : <type>) : void {
                 // Emitting `void` in order to prevent errors in case of implicitAllowAny
                 writer.WriteLine("{0}{1}{2}{3}{4} {5} {6}",
-                    this.RenderedVisibilityModifier,
+                    this.RenderedModifiers,
                     this.RenderedSetterMethodName,
                     Lexems.OpenRoundBracket,
                     valueParameter.Translate(),
@@ -135,19 +135,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             return writer.ToString();
         }
         
-        protected virtual string RenderedVisibilityModifier
-        {
-            get
-            {
-                if (this.Modifiers.HasFlag(ModifierTokens.Protected))
-                {
-                    // If protected, emit the visibility modifier
-                    return this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
-                }
-
-                return string.Empty;
-            }
-        }
+        protected virtual string RenderedModifiers => this.Modifiers.ConvertToTypeScriptEquivalent().StripPublic().EmitOptionalVisibility();
 
         private string RenderedName => this.Name.Translate();
 

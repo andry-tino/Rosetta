@@ -76,7 +76,7 @@ namespace Rosetta.Translation
         }
 
         /// <summary>
-        /// Generates a <see cref="VisibilityToken"/> which is fully TypeScript compliant.
+        /// Generates a <see cref="ModifierTokens"/> which is fully TypeScript compliant.
         /// </summary>
         /// <param name="modifierTokens">The modifiers.</param>
         /// <returns></returns>
@@ -123,6 +123,23 @@ namespace Rosetta.Translation
                 modifiers |= ModifierTokens.Public;
 
                 return modifiers;
+            }
+
+            return modifiers;
+        }
+
+        /// <summary>
+        /// Removes the <see cref="ModifierTokens.Public"/> token if found among flags.
+        /// </summary>
+        /// <param name="modifierTokens">The modifiers.</param>
+        /// <returns></returns>
+        public static ModifierTokens StripPublic(this ModifierTokens modifierTokens)
+        {
+            ModifierTokens modifiers = modifierTokens;
+
+            if (modifierTokens.HasFlag(ModifierTokens.Public))
+            {
+                modifiers &= ~ModifierTokens.Public;
             }
 
             return modifiers;

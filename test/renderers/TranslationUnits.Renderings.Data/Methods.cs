@@ -44,6 +44,19 @@ namespace Rosetta.Translation.Renderings.Data
         /// 
         /// </summary>
         /// <returns></returns>
+        [RenderingResource("EmptyPublicStaticMethod.ts")]
+        public string RenderEmptyPublicStaticMethod()
+        {
+            ITranslationUnit translationUnit = TranslationUnitBuilder.BuildMethodTranslationUnit(
+                ModifierTokens.Public | ModifierTokens.Static, null, "EmptyPublicStaticMethod");
+
+            return translationUnit.Translate();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [RenderingResource("EmptyProtectedStaticMethod.ts")]
         public string RenderEmptyProtectedStaticMethod()
         {

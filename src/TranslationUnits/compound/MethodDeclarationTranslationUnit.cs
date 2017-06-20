@@ -86,14 +86,14 @@ namespace Rosetta.Translation
                 Formatter = this.Formatter
             };
 
-            // Opening declaration: [<visibility>] <method-name>(<params>) : <type> {
+            // Opening declaration: [<modifiers>] <method-name>(<params>) : <type> {
             // TODO: Handle case of no visibility specified
-            string methodVisibility = this.RenderedVisibilityModifier;
+            string modifiers = this.RenderedModifiers;
 
             if (this.ShouldRenderReturnType)
             {
                 writer.WriteLine("{0}{1}{2} {3} {4} {5}",
-                methodVisibility,
+                modifiers,
                 this.RenderedName,
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.Colon,
@@ -103,7 +103,7 @@ namespace Rosetta.Translation
             else
             {
                 writer.WriteLine("{0}{1}{2} {3}",
-                methodVisibility,
+                modifiers,
                 this.RenderedName,
                 SyntaxUtility.ToBracketEnclosedList(this.Arguments.Select(unit => unit.Translate())),
                 Lexems.OpenCurlyBracket);

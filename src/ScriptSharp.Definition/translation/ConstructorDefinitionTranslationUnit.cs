@@ -61,19 +61,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
             };
         }
 
-        protected override string RenderedVisibilityModifier
-        {
-            get
-            {
-                if (this.Modifiers.HasFlag(ModifierTokens.Protected))
-                {
-                    // If protected, emit the visibility modifier
-                    return this.Modifiers.ConvertToTypeScriptEquivalent().EmitOptionalVisibility();
-                }
-
-                return string.Empty;
-            }
-        }
+        protected override string RenderedModifiers => this.Modifiers.ConvertToTypeScriptEquivalent().StripPublic().EmitOptionalVisibility();
 
         protected override bool ShouldRenderReturnType
         {
