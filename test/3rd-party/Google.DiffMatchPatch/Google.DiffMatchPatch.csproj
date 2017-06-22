@@ -43,6 +43,11 @@
   <ItemGroup>
     <Compile Include="Diff.cs" />
     <Compile Include="DiffMatchPatch.cs" />
+    <Compile Include="DiffOutputText.cs" />
+    <Compile Include="display\DifferenceDisplayerFactory.cs" />
+    <Compile Include="display\DifferenceDisplayMode.cs" />
+    <Compile Include="display\IDifferenceDisplayer.cs" />
+    <Compile Include="display\PlainTextSeparatedDifferenceDisplayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

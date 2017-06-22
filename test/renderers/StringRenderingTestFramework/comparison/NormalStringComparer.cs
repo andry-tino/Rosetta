@@ -23,7 +23,7 @@ namespace Rosetta.Renderings
         /// <returns></returns>
         public CompareResult Compare(string x, string y)
         {
-            DMP.Diff.DiffOutputText output = DMP.Diff.ComputeDifferences(x, y);
+            DMP.DiffOutputText output = DMP.Diff.ComputeDifferences(x, y);
 
             var result = new CompareResult();
             result.Result = output.NumberOfDifferences == 0; // Ok if no differences
