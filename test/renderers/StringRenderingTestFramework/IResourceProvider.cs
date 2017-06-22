@@ -3,7 +3,7 @@
 /// Andrea Tino - 2015
 /// </summary>
 
-namespace Rosetta.Translation.Renderings.Tests
+namespace Rosetta.Renderings
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Rosetta.Translation.Renderings.Tests
     /// <summary>
     /// 
     /// </summary>
-    internal interface IResourceProvider
+    public interface IResourceProvider
     {
         /// <summary>
         /// Provides the necessary resources for processing comparison test.

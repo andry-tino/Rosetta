@@ -8,6 +8,8 @@ namespace Rosetta.Translation.Renderings.Tests
     using System;
     using System.Collections.Generic;
 
+    using Rosetta.Renderings;
+
     /// <summary>
     /// 
     /// </summary>
