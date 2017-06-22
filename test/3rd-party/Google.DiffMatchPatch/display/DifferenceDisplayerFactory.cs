@@ -32,7 +32,7 @@ namespace Rosetta.ThirdParty.Google.DiffMatchPatch
             switch (this.mode)
             {
                 case DifferenceDisplayMode.HTML:
-                    return null;
+                    return null; // TODO: Create this displayer
                 case DifferenceDisplayMode.PlainTextSeparated:
                 default:
                     return new PlainTextSeparatedDifferenceDisplayer();

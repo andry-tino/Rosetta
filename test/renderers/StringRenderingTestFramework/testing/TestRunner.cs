@@ -63,17 +63,42 @@ namespace Rosetta.Renderings
 
             foreach (var testResource in this.testResources)
             {
-                var actual = testResource.ActualValue; // Causes reflection to be invoked
-                var archetype = testResource.ArchetypeValue; // Causes assembly resource to be extracted
+                string actual = null;
+                string archetype = null;
+                Exception exception = null;
 
-                var result = this.comparer.Compare(actual, archetype);
-                this.OverallResult = this.OverallResult.Value && result.Result;
+                try
+                {
+                    actual = testResource.ActualValue; // Causes reflection to be invoked
+                    archetype = testResource.ArchetypeValue; // Causes assembly resource to be extracted
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+                }
 
+                if (actual != null && archetype != null)
+                {
+                    var result = this.comparer.Compare(actual, archetype);
+                    this.OverallResult = this.OverallResult.Value && result.Result;
+
+                    results.Add(new ResourceTestRunResult()
+                    {
+                        TestRunName = testResource.EmbeddedResourceName,
+                        Resource = testResource,
+                        Result = result
+                    });
+
+                    continue;
+                }
+
+                // Handle error here
                 results.Add(new ResourceTestRunResult()
                 {
-                    Resource = testResource,
-                    Result = result
+                    TestRunName = testResource.EmbeddedResourceName,
+                    Exception = exception
                 });
+                this.OverallResult = false;
             }
 
             // Building report and summary
@@ -86,18 +111,40 @@ namespace Rosetta.Renderings
             foreach (var result in results)
             {
                 // Report
-                report.AppendLine($"{result.Resource.EmbeddedResourceName} => {result.Result.Result.ToTestPassResult()}");
-
-                // Summary
-                if (!result.Result.Result)
+                if (result.Exception != null)
                 {
-                    summary.AppendLine($"{result.Resource.EmbeddedResourceName}");
-                    summary.AppendLine(Utilities.PrintSeparator(result.Resource.EmbeddedResourceName.Length));
-                    summary.AppendLine(result.Result.Description);
+                    report.AppendLine($"{result.TestRunName} => Exception");
                 }
                 else
                 {
-                    summary.AppendLine($"{result.Resource.EmbeddedResourceName} is OK");
+                    report.AppendLine($"{result.TestRunName} => {result.ToTestPassResult()}");
+                }
+
+                // Summary
+                if (result.Exception != null)
+                {
+                    // Report exception
+                    summary.AppendLine($"{result.TestRunName}");
+                    summary.AppendLine(Utilities.PrintSeparator(result.TestRunName.Length));
+                    summary.AppendLine("Exception was thrown! Details below.");
+                    summary.AppendLine(result.Exception.Message);
+                    summary.AppendLine("Stack:");
+                    summary.AppendLine(result.Exception.StackTrace);
+                }
+                else
+                {
+                    if (!result.Result.Result)
+                    {
+                        // Report fail
+                        summary.AppendLine($"{result.TestRunName}");
+                        summary.AppendLine(Utilities.PrintSeparator(result.TestRunName.Length));
+                        summary.AppendLine(result.Result.Description);
+                    }
+                    else
+                    {
+                        // Report success
+                        summary.AppendLine($"{result.TestRunName} is OK");
+                    }
                 }
                 summary.AppendLine();
             }

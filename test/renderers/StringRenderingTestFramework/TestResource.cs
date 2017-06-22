@@ -78,7 +78,7 @@ namespace Rosetta.Renderings
                 return str;
             };
 
-            this.EmbeddedResourceName = GetRenderingResourceAttributeValue(this.methodInfo.CustomAttributes);
+            this.EmbeddedResourceName = Utilities.RetrieveRenderingResourceAttributeValue(this.methodInfo.CustomAttributes);
             if (this.EmbeddedResourceName == null)
             {
                 throw new InvalidOperationException("Could not retrieve embedded resource name");
@@ -149,54 +149,6 @@ namespace Rosetta.Renderings
                 return this.actualValue;
             }
         }
-
-        private static string GetRenderingResourceAttributeValue(IEnumerable<CustomAttributeData> attributes)
-        {
-            if (attributes.Count() == 0)
-            {
-                return null;
-            }
-
-            foreach (var attribute in attributes)
-            {
-                if (attribute.AttributeType == typeof(RenderingResourceAttribute))
-                {
-                    // Get the value of the parameter `fileName`
-                    // First search among ctor arguments
-                    foreach (var arg in attribute.ConstructorArguments)
-                    {
-                        var value = arg.Value;
-
-                        if (value != null)
-                        {
-                            return value as string;
-                        }
-                    }
-
-                    // First search among named arguments
-                    foreach (var arg in attribute.NamedArguments)
-                    {
-                        var name = arg.MemberName;
-
-                        if (name == RenderingResourceAttributePropertyName)
-                        {
-                            var value = arg.TypedValue.Value;
-
-                            if (value != null)
-                            {
-                                return value as string;
-                            }
-                        }
-                    }
-
-                    return null; // Problems getting the value
-                }
-            }
-
-            return null; // Could not be found
-        }
-
-        private static string RenderingResourceAttributePropertyName => typeof(RenderingResourceAttribute).GetProperties().First().Name;
 
         #region Types
 

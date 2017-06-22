@@ -13,6 +13,11 @@ namespace Rosetta.Renderings
     public class ResourceTestRunResult
     {
         /// <summary>
+        /// Gets or sets the name associated to this run.
+        /// </summary>
+        public string TestRunName { get; set; }
+
+        /// <summary>
         /// The <see cref="TestResource"/> the test was conducted on.
         /// </summary>
         public TestResource Resource { get; set; }
@@ -21,5 +26,10 @@ namespace Rosetta.Renderings
         /// The <see cref="CompareResult"/>.
         /// </summary>
         public CompareResult Result { get; set; }
+
+        /// <summary>
+        /// In case the test occurred into an exception, the issue is reported here.
+        /// </summary>
+        public Exception Exception { get; set; }
     }
 }
