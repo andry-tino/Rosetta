@@ -20,21 +20,16 @@ namespace Rosetta.Translation.Renderings.Tests
     internal class MethodsResourceDeployer : IResourceProvider
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MethodsResourceDeployer"/> class.
-        /// </summary>
-        public MethodsResourceDeployer()
-        {
-        }
-
-        /// <summary>
         /// Provides the necessary resources for processing comparison test.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<TestResource> Provide() => 
-            RenderingUtils.RetrieveAllTestMethodsInClassContainer(typeof(TestData.Methods))
+            RenderingUtils.RetrieveAllTestMethodsInClassContainer(this.Container)
                 .Select(method => method.Name)
-                .Select(name => new TestResource(typeof(TestData.Methods), name, this.Assembly));
+                .Select(name => new TestResource(this.Container, name, this.Assembly));
 
         private Assembly Assembly => typeof(MethodsResourceDeployer).Assembly;
+
+        private Type Container => typeof(TestData.Methods);
     }
 }

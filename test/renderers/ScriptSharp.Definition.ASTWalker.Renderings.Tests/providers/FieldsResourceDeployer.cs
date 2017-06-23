@@ -1,9 +1,9 @@
 ﻿/// <summary>
-/// ClassesResourceDeployer.cs
-/// Andrea Tino - 2015
+/// FieldsResourceDeployer.cs
+/// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Translation.Renderings.Tests
+namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -11,13 +11,13 @@ namespace Rosetta.Translation.Renderings.Tests
     using System.Reflection;
 
     using Rosetta.Renderings;
-    using TestData = Rosetta.Translation.Renderings.Data;
+    using TestData = Rosetta.ScriptSharp.Definition.AST.Renderings.Data;
     using RenderingUtils = Rosetta.Renderings.Utilities;
 
     /// <summary>
     /// 
     /// </summary>
-    internal class ClassesResourceDeployer : IResourceProvider
+    internal class FieldsResourceDeployer : IResourceProvider
     {
         /// <summary>
         /// Provides the necessary resources for processing comparison test.
@@ -28,8 +28,8 @@ namespace Rosetta.Translation.Renderings.Tests
                 .Select(method => method.Name)
                 .Select(name => new TestResource(this.Container, name, this.Assembly));
 
-        private Assembly Assembly => typeof(ClassesResourceDeployer).Assembly;
+        private Assembly Assembly => typeof(FieldsResourceDeployer).Assembly;
 
-        private Type Container => typeof(TestData.Classes);
+        private Type Container => typeof(TestData.Fields);
     }
 }

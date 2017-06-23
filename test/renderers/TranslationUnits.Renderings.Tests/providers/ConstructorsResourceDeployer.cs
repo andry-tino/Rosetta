@@ -1,6 +1,6 @@
 ﻿/// <summary>
-/// ClassesResourceDeployer.cs
-/// Andrea Tino - 2015
+/// ConstructorsResourceDeployer.cs
+/// Andrea Tino - 2017
 /// </summary>
 
 namespace Rosetta.Translation.Renderings.Tests
@@ -17,7 +17,7 @@ namespace Rosetta.Translation.Renderings.Tests
     /// <summary>
     /// 
     /// </summary>
-    internal class ClassesResourceDeployer : IResourceProvider
+    internal class ConstructorsResourceDeployer : IResourceProvider
     {
         /// <summary>
         /// Provides the necessary resources for processing comparison test.
@@ -28,8 +28,8 @@ namespace Rosetta.Translation.Renderings.Tests
                 .Select(method => method.Name)
                 .Select(name => new TestResource(this.Container, name, this.Assembly));
 
-        private Assembly Assembly => typeof(ClassesResourceDeployer).Assembly;
+        private Assembly Assembly => typeof(ConstructorsResourceDeployer).Assembly;
 
-        private Type Container => typeof(TestData.Classes);
+        private Type Container => typeof(TestData.Constructors);
     }
 }

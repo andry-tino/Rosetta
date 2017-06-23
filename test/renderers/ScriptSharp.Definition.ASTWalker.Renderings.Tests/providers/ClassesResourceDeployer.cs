@@ -1,9 +1,9 @@
 ﻿/// <summary>
 /// ClassesResourceDeployer.cs
-/// Andrea Tino - 2015
+/// Andrea Tino - 2017
 /// </summary>
 
-namespace Rosetta.Translation.Renderings.Tests
+namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Rosetta.Translation.Renderings.Tests
     using System.Reflection;
 
     using Rosetta.Renderings;
-    using TestData = Rosetta.Translation.Renderings.Data;
+    using TestData = Rosetta.ScriptSharp.Definition.AST.Renderings.Data;
     using RenderingUtils = Rosetta.Renderings.Utilities;
 
     /// <summary>

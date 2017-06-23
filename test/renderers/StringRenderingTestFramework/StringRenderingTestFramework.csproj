@@ -43,6 +43,9 @@
     <Compile Include="comparison\CompareResult.cs" />
     <Compile Include="comparison\IStringComparer.cs" />
     <Compile Include="comparison\NormalStringComparer.cs" />
+    <Compile Include="exceptions\AmbiguousEmbeddedResourceException.cs" />
+    <Compile Include="exceptions\EmbeddedResourceNameNotRetrievedException.cs" />
+    <Compile Include="exceptions\EmbeddedResourceNotFoundException.cs" />
     <Compile Include="IResourceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceDeployer.cs" />

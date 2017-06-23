@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{05248EBC-D954-453E-92F7-49A8F5F27446}</ProjectGuid>
+    <ProjectGuid>{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.Translation.Renderings.Tests</RootNamespace>
-    <AssemblyName>Rosetta.TranslationUnits.Renderings.Tests</AssemblyName>
+    <RootNamespace>Rosetta.AST.Renderings.Tests</RootNamespace>
+    <AssemblyName>Rosetta.ASTWalker.Renderings.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -50,33 +50,26 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="providers\MixedExpressionsResourceDeployer.cs" />
-    <Compile Include="providers\StatementsGroupsResourceDeployer.cs" />
-    <Compile Include="providers\StatementsResourceDeployer.cs" />
-    <Compile Include="providers\ReferencesResourceDeployer.cs" />
-    <Compile Include="providers\PropertiesResourceDeployer.cs" />
-    <Compile Include="providers\ModulesResourceDeployer.cs" />
-    <Compile Include="providers\MethodSignaturesResourceDeployer.cs" />
-    <Compile Include="providers\MembersResourceDeployer.cs" />
+    <Compile Include="providers\MethodsResourceDeployer.cs" />
     <Compile Include="providers\InterfacesResourceDeployer.cs" />
-    <Compile Include="providers\ExpressionsResourceDeployer.cs" />
     <Compile Include="providers\ConstructorsResourceDeployer.cs" />
     <Compile Include="providers\ClassesResourceDeployer.cs" />
-    <Compile Include="providers\MethodsResourceDeployer.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ASTWalker.Renderings.Data\ASTWalker.Renderings.Data.csproj">
+      <Project>{63d01926-ed5c-4d41-83c9-f98e05201c53}</Project>
+      <Name>ASTWalker.Renderings.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StringRenderingTestFramework\StringRenderingTestFramework.csproj">
       <Project>{a53b16a3-f913-437a-b5b3-635b6896f9b1}</Project>
       <Name>StringRenderingTestFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TranslationUnits.Renderings.Data\TranslationUnits.Renderings.Data.csproj">
-      <Project>{c9fd0872-c099-49b4-a55e-8ae0c3ea5675}</Project>
-      <Name>TranslationUnits.Renderings.Data</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="archetypes\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -95,18 +88,6 @@
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-    <EmbeddedResource Include="archetypes\classes\ClassWithEmptyMethods.ts" />
-    <EmbeddedResource Include="archetypes\classes\EmptyClassWithInheritance.ts" />
-    <EmbeddedResource Include="archetypes\classes\EmptyClassWithInheritanceAndManyInterface.ts" />
-    <EmbeddedResource Include="archetypes\classes\EmptyClassWithManyInterface.ts" />
-    <EmbeddedResource Include="archetypes\classes\EmptyClassWithOneInterface.ts" />
-    <EmbeddedResource Include="archetypes\classes\SimpleEmptyClass.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="archetypes\methods\SimpleEmptyMethod.ts" />
-    <EmbeddedResource Include="archetypes\methods\EmptyMethodWithReturn.ts" />
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

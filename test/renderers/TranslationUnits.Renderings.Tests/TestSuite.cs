@@ -6,7 +6,6 @@
 namespace Rosetta.Translation.Renderings.Tests
 {
     using System;
-    using System.Text;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,20 +14,87 @@ namespace Rosetta.Translation.Renderings.Tests
     [TestClass]
     public class TestSuite
     {
-        [ClassInitialize]
-        public static void Initialize(TestContext context)
+        [TestMethod]
+        public void TestClasses()
         {
+            Test(new ClassesResourceDeployer());
         }
 
-        [ClassCleanup]
-        public static void CleanUp()
+        [TestMethod]
+        public void TestConstructors()
         {
+            Test(new ConstructorsResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestExpressions()
+        {
+            Test(new ExpressionsResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestInterfaces()
+        {
+            Test(new InterfacesResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestMembers()
+        {
+            Test(new MembersResourceDeployer());
         }
 
         [TestMethod]
         public void TestMethods()
         {
-            var runner = new TestRunner(new MethodsResourceDeployer().Provide());
+            Test(new MethodsResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestMethodSignatures()
+        {
+            Test(new MethodSignaturesResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestMixedExpressions()
+        {
+            Test(new MixedExpressionsResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestModules()
+        {
+            Test(new ModulesResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestProperties()
+        {
+            Test(new PropertiesResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestReferences()
+        {
+            Test(new ReferencesResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestStatements()
+        {
+            Test(new StatementsResourceDeployer());
+        }
+
+        [TestMethod]
+        public void TestStatementsGroups()
+        {
+            Test(new StatementsGroupsResourceDeployer());
+        }
+
+        private void Test(IResourceProvider provider)
+        {
+            var runner = new TestRunner(provider.Provide());
             runner.Run();
 
             if (!runner.OverallResult.Value)

@@ -113,7 +113,7 @@ namespace Rosetta.Renderings
                 // Report
                 if (result.Exception != null)
                 {
-                    report.AppendLine($"{result.TestRunName} => Exception");
+                    report.AppendLine($"{result.TestRunName} => Exception ({GetExceptionFriendlyName(result.Exception)})");
                 }
                 else
                 {
@@ -185,6 +185,26 @@ namespace Rosetta.Renderings
             }
 
             return message.ToString();
+        }
+
+        private static string GetExceptionFriendlyName(Exception e)
+        {
+            if (e.GetType() == typeof(EmbeddedResourceNotFoundException))
+            {
+                return "Embedded resource not found";
+            }
+
+            if (e.GetType() == typeof(EmbeddedResourceNameNotRetrievedException))
+            {
+                return "Embedded resource name not retrieved";
+            }
+
+            if (e.GetType() == typeof(AmbiguousEmbeddedResourceException))
+            {
+                return "Ambiguous embedded resource";
+            }
+
+            return e.GetType().Name;
         }
     }
 }

@@ -59,9 +59,9 @@ namespace Rosetta.Renderings
             this.assembly = assembly == null ? containingClass.Assembly : assembly;
             this.methodInfo = containingClass.GetMethod(methodName);
 
-             // Generating the instance of the class. 
-             // Being a test class, it is supposed to have a parameterless constructor.
-             ConstructorInfo containingClassCtor = containingClass.GetConstructor(Type.EmptyTypes);
+            // Generating the instance of the class. 
+            // Being a test class, it is supposed to have a parameterless constructor.
+            ConstructorInfo containingClassCtor = containingClass.GetConstructor(Type.EmptyTypes);
             this.containingClassInstance = containingClassCtor.Invoke(new object[] { });
 
             // Generating quantities
@@ -81,7 +81,7 @@ namespace Rosetta.Renderings
             this.EmbeddedResourceName = Utilities.RetrieveRenderingResourceAttributeValue(this.methodInfo.CustomAttributes);
             if (this.EmbeddedResourceName == null)
             {
-                throw new InvalidOperationException("Could not retrieve embedded resource name");
+                throw new EmbeddedResourceNameNotRetrievedException("Could not retrieve embedded resource name");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Rosetta.Renderings
 
                     if (!deployer.IsResourceAvailableInAssembly)
                     {
-                        throw new InvalidOperationException($"Resource {this.EmbeddedResourceName} could not be found in assembly {this.assembly.FullName}");
+                        throw new EmbeddedResourceNotFoundException($"Resource {this.EmbeddedResourceName} could not be found in assembly {this.assembly.FullName}");
                     }
                     if (deployer.IsResourceNameAmbiguous)
                     {
@@ -120,7 +120,7 @@ namespace Rosetta.Renderings
                             message.AppendLine($"- {name}");
                         }
 
-                        throw new InvalidOperationException(message.ToString());
+                        throw new AmbiguousEmbeddedResourceException(message.ToString());
                     }
 
                     this.archetypeValue = deployer.ExtractResource();

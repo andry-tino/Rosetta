@@ -93,6 +93,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflection.ScriptSharp.Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringRenderingTestFramework", "test\renderers\StringRenderingTestFramework\StringRenderingTestFramework.csproj", "{A53B16A3-F913-437A-B5B3-635B6896F9B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp.Definition.ASTWalker.Renderings.Tests", "test\renderers\ScriptSharp.Definition.ASTWalker.Renderings.Tests\ScriptSharp.Definition.ASTWalker.Renderings.Tests.csproj", "{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker.Renderings.Tests", "test\renderers\ASTWalker.Renderings.Tests\ASTWalker.Renderings.Tests.csproj", "{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -389,6 +393,22 @@ Global
 		{A53B16A3-F913-437A-B5B3-635B6896F9B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A53B16A3-F913-437A-B5B3-635B6896F9B1}.Release|x86.ActiveCfg = Release|Any CPU
 		{A53B16A3-F913-437A-B5B3-635B6896F9B1}.Release|x86.Build.0 = Release|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Debug|x86.Build.0 = Debug|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Release|x86.ActiveCfg = Release|Any CPU
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090}.Release|x86.Build.0 = Release|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Debug|x86.Build.0 = Debug|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Release|x86.ActiveCfg = Release|Any CPU
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -433,6 +453,8 @@ Global
 		{FF06D702-DB9F-45E2-B641-317F9DC3F3B9} = {1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}
 		{FACF7879-484C-489A-BB65-1868D2D9F6B5} = {2683807F-29C3-4ED2-90F5-B342DB0A8B04}
 		{A53B16A3-F913-437A-B5B3-635B6896F9B1} = {A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}
+		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090} = {A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}
+		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6} = {A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
