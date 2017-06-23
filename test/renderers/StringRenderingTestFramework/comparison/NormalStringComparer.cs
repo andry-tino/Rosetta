@@ -23,7 +23,11 @@ namespace Rosetta.Renderings
         /// <returns></returns>
         public CompareResult Compare(string x, string y)
         {
-            DMP.DiffOutputText output = DMP.Diff.ComputeDifferences(x, y);
+            // Remove trailing and leading spaces or newlines in both strings first
+            string X = RemoveLeadingAndTrailingStuff(x);
+            string Y = RemoveLeadingAndTrailingStuff(y);
+
+            DMP.DiffOutputText output = DMP.Diff.ComputeDifferences(X, Y);
 
             var result = new CompareResult();
             result.Result = output.NumberOfDifferences == 0; // Ok if no differences
@@ -32,10 +36,15 @@ namespace Rosetta.Renderings
 
             string deletions = output.Deletions != null ? output.Deletions : "none";
             string insertions = output.Insertions != null ? output.Insertions : "none";
-            string description = $"Differences found.{nl}LEFT{nl}===={nl}{deletions}{nl}RIGHT{nl}===={nl}{insertions}";
+            string description = $"Found {output.NumberOfDifferences} difference(s).{nl}LEFT{nl}===={nl}{deletions}{nl}RIGHT{nl}===={nl}{insertions}";
             result.Description = description;
 
             return result;
+        }
+
+        private static string RemoveLeadingAndTrailingStuff(string input)
+        {
+            return input.Trim('\r', '\n', ' ');
         }
     }
 }

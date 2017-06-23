@@ -27,7 +27,7 @@ namespace Rosetta.ThirdParty.Google.DiffMatchPatch
             GoogleDMP.diff_match_patch dmp = new GoogleDMP.diff_match_patch();
             List<GoogleDMP.Diff> diffs = dmp.diff_main(s1, s2);
 
-            if (diffs == null)
+            if (diffs == null || (diffs.Count == 1 && diffs[0].operation == GoogleDMP.Operation.EQUAL))
             {
                 return new DiffOutputText { NumberOfDifferences = 0 };
             }

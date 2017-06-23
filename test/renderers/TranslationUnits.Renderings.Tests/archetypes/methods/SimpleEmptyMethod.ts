@@ -1,3 +1,2 @@
-public void SimpleEmptyMethod() {
-
+public SimpleEmptyMethod() {
 }
