@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Executable\Executable.csproj">
@@ -72,6 +73,12 @@
       <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
       <Name>TranslationUnits</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+	<Reference Include="System.Reflection">
+      <HintPath>..\..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
