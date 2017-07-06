@@ -16,11 +16,8 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         public class Statements
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [RenderingResource("IfStatement.ts")]
+            // TODO: There is a problem, in body block, no semicolons are added between statements
+            //[RenderingResource("ConditionalStatements.IfStatement.ts")]
             public string RenderIfStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildIfStatementTranslationUnit(
@@ -36,7 +33,8 @@ namespace Rosetta.Translation.Renderings.Data
                 return translationUnit.Translate();
             }
 
-            [RenderingResource("IfElseStatement.ts")]
+            // TODO: There is a problem, in body block, no semicolons are added between statements
+            //[RenderingResource("ConditionalStatements.IfElseStatement.ts")]
             public string RenderIfElseStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildIfStatementTranslationUnit(
@@ -66,22 +64,14 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         public class Statements
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [RenderingResource("BreakStatement.ts")]
+            [RenderingResource("KeywordStatements.BreakStatement.ts")]
             public string RenderBreakStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildBreakStatementTranslationUnit();
                 return translationUnit.Translate();
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [RenderingResource("ContinueStatement.ts")]
+            [RenderingResource("KeywordStatements.ContinueStatement.ts")]
             public string RenderContinueStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildContinueStatementTranslationUnit();
@@ -97,11 +87,7 @@ namespace Rosetta.Translation.Renderings.Data
         /// </summary>
         public class Statements
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [RenderingResource("ReturnStatement.ts")]
+            [RenderingResource("ExpressionStatements.ReturnStatement.ts")]
             public string RenderReturnStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildReturnStatementTranslationUnit(
@@ -109,22 +95,14 @@ namespace Rosetta.Translation.Renderings.Data
                 return translationUnit.Translate();
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [RenderingResource("ReturnVoidStatement.ts")]
+            [RenderingResource("ExpressionStatements.ReturnVoidStatement.ts")]
             public string RenderReturnVoidStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildReturnStatementTranslationUnit();
                 return translationUnit.Translate();
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [RenderingResource("ThrowStatement.ts")]
+            [RenderingResource("ExpressionStatements.ThrowStatement.ts")]
             public string RenderThrowStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildThrowStatementTranslationUnit(
@@ -132,11 +110,7 @@ namespace Rosetta.Translation.Renderings.Data
                 return translationUnit.Translate();
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [RenderingResource("ThrowVoidStatement.ts")]
+            [RenderingResource("ExpressionStatements.ThrowVoidStatement.ts")]
             public string RenderThrowVoidStatement()
             {
                 ITranslationUnit translationUnit = TranslationUnitBuilder.BuildThrowStatementTranslationUnit();

@@ -1,0 +1,1 @@
+﻿public MethodSignatureWithReturn() : string

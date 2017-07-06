@@ -1,3 +1,2 @@
-public string EmptyMethodWithReturn() {
-
+public EmptyMethodWithReturn() : string {
 }

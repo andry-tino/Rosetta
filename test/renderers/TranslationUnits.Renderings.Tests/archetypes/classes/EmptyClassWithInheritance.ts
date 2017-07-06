@@ -1,2 +1,2 @@
-public class EmptyClassWithInheritance extends BaseClass  {
+public class EmptyClassWithInheritance extends BaseClass {
 }

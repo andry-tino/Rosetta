@@ -1,0 +1,2 @@
+﻿declare interface IInterface1 {
+}

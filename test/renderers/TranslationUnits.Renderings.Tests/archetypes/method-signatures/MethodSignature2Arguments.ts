@@ -1,0 +1,1 @@
+﻿public MethodSignature2Arguments(param1 : number, param2 : string)

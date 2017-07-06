@@ -1,2 +1,2 @@
-public class EmptyClassWithOneInterface  implements Interface1 {
+public class EmptyClassWithOneInterface implements Interface1 {
 }

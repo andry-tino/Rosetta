@@ -74,7 +74,56 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="archetypes\" />
+    <EmbeddedResource Include="archetypes\classes\classes-scriptnamespace\ScriptNamespace.SingleClass.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\classes-scriptnamespace\ScriptNamespace.SingleNamespacedClass.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\classes-scriptnamespace\ScriptNamespace.TwoClasses.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\classes-scriptnamespace\ScriptNamespace.TwoMixedClasses.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\classes-scriptnamespace\ScriptNamespace.TwoMixedNamespacedClasses.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\classes-scriptnamespace\ScriptNamespace.TwoNamespacedClasses.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\classes\ClassWithConstructorsWithParameters.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithMethodsWithParameters.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithSimpleMixedContent.d.ts" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithSimpleProperties.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\enums\EmptyEnum.d.ts" />
+    <EmbeddedResource Include="archetypes\enums\EnumWithValues.d.ts" />
+    <EmbeddedResource Include="archetypes\enums\EnumWithValuesWithEqualsExpr.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\enums\enums-scriptnamespace\ScriptNamespace.SingleEnum.d.ts" />
+    <EmbeddedResource Include="archetypes\enums\enums-scriptnamespace\ScriptNamespace.SingleNamespacedEnum.d.ts" />
+    <EmbeddedResource Include="archetypes\enums\enums-scriptnamespace\ScriptNamespace.TwoEnums.d.ts" />
+    <EmbeddedResource Include="archetypes\enums\enums-scriptnamespace\ScriptNamespace.TwoMixedEnums.d.ts" />
+    <EmbeddedResource Include="archetypes\enums\enums-scriptnamespace\ScriptNamespace.TwoMixedNamespacedEnums.d.ts" />
+    <EmbeddedResource Include="archetypes\enums\enums-scriptnamespace\ScriptNamespace.TwoNamespacedEnums.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\fields\FieldsWithSeveralModifiers.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\fields\fields-preservename\PreserveName.Field.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\interfaces\EmptyInterface.d.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\InterfaceWithMethods.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\methods\methods-preservename\PreserveName.SimpleMethod.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\interfaces\interfaces-scriptnamespace\ScriptNamespace.SingleInterface.d.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\interfaces-scriptnamespace\ScriptNamespace.SingleNamespacedInterface.d.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\interfaces-scriptnamespace\ScriptNamespace.TwoInterfaces.d.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\interfaces-scriptnamespace\ScriptNamespace.TwoMixedInterfaces.d.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\interfaces-scriptnamespace\ScriptNamespace.TwoMixedNamespacedInterfaces.d.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\interfaces-scriptnamespace\ScriptNamespace.TwoNamespacedInterfaces.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\properties\properties-preservename\PreserveName.SimpleAutoProperty.d.ts" />
+    <EmbeddedResource Include="archetypes\properties\properties-preservename\PreserveName.SimpleProperty.d.ts" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

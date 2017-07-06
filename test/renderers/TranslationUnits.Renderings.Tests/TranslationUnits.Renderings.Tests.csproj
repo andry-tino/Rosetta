@@ -76,7 +76,17 @@
       <Name>TranslationUnits.Renderings.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\methods\EmptyMethod1Argument.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethod2Arguments.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethodManyArguments.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyProtectedInternalMethod.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyProtectedInternalStaticMethod.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyProtectedStaticMethod.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyPublicStaticMethod.ts" />
+    <EmbeddedResource Include="archetypes\methods\SimpleEmptyNoVisibilityMethod.ts" />
+    <EmbeddedResource Include="archetypes\methods\SimpleMethod.ts" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -106,6 +116,81 @@
   <ItemGroup>
     <EmbeddedResource Include="archetypes\methods\SimpleEmptyMethod.ts" />
     <EmbeddedResource Include="archetypes\methods\EmptyMethodWithReturn.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\classes\ClassWithSimpleMethods.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\method-signatures\MethodSignature1Argument.ts" />
+    <EmbeddedResource Include="archetypes\method-signatures\MethodSignature2Arguments.ts" />
+    <EmbeddedResource Include="archetypes\method-signatures\MethodSignatureManyArguments.ts" />
+    <EmbeddedResource Include="archetypes\method-signatures\MethodSignatureWithReturn.ts" />
+    <EmbeddedResource Include="archetypes\method-signatures\SimpleMethodSignature.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructor1Argument.ts" />
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructor2Arguments.ts" />
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructorManyArguments.ts" />
+    <EmbeddedResource Include="archetypes\constructors\SimpleConstructor.ts" />
+    <EmbeddedResource Include="archetypes\constructors\SimpleEmptyConstructor.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\expressions\BinaryExpression.IntegerSum.ts" />
+    <EmbeddedResource Include="archetypes\expressions\CastExpression.NativeCast.ts" />
+    <EmbeddedResource Include="archetypes\expressions\InvokationExpressions.OneParameter.ts" />
+    <EmbeddedResource Include="archetypes\expressions\InvokationExpressions.ParameterlessInvokation.ts" />
+    <EmbeddedResource Include="archetypes\expressions\InvokationExpressions.ParameterlessInvokationNull.ts" />
+    <EmbeddedResource Include="archetypes\expressions\InvokationExpressions.ThreeParameters.ts" />
+    <EmbeddedResource Include="archetypes\expressions\InvokationExpressions.TwoParameters.ts" />
+    <EmbeddedResource Include="archetypes\expressions\LiteralExpression.Boolean.ts" />
+    <EmbeddedResource Include="archetypes\expressions\LiteralExpression.Integer.ts" />
+    <EmbeddedResource Include="archetypes\expressions\LiteralExpression.Null.ts" />
+    <EmbeddedResource Include="archetypes\expressions\MemberAccessExpressions.Base.ts" />
+    <EmbeddedResource Include="archetypes\expressions\MemberAccessExpressions.None.ts" />
+    <EmbeddedResource Include="archetypes\expressions\MemberAccessExpressions.This.ts" />
+    <EmbeddedResource Include="archetypes\expressions\ObjectCreationExpressions.ParameterlessCtor.ts" />
+    <EmbeddedResource Include="archetypes\expressions\ParenthesizedExpressions.VariableWrapping.ts" />
+    <EmbeddedResource Include="archetypes\expressions\UnaryExpression.PostfixIncrement.ts" />
+    <EmbeddedResource Include="archetypes\expressions\UnaryExpression.PrefixIncrement.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\interfaces\EmptyInterfaceWithManyExtendedInterfaces.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\EmptyInterfaceWithOneExtendedInterface.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\InterfaceWithSignatures.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\SimpleEmptyInterface.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\members\NumberPrivateMember.ts" />
+    <EmbeddedResource Include="archetypes\members\StringMember.ts" />
+    <EmbeddedResource Include="archetypes\members\StringPublicMember.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\modules\SimpleClassInModule.ts" />
+    <EmbeddedResource Include="archetypes\modules\SimpleEmptyClassInModule.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\mixed-expressions\MixedExpressions.SimpleArithmetic.ts" />
+    <EmbeddedResource Include="archetypes\mixed-expressions\MixedExpressions.SimpleParentheticArithmetic.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\properties\SimpleEmptyProperty.ts" />
+    <EmbeddedResource Include="archetypes\properties\SimpleProperty.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\references\ReferenceToFile.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\statements\ConditionalStatements.IfElseStatement.ts" />
+    <EmbeddedResource Include="archetypes\statements\ConditionalStatements.IfStatement.ts" />
+    <EmbeddedResource Include="archetypes\statements\ExpressionStatements.ReturnStatement.ts" />
+    <EmbeddedResource Include="archetypes\statements\ExpressionStatements.ReturnVoidStatement.ts" />
+    <EmbeddedResource Include="archetypes\statements\ExpressionStatements.ThrowStatement.ts" />
+    <EmbeddedResource Include="archetypes\statements\ExpressionStatements.ThrowVoidStatement.ts" />
+    <EmbeddedResource Include="archetypes\statements\KeywordStatements.BreakStatement.ts" />
+    <EmbeddedResource Include="archetypes\statements\KeywordStatements.ContinueStatement.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\statements-groups\ReferencesGroup.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -67,8 +67,41 @@
       <Name>StringRenderingTestFramework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="archetypes\" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithConstructorsWithParameters.ts" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithMethodExpression.ts" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithMethodStatements.ts" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithMethodsWithParameters.ts" />
+    <EmbeddedResource Include="archetypes\classes\ClassWithSimpleProperties.ts" />
+    <EmbeddedResource Include="archetypes\classes\SimpleClass.ts" />
+    <EmbeddedResource Include="archetypes\classes\SimpleEmptyClass.ts" />
+    <EmbeddedResource Include="archetypes\classes\SimpleEmptyClassWithConstructor.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructor.ts" />
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructorWith1Argument.ts" />
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructorWith2Arguments.ts" />
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructorWith3Arguments.ts" />
+    <EmbeddedResource Include="archetypes\constructors\EmptyConstructorWithManyArguments.ts" />
+    <EmbeddedResource Include="archetypes\constructors\SimpleConstructorWithVariableDeclarations.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\interfaces\InterfaceWithExtendedInterfaces.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\InterfaceWithGetterProperties.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\InterfaceWithMethods.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\InterfaceWithMethodsAndProperties.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\InterfaceWithProperties.ts" />
+    <EmbeddedResource Include="archetypes\interfaces\SimpleEmptyInterface.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\methods\EmptyMethod.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethodWith1Argument.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethodWith2Arguments.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethodWith3Arguments.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethodWithManyArguments.ts" />
+    <EmbeddedResource Include="archetypes\methods\EmptyMethodWithReturn.ts" />
+    <EmbeddedResource Include="archetypes\methods\SimpleMethodWithVariableDeclarations.ts" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

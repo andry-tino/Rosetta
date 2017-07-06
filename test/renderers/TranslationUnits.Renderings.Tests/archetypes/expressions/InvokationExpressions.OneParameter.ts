@@ -1,0 +1,1 @@
+﻿myMethod('string1')

@@ -15,7 +15,10 @@ param(
 	'ScriptSharp.Definition.ASTWalker.UnitTests\bin\Debug\Rosetta.ScriptSharp.Definition.ASTWalker.UnitTests.dll',
 	'ScriptSharp.ASTWalker.UnitTests\bin\Debug\Rosetta.ScriptSharp.ASTWalker.UnitTests.dll',
 	'Reflection.UnitTests\bin\Debug\Rosetta.Reflection.UnitTests.dll',
-	'Reflection.ScriptSharp.UnitTests\bin\Debug\Rosetta.Reflection.ScriptSharp.UnitTests.dll'
+	'Reflection.ScriptSharp.UnitTests\bin\Debug\Rosetta.Reflection.ScriptSharp.UnitTests.dll',
+	'ASTWalker.Renderings.Tests\bin\Debug\Rosetta.ASTWalker.Renderings.Tests.dll',
+	'TranslationUnits.Renderings.Tests\bin\Debug\Rosetta.TranslationUnits.Renderings.Tests.dll',
+	'ScriptSharp.Definition.ASTWalker.Renderings.Tests\bin\Debug\Rosetta.ScriptSharp.Definition.ASTWalker.Renderings.Tests.dll'
   )
 );
 

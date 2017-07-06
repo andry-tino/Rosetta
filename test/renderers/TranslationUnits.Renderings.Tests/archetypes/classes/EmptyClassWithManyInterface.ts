@@ -1,2 +1,2 @@
-public class EmptyClassWithManyInterface  implements Interface1, Interface2, Interface3 {
+public class EmptyClassWithManyInterface implements Interface1, Interface2, Interface3 {
 }

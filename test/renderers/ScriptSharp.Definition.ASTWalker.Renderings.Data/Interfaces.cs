@@ -37,6 +37,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Data
         [RenderingResource("InterfaceWithMethods.d.ts")]
         public string RenderInterfaceWithMethods()
         {
+            // For definitions we need to tests that methods do not show up.
             return GetTranslation(@"
                 public interface IInterface1 {
                     Method1();

@@ -21,6 +21,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Tests
         }
 
         [TestMethod]
+        [Ignore] // Bug #49
         public void TestClassesWithScriptNamespace()
         {
             Test(new ClassesWithScriptNamespaceResourceDeployer());
@@ -33,6 +34,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Tests
         }
 
         [TestMethod]
+        [Ignore] // Bug #49
         public void TestEnumsWithScriptNamespace()
         {
             Test(new EnumsWithScriptNamespaceResourceDeployer());
@@ -57,6 +59,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Tests
         }
 
         [TestMethod]
+        [Ignore] // Bug #49
         public void TestInterfacesWithScriptNamespace()
         {
             Test(new InterfacesWithScriptNamespaceResourceDeployer());

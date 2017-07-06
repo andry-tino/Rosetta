@@ -1,0 +1,2 @@
+﻿protected static EmptyProtectedStaticMethod() {
+}

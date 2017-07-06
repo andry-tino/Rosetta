@@ -1,2 +1,2 @@
-public class SimpleEmptyClass   {
+public class SimpleEmptyClass {
 }
