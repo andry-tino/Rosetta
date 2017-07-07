@@ -61,6 +61,9 @@ namespace Rosetta.Reflection.Factories
             // Properties
             classNode = this.HandleProperties(classNode);
 
+            // Handle fields
+            classNode = this.HandleFields(classNode);
+
             return classNode;
         }
 
@@ -161,6 +164,23 @@ namespace Rosetta.Reflection.Factories
             return newNode;
         }
 
+        private ClassDeclarationSyntax HandleFields(ClassDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            var fields = this.ClassInfo.DeclaredFields;
+
+            if (fields != null)
+            {
+                foreach (var field in fields)
+                {
+                    newNode = newNode.AddMembers(this.CreateFieldDeclarationSyntaxFactory(field).Create() as FieldDeclarationSyntax);
+                }
+            }
+
+            return newNode;
+        }
+
         protected virtual string GetBaseTypeFullName(ITypeProxy type) => type.FullName;
 
         protected virtual string GetInterfaceFullName(ITypeProxy type) => type.FullName;
@@ -173,5 +193,8 @@ namespace Rosetta.Reflection.Factories
 
         protected virtual ISyntaxFactory CreatePropertyDeclarationSyntaxFactory(IPropertyInfoProxy propertyInfo)
             => new PropertyDeclarationSyntaxFactory(propertyInfo);
+
+        protected virtual ISyntaxFactory CreateFieldDeclarationSyntaxFactory(IFieldInfoProxy fieldInfo)
+            => new FieldDeclarationSyntaxFactory(fieldInfo);
     }
 }

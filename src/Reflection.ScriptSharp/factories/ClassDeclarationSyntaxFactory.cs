@@ -47,5 +47,8 @@ namespace Rosetta.Reflection.ScriptSharp.Factories
         
         protected override ISyntaxFactory CreatePropertyDeclarationSyntaxFactory(IPropertyInfoProxy propertyInfo)
             => new PropertyDeclarationSyntaxFactory(propertyInfo, this.typeLookup);
+
+        protected override ISyntaxFactory CreateFieldDeclarationSyntaxFactory(IFieldInfoProxy fieldInfo)
+            => new FieldDeclarationSyntaxFactory(fieldInfo, this.typeLookup);
     }
 }
