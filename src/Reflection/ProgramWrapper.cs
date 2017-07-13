@@ -12,6 +12,7 @@ namespace Rosetta.Reflection
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST;
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.Reflection.Proxies;
 
     /// <summary>
@@ -20,6 +21,8 @@ namespace Rosetta.Reflection
     public class ProgramWrapper
     {
         private readonly string assemblyPath;
+
+        private ILogger logger;
 
         // Lazy loaded or cached quantities
         private IASTWalker walker;
@@ -47,6 +50,11 @@ namespace Rosetta.Reflection
 
             this.assemblyPath = assemblyPath;
         }
+
+        /// <summary>
+        /// Gets or sets the path to the log file to write. If set to <c>null</c> no logging is performed.
+        /// </summary>
+        public string LogPath { get; set; }
 
         /// <summary>
         /// Gets the output of the generation.
@@ -86,11 +94,17 @@ namespace Rosetta.Reflection
             }
         }
 
-        protected virtual IASTBuilder CreateASTBuilder(IAssemblyProxy assembly) => new ASTBuilder(assembly);
+        protected virtual IASTBuilder CreateASTBuilder(IAssemblyProxy assembly) => new ASTBuilder(assembly) { Logger = this.Logger };
 
         protected virtual IAssemblyLoader CreateAssemblyLoader(string assemblyPath) => new MonoFSAssemblyLoader(assemblyPath);
 
-        protected virtual IASTWalker CreateASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel) => ProgramASTWalker.Create(node, null, semanticModel);
+        protected virtual IASTWalker CreateASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel)
+        {
+            var walker = ProgramASTWalker.Create(node, null, semanticModel);
+            walker.Logger = this.Logger;
+
+            return walker;
+        }
 
         private void Initialize()
         {
@@ -122,6 +136,29 @@ namespace Rosetta.Reflection
             this.info = $"AST generation: {astInfo.ToString()}";
 
             this.initialized = true;
+        }
+
+        protected ILogger Logger
+        {
+            get
+            {
+                if (this.logger == null)
+                {
+                    this.logger = this.CreateLogger();
+                }
+
+                return this.logger;
+            }
+        }
+
+        private ILogger CreateLogger()
+        {
+            if (this.LogPath != null)
+            {
+                return new FileLogger(this.LogPath);
+            }
+
+            return null;
         }
 
         private IAssemblyProxy LoadAssembly()

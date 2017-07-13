@@ -13,7 +13,6 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.Text;
 
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
     using Rosetta.AST.Factories;
 
     /// <summary>

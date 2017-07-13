@@ -74,8 +74,12 @@ namespace Rosetta.ScriptSharp.Definition.AST
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
             var classDefinitionWalker = ClassDefinitionASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
+            classDefinitionWalker.Logger = this.Logger;
+
             var translationUnit = classDefinitionWalker.Walk();
             this.program.AddContent(translationUnit);
+
+            this.LogVisitClassDeclaration(node); // Logging
 
             this.InvokeClassDeclarationVisited(this, new WalkerEventArgs());
         }
@@ -91,8 +95,12 @@ namespace Rosetta.ScriptSharp.Definition.AST
         public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
             var namespaceWalker = NamespaceDefinitionASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
+            namespaceWalker.Logger = this.Logger;
+
             var translationUnit = namespaceWalker.Walk();
             this.program.AddContent(translationUnit);
+
+            this.LogVisitNamespaceDeclaration(node); // Logging
 
             this.InvokeNamespaceDeclarationVisited(this, new WalkerEventArgs());
         }
@@ -106,6 +114,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
             var translationUnit = new InterfaceDefinitionTranslationUnitFactory(node, this.semanticModel).Create();
             (translationUnit as InterfaceDefinitionTranslationUnit).IsAtRootLevel = true;
             this.program.AddContent(translationUnit);
+
+            this.LogVisitInterfaceDeclaration(node); // Logging
 
             this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
         }

@@ -12,6 +12,8 @@ namespace Rosetta.Reflection
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.Diagnostics.Logging;
+    using Rosetta.Reflection.Diagnostics.Logging;
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Helpers;
     using Rosetta.Reflection.Proxies;
@@ -46,6 +48,16 @@ namespace Rosetta.Reflection
 
             this.assembly = assembly;
         }
+
+        /// <summary>
+        /// Sets the logger to use.
+        /// </summary>
+        public ILogger Logger { protected get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether a logger is active or not.
+        /// </summary>
+        public bool IsLoggingEnabled => this.Logger != null;
 
         /// <summary>
         /// Builds the AST from the assembly.
@@ -111,22 +123,42 @@ namespace Rosetta.Reflection
 
         private MemberDeclarationSyntax BuildClassNode(ITypeInfoProxy type)
         {
+            if (this.IsLoggingEnabled)
+            {
+                new TypeInfoLogger(type, this.Logger).LogSyntaxNodeCreation("Class");
+            }
+
             return this.BuildNode(type, this.BuildClassNodeCore(type));
         }
 
         private MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type)
         {
+            if (this.IsLoggingEnabled)
+            {
+                new TypeInfoLogger(type, this.Logger).LogSyntaxNodeCreation("Struct");
+            }
+
             // TODO
             return this.BuildNode(type, SyntaxFactory.StructDeclaration);
         }
 
         private MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type)
         {
+            if (this.IsLoggingEnabled)
+            {
+                new TypeInfoLogger(type, this.Logger).LogSyntaxNodeCreation("Enum");
+            }
+
             return this.BuildNode(type, this.BuildEnumNodeCore(type));
         }
 
         private MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type)
         {
+            if (this.IsLoggingEnabled)
+            {
+                new TypeInfoLogger(type, this.Logger).LogSyntaxNodeCreation("Interface");
+            }
+
             return this.BuildNode(type, this.BuildInterfaceNodeCore(type));
         }
 

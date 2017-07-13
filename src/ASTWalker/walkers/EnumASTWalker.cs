@@ -14,7 +14,6 @@ namespace Rosetta.AST
 
     using Rosetta.Translation;
     using Rosetta.AST.Factories;
-    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Walks an interface AST node.

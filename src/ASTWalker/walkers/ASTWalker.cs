@@ -9,6 +9,8 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
+    using Rosetta.Diagnostics.Logging;
+
     /// <summary>
     /// Walks a class AST node.
     /// // TODO: Override class definition in order to create an inner class and remove the node!
@@ -18,7 +20,7 @@ namespace Rosetta.AST
         // Protected for testability
         protected CSharpSyntaxNode node;
         protected SemanticModel semanticModel;
-
+        
         private ASTWalkerContext context;
 
         /// <summary>
@@ -36,6 +38,16 @@ namespace Rosetta.AST
             this.node = node;
             this.semanticModel = semanticModel;
         }
+
+        /// <summary>
+        /// Sets the logger to use.
+        /// </summary>
+        public ILogger Logger { protected get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether a logger is active or not.
+        /// </summary>
+        public bool IsLoggingEnabled => this.Logger != null;
 
         /// <summary>
         /// Copy initializes a new instance of the <see cref="ASTWalker"/> class.

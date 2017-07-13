@@ -10,6 +10,7 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+    using Rosetta.AST.Diagnostics.Logging;
     using Rosetta.Translation;
     using Rosetta.AST.Factories;
 
@@ -104,8 +105,12 @@ namespace Rosetta.AST
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
             var classWalker = ClassASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
+            classWalker.Logger = this.Logger;
+
             var translationUnit = classWalker.Walk();
             this.program.AddContent(translationUnit);
+
+            this.LogVisitClassDeclaration(node); // Logging
 
             this.InvokeClassDeclarationVisited(this, new WalkerEventArgs());
         }
@@ -121,8 +126,12 @@ namespace Rosetta.AST
         public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
             var namespaceWalker = NamespaceASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
+            namespaceWalker.Logger = this.Logger;
+
             var translationUnit = namespaceWalker.Walk();
             this.program.AddContent(translationUnit);
+
+            this.LogVisitNamespaceDeclaration(node); // Logging
 
             this.InvokeNamespaceDeclarationVisited(this, new WalkerEventArgs());
         }
@@ -136,6 +145,34 @@ namespace Rosetta.AST
             // TODO: Implement
 
             this.InvokeInterfaceDeclarationVisited(this, new WalkerEventArgs());
+        }
+
+        #endregion
+
+        #region Logging
+
+        protected void LogVisitClassDeclaration(ClassDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new ClassDeclarationSyntaxNodeLogger(this.node as CompilationUnitSyntax, node, this.Logger).LogVisit("Program ASTWalker");
+            }
+        }
+
+        protected void LogVisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new InterfaceDeclarationSyntaxNodeLogger(this.node as NamespaceDeclarationSyntax, node, this.Logger).LogVisit("Program ASTWalker");
+            }
+        }
+
+        protected void LogVisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new NamespaceDeclarationSyntaxNodeLogger(this.node as CompilationUnitSyntax, node, this.Logger).LogVisit("Program ASTWalker");
+            }
         }
 
         #endregion

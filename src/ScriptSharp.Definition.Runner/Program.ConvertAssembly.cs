@@ -7,6 +7,7 @@ namespace Rosetta.ScriptSharp.Definition.Runner
 {
     using System;
 
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.Executable;
     using Rosetta.Reflection.ScriptSharp;
 
@@ -18,6 +19,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         protected virtual void ConvertAssembly()
         {
             var program = new ProgramWrapper(this.assemblyPath);
+            program.LogPath = new SysRegLogPathProvider().LogPath;
+
             var output = program.Output;
             var info = program.Info; // To display
 

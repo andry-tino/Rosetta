@@ -41,7 +41,12 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         {
             var program = new ProgramWrapper(
                 arguments.Source,
-                arguments.AssemblyPath);
+                arguments.AssemblyPath)
+            {
+#if Debug
+                LogPath = @"C:\temp\Rosetta.log"
+#endif
+            };
 
             return program.Output;
         }

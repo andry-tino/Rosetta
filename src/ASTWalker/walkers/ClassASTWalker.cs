@@ -12,8 +12,8 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
 
+    using Rosetta.AST.Diagnostics.Logging;
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
     using Rosetta.AST.Factories;
 
     /// <summary>
@@ -105,10 +105,12 @@ namespace Rosetta.AST
         {
             var fieldDeclarationTranslationUnit = new FieldDeclarationTranslationUnitFactory(node, this.semanticModel).Create();
             this.classDeclaration.AddMemberDeclaration(fieldDeclarationTranslationUnit);
+            
+            this.LogVisitFieldDeclaration(node); // Logging
 
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
 
-            base.VisitFieldDeclaration(node); // Remove?
+            base.VisitFieldDeclaration(node); // TODO: Remove, should not be needed
         }
 
         /// <summary>
@@ -120,6 +122,8 @@ namespace Rosetta.AST
             var propertyWalker = PropertyASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
             var translationUnit = propertyWalker.Walk();
             this.classDeclaration.AddPropertyDeclaration(translationUnit);
+
+            this.LogVisitPropertyDeclaration(node); // Logging
 
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
         }
@@ -135,8 +139,12 @@ namespace Rosetta.AST
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             var methodWalker = MethodASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
+            methodWalker.Logger = this.Logger;
+
             var translationUnit = methodWalker.Walk();
             this.classDeclaration.AddMethodDeclaration(translationUnit);
+
+            this.LogVisitMethodDeclaration(node); // Logging
 
             this.InvokeMethodDeclarationVisited(this, new WalkerEventArgs());
         }
@@ -148,10 +156,50 @@ namespace Rosetta.AST
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
             var constructorWalker = ConstructorASTWalker.Create(node, this.CreateWalkingContext(), this.semanticModel);
+            constructorWalker.Logger = this.Logger;
+
             var translationUnit = constructorWalker.Walk();
             this.classDeclaration.AddConstructorDeclaration(translationUnit);
 
+            this.LogVisitConstructorDeclaration(node); // Logging
+
             this.InvokeConstructorDeclarationVisited(this, new WalkerEventArgs());
+        }
+
+        #endregion
+
+        #region Logging
+
+        protected void LogVisitFieldDeclaration(FieldDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new FieldDeclarationSyntaxNodeLogger(this.node as ClassDeclarationSyntax, node, this.Logger).LogVisit("Class ASTWalker");
+            }
+        }
+
+        protected void LogVisitPropertyDeclaration(PropertyDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new PropertyDeclarationSyntaxNodeLogger(this.node as ClassDeclarationSyntax, node, this.Logger).LogVisit("Class ASTWalker");
+            }
+        }
+
+        protected void LogVisitMethodDeclaration(MethodDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new MethodDeclarationSyntaxNodeLogger(this.node as ClassDeclarationSyntax, node, this.Logger).LogVisit("Class ASTWalker");
+            }
+        }
+
+        protected void LogVisitConstructorDeclaration(ConstructorDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new ConstructorDeclarationSyntaxNodeLogger(this.node as ClassDeclarationSyntax, node, this.Logger).LogVisit("Class ASTWalker");
+            }
         }
 
         #endregion

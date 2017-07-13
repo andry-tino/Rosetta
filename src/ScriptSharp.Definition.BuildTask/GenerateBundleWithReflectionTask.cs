@@ -7,7 +7,8 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
 {
     using System;
     using System.Collections.Generic;
-    
+
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.Reflection.ScriptSharp;
 
     /// <summary>
@@ -27,6 +28,12 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         {
         }
 
-        protected override string GenerateOutput() => new ProgramWrapper(this.assemblyPath).Output;
+        protected override string GenerateOutput()
+        {
+            var program = new ProgramWrapper(this.assemblyPath);
+            program.LogPath = new SysRegLogPathProvider().LogPath;
+
+            return program.Output;
+        }
     }
 }

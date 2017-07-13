@@ -126,6 +126,10 @@
       <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
       <Name>ASTWalker</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{788cc8e1-6329-45ab-9869-6ef0037832e2}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RoslynUtils\RoslynUtils.csproj">
       <Project>{5eeedbfb-9d44-43a3-a6ef-310008004c91}</Project>
       <Name>RoslynUtils</Name>

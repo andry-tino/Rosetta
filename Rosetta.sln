@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp.Definition.ASTW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTWalker.Renderings.Tests", "test\renderers\ASTWalker.Renderings.Tests\ASTWalker.Renderings.Tests.csproj", "{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "src\Logging\Logging.csproj", "{788CC8E1-6329-45AB-9869-6EF0037832E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -409,6 +411,14 @@ Global
 		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Release|x86.ActiveCfg = Release|Any CPU
 		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6}.Release|x86.Build.0 = Release|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Debug|x86.Build.0 = Debug|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Release|x86.ActiveCfg = Release|Any CPU
+		{788CC8E1-6329-45AB-9869-6EF0037832E2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -455,6 +465,7 @@ Global
 		{A53B16A3-F913-437A-B5B3-635B6896F9B1} = {A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}
 		{39B955E5-7DCF-4FDA-9CB7-9A162E15D090} = {A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}
 		{F64D077A-210F-4B32-A97A-2FDB1FE5FAC6} = {A9103A61-0F72-49E4-BFEE-4B2FF55CAEA0}
+		{788CC8E1-6329-45AB-9869-6EF0037832E2} = {1A19BE16-83D1-4DD3-80FA-56E1533C0BC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45

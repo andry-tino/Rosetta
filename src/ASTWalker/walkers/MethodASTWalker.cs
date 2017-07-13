@@ -13,7 +13,6 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.Text;
 
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
     using Rosetta.AST.Factories;
 
     /// <summary>
@@ -396,6 +395,8 @@ namespace Rosetta.AST
             ITranslationUnit statementTranslationUnit = walker.Walk();
 
             this.methodDeclaration.AddStatement(statementTranslationUnit);
+
+            // TODO: Add logging
 
             this.InvokeStatementVisited(this, new WalkerEventArgs());
         }

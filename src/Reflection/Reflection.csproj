@@ -158,6 +158,7 @@
     <Compile Include="helpers\ObjectClass.cs" />
     <Compile Include="helpers\ValueTypeClass.cs" />
     <Compile Include="helpers\Visibility.cs" />
+    <Compile Include="logging\TypeInfoLogger.cs" />
     <Compile Include="lookup\ITypeLookup.cs" />
     <Compile Include="loading\MonoFSAssemblyLoader.cs" />
     <Compile Include="helpers\Namespace.cs" />
@@ -178,6 +179,10 @@
     <ProjectReference Include="..\ASTWalker\ASTWalker.csproj">
       <Project>{cb3ff60e-af76-471a-98a3-dfed31a10e94}</Project>
       <Name>ASTWalker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{788cc8e1-6329-45ab-9869-6ef0037832e2}</Project>
+      <Name>Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\TranslationUnits\TranslationUnits.csproj">
       <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>

@@ -83,6 +83,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
             this.classDeclaration.AddMemberDeclaration(fieldDefinitionTranslationUnit);
 
+            this.LogVisitFieldDeclaration(node); // Logging
+
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
         }
 
@@ -100,7 +102,9 @@ namespace Rosetta.ScriptSharp.Definition.AST
             }
 
             this.classDeclaration.AddPropertyDeclaration(propertyDefinitionTranslationUnit);
-            
+
+            this.LogVisitPropertyDeclaration(node); // Logging
+
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
         }
 
@@ -123,6 +127,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
             this.classDeclaration.AddMethodDeclaration(methodDefinitionTranslationUnit);
 
+            this.LogVisitMethodDeclaration(node); // Logging
+
             this.InvokeMethodDeclarationVisited(this, new WalkerEventArgs());
         }
 
@@ -140,6 +146,8 @@ namespace Rosetta.ScriptSharp.Definition.AST
             }
 
             this.classDeclaration.AddConstructorDeclaration(constructorDefinitionTranslationUnit);
+
+            this.LogVisitConstructorDeclaration(node); // Logging
 
             this.InvokeConstructorDeclarationVisited(this, new WalkerEventArgs());
         }

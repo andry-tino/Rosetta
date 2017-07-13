@@ -151,6 +151,14 @@
     <Compile Include="helpers\simple\Parameter.cs" />
     <Compile Include="helpers\SymbolHelper.cs" />
     <Compile Include="IASTTransformer.cs" />
+    <Compile Include="logging\ClassDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\ConstructorDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\FieldDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\InterfaceDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\MethodDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\NamespaceDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\PropertyDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\SyntaxNodeLogger.cs" />
     <Compile Include="ProgramWrapper.cs" />
     <Compile Include="transformers\ClassInDifferentNamespaceASTTransformer.cs" />
     <Compile Include="transformers\ClassWithAttributeInDifferentNamespaceASTTransformer.cs" />
@@ -191,6 +199,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{788cc8e1-6329-45ab-9869-6ef0037832e2}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RoslynUtils\RoslynUtils.csproj">
       <Project>{5eeedbfb-9d44-43a3-a6ef-310008004c91}</Project>
       <Name>RoslynUtils</Name>

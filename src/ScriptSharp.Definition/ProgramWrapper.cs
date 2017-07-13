@@ -11,6 +11,7 @@ namespace Rosetta.ScriptSharp.Definition.AST
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST;
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.AST.Helpers;
     using Rosetta.AST.Transformers;
     using Rosetta.ScriptSharp.AST.Transformers;
@@ -73,6 +74,11 @@ namespace Rosetta.ScriptSharp.Definition.AST
             }
         }
 
+        /// <summary>
+        /// Gets or sets the path to the log file to write. If set to <c>null</c> no logging is performed.
+        /// </summary>
+        public string LogPath { get; set; }
+
         private void Initialize()
         {
             // TODO: In order to target #41, add an option for using the reflector when requested
@@ -102,11 +108,22 @@ namespace Rosetta.ScriptSharp.Definition.AST
             // If no semantic model was loaded, null will just be passed
             var node = this.tree.GetRoot();
             this.walker = ProgramDefinitionASTWalker.Create(node, null, this.semanticModel);
+            this.walker.Logger = this.CreateLogger();
 
             // Translating
             this.output = this.walker.Walk().Translate();
 
             this.initialized = true;
+        }
+
+        private ILogger CreateLogger()
+        {
+            if (this.LogPath != null)
+            {
+                return new FileLogger(this.LogPath);
+            }
+
+            return null;
         }
 
         private CSharpCompilation GetCompilation(string path, CSharpSyntaxTree sourceTree)

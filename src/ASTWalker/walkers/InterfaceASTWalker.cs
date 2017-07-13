@@ -12,6 +12,7 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
 
+    using Rosetta.AST.Diagnostics.Logging;
     using Rosetta.Translation;
     using Rosetta.AST.Factories;
     using Rosetta.AST.Helpers;
@@ -116,6 +117,8 @@ namespace Rosetta.AST
             
             this.interfaceDeclaration.AddSignature(translationUnit);
 
+            this.LogVisitPropertyDeclaration(node); // Logging
+
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
         }
 
@@ -139,13 +142,35 @@ namespace Rosetta.AST
 
             this.interfaceDeclaration.AddSignature(translationUnit);
 
+            this.LogVisitMethodDeclaration(node); // Logging
+
             this.InvokePropertyDeclarationVisited(this, new WalkerEventArgs());
         }
 
         #endregion
 
+        #region Logging
+
+        protected void LogVisitPropertyDeclaration(PropertyDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new PropertyDeclarationSyntaxNodeLogger(this.node as ClassDeclarationSyntax, node, this.Logger).LogVisit("Interface ASTWalker");
+            }
+        }
+
+        protected void LogVisitMethodDeclaration(MethodDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new MethodDeclarationSyntaxNodeLogger(this.node as ClassDeclarationSyntax, node, this.Logger).LogVisit("Interface ASTWalker");
+            }
+        }
+
+        #endregion
+
         #region Walk events
-        
+
         /// <summary>
         /// 
         /// </summary>

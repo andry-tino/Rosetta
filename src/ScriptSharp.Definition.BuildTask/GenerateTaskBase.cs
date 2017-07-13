@@ -9,6 +9,7 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
     using System.Collections.Generic;
     using System.Linq;
 
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.Executable;
     using Rosetta.Translation;
     using Rosetta.ScriptSharp.Definition.AST;
@@ -60,8 +61,11 @@ namespace Rosetta.ScriptSharp.Definition.BuildTask
         protected static string PerformFileConversion(ConversionArguments arguments)
         {
             var program = new ProgramWrapper(
-                arguments.Source, 
-                arguments.AssemblyPath);
+                arguments.Source,
+                arguments.AssemblyPath)
+            {
+                LogPath = new SysRegLogPathProvider().LogPath
+            };
 
             return program.Output;
         }

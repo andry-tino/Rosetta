@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C10C6C8A-8176-4976-942A-10EDF49721A8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{788CC8E1-6329-45AB-9869-6EF0037832E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rosetta.ScriptSharp.Definition.Runner</RootNamespace>
-    <AssemblyName>Rosetta.ScriptSharp.Definition.Runner</AssemblyName>
+    <RootNamespace>Rosetta.Diagnostics.Logging</RootNamespace>
+    <AssemblyName>Rosetta.Logging</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,46 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.ConvertAssembly.cs" />
-    <Compile Include="Program.ConvertFile.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="filesystem\FileLogger.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="LoggingException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Executable\Executable.csproj">
-      <Project>{2d805f02-16c6-4a45-9837-210c0f20b4a4}</Project>
-      <Name>Executable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logging\Logging.csproj">
-      <Project>{788cc8e1-6329-45ab-9869-6ef0037832e2}</Project>
-      <Name>Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reflection.ScriptSharp\Reflection.ScriptSharp.csproj">
-      <Project>{ff06d702-db9f-45e2-b641-317f9dc3f3b9}</Project>
-      <Name>Reflection.ScriptSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reflection\Reflection.csproj">
-      <Project>{20c3aa07-7e56-4e13-a932-b8d69a94525a}</Project>
-      <Name>Reflection</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ScriptSharp.Definition\ScriptSharp.Definition.csproj">
-      <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
-      <Name>ScriptSharp.Definition</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TranslationUnits\TranslationUnits.csproj">
-      <Project>{851a3acd-a1c2-40cd-8ba0-0296eedbf025}</Project>
-      <Name>TranslationUnits</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Reflection">
-      <HintPath>..\..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Compile Include="filesystem\EventViewerLogger.cs" />
+    <Compile Include="providers\ILogPathProvider.cs" />
+    <Compile Include="providers\SysRegLogPathProvider.cs" />
+    <Compile Include="utilities\ErrorUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

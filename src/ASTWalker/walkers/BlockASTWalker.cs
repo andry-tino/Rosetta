@@ -11,7 +11,6 @@ namespace Rosetta.AST
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using Rosetta.Translation;
-    using Rosetta.AST.Helpers;
 
     /// <summary>
     /// Walks a block AST node.
@@ -372,6 +371,8 @@ namespace Rosetta.AST
             ITranslationUnit statementTranslationUnit = walker.Walk();
 
             this.statementsGroup.AddStatement(statementTranslationUnit);
+
+            // TODO: Add logging
 
             this.InvokeStatementVisited(this, new WalkerEventArgs());
         }

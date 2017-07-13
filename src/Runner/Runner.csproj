@@ -60,6 +60,10 @@
       <Project>{2d805f02-16c6-4a45-9837-210c0f20b4a4}</Project>
       <Name>Executable</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{788cc8e1-6329-45ab-9869-6ef0037832e2}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

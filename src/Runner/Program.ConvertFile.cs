@@ -8,6 +8,7 @@ namespace Rosetta.Runner
     using System;
 
     using Rosetta.AST;
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.Executable;
 
     /// <summary>
@@ -52,6 +53,7 @@ namespace Rosetta.Runner
         protected static string PerformFileConversion(ConversionArguments arguments)
         {
             var program = new ProgramWrapper(arguments.Source, arguments.AssemblyPath);
+            program.LogPath = new SysRegLogPathProvider().LogPath;
 
             return program.Output;
         }

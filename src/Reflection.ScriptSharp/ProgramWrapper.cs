@@ -11,6 +11,7 @@ namespace Rosetta.Reflection.ScriptSharp
     using Microsoft.CodeAnalysis.CSharp;
 
     using Rosetta.AST;
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.Reflection.Proxies;
     using Rosetta.ScriptSharp.Definition.AST;
 
@@ -30,8 +31,14 @@ namespace Rosetta.Reflection.ScriptSharp
         {
         }
 
-        protected override IASTBuilder CreateASTBuilder(IAssemblyProxy assembly) => new ASTBuilder(assembly);
+        protected override IASTBuilder CreateASTBuilder(IAssemblyProxy assembly) => new ASTBuilder(assembly) { Logger = this.Logger };
 
-        protected override IASTWalker CreateASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel) => ProgramDefinitionASTWalker.Create(node, null, semanticModel);
+        protected override IASTWalker CreateASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel)
+        {
+            var walker = ProgramDefinitionASTWalker.Create(node, null, semanticModel);
+            walker.Logger = this.Logger;
+
+            return walker;
+        }
     }
 }

@@ -9,7 +9,8 @@ namespace Rosetta.AST
     using System.IO;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
-
+    
+    using Rosetta.Diagnostics.Logging;
     using Rosetta.AST.Helpers;
     using Rosetta.Utils;
 
@@ -55,6 +56,11 @@ namespace Rosetta.AST
         }
 
         /// <summary>
+        /// Gets or sets the path to the log file to write. If set to <c>null</c> no logging is performed.
+        /// </summary>
+        public string LogPath { get; set; }
+
+        /// <summary>
         /// Gets the output.
         /// </summary>
         public string Output
@@ -85,11 +91,22 @@ namespace Rosetta.AST
             // Creating the walker
             // If no semantic model was loaded, null will just be passed
             this.walker = ProgramASTWalker.Create(node, null, this.semanticModel);
+            this.walker.Logger = this.CreateLogger();
 
             // Translating
             this.output = this.walker.Walk().Translate();
 
             this.initialized = true;
+        }
+
+        private ILogger CreateLogger()
+        {
+            if (this.LogPath != null)
+            {
+                return new FileLogger(this.LogPath);
+            }
+
+            return null;
         }
         
         private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)
