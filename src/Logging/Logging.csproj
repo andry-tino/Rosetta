@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="filesystem\BufferedFileLogger.cs" />
     <Compile Include="filesystem\FileLogger.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="LoggingException.cs" />

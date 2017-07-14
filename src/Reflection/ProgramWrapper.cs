@@ -18,25 +18,19 @@ namespace Rosetta.Reflection
     /// <summary>
     /// Initiates the translation.
     /// </summary>
-    public class ProgramWrapper
+    public class ProgramWrapper : ProgramWrapperBase
     {
         private readonly string assemblyPath;
 
-        private ILogger logger;
-
         // Lazy loaded or cached quantities
-        private IASTWalker walker;
-        private CSharpSyntaxTree tree;
-        private SemanticModel semanticModel;
-        private string output;
-        private bool initialized;
         private string info;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramWrapper"/> class.
         /// </summary>
         /// <param name="assemblyPath"></param>
-        public ProgramWrapper(string assemblyPath)
+        public ProgramWrapper(string assemblyPath) 
+            : base()
         {
             if (assemblyPath == null)
             {
@@ -54,25 +48,18 @@ namespace Rosetta.Reflection
         /// <summary>
         /// Gets or sets the path to the log file to write. If set to <c>null</c> no logging is performed.
         /// </summary>
-        public string LogPath { get; set; }
+        public new string LogPath
+        {
+            get { return base.LogPath; }
+            set { base.LogPath = value; }
+        }
 
         /// <summary>
-        /// Gets the output of the generation.
+        /// Gets the output.
         /// </summary>
-        /// <remarks>
-        /// Generation is lazy and triggered here if this is the first time this property or <see cref="Info"/> is invoked.
-        /// </remarks>
-        public string Output
+        public new string Output
         {
-            get
-            {
-                if (!this.initialized)
-                {
-                    this.Initialize();
-                }
-
-                return this.output;
-            }
+            get { return base.Output; }
         }
 
         /// <summary>
@@ -85,7 +72,7 @@ namespace Rosetta.Reflection
         {
             get
             {
-                if (!this.initialized)
+                if (!this.Initialized)
                 {
                     this.Initialize();
                 }
@@ -106,7 +93,7 @@ namespace Rosetta.Reflection
             return walker;
         }
 
-        private void Initialize()
+        protected override void InitializeCore()
         {
             IAssemblyProxy assembly = this.LoadAssembly();
 
@@ -134,31 +121,6 @@ namespace Rosetta.Reflection
 
             // Some info
             this.info = $"AST generation: {astInfo.ToString()}";
-
-            this.initialized = true;
-        }
-
-        protected ILogger Logger
-        {
-            get
-            {
-                if (this.logger == null)
-                {
-                    this.logger = this.CreateLogger();
-                }
-
-                return this.logger;
-            }
-        }
-
-        private ILogger CreateLogger()
-        {
-            if (this.LogPath != null)
-            {
-                return new FileLogger(this.LogPath);
-            }
-
-            return null;
         }
 
         private IAssemblyProxy LoadAssembly()

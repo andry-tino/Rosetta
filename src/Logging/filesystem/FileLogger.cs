@@ -56,9 +56,16 @@ namespace Rosetta.Diagnostics.Logging
             string message = messages.Aggregate((s1, s2) => $"{s1}{Separator}{s2}");
             string logEntry = $"[{DateTime.Now.ToShortDateString()}-{DateTime.Now.ToShortTimeString()}]{Separator}{message}";
 
+            this.WriteEntry(logEntry);
+        }
+
+        protected string Path => this.path;
+
+        protected virtual void WriteEntry(string logEntry)
+        {
             try
             {
-                using (StreamWriter sw = File.AppendText(path))
+                using (StreamWriter sw = File.AppendText(this.Path))
                 {
                     sw.WriteLine(logEntry);
                 }
@@ -72,12 +79,12 @@ namespace Rosetta.Diagnostics.Logging
         private void CreateFile()
         {
             // If it exists already, remove it so we do not append different logging sessions
-            if (File.Exists(this.path))
+            if (File.Exists(this.Path))
             {
-                File.Delete(this.path);
+                File.Delete(this.Path);
             }
 
-            using (FileStream fs = File.Create(path))
+            using (FileStream fs = File.Create(this.Path))
             {
                 Byte[] info = new UTF8Encoding(true).GetBytes("Rosetta logfile");
                 fs.Write(info, 0, info.Length);

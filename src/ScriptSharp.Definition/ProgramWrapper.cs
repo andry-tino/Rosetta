@@ -21,26 +21,18 @@ namespace Rosetta.ScriptSharp.Definition.AST
     /// Acts like a wrapper for <see cref="ProgramDefinitionASTWalker"/> in order to provide 
     /// an easy interface for converting C# code.
     /// </summary>
-    public class ProgramWrapper
+    public class ProgramWrapper : ProgramWrapperBase
     {
-        // TODO: Make base class for program wrappers
-
         private readonly string source;
         private readonly string assemblyPath;
-
-        // Lazy loaded or cached quantities
-        private ProgramASTWalker walker;
-        private CSharpSyntaxTree tree;
-        private SemanticModel semanticModel;
-        private string output;
-        private bool initialized;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramWrapper"/> class.
         /// </summary>
         /// <param name="source">The source code</param>
         /// <param name="assemblyPath">The path to assembly for semantic model</param>
-        public ProgramWrapper(string source, string assemblyPath = null)
+        public ProgramWrapper(string source, string assemblyPath = null) 
+            : base()
         {
             if (source == null)
             {
@@ -54,32 +46,26 @@ namespace Rosetta.ScriptSharp.Definition.AST
 
             this.source = source;
             this.assemblyPath = assemblyPath;
-
-            this.initialized = false;
-        }
-
-        /// <summary>
-        /// Gets the output.
-        /// </summary>
-        public string Output
-        {
-            get
-            {
-                if (!this.initialized)
-                {
-                    this.Initialize();
-                }
-
-                return this.output;
-            }
         }
 
         /// <summary>
         /// Gets or sets the path to the log file to write. If set to <c>null</c> no logging is performed.
         /// </summary>
-        public string LogPath { get; set; }
+        public new string LogPath
+        {
+            get { return base.LogPath; }
+            set { base.LogPath = value; }
+        }
 
-        private void Initialize()
+        /// <summary>
+        /// Gets the output.
+        /// </summary>
+        public new string Output
+        {
+            get { return base.Output; }
+        }
+
+        protected override void InitializeCore()
         {
             // TODO: In order to target #41, add an option for using the reflector when requested
 
@@ -108,22 +94,10 @@ namespace Rosetta.ScriptSharp.Definition.AST
             // If no semantic model was loaded, null will just be passed
             var node = this.tree.GetRoot();
             this.walker = ProgramDefinitionASTWalker.Create(node, null, this.semanticModel);
-            this.walker.Logger = this.CreateLogger();
+            (this.walker as ProgramDefinitionASTWalker).Logger = this.Logger;
 
             // Translating
             this.output = this.walker.Walk().Translate();
-
-            this.initialized = true;
-        }
-
-        private ILogger CreateLogger()
-        {
-            if (this.LogPath != null)
-            {
-                return new FileLogger(this.LogPath);
-            }
-
-            return null;
         }
 
         private CSharpCompilation GetCompilation(string path, CSharpSyntaxTree sourceTree)

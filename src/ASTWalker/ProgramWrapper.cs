@@ -18,26 +18,18 @@ namespace Rosetta.AST
     /// Acts like a wrapper for <see cref="ProgramASTWalker"/> in order to provide 
     /// an easy interface for converting C# code.
     /// </summary>
-    public class ProgramWrapper
+    public class ProgramWrapper : ProgramWrapperBase
     {
-        // TODO: Make base class for program wrappers
-
         private readonly string source;
         private readonly string assemblyPath;
-
-        // Lazy loaded or cached quantities
-        private ProgramASTWalker walker;
-        private CSharpSyntaxTree tree;
-        private SemanticModel semanticModel;
-        private string output;
-        private bool initialized;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgramWrapper"/> class.
         /// </summary>
         /// <param name="source">The source code</param>
         /// <param name="assemblyPath">The path to assembly for semantic model</param>
-        public ProgramWrapper(string source, string assemblyPath = null)
+        public ProgramWrapper(string source, string assemblyPath = null) 
+            : base()
         {
             if (source == null)
             {
@@ -51,32 +43,26 @@ namespace Rosetta.AST
 
             this.source = source;
             this.assemblyPath = assemblyPath;
-
-            this.initialized = false;
         }
 
         /// <summary>
         /// Gets or sets the path to the log file to write. If set to <c>null</c> no logging is performed.
         /// </summary>
-        public string LogPath { get; set; }
+        public new string LogPath
+        {
+            get { return base.LogPath; }
+            set { base.LogPath = value; }
+        }
 
         /// <summary>
         /// Gets the output.
         /// </summary>
-        public string Output
+        public new string Output
         {
-            get
-            {
-                if (!this.initialized)
-                {
-                    this.Initialize();
-                }
-
-                return this.output;
-            }
+            get { return base.Output; }
         }
 
-        private void Initialize()
+        protected override void InitializeCore()
         {
             // Getting the AST node
             this.tree = ASTExtractor.Extract(this.source);
@@ -91,22 +77,10 @@ namespace Rosetta.AST
             // Creating the walker
             // If no semantic model was loaded, null will just be passed
             this.walker = ProgramASTWalker.Create(node, null, this.semanticModel);
-            this.walker.Logger = this.CreateLogger();
+            (this.walker as ProgramASTWalker).Logger = this.Logger;
 
             // Translating
             this.output = this.walker.Walk().Translate();
-
-            this.initialized = true;
-        }
-
-        private ILogger CreateLogger()
-        {
-            if (this.LogPath != null)
-            {
-                return new FileLogger(this.LogPath);
-            }
-
-            return null;
         }
         
         private void LoadSemanticModel(string path, CSharpSyntaxTree sourceTree)

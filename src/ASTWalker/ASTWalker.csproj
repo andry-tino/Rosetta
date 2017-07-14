@@ -160,6 +160,7 @@
     <Compile Include="logging\PropertyDeclarationSyntaxNodeLogger.cs" />
     <Compile Include="logging\SyntaxNodeLogger.cs" />
     <Compile Include="ProgramWrapper.cs" />
+    <Compile Include="ProgramWrapperBase.cs" />
     <Compile Include="transformers\ClassInDifferentNamespaceASTTransformer.cs" />
     <Compile Include="transformers\ClassWithAttributeInDifferentNamespaceASTTransformer.cs" />
     <Compile Include="utilities\MultiPurposeASTWalker.cs" />
