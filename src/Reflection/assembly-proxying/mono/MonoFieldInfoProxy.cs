@@ -57,5 +57,10 @@ namespace Rosetta.Reflection.Proxies
         /// Gets a value indicating whether this member is public.
         /// </summary>
         public bool IsPublic => this.fieldDefinition.IsPublic;
+
+        /// <summary>
+        /// Gets a value indicating whether the member is static.
+        /// </summary>
+        public bool IsStatic => this.fieldDefinition.IsStatic;
     }
 }

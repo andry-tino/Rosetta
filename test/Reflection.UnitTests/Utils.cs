@@ -111,6 +111,25 @@ namespace Rosetta.Reflection.UnitTests
         }
 
         /// <summary>
+        /// Finds a <see cref="IFieldInfoProxy"/> into an <see cref="ITypeInfoProxy"/> by looking at the name (partial match).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="fieldName"></param>
+        /// <returns></returns>
+        public static IFieldInfoProxy LocateField(this ITypeInfoProxy type, string fieldName)
+        {
+            foreach (var field in type.DeclaredFields)
+            {
+                if (field.Name.Contains(fieldName))
+                {
+                    return field;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Finds a <see cref="IConstructorInfoProxy"/> into an <see cref="ITypeInfoProxy"/>.
         /// </summary>
         /// <param name="type"></param>

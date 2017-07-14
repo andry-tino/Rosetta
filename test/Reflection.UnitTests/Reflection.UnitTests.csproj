@@ -122,6 +122,7 @@
     <Compile Include="factories\ClassDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\ConstructorDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\EnumDeclarationSyntaxFactoryTest.cs" />
+    <Compile Include="factories\FieldDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\InterfaceDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\PropertyDeclarationSyntaxFactoryTest.cs" />

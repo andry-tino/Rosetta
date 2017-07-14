@@ -47,6 +47,9 @@ namespace Rosetta.Reflection.Factories
                     .Add(SyntaxFactory.VariableDeclarator(this.FieldInfo.Name)));
             var fieldDeclaration = SyntaxFactory.FieldDeclaration(varDeclaration);
 
+            // Defining modifiers
+            fieldDeclaration = this.HandleModifiers(fieldDeclaration);
+
             // Defining accessibility
             fieldDeclaration = this.HandleAccessibility(fieldDeclaration);
 
@@ -54,6 +57,18 @@ namespace Rosetta.Reflection.Factories
         }
 
         protected IFieldInfoProxy FieldInfo => this.fieldInfo;
+
+        private FieldDeclarationSyntax HandleModifiers(FieldDeclarationSyntax node)
+        {
+            var newNode = node;
+
+            if (this.FieldInfo.IsStatic)
+            {
+                newNode = newNode.AddModifiers(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
+            }
+
+            return newNode;
+        }
 
         private FieldDeclarationSyntax HandleAccessibility(FieldDeclarationSyntax node)
         {
