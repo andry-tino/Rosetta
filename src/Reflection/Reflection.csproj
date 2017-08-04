@@ -153,6 +153,9 @@
     <Compile Include="factories\ISyntaxFactory.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\PropertyDeclarationSyntaxFactory.cs" />
+    <Compile Include="filtering\DotNetAssemblyTypeInfoBlackList.cs" />
+    <Compile Include="filtering\ITypeInfoFilter.cs" />
+    <Compile Include="filtering\TypeInfoBlackList.cs" />
     <Compile Include="helpers\EnumClass.cs" />
     <Compile Include="helpers\NativeClass.cs" />
     <Compile Include="helpers\ObjectClass.cs" />

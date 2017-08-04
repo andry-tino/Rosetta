@@ -126,6 +126,7 @@
     <Compile Include="factories\InterfaceDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactoryTest.cs" />
     <Compile Include="factories\PropertyDeclarationSyntaxFactoryTest.cs" />
+    <Compile Include="filtering\TypeInfoBlackListTest.cs" />
     <Compile Include="helpers\ObjectClassTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />

@@ -75,12 +75,22 @@ namespace Rosetta.Reflection
 
         protected IAssemblyProxy Assembly => this.assembly;
 
+        private IEnumerable<ITypeInfoProxy> RetrieveTypesFromAssembly()
+        {
+            IEnumerable<ITypeInfoProxy> types = this.Assembly.DefinedTypes;
+
+            // FIlter out blacklisted types
+            types = new DotNetAssemblyTypeInfoBlackList().Filter(types);
+
+            return types;
+        }
+
         private ASTInfo BuildASTInfo()
         {
             IEnumerable<ITypeInfoProxy> types = null;
             try
             {
-                types = this.Assembly.DefinedTypes;
+                types = this.RetrieveTypesFromAssembly();
             }
             catch (Exception ex)
             {
