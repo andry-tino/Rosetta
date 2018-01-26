@@ -26,8 +26,12 @@ namespace Rosetta.Reflection.ScriptSharp
         /// namespace substitution attribute <code>ScriptNamespace</code>.
         /// </summary>
         /// <param name="assembly">The assembly.</param>
-        public ASTBuilder(IAssemblyProxy assembly) 
-            : base(assembly)
+        /// <param name="retrieveSemanticModel">
+        /// A value indicating whether the Mscorlib assembly should be 
+        /// loaded and its semantic model employed.
+        /// </param>
+        public ASTBuilder(IAssemblyProxy assembly, bool retrieveSemanticModel = true) 
+            : base(assembly, retrieveSemanticModel)
         {
             this.lookup = new LinearSearchTypeLookup(assembly);
         }

@@ -119,6 +119,22 @@ namespace Rosetta.Reflection.Proxies
         /// <summary>
         /// Gets a value indicating whether the member is static.
         /// </summary>
-        public bool IsStatic => this.propertyDefinition.GetMethod.IsStatic; // Relying on the getter, both must be the same
+        public bool IsStatic
+        {
+            get
+            {
+                if (this.propertyDefinition.GetMethod != null)
+                {
+                    return this.propertyDefinition.GetMethod.IsStatic;
+                }
+
+                if (this.propertyDefinition.SetMethod != null)
+                {
+                    return this.propertyDefinition.SetMethod.IsStatic;
+                }
+
+                throw new InvalidOperationException($"Property definition {this.propertyDefinition} does not have either a getter or a setter.");
+            }
+        }
     }
 }

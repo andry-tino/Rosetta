@@ -25,15 +25,14 @@ namespace Rosetta.AST.Utilities
         /// </summary>
         /// <param name="baseTypes"></param>
         /// <returns></returns>
-        /// <remarks>
-        /// 
-        /// </remarks>
         public static IEnumerable<BaseTypeInfo> SeparateClassAndInterfacesBasedOnNames(IEnumerable<BaseTypeSyntax> baseTypes)
         {
             if (!CanSeparateClassAndInterfacesBasedOnNames(baseTypes))
             {
                 var names = baseTypes.Select(baseType => new BaseTypeReference(baseType).Name).Aggregate((i, j) => $"{i}; {j}");
-                throw new ArgumentException(nameof(baseTypes), $"The provided collection of base types: [{names}] cannot be evaluated with this approach");
+                throw new UnableToDiscriminateBasetypeCollectionByNameException(
+                    $"The provided collection of base types: [{names}] cannot be evaluated with this approach", 
+                    new ArgumentException(nameof(baseTypes)));
             }
 
             var infos = new List<BaseTypeInfo>();
@@ -106,10 +105,7 @@ namespace Rosetta.AST.Utilities
         }
 
         #region Types
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         public sealed class BaseTypeInfo
         {
             /// <summary>
@@ -121,6 +117,28 @@ namespace Rosetta.AST.Utilities
             /// Gets or sets the type.
             /// </summary>
             public Roslyn.TypeKind Kind { get; set; }
+        }
+
+        public class UnableToDiscriminateBasetypeCollectionByNameException : Exception
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="UnableToDiscriminateBasetypeCollectionByNameException"/> class.
+            /// </summary>
+            /// <param name="message"></param>
+            public UnableToDiscriminateBasetypeCollectionByNameException(string message) 
+                : base(message)
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="UnableToDiscriminateBasetypeCollectionByNameException"/> class.
+            /// </summary>
+            /// <param name="message"></param>
+            /// <param name="innerException"></param>
+            public UnableToDiscriminateBasetypeCollectionByNameException(string message, Exception innerException)
+                : base(message, innerException)
+            {
+            }
         }
 
         #endregion

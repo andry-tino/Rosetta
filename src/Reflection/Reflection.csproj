@@ -161,6 +161,7 @@
     <Compile Include="helpers\ObjectClass.cs" />
     <Compile Include="helpers\ValueTypeClass.cs" />
     <Compile Include="helpers\Visibility.cs" />
+    <Compile Include="loading\MscorlibAssemblyLoader.cs" />
     <Compile Include="logging\TypeInfoLogger.cs" />
     <Compile Include="lookup\ITypeLookup.cs" />
     <Compile Include="loading\MonoFSAssemblyLoader.cs" />

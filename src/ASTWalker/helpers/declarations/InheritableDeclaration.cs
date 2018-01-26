@@ -70,73 +70,117 @@ namespace Rosetta.AST.Helpers
         {
             get
             {
-                // TODO: Simplify this logic
-
                 if (this.baseTypes == null)
                 {
                     this.baseTypes = new List<BaseTypeReference>();
 
                     BaseListSyntax baselist = this.TypeDeclarationSyntaxNode.BaseList;
-                    if (baselist != null)
+                    if (baselist == null)
                     {
-                        SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.TypeDeclarationSyntaxNode.BaseList.Types;
+                        return this.baseTypes;
+                    }
 
-                        // TODO: Enable back once the semantic model use with AST transformation works again
-                        /*if (this.SemanticModel != null) // Semantic model available, use it!
+                    SeparatedSyntaxList<BaseTypeSyntax> listSyntax = this.TypeDeclarationSyntaxNode.BaseList.Types;
+
+                    IEnumerable<BaseTypeSyntax> simpleBaseTypes = listSyntax.Where(node => node.Kind() == SyntaxKind.SimpleBaseType);
+                    var unprocessedBaseTypes = new List<BaseTypeSyntax>(); // Semantic model failed for those
+
+                    // Process each type and try using the semantic model, at the end, it might 
+                    // be that not all types could not be solved using the semantic model, for 
+                    // those, try using the names
+                    foreach (BaseTypeSyntax baseType in simpleBaseTypes)
+                    {
+                        var discrimination = this.DiscriminateUsingSemanticModel(baseType);
+                        if (!discrimination.HasValue)
                         {
-                            foreach (BaseTypeSyntax baseType in listSyntax)
-                            {
-                                if (baseType.Kind() == SyntaxKind.SimpleBaseType)
-                                {
-                                    var symbolInfo = this.SemanticModel.GetSymbolInfo(baseType.Type);
-                                    var typeSymbol = symbolInfo.Symbol as ITypeSymbol;
-
-                                    switch (typeSymbol.TypeKind)
-                                    {
-                                        case Roslyn.TypeKind.Class:
-                                            ((List<BaseTypeReference>)this.baseTypes).Add(
-                                                this.CreateBaseTypeReferenceHelper(baseType, this.SemanticModel, Roslyn.TypeKind.Class));
-                                            break;
-                                        case Roslyn.TypeKind.Interface:
-                                            ((List<BaseTypeReference>)this.baseTypes).Add(
-                                                this.CreateBaseTypeReferenceHelper(baseType, this.SemanticModel, Roslyn.TypeKind.Interface));
-                                            break;
-                                        default:
-                                            // Not recognized, skip it
-                                            continue;
-                                    }
-                                }
-                            }
+                            unprocessedBaseTypes.Add(baseType);
+                            continue;
                         }
-                        else // Semantic model is not available, guess!*/
+
+                        switch (discrimination.Value)
                         {
-                            IEnumerable<BaseTypeSyntax> simpleBaseTypes = listSyntax.Where(node => node.Kind() == SyntaxKind.SimpleBaseType);
-                            IEnumerable<SemanticUtilities.BaseTypeInfo> baseTypeInfos = SemanticUtilities.SeparateClassAndInterfacesBasedOnNames(simpleBaseTypes);
-
-                            foreach (var baseTypeInfo in baseTypeInfos)
-                            {
-                                // Semantic model passed for consistency, but here is actually null
-                                switch (baseTypeInfo.Kind)
-                                {
-                                    case Roslyn.TypeKind.Class:
-                                        ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            this.CreateBaseTypeReferenceHelper(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Class));
-                                        break;
-                                    case Roslyn.TypeKind.Interface:
-                                        ((List<BaseTypeReference>)this.baseTypes).Add(
-                                            this.CreateBaseTypeReferenceHelper(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Interface));
-                                        break;
-                                    default:
-                                        // Not recognized, skip it
-                                        continue;
-                                }
-                            }
+                            case Roslyn.TypeKind.Class:
+                                ((List<BaseTypeReference>)this.baseTypes).Add(
+                                    this.CreateBaseTypeReferenceHelper(baseType, this.SemanticModel, Roslyn.TypeKind.Class));
+                                break;
+                            case Roslyn.TypeKind.Interface:
+                                ((List<BaseTypeReference>)this.baseTypes).Add(
+                                    this.CreateBaseTypeReferenceHelper(baseType, this.SemanticModel, Roslyn.TypeKind.Interface));
+                                break;
+                            default:
+                                // Something else other than class or interface => not of interest, skip it
+                                continue;
                         }
+                    }
+
+                    // Do we have any unresolved types?
+                    if (unprocessedBaseTypes.Count() > 0)
+                    {
+                        List<BaseTypeReference> resolvedTypes = this.DiscriminateByName(unprocessedBaseTypes);
+
+                        ((List<BaseTypeReference>)this.baseTypes).AddRange(resolvedTypes);
                     }
                 }
 
                 return this.baseTypes;
             }
+        }
+
+        /// <summary>
+        /// This strategy employs the semantic model.
+        /// </summary>
+        /// <param name="baseType"></param>
+        /// <returns></returns>
+        private Roslyn.TypeKind? DiscriminateUsingSemanticModel(BaseTypeSyntax baseType)
+        {
+            var symbolInfo = this.SemanticModel.GetSymbolInfo(baseType.Type);
+            ITypeSymbol typeSymbol = symbolInfo.Symbol as ITypeSymbol;
+
+            if (typeSymbol == null && symbolInfo.CandidateSymbols.Count() > 0)
+            {
+                typeSymbol = symbolInfo.CandidateSymbols[0] as ITypeSymbol;
+            }
+
+            if (typeSymbol == null)
+            {
+                return null;
+            }
+
+            switch (typeSymbol.TypeKind)
+            {
+                case Roslyn.TypeKind.Class: return Roslyn.TypeKind.Class;
+                case Roslyn.TypeKind.Interface: return Roslyn.TypeKind.Interface;
+                default: return null;
+            }
+        }
+
+        /// <summary>
+        /// This strategy uses the names and needs the whole array of base types, not just one type in the base list.
+        /// </summary>
+        /// <param name="baseTypeInfo"></param>
+        private List<BaseTypeReference> DiscriminateByName(IEnumerable<BaseTypeSyntax> simpleBaseTypes)
+        {
+            var baseTypes = new List<BaseTypeReference>();
+            IEnumerable<SemanticUtilities.BaseTypeInfo> baseTypeInfos = SemanticUtilities.SeparateClassAndInterfacesBasedOnNames(simpleBaseTypes);
+
+            foreach (var baseTypeInfo in baseTypeInfos)
+            {
+                // Semantic model passed for consistency, but here is actually null
+                switch (baseTypeInfo.Kind)
+                {
+                    case Roslyn.TypeKind.Class:
+                        baseTypes.Add(this.CreateBaseTypeReferenceHelper(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Class));
+                        break;
+                    case Roslyn.TypeKind.Interface:
+                        baseTypes.Add(this.CreateBaseTypeReferenceHelper(baseTypeInfo.Node, this.SemanticModel, Roslyn.TypeKind.Interface));
+                        break;
+                    default:
+                        // Not recognized, skip it
+                        continue;
+                }
+            }
+
+            return baseTypes;
         }
 
         /// <summary>

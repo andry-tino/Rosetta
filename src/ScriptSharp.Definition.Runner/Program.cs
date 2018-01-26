@@ -35,7 +35,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         protected List<string> includes = new List<string>();   // The included files to be emitted as references
         protected bool verbose = false;                         // Verbosity
         protected bool help = false;                            // Show help message
-        
+        protected bool mscorlib = false;                        // Generate definitions for the Mscorlib assembly
+
         public const string UnnamedArgumentName = "unnamed";
 
         public const string FileArgumentName        = "file";
@@ -52,6 +53,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
         public const string VerboseArgumentChar     = "v";
         public const string HelpArgumentName        = "help";
         public const string HelpArgumentChar        = "h";
+        public const string MscorlibArgumentName    = "mscorlib";
+        public const string MscorlibArgumentChar    = "m";
 
         public string FileOption
         {
@@ -88,6 +91,11 @@ namespace Rosetta.ScriptSharp.Definition.Runner
             get { return string.Format("{0}|{1}", HelpArgumentName, HelpArgumentChar); }
         }
 
+        public string MscorlibOption
+        {
+            get { return string.Format("{0}|{1}", MscorlibArgumentName, MscorlibArgumentChar); }
+        }
+
         /// <summary>
         /// Entry point.
         /// </summary>
@@ -120,6 +128,8 @@ namespace Rosetta.ScriptSharp.Definition.Runner
                   value => this.verbose = value != null },
                 { HelpOption,  "Show this message and exit.",
                   value => this.help = value != null },
+                { MscorlibOption,  "Generate definitions for the Mscorlib assembly.",
+                  value => this.mscorlib = value != null }
             };
         }
 
@@ -143,7 +153,13 @@ namespace Rosetta.ScriptSharp.Definition.Runner
                     return;
                 }
 
-                if (this.filePath == null && this.assemblyPath != null)
+                if (this.mscorlib)
+                {
+                    this.GenerateMscorlibAssembly();
+                    return;
+                }
+
+                if (this.assemblyPath != null)
                 {
                     this.ConvertAssembly();
                     return;

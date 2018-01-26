@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ProgramWrapper.cs
+/// MscorlibProgramWrapper.cs
 /// Andrea Tino - 2017
 /// </summary>
 
@@ -17,20 +17,19 @@ namespace Rosetta.Reflection.ScriptSharp
     /// <summary>
     /// Initiates the translation.
     /// </summary>
-    public class ProgramWrapper : Rosetta.Reflection.ProgramWrapper
+    public class MscorlibProgramWrapper : Rosetta.Reflection.ProgramWrapper
     {
-        // TODO: Rename this whole assembly into Reflection.ScriptSharp.Definition
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProgramWrapper"/> class.
+        /// Initializes a new instance of the <see cref="MscorlibProgramWrapper"/> class.
         /// </summary>
         /// <param name="assemblyPath"></param>
-        public ProgramWrapper(string assemblyPath) 
-            : base(assemblyPath)
+        public MscorlibProgramWrapper() : base(null)
         {
         }
 
-        protected override IASTBuilder CreateASTBuilder(IAssemblyProxy assembly) => new ASTBuilder(assembly) { Logger = this.Logger };
+        protected override IASTBuilder CreateASTBuilder(IAssemblyProxy assembly) => new ASTBuilder(assembly, true) { Logger = this.Logger };
+
+        protected override IAssemblyLoader CreateAssemblyLoader(string assemblyPath) => new MscorlibAssemblyLoader();
 
         protected override IASTWalker CreateASTWalker(CSharpSyntaxNode node, SemanticModel semanticModel)
         {

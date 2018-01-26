@@ -120,6 +120,7 @@
     <Compile Include="ClassDeclarationTest.cs" />
     <Compile Include="ConditionalStatementTest.cs" />
     <Compile Include="FieldDeclarationTest.cs" />
+    <Compile Include="InheritableDeclarationTest.cs" />
     <Compile Include="MethodDeclarationTest.cs" />
     <Compile Include="ModifiersTest.cs" />
     <Compile Include="TestSuite.cs" />

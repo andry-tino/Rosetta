@@ -30,6 +30,7 @@ namespace Rosetta.Reflection
     public class ASTBuilder : IASTBuilder
     {
         private readonly IAssemblyProxy assembly;
+        private readonly bool retrieveSemanticModel;
 
         // Cached quantities
         private ASTInfo astInfo;
@@ -39,7 +40,11 @@ namespace Rosetta.Reflection
         /// This class builds a plain tree from all the types in the assembly.
         /// </summary>
         /// <param name="assembly">The path to the assembly.</param>
-        public ASTBuilder(IAssemblyProxy assembly)
+        /// <param name="retrieveSemanticModel">
+        /// A value indicating whether the Mscorlib assembly should be 
+        /// loaded and its semantic model employed.
+        /// </param>
+        public ASTBuilder(IAssemblyProxy assembly, bool retrieveSemanticModel = true)
         {
             if (assembly == null)
             {
@@ -47,6 +52,7 @@ namespace Rosetta.Reflection
             }
 
             this.assembly = assembly;
+            this.retrieveSemanticModel = retrieveSemanticModel;
         }
 
         /// <summary>
@@ -174,7 +180,12 @@ namespace Rosetta.Reflection
 
         private SemanticModel RetrieveSemanticModel(SyntaxTree tree)
         {
-            var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
+            if (!this.retrieveSemanticModel)
+            {
+                return null;
+            }
+
+            PortableExecutableReference mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
 
             var compilation = CSharpCompilation.Create("RosettaReflectionCompilation",
                 syntaxTrees: new[] { tree },

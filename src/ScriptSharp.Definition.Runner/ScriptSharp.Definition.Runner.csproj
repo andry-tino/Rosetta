@@ -46,6 +46,7 @@
     <Compile Include="Program.ConvertAssembly.cs" />
     <Compile Include="Program.ConvertFile.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Program.GenerateMscorlibAssembly.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

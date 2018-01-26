@@ -32,12 +32,7 @@ namespace Rosetta.Reflection
         public ProgramWrapper(string assemblyPath) 
             : base()
         {
-            if (assemblyPath == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyPath));
-            }
-
-            if (!File.Exists(assemblyPath))
+            if (assemblyPath != null && !File.Exists(assemblyPath))
             {
                 throw new ArgumentException("Invalid path", nameof(assemblyPath));
             }
