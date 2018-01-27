@@ -10,54 +10,71 @@ namespace Rosetta.AST.Utilities
     using Rosetta.Translation;
 
     /// <summary>
-    /// Maps system (MsCoreLib) types to TypeScript types.
+    /// A class describing the result of the mapping process.
+    /// </summary>
+    public sealed class MappingResult
+    {
+        /// <summary>
+        /// Gets a value indicating whether a mapping was actually applied or not.
+        /// </summary>
+        public bool MappingApplied { get; set; }
+
+        /// <summary>
+        /// Gets the mapping result.
+        /// If no mapping is found, this contains a <see cref="TypeIdentifierTranslationUnit"/> wrapping the original value.
+        /// </summary>
+        public ITranslationUnit MappedType { get; set; }
+    }
+
+    /// <summary>
+    /// Maps system (Mscorlib.dll, part of .NET) types to TypeScript types.
     /// </summary>
     public static class TypeMappings
     {
         /// <summary>
         /// Maps a type into another.
         /// </summary>
-        /// <param name="originalType">The original type.</param>
+        /// <param name="originalType">The original type (fully qualified name).</param>
         /// <returns>The new type, or the original type if no mapping is possible.</returns>
-        public static string MapType(this string originalType)
+        public static MappingResult MapType(this string originalType)
         {
             if (IsVoid(originalType))
             {
-                return Lexems.VoidReturnType;
+                return new MappingResult() { MappedType = VoidTypeTranslationUnit.Create(), MappingApplied = true };
             }
 
             if (IsString(originalType))
             {
-                return Lexems.StringType;
+                return new MappingResult() { MappedType = StringTypeTranslationUnit.Create(), MappingApplied = true };
             }
 
             if (IsInt(originalType))
             {
-                return Lexems.NumberType;
+                return new MappingResult() { MappedType = NumberTypeTranslationUnit.Create(), MappingApplied = true };
             }
 
             if (IsDouble(originalType))
             {
-                return Lexems.NumberType;
+                return new MappingResult() { MappedType = NumberTypeTranslationUnit.Create(), MappingApplied = true };
             }
 
             if (IsFloat(originalType))
             {
-                return Lexems.NumberType;
+                return new MappingResult() { MappedType = NumberTypeTranslationUnit.Create(), MappingApplied = true };
             }
 
             if (IsBool(originalType))
             {
-                return Lexems.BooleanType;
+                return new MappingResult() { MappedType = BooleanTypeTranslationUnit.Create(), MappingApplied = true };
             }
 
             if (IsObject(originalType))
             {
-                return Lexems.AnyType;
+                return new MappingResult() { MappedType = AnyTypeTranslationUnit.Create(), MappingApplied = true };
             }
 
             // No type could be found
-            return originalType;
+            return new MappingResult() { MappedType = TypeIdentifierTranslationUnit.Create(originalType), MappingApplied = false };
         }
 
         private static bool IsVoid(string originalType) => originalType == typeof(void).FullName || originalType.ToLower().Contains("void");

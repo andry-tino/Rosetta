@@ -56,13 +56,13 @@ namespace Rosetta.AST.Factories
 
             var methodDeclaration = this.CreateTranslationUnit(
                 helper.Modifiers,
-                TypeIdentifierTranslationUnit.Create(helper.ReturnType.FullName.MapType()),
+                this.MapType(helper.ReturnType.FullName).MappedType,
                 IdentifierTranslationUnit.Create(helper.Name)) as MethodSignatureDeclarationTranslationUnit;
 
             foreach (Parameter parameter in helper.Parameters)
             {
                 methodDeclaration.AddArgument(ArgumentDefinitionTranslationUnit.Create(
-                    TypeIdentifierTranslationUnit.Create(parameter.Type.FullName.MapType()),
+                    this.MapType(parameter.Type.FullName).MappedType,
                     IdentifierTranslationUnit.Create(parameter.IdentifierName)));
             }
 

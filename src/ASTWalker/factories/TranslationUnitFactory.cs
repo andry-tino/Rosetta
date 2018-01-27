@@ -9,6 +9,9 @@ namespace Rosetta.AST.Factories
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
+    using Rosetta.AST.Utilities;
+    using Rosetta.Translation;
+
     /// <summary>
     /// Factory for <see cref="ClassDeclarationTranslationUnit"/>.
     /// </summary>
@@ -45,6 +48,8 @@ namespace Rosetta.AST.Factories
             this.node = other.node;
             this.semanticModel = other.semanticModel;
         }
+
+        protected virtual MappingResult MapType(string originalType) => originalType.MapType();
 
         protected CSharpSyntaxNode Node => this.node;
 

@@ -12,6 +12,8 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
 
     using Rosetta.AST.Factories;
     using Rosetta.AST.Helpers;
+    using Rosetta.AST.Utilities;
+    using DefinitionUtilities = Rosetta.ScriptSharp.Definition.AST.Utilities;
     using Rosetta.ScriptSharp.Definition.Translation;
     using Rosetta.Translation;
 
@@ -55,6 +57,20 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
             : base(other)
         {
             this.createWhenProtected = other.createWhenProtected;
+        }
+
+        protected override MappingResult MapType(string originalType)
+        {
+            // Apply mapping from base
+            var mappingResult = base.MapType(originalType);
+
+            // If no actual mapping is performed, do this mapping
+            if (!mappingResult.MappingApplied)
+            {
+                mappingResult = DefinitionUtilities.TypeMappings.MapType(originalType);
+            }
+
+            return mappingResult;
         }
 
         /// <summary>

@@ -86,6 +86,13 @@
     <Compile Include="simple\ReferenceTranslationUnit.cs" />
     <Compile Include="simple\SingleLineCommentTranslationUnit.cs" />
     <Compile Include="simple\TypeIdentifierTranslationUnit.cs" />
+    <Compile Include="types\AnyArrayTypeTranslationUnit.cs" />
+    <Compile Include="types\AnyTypeTranslationUnit.cs" />
+    <Compile Include="types\BooleanTypeTranslationUnit.cs" />
+    <Compile Include="types\NumberTypeTranslationUnit.cs" />
+    <Compile Include="types\StringDictionaryTypeTranslationUnit.cs" />
+    <Compile Include="types\StringTypeTranslationUnit.cs" />
+    <Compile Include="types\VoidTypeTranslationUnit.cs" />
     <Compile Include="simple\VariableDeclarationTranslationUnit.cs" />
     <Compile Include="simple\VoidTranslationUnit.cs" />
     <Compile Include="tokens\Lexems.cs" />

@@ -288,7 +288,7 @@ namespace Rosetta.AST.Helpers
             ObjectCreationExpression helper = new ObjectCreationExpression(expression, semanticModel);
             
             var translationUnit = ObjectCreationExpressionTranslationUnit.Create(
-                TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType())); // TODO: Create factory for TypeReference
+                TypeIdentifierTranslationUnit.Create(helper.Type.FullName.MapType().MappedType.Translate())); // TODO: Create factory for TypeReference
 
             foreach (var argument in helper.Arguments)
             {
