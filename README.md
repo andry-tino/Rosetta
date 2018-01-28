@@ -10,7 +10,7 @@ C# to TypeScript via [Roslyn](https://github.com/dotnet/roslyn)
 _Rosetta_ is a project for converting C# code into [TypeScript](http://www.typescriptlang.org/). I do this by means of project [Roslyn](https://github.com/dotnet/roslyn). _Rosetta_ is also a toolset for providing help while converting yourr codebase to TypeScript. The overall solution includes the following tools:
 
 - **Rosetta** The transpiler to convert ScriptSharp C# code into TypeScript.
-- **Rosetta ScriptSharp definition generator** A tool to generate TypeScript definition files out of your ScriptSharp C# codebase.
+- **Rosetta ScriptSharp Definition Generator** A tool to generate TypeScript definition files out of your ScriptSharp C# codebase.
 
 ## How it works
 _Rosetta_ is written in C# and performs syntax analysis of C# code in order to convert it into _TypeScript_. There are many applications, however _Rosetta_ is developed with those specific ones as targets:
@@ -28,5 +28,11 @@ _Rosetta_ relies can be executed on the following platforms:
 
 _Rosetta_ depends on:
 
-- The .NET Framework 4.0+.
+- .NET Framework 4.0+.
 - Project [Roslyn](https://github.com/dotnet/roslyn).
+
+_Rosetta ScriptSharp Definition Generator_ depends on:
+
+- .NET Framework 4.0+.
+- Project [Roslyn](https://github.com/dotnet/roslyn) (definition generation via file).
+- Project [Mono.Cecil](https://github.com/jbevain/cecil) (definition generation via assembly).

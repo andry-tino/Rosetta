@@ -13,6 +13,10 @@ namespace Rosetta.Reflection
     /// <summary>
     /// Describes a filter for <see cref="ITypeInfoProxy"/>.
     /// </summary>
+    /// <remarks>
+    /// This interface describes very simple filters that just remove a entry in a list of type definitions. 
+    /// If the filtered type is referenced by other types, those references are not removed.
+    /// </remarks>
     public interface ITypeInfoFilter
     {
         /// <summary>
