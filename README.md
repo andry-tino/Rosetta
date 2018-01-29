@@ -26,6 +26,10 @@ _Rosetta_ can be executed on the following platforms:
 
 - Windows
 
+Current supported development environments are:
+
+- Visual Studio 2015
+
 _Rosetta_ depends on:
 
 - .NET Framework 4.0+.
