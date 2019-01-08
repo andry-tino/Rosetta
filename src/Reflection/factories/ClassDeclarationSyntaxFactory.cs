@@ -6,6 +6,7 @@
 namespace Rosetta.Reflection.Factories
 {
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -17,7 +18,7 @@ namespace Rosetta.Reflection.Factories
     /// <summary>
     /// Factory for generating a <see cref="ClassDeclarationSyntax"/>.
     /// </summary>
-    public class ClassDeclarationSyntaxFactory : ISyntaxFactory
+    public class ClassDeclarationSyntaxFactory : ISyntaxFactory, ISyntaxFilterOut
     {
         private readonly ITypeInfoProxy classInfo;
 
@@ -34,6 +35,12 @@ namespace Rosetta.Reflection.Factories
 
             this.classInfo = classInfo;
         }
+
+        /// <summary>
+        /// Gets or sets the collection of types to filter out.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> FilteredOutTypes { get; set; }
 
         /// <summary>
         /// Creates the <see cref="ClassDeclarationSyntax"/>.

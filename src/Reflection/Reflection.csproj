@@ -149,6 +149,7 @@
     <Compile Include="factories\ConstructorDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\EnumDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\FieldDeclarationSyntaxFactory.cs" />
+    <Compile Include="factories\ISyntaxFilterOut.cs" />
     <Compile Include="factories\InterfaceDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\ISyntaxFactory.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactory.cs" />
