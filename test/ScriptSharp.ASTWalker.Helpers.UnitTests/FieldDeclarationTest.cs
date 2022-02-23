@@ -43,8 +43,21 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
             ", "myField");
         }
 
+        /// <summary>
+        /// ScrptSharp by default converts identifier UILanguageId to uiLanguageId
+        /// </summary>
         [TestMethod]
-        public void WhenPreserveNameAttributeDetectedThenRenderNameAsItIs()
+        public void NameConvertedAccordingToScriptSharpCamelCaseRules()
+        {
+            TestName(@"
+            public class MyClass {
+                int MYField;
+            }
+            ", "myField");
+        }
+
+        [TestMethod]
+        public void WhenPreserveNameAttributeDetectedOnFieldThenRenderNameAsItIs()
         {
             TestName(@"
             public class MyClass {
@@ -52,6 +65,53 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
                 int MyField;
             }
             ", "MyField");
+        }
+
+        [TestMethod]
+        public void WhenScriptNameAttributeDetectedOnFieldThenRenderNameAsSpecified()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(""myfield"")]
+                int MyField;
+            }
+            ", "myfield");
+        }
+
+        [TestMethod]
+        public void WhenScriptNameWithPreserveNameAttributeDetectedOnFieldThenRenderNameAsItIs()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(PreserveCase = true)]
+                int MYFIELD;
+            }
+            ", "MYFIELD");
+        }
+
+        [TestMethod]
+        public void WhenScriptNameWithPreserveCaseAttributeDetectedOnFieldThenRenderNameAsItIs()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(PreserveCase = true)]
+                int MyField;
+            }
+            ", "MyField");
+        }
+
+        /// <summary>
+        /// ScriptName attribute constructor argument overrides PreserveCase/PreserveName properties
+        /// </summary>
+        [TestMethod]
+        public void WhenScriptNameWithMultipleAttributesDetectedOnFieldThenOverridenNameTakesPrecedence()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(""myfield"", PreserveCase = true, PreserveName = true)]
+                int MyField;
+            }
+            ", "myfield");
         }
 
         private static void TestName(string source, string expectedName)

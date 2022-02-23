@@ -5,10 +5,9 @@
 
 namespace Rosetta.ScriptSharp.AST.Helpers
 {
-    using System;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
+    
 
     /// <summary>
     ///Decorates <see cref="AttributeDecoration"/>.
@@ -32,6 +31,28 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         public ClassDeclaration(ClassDeclarationSyntax classDeclarationNode, SemanticModel semanticModel)
             : base(classDeclarationNode, semanticModel)
         {
+        }
+
+        public override string Name
+        {
+            get
+            {
+                var attributes = new Rosetta.AST.Helpers.AttributeLists(this.ClassDeclarationSyntaxNode).Attributes;
+                foreach (var attribute in attributes)
+                {
+                    if (ScriptNameAttributeDecoration.IsScriptNameAttributeDecoration(attribute))
+                    {
+                        var scriptNameAttributeDecoration = new ScriptNameAttributeDecoration(attribute);
+                        return scriptNameAttributeDecoration.OverridenName ?? base.Name;
+                    }
+                }
+                return base.Name;
+            }
+        }
+
+        protected ClassDeclarationSyntax ClassDeclarationSyntaxNode
+        {
+            get { return this.SyntaxNode as ClassDeclarationSyntax; }
         }
 
         /// <summary>

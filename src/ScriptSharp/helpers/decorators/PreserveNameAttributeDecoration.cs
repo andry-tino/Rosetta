@@ -16,6 +16,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers
     /// This is a syntax helper which is used to retrieve info on the PreserveNamespace
     /// attribute from a mere syntax point of view.
     /// </remarks>
+    [Obsolete("PreserveCase/PreserveName rolled into ScriptName attribute: https://github.com/nikhilk/scriptsharp/commit/7abd05cf1dbefe6eaf3cb271f7fedec54cc9c4e7")]
     public class PreserveNameAttributeDecoration
     {
         public const string PreserveNameFullName = "PreserveName"; // TODO: Find namespace used by ScriptSharp for this class
