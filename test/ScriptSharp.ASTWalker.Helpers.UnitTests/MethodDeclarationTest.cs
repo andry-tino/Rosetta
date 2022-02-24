@@ -66,17 +66,6 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
         }
 
         [TestMethod]
-        public void WhenScriptNameWithPreserveNameAttributeDetectedOnMethodThenRenderNameAsItIs()
-        {
-            TestName(@"
-            public class MyClass {
-                [ScriptName(PreserveCase = true)]
-                public void MYMETHOD() { }
-            }
-            ", "MYMETHOD");
-        }
-
-        [TestMethod]
         public void WhenScriptNameWithPreserveCaseAttributeDetectedOnMethodThenRenderNameAsItIs()
         {
             TestName(@"
