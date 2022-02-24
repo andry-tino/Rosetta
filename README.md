@@ -1,5 +1,7 @@
 # Rosetta
 
+**Important** At the moment the project is dead. Should you be interested in the code, please fork this repository.
+
 [![Build Status](http://antino-enlad.cloudapp.net:8080/job/Rosetta/badge/icon)](http://antino-enlad.cloudapp.net:8080/job/Rosetta/)
 
 Toolset for migrating your codebase from C# to TypeScript.
