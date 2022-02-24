@@ -7,6 +7,7 @@ namespace Rosetta.AST.Helpers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -84,6 +85,12 @@ namespace Rosetta.AST.Helpers
         public AttributeSyntax AttributeNode
         {
             get { return (AttributeSyntax)this.SyntaxNode; }
+        }
+
+        public AttributeArgument GetArgument(string attributeName)
+        {
+            if (this.Arguments == null) { return null; }
+            return this.Arguments.FirstOrDefault(x => x.AttributeName?.Equals(attributeName, StringComparison.Ordinal) ?? false);
         }
     }
 }

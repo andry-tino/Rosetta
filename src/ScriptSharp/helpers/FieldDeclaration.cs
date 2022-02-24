@@ -39,7 +39,20 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// <summary>
         /// Gets the name of the variable.
         /// </summary>
-        public override string Name => this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
+        public override string Name {
+            get {
+                var attributes = new AttributeLists(this.FieldDeclarationSyntaxNode).Attributes;
+                foreach (var attribute in attributes)
+                {
+                    if (ScriptNameAttributeDecoration.IsScriptNameAttributeDecoration(attribute))
+                    {
+                        var scriptNameAttributeDecoration = new ScriptNameAttributeDecoration(attribute);
+                        return scriptNameAttributeDecoration.OverridenName ?? base.Name.ToScriptSharpName(scriptNameAttributeDecoration.PreserveCase);
+                    }
+                }
+                return this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
+            }
+        }
 
         /// <summary>
         /// Creates the variable declaration helper.
@@ -53,6 +66,9 @@ namespace Rosetta.ScriptSharp.AST.Helpers
             return new Rosetta.ScriptSharp.AST.Helpers.VariableDeclaration(node, semanticModel);
         }
 
+        /// <summary>
+        /// Legacy PreserveName attribute. AT some point in time, ScriptSharp migrated to ScriptName attribute. We want to support both.
+        /// </summary>
         private bool ShouldPreserveName
         {
             get

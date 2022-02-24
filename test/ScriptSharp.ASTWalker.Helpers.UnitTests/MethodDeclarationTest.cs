@@ -54,6 +54,42 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
             ", "MyMethod");
         }
 
+        [TestMethod]
+        public void WhenScriptNameAttributeDetectedOnMethodThenRenderNameAsSpecified()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(""mymethod"")]
+                public void MyMethod() { }
+            }
+            ", "mymethod");
+        }
+
+        [TestMethod]
+        public void WhenScriptNameWithPreserveCaseAttributeDetectedOnMethodThenRenderNameAsItIs()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(PreserveCase = true)]
+                public void MyMethod() { }
+            }
+            ", "MyMethod");
+        }
+
+        /// <summary>
+        /// ScriptName attribute constructor argument overrides PreserveCase/PreserveName properties
+        /// </summary>
+        [TestMethod]
+        public void WhenScriptNameWithMultipleAttributesDetectedOnMethodThenOverridenNameTakesPrecedence()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(""mymethod"", PreserveCase = true, PreserveName = true)]
+                public void MyMethod() { }
+            }
+            ", "mymethod");
+        }
+
         private static void TestName(string source, string expectedName)
         {
             var tree = CSharpSyntaxTree.ParseText(source);

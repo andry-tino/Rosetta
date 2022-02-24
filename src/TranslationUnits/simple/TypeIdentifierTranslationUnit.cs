@@ -86,7 +86,9 @@ namespace Rosetta.Translation
 
         private static string ValidateName(string name)
         {
-            if (name.Contains(" "))
+            string[] parts = name.Split('<'); //only check the non-generic part
+
+            if (parts[0].Contains(" "))
             {
                 throw new ArgumentException("Type names cannot contain spaces", nameof(name));
             }

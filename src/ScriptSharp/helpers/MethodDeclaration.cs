@@ -39,8 +39,21 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         /// <summary>
         /// Gets the name of the type.
         /// </summary>
-        public override string Name => this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
-        
+        public override string Name {
+            get {
+                var attributes = new AttributeLists(this.MethodDeclarationSyntaxNode).Attributes;
+                foreach (var attribute in attributes)
+                {
+                    if (ScriptNameAttributeDecoration.IsScriptNameAttributeDecoration(attribute))
+                    {
+                        var scriptNameAttributeDecoration = new ScriptNameAttributeDecoration(attribute);
+                        return scriptNameAttributeDecoration.OverridenName ?? base.Name.ToScriptSharpName(scriptNameAttributeDecoration.PreserveCase);
+                    }
+                }
+                return this.ShouldPreserveName ? base.Name : base.Name.ToScriptSharpName();
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

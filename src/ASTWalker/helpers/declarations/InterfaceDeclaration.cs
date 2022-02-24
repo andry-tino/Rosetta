@@ -69,7 +69,7 @@ namespace Rosetta.AST.Helpers
             }
         }
 
-        private InterfaceDeclarationSyntax InterfaceDeclarationNode
+        protected InterfaceDeclarationSyntax InterfaceDeclarationNode
         {
             get { return (InterfaceDeclarationSyntax)this.SyntaxNode; }
         }

@@ -3,21 +3,15 @@
 /// Andrea Tino - 2016
 /// </summary>
 
-namespace Rosetta.AST.Helpers
+namespace Rosetta.ScriptSharp.AST.Helpers
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    using Rosetta.Translation;
 
     /// <summary>
     /// Helper for accessing enums in AST.
     /// </summary>
-    public class EnumDeclaration : Helper
+    public class EnumDeclaration : Rosetta.AST.Helpers.EnumDeclaration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumDeclaration"/> class.
@@ -39,32 +33,24 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
-        /// Gets the visibility associated with the property.
-        /// </summary>
-        public ModifierTokens Visibility
-        {
-            get { return Modifiers.Get(this.EnumDeclarationSyntaxNode.Modifiers); }
-        }
-
-        /// <summary>
-        /// Gets the values of the enum.
-        /// </summary>
-        public IEnumerable<string> Values
-        {
-            get { return null; }
-        }
-
-        /// <summary>
         /// Gets the name.
         /// </summary>
-        public virtual string Name
+        public override string Name
         {
-            get { return this.EnumDeclarationSyntaxNode.Identifier.ValueText; }
-        }
-
-        protected EnumDeclarationSyntax EnumDeclarationSyntaxNode
-        {
-            get { return this.SyntaxNode as EnumDeclarationSyntax; }
+            get
+            {
+                var attributes = new Rosetta.AST.Helpers.AttributeLists(this.EnumDeclarationSyntaxNode).Attributes;
+                foreach (var attribute in attributes)
+                {
+                    if (ScriptNameAttributeDecoration.IsScriptNameAttributeDecoration(attribute))
+                    {
+                        var scriptNameAttributeDecoration = new ScriptNameAttributeDecoration(attribute);
+                        return scriptNameAttributeDecoration.OverridenName ?? base.Name.ToScriptSharpName(scriptNameAttributeDecoration.PreserveCase);
+                    }
+                }
+                //By default, Enum names are not CamelCased.
+                return base.Name;
+            }
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
     using Rosetta.Tests.Utils;
 
     /// <summary>
-    /// Tests for the <see cref="FieldDeclaration"/> classes.
+    /// Tests for the <see cref="EnumMemberDeclarationTest"/> classes.
     /// </summary>
     [TestClass]
-    public class FieldDeclarationTest
+    public class EnumMemberDeclarationTest
     {
         [ClassInitialize]
         public static void Initialize(TestContext context)
@@ -34,86 +34,75 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
         }
 
         [TestMethod]
-        public void NameConvertedAccordingToScriptSharpRules()
+        public void NameConvertedOnEnumMemberAccordingToScriptSharpRules()
         {
             TestName(@"
-            public class MyClass {
-                int MyField;
+            public enum MyEnum {
+                MyEnumMember;
             }
-            ", "myField");
+            ", "myEnumMember");
         }
 
         /// <summary>
         /// ScrptSharp by default converts identifier UILanguageId to uiLanguageId
         /// </summary>
         [TestMethod]
-        public void NameConvertedAccordingToScriptSharpCamelCaseRules()
+        public void NameConvertedOnEnumMemberAccordingToScriptSharpCamelCaseRules()
         {
             TestName(@"
-            public class MyClass {
-                int MYField;
+            public enum MyEnum {
+                MYEnumMember;
             }
-            ", "myField");
+            ", "myEnumMember");
         }
 
         [TestMethod]
-        public void WhenPreserveNameAttributeDetectedOnFieldThenRenderNameAsItIs()
+        public void WhenScriptNameAttributeDetectedOnEnumMemberThenRenderNameAsSpecified()
         {
             TestName(@"
-            public class MyClass {
-                [PreserveName]
-                int MyField;
+            public enum MyEnum {
+                [ScriptName(""myenummember"")
+                MyEnumMember;
             }
-            ", "MyField");
+            ", "myenummember");
         }
 
         [TestMethod]
-        public void WhenScriptNameAttributeDetectedOnFieldThenRenderNameAsSpecified()
+        public void WhenScriptNameWithPreserveCaseAttributeDetectedOnEnumMemberThenRenderNameAsItIs()
         {
             TestName(@"
-            public class MyClass {
-                [ScriptName(""myfield"")]
-                int MyField;
-            }
-            ", "myfield");
-        }
-
-        [TestMethod]
-        public void WhenScriptNameWithPreserveCaseAttributeDetectedOnFieldThenRenderNameAsItIs()
-        {
-            TestName(@"
-            public class MyClass {
+            public enum MyEnum {
                 [ScriptName(PreserveCase = true)]
-                int MyField;
+                MyEnumMember;
             }
-            ", "MyField");
+            ", "MyEnumMember");
         }
 
         /// <summary>
         /// ScriptName attribute constructor argument overrides PreserveCase/PreserveName properties
         /// </summary>
         [TestMethod]
-        public void WhenScriptNameWithMultipleAttributesDetectedOnFieldThenOverridenNameTakesPrecedence()
+        public void WhenScriptNameWithMultipleAttributesDetectedOnEnumMemberThenOverridenNameTakesPrecedence()
         {
             TestName(@"
-            public class MyClass {
-                [ScriptName(""myfield"", PreserveCase = true, PreserveName = true)]
-                int MyField;
+            public enum MyEnum {
+                [ScriptName(""myenummember"", PreserveCase = true, PreserveName = true)]
+                MyEnumMember;
             }
-            ", "myfield");
+            ", "myenummember");
         }
 
         private static void TestName(string source, string expectedName)
         {
             var tree = CSharpSyntaxTree.ParseText(source);
 
-            var node = new NodeLocator(tree).LocateFirst(typeof(FieldDeclarationSyntax));
+            var node = new NodeLocator(tree).LocateFirst(typeof(EnumMemberDeclarationSyntax));
             Assert.IsNotNull(node);
 
-            var fieldDeclarationNode = node as FieldDeclarationSyntax;
-            Assert.IsNotNull(fieldDeclarationNode);
+            var enumMemberDeclarationNode = node as EnumMemberDeclarationSyntax;
+            Assert.IsNotNull(enumMemberDeclarationNode);
 
-            var helper = new FieldDeclaration(fieldDeclarationNode);
+            var helper = new EnumMemberDeclaration(enumMemberDeclarationNode);
 
             Assert.AreEqual(expectedName, helper.Name, "Name was not converted according to ScriptSharp rules!");
         }

@@ -46,9 +46,9 @@ namespace Rosetta.AST.Helpers
             get
             {
                 var literalExpression = this.AttributeArgumentSyntaxNode.Expression as LiteralExpressionSyntax;
-                
-                return literalExpression == null 
-                    ? null 
+
+                return literalExpression == null
+                    ? null
                     : new LiteralExpression(literalExpression, this.SemanticModel);
             }
         }
@@ -56,6 +56,18 @@ namespace Rosetta.AST.Helpers
         private AttributeArgumentSyntax AttributeArgumentSyntaxNode
         {
             get { return this.SyntaxNode as AttributeArgumentSyntax; }
+        }
+
+        public string AttributeName
+        {
+            get
+            {
+                return this.AttributeArgumentSyntaxNode.NameEquals?.Name.Identifier.ValueText;
+            }
+        }
+
+        public object GetAttributeValue() {
+            return this.LiteralExpression.Literal.Value;
         }
     }
 }

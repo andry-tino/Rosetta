@@ -81,6 +81,42 @@ namespace Rosetta.ScriptSharp.AST.Helpers.UnitTests
             ", "MyProperty");
         }
 
+        [TestMethod]
+        public void WhenScriptNameAttributeDetectedOnPropertyThenRenderNameAsSpecified()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(""myproperty"")]
+                public string MyProperty { get; set; }
+            }
+            ", "myproperty");
+        }
+
+        [TestMethod]
+        public void WhenScriptNameWithPreserveCaseAttributeDetectedOnPropertyThenRenderNameAsItIs()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(PreserveCase = true)]
+                public string MyProperty { get; set; }
+            }
+            ", "MyProperty");
+        }
+
+        /// <summary>
+        /// ScriptName attribute constructor argument overrides PreserveCase/PreserveName properties
+        /// </summary>
+        [TestMethod]
+        public void WhenScriptNameWithMultipleAttributesDetectedOnPropertyThenOverridenNameTakesPrecedence()
+        {
+            TestName(@"
+            public class MyClass {
+                [ScriptName(""myproperty"", PreserveCase = true, PreserveName = true)]
+                public string MyProperty { get; set; }
+            }
+            ", "myproperty");
+        }
+
         private static void TestName(string source, string expectedName)
         {
             var tree = CSharpSyntaxTree.ParseText(source);

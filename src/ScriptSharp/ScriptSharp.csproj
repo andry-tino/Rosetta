@@ -100,7 +100,11 @@
     <Compile Include="helpers\ClassDeclaration.cs" />
     <Compile Include="helpers\ConstructorDeclaration.cs" />
     <Compile Include="helpers\decorators\PreserveNameAttributeDecoration.cs" />
+    <Compile Include="helpers\decorators\ScriptNameAttributeDecoration.cs" />
+    <Compile Include="helpers\EnumDeclaration.cs" />
+    <Compile Include="helpers\EnumMemberDeclaration.cs" />
     <Compile Include="helpers\FieldDeclaration.cs" />
+    <Compile Include="helpers\InterfaceDeclaration.cs" />
     <Compile Include="helpers\MethodDeclaration.cs" />
     <Compile Include="helpers\Parameter.cs" />
     <Compile Include="helpers\PropertyDeclaration.cs" />
