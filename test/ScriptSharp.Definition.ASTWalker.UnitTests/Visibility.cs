@@ -61,6 +61,31 @@ namespace Rosetta.ScriptSharp.Definition.AST.UnitTests
         }
 
         /// <summary>
+        /// Checks that not exposed event field members in classes are not actually emitted in the definition file.
+        /// </summary>
+        [TestMethod]
+        public void PublicEventFieldMembersInClasses()
+        {
+            var astWalker = ParseClass(@"
+                public class MyClass {
+                    private event EventHandler myPrivateEvent1;
+                    public event EventHandler myInternalEvent1;
+                    private event EventHandler myPrivateEvent2;
+                    protected event EventHandler myProtectedEvent1;
+                    event EventHandler myPrivateEvent3;
+                }
+            ");
+
+            // Checking
+            Assert.IsNotNull(astWalker.ClassDefinition);
+
+            // Checking members
+            Assert.IsNotNull(astWalker.ClassDefinition.OtherDeclarations);
+            Assert.IsTrue(astWalker.ClassDefinition.OtherDeclarations.Count() > 0);
+            Assert.AreEqual(1, astWalker.ClassDefinition.OtherDeclarations.Count());
+        }
+
+        /// <summary>
         /// Checks that not exposed field members in classes are not actually emitted in the definition file.
         /// </summary>
         [TestMethod]
@@ -108,6 +133,31 @@ namespace Rosetta.ScriptSharp.Definition.AST.UnitTests
             Assert.IsNotNull(astWalker.ClassDefinition.MemberDeclarations);
             Assert.IsTrue(astWalker.ClassDefinition.MemberDeclarations.Count() > 0);
             Assert.AreEqual(1, astWalker.ClassDefinition.MemberDeclarations.Count());
+        }
+
+        /// <summary>
+        /// Checks that not exposed event field members in classes are not actually emitted in the definition file.
+        /// </summary>
+        [TestMethod]
+        public void InternalEventFieldMembersInClasses()
+        {
+            var astWalker = ParseClass(@"
+                public class MyClass {
+                    private event EventHandler myPrivateEvent1;
+                    internal event EventHandler myInternalEvent1;
+                    private event EventHandler myPrivateEvent2;
+                    protected event EventHandler myProtectedEvent1;
+                    event EventHandler myPrivateEvent3;
+                }
+            ");
+
+            // Checking
+            Assert.IsNotNull(astWalker.ClassDefinition);
+
+            // Checking members
+            Assert.IsNotNull(astWalker.ClassDefinition.OtherDeclarations);
+            Assert.IsTrue(astWalker.ClassDefinition.OtherDeclarations.Count() > 0);
+            Assert.AreEqual(1, astWalker.ClassDefinition.OtherDeclarations.Count());
         }
 
         /// <summary>

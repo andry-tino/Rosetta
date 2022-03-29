@@ -33,5 +33,7 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
         public static Type FieldsDefinitionMethodsProvider => typeof(Fields);
 
         public static Type FieldsWithPreserveNameDefinitionMethodsProvider => typeof(FieldsWithPreserveName);
+
+        public static Type EventsDefinitionMethodsProvider => typeof(Events);
     }
 }

@@ -23,6 +23,10 @@ namespace Rosetta.Translation
         protected IEnumerable<ITranslationUnit> constructorDeclarations;
         protected IEnumerable<ITranslationUnit> propertyDeclarations;
         protected IEnumerable<ITranslationUnit> methodDeclarations;
+        /// <summary>
+        /// Other declarations may come in with more specific projects (ScriptSharp)
+        /// </summary>
+        protected IEnumerable<ITranslationUnit> otherDeclarations;
 
         // Injected units
         protected ITranslationUnit injectedBefore;
@@ -40,6 +44,7 @@ namespace Rosetta.Translation
             this.constructorDeclarations = new List<ITranslationUnit>();
             this.propertyDeclarations = new List<ITranslationUnit>();
             this.methodDeclarations = new List<ITranslationUnit>();
+            this.otherDeclarations = new List<ITranslationUnit>();
 
             this.injectedBefore = null;
         }
@@ -62,6 +67,7 @@ namespace Rosetta.Translation
             this.constructorDeclarations = other.constructorDeclarations;
             this.propertyDeclarations = other.propertyDeclarations;
             this.methodDeclarations = other.methodDeclarations;
+            this.otherDeclarations = other.otherDeclarations;
 
             this.injectedBefore = other.injectedBefore;
         }
@@ -118,11 +124,12 @@ namespace Rosetta.Translation
         {
             get
             {
-                return 
+                return
                     this.constructorDeclarations
                     .Concat(this.constructorDeclarations)
                     .Concat(this.memberDeclarations)
-                    .Concat(this.propertyDeclarations);
+                    .Concat(this.propertyDeclarations)
+                    .Concat(this.otherDeclarations);
             }
         }
 
@@ -202,7 +209,8 @@ namespace Rosetta.Translation
             if (this.memberDeclarations.Count() > 0 && (
                 this.constructorDeclarations.Count() > 0 || 
                 this.propertyDeclarations.Count() > 0 ||
-                this.methodDeclarations.Count() > 0))
+                this.methodDeclarations.Count() > 0 ||
+                this.otherDeclarations.Count() > 0))
             {
                 writer.WriteLine(string.Empty);
             }
@@ -216,7 +224,8 @@ namespace Rosetta.Translation
             // Adding a newline
             if (this.constructorDeclarations.Count() > 0 && (
                 this.propertyDeclarations.Count() > 0 ||
-                this.methodDeclarations.Count() > 0))
+                this.methodDeclarations.Count() > 0 ||
+                this.otherDeclarations.Count() > 0))
             {
                 writer.WriteLine(string.Empty);
             }
@@ -228,7 +237,9 @@ namespace Rosetta.Translation
             }
 
             // Adding a newline
-            if (this.propertyDeclarations.Count() > 0 && this.methodDeclarations.Count() > 0)
+            if (this.propertyDeclarations.Count() > 0 && (
+                this.methodDeclarations.Count() > 0 ||
+                this.otherDeclarations.Count() > 0))
             {
                 writer.WriteLine(string.Empty);
             }
@@ -237,6 +248,18 @@ namespace Rosetta.Translation
             foreach (ITranslationUnit translationUnit in this.methodDeclarations)
             {
                 writer.WriteLine("{0}{1}", translationUnit.Translate(), this.RenderedMethodDeclarationAfterSeparator);
+            }
+
+            // Adding a newline
+            if (this.methodDeclarations.Count() > 0 && this.otherDeclarations.Count() > 0)
+            {
+                writer.WriteLine(string.Empty);
+            }
+
+            //Other declarations
+            foreach (ITranslationUnit translationUnit in this.otherDeclarations)
+            {
+                writer.WriteLine("{0}", translationUnit.Translate());
             }
 
             // Closing
@@ -323,6 +346,21 @@ namespace Rosetta.Translation
             }
 
             ((List<ITranslationUnit>)this.methodDeclarations).Add(translationUnit);
+        }
+
+        public void AddOtherDeclaration(ITranslationUnit translationUnit)
+        {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
+            ((List<ITranslationUnit>)this.otherDeclarations).Add(translationUnit);
         }
 
         #endregion

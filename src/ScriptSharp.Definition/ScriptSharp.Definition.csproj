@@ -99,6 +99,7 @@
     <Compile Include="factories\ClassDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\ConstructorDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\EnumDefinitionTranslationUnitFactory.cs" />
+    <Compile Include="factories\EventFieldDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\FieldDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\InterfaceDefinitionTranslationUnitFactory.cs" />
     <Compile Include="factories\MethodDefinitionTranslationUnitFactory.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="translation\ConstructorDefinitionTranslationUnit.cs" />
     <Compile Include="translation\EmptyInterfaceDefinitionTranslationUnit.cs" />
     <Compile Include="translation\EnumDefinitionTranslationUnit.cs" />
+    <Compile Include="translation\EventFieldDefinitionTranslationUnit.cs" />
     <Compile Include="translation\FieldDefinitionTranslationUnit.cs" />
     <Compile Include="translation\InterfaceDefinitionTranslationUnit.cs" />
     <Compile Include="translation\MethodDefinitionTranslationUnit.cs" />

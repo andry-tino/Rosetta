@@ -40,6 +40,16 @@ namespace Rosetta.AST.Helpers
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeLists"/> class.
         /// </summary>
+        /// <param name="syntaxNode">The <see cref="BaseFieldDeclarationSyntax"/> from which attributes will be extracted.</param>
+        public AttributeLists(BaseFieldDeclarationSyntax syntaxNode)
+            : base(syntaxNode)
+        {
+            this.attributeLists = syntaxNode.AttributeLists;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttributeLists"/> class.
+        /// </summary>
         /// <param name="syntaxNode">The <see cref="MethodDeclarationSyntax"/> from which attributes will be extracted.</param>
         public AttributeLists(MethodDeclarationSyntax syntaxNode)
             : base(syntaxNode)

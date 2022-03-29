@@ -381,5 +381,10 @@ namespace Rosetta.Translation
         /// String rendering constant for any keyword token. 
         /// </summary>
         public const string AnyType = "any";
+
+        /// <summary>
+        /// String rendering constant for Function keyword token.
+        /// </summary>
+        public const string FunctionType = "Function";
     }
 }

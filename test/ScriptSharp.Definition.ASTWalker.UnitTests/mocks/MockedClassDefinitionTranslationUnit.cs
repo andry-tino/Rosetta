@@ -45,5 +45,10 @@ namespace Rosetta.ScriptSharp.Definition.AST.UnitTests.Mocks
         {
             get { return this.methodDeclarations; }
         }
+
+        public IEnumerable<ITranslationUnit> OtherDeclarations
+        {
+            get { return this.otherDeclarations; }
+        }
     }
 }

@@ -47,6 +47,12 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings.Tests
         }
 
         [TestMethod]
+        public void TestEvents()
+        {
+            Test(new EventsResourceDeployer());
+        }
+
+        [TestMethod]
         public void TestFieldsWithPreserveName()
         {
             Test(new FieldsWithPreserveNameResourceDeployer());

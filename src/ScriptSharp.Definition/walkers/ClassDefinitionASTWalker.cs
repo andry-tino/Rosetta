@@ -88,6 +88,22 @@ namespace Rosetta.ScriptSharp.Definition.AST
             this.InvokeFieldDeclarationVisited(this, new WalkerEventArgs());
         }
 
+        public override void VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
+        {
+            var eventFieldDefinitionTranslationUnit = new EventFieldDefinitionTranslationUnitFactory(node, this.semanticModel, this.generateTranslationUniOnProtectedMembers).Create();
+            if (eventFieldDefinitionTranslationUnit == null)
+            {
+                // When the factory returns null, then the member is not exposed, thus we do not generate it in the translation tree
+                return;
+            }
+
+            this.classDeclaration.AddOtherDeclaration(eventFieldDefinitionTranslationUnit);
+
+            this.LogVisitEventFieldDeclaration(node); // Logging
+
+            this.InvokeEventFieldDeclarationVisited(this, new WalkerEventArgs());
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -152,6 +168,14 @@ namespace Rosetta.ScriptSharp.Definition.AST
             this.InvokeConstructorDeclarationVisited(this, new WalkerEventArgs());
         }
 
+        protected void LogVisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
+        {
+            if (this.IsLoggingEnabled)
+            {
+                new Rosetta.AST.Diagnostics.Logging.EventFieldDeclarationSyntaxNodeLogger(this.node as ClassDeclarationSyntax, node, this.Logger).LogVisit("Class ASTWalker");
+            }
+        }
+
         #endregion
 
         protected override void OnContextChanged()
@@ -176,5 +200,17 @@ namespace Rosetta.ScriptSharp.Definition.AST
         {
             get { return this.classDeclaration as ClassDefinitionTranslationUnit; }
         }
+
+        #region Walk events
+        public event WalkerEvent EventFieldDeclarationVisited;
+
+        protected void InvokeEventFieldDeclarationVisited(object sender, WalkerEventArgs e)
+        {
+            if (this.EventFieldDeclarationVisited != null)
+            {
+                this.EventFieldDeclarationVisited(sender, e);
+            }
+        }
+        #endregion
     }
 }

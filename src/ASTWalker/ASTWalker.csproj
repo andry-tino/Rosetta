@@ -118,6 +118,7 @@
     <Compile Include="helpers\declarations\ConstructorDeclaration.cs" />
     <Compile Include="helpers\declarations\EnumDeclaration.cs" />
     <Compile Include="helpers\declarations\EnumMemberDeclaration.cs" />
+    <Compile Include="helpers\declarations\EventFieldDeclaration.cs" />
     <Compile Include="helpers\declarations\FieldDeclaration.cs" />
     <Compile Include="helpers\declarations\MethodDeclaration.cs" />
     <Compile Include="helpers\declarations\NamespaceDeclaration.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="IASTTransformer.cs" />
     <Compile Include="logging\ClassDeclarationSyntaxNodeLogger.cs" />
     <Compile Include="logging\ConstructorDeclarationSyntaxNodeLogger.cs" />
+    <Compile Include="logging\EventFieldDeclarationSyntaxNodeLogger.cs" />
     <Compile Include="logging\FieldDeclarationSyntaxNodeLogger.cs" />
     <Compile Include="logging\InterfaceDeclarationSyntaxNodeLogger.cs" />
     <Compile Include="logging\MethodDeclarationSyntaxNodeLogger.cs" />

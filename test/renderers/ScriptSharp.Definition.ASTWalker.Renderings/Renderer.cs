@@ -41,7 +41,8 @@ namespace Rosetta.ScriptSharp.Definition.AST.Renderings
                     DataProvider.MethodsWithPreserveNameDefinitionMethodsProvider,
                     DataProvider.PropertiesWithPreserveNameDefinitionMethodsProvider,
                     DataProvider.FieldsDefinitionMethodsProvider,
-                    DataProvider.FieldsWithPreserveNameDefinitionMethodsProvider
+                    DataProvider.FieldsWithPreserveNameDefinitionMethodsProvider,
+                    DataProvider.EventsDefinitionMethodsProvider
                 };
             }
         }

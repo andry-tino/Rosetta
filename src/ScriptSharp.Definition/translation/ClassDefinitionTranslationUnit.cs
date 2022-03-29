@@ -6,7 +6,8 @@
 namespace Rosetta.ScriptSharp.Definition.Translation
 {
     using System;
-
+    using System.Collections.Generic;
+    using System.Linq;
     using Rosetta.Translation;
 
     /// <summary>
@@ -19,12 +20,14 @@ namespace Rosetta.ScriptSharp.Definition.Translation
     /// </remarks>
     public class ClassDefinitionTranslationUnit : ClassDeclarationTranslationUnit
     {
+        protected IEnumerable<ITranslationUnit> eventFieldDeclarations;
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassDefinitionTranslationUnit"/> class.
         /// </summary>
         protected ClassDefinitionTranslationUnit() : base()
         {
             this.IsAtRootLevel = false;
+            this.eventFieldDeclarations = new List<ITranslationUnit>();
         }
 
         /// <summary>
@@ -37,6 +40,7 @@ namespace Rosetta.ScriptSharp.Definition.Translation
         public ClassDefinitionTranslationUnit(ClassDefinitionTranslationUnit other)
             : base(other)
         {
+            this.eventFieldDeclarations = other.eventFieldDeclarations;
         }
 
         /// <summary>
@@ -59,6 +63,22 @@ namespace Rosetta.ScriptSharp.Definition.Translation
                 Name = name,
                 BaseClassName = baseClassName
             };
+        }
+
+        public void AddEventFieldDeclaration(ITranslationUnit translationUnit)
+        {
+            if (translationUnit == null)
+            {
+                throw new ArgumentNullException(nameof(translationUnit));
+            }
+
+            if (translationUnit as NestedElementTranslationUnit != null)
+            {
+                ((NestedElementTranslationUnit)translationUnit).NestingLevel = this.NestingLevel + 1;
+            }
+
+            ((List<ITranslationUnit>)this.eventFieldDeclarations).Add(translationUnit);
+            ((List<ITranslationUnit>)this.otherDeclarations).Add(translationUnit);
         }
 
         protected override string RenderedMethodDeclarationAfterSeparator

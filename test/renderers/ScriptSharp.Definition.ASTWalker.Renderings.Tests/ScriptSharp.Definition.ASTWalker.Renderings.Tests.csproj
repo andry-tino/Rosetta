@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="providers\EventsResourceDeployer.cs" />
     <Compile Include="providers\PropertiesWithPreserveNameResourceDeployer.cs" />
     <Compile Include="providers\MethodsWithPreserveNameResourceDeployer.cs" />
     <Compile Include="providers\InterfacesWithScriptNamespaceResourceDeployer.cs" />
@@ -124,6 +125,9 @@
   <ItemGroup>
     <EmbeddedResource Include="archetypes\properties\properties-preservename\PreserveName.SimpleAutoProperty.d.ts" />
     <EmbeddedResource Include="archetypes\properties\properties-preservename\PreserveName.SimpleProperty.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="archetypes\events\Events.d.ts" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

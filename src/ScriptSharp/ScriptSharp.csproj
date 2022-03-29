@@ -101,6 +101,7 @@
     <Compile Include="helpers\ConstructorDeclaration.cs" />
     <Compile Include="helpers\decorators\PreserveNameAttributeDecoration.cs" />
     <Compile Include="helpers\decorators\ScriptNameAttributeDecoration.cs" />
+    <Compile Include="helpers\EventFieldDeclaration.cs" />
     <Compile Include="helpers\FieldDeclaration.cs" />
     <Compile Include="helpers\InterfaceDeclaration.cs" />
     <Compile Include="helpers\MethodDeclaration.cs" />
