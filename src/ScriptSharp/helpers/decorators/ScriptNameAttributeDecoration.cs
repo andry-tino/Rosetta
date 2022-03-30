@@ -20,7 +20,7 @@ namespace Rosetta.ScriptSharp.AST.Helpers
     public class ScriptNameAttributeDecoration
     {
         //[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Event, Inherited = false, AllowMultiple = false)]
-        public const string ScriptNameFullName = "ScriptName"; // TODO: Find namespace used by ScriptSharp for this class
+        public const string ScriptNameFullName = "ScriptNameAttribute"; // TODO: Find namespace used by ScriptSharp for this class
         public const string ScriptNameName = "ScriptName";
         public const string PreserveCasePropertyName = "PreserveCase";
         public const string PreserveNamePropertyName = "PreserveName";

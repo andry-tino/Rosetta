@@ -8,8 +8,9 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
     using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
-
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Rosetta.AST.Factories;
+    using Rosetta.AST.Helpers;
     using Rosetta.ScriptSharp.Definition.Translation;
     using Rosetta.Translation;
 
@@ -52,6 +53,11 @@ namespace Rosetta.ScriptSharp.Definition.AST.Factories
         protected override ITranslationUnit CreateTranslationUnit(ModifierTokens visibility, ITranslationUnit name)
         {
             return InterfaceDefinitionTranslationUnit.Create(visibility, name);
+        }
+
+        protected override InterfaceDeclaration CreateHelper(InterfaceDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new Rosetta.ScriptSharp.AST.Helpers.InterfaceDeclaration(node, semanticModel);
         }
     }
 }

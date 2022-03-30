@@ -74,5 +74,6 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
         {
             return attribute.Name == ScriptNamespaceFullName;
         }
+        
     }
 }

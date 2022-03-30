@@ -42,51 +42,8 @@ namespace Rosetta.Reflection.Helpers
         /// <summary>
         /// Gets a value indicating whether a namespace is defined for the type.
         /// </summary>
-        public bool Exists => this.FullName != null && this.FullName != "";
-
-        /// <summary>
-        /// Replaces the namespace with another one.
-        /// </summary>
-        /// <param name="originalTypeFullName">The full name of a type.</param>
-        /// <param name="newNamespace">The namespace to replace the original namespace.</param>
-        /// <returns>The final type name with replaced namespace.</returns>
-        /// <remarks>
-        /// This method will consider the type name the last one after extracting from the dot notation.
-        /// </remarks>
-        public static string ReplaceNamespace(string originalTypeFullName, string newNamespace)
-        {
-            if (originalTypeFullName == null)
-            {
-                throw new ArgumentNullException(nameof(originalTypeFullName));
-            }
-            if (originalTypeFullName.Length == 0)
-            {
-                throw new ArgumentException("Type name should contain an actual value", nameof(originalTypeFullName));
-            }
-
-            if (newNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(newNamespace));
-            }
-            if (newNamespace.Length == 0)
-            {
-                throw new ArgumentException("New namespace name should contain an actual value", nameof(newNamespace));
-            }
-
-            string[] extractedNames = originalTypeFullName.Split(new[] { "." }, StringSplitOptions.None);
-            if (extractedNames.Length <= 1)
-            {
-                throw new ArgumentException("Invalid full name", nameof(originalTypeFullName));
-            }
-
-            var typeName = extractedNames.Reverse().Take(1).First();
-            if (typeName.Length == 0)
-            {
-                throw new ArgumentException("Invalid full name", nameof(originalTypeFullName));
-            }
-
-            return $"{newNamespace}.{typeName}";
-        }
+        public bool Exists => this.FullName != null;
+        
 
         /// <summary>
         /// Replaces the namespace with another one.
@@ -119,10 +76,6 @@ namespace Rosetta.Reflection.Helpers
             {
                 throw new ArgumentNullException(nameof(newNamespace));
             }
-            if (newNamespace.Length == 0)
-            {
-                throw new ArgumentException("New namespace name should contain an actual value", nameof(newNamespace));
-            }
 
             if (originalTypeNamespaceName.Length == 0)
             {
@@ -136,7 +89,7 @@ namespace Rosetta.Reflection.Helpers
                 return $"{newNamespace}.{originalTypeFullName}";
             }
 
-            return originalTypeFullName.Replace(originalTypeNamespaceName, newNamespace);
+            return originalTypeFullName.Replace(originalTypeNamespaceName, newNamespace).TrimStart('.');
         }
 
         protected ITypeInfoProxy Type => this.type;

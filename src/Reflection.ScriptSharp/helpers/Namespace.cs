@@ -18,6 +18,7 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
         // Cached values
         private string fullName;
         private bool? hasScriptNamespaceOverride;
+        private bool? hasIgnoreOutput;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Namespace"/> class.
@@ -50,11 +51,14 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
                     {
                         foreach (ICustomAttributeDataProxy attribute in customAttributes)
                         {
-                            if (ScriptNamespaceAttributeDecoration.IsScriptNamespaceAttributeDecoration(attribute.AttributeType))
+                            if (IgnoreNamespaceAttributeDecoration.IsIgnoreNamespaceAttributeDecoration(attribute.AttributeType))
+                            {
+                                this.fullName = "";
+                                break;
+                            } else if (ScriptNamespaceAttributeDecoration.IsScriptNamespaceAttributeDecoration(attribute.AttributeType))
                             {
                                 var helper = new ScriptNamespaceAttributeDecoration(attribute);
                                 this.fullName = helper.OverridenNamespace;
-
                                 break;
                             }
                         }
@@ -94,6 +98,35 @@ namespace Rosetta.Reflection.ScriptSharp.Helpers
                 }
 
                 return this.hasScriptNamespaceOverride.Value;
+            }
+        }
+
+        public bool HasIgnoreOutput
+        {
+            get
+            {
+                if (!this.hasIgnoreOutput.HasValue)
+                {
+                    this.hasIgnoreOutput = false;
+
+                    IEnumerable<ICustomAttributeDataProxy> customAttributes = this.Type.CustomAttributes;
+
+                    if (customAttributes != null)
+                    {
+                        foreach (ICustomAttributeDataProxy attribute in customAttributes)
+                        {
+                            if (IgnoreNamespaceAttributeDecoration.IsIgnoreNamespaceAttributeDecoration(attribute.AttributeType) ||
+                                NonScriptableAttributeDecoration.IsNonScriptableAttributeDecoration(attribute.AttributeType))
+                            {
+                                this.hasIgnoreOutput = true;
+
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return this.hasIgnoreOutput.Value;
             }
         }
     }

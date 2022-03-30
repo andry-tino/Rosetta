@@ -39,6 +39,8 @@ namespace Rosetta.Reflection.ScriptSharp.Factories
         
         protected override string GetInterfaceFullName(ITypeProxy type) => type.FullName.LookupTypeAndOverrideFullName(this.typeLookup);
         
+
+        
         protected override ISyntaxFactory CreateConstructorDeclarationSyntaxFactory(IConstructorInfoProxy ctorInfo)
             => new ConstructorDeclarationSyntaxFactory(ctorInfo, this.ClassInfo, this.typeLookup);
         

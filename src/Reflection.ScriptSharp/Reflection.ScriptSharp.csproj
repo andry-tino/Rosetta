@@ -108,7 +108,11 @@
     <Compile Include="factories\InterfaceDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\MethodDeclarationSyntaxFactory.cs" />
     <Compile Include="factories\PropertyDeclarationSyntaxFactory.cs" />
+    <Compile Include="helpers\NonScriptableAttributeDecoration.cs" />
+    <Compile Include="helpers\ScriptName.cs" />
     <Compile Include="helpers\Namespace.cs" />
+    <Compile Include="helpers\ScriptNameAttributeDecoration.cs" />
+    <Compile Include="helpers\IgnoreNamespaceAttributeDecoration.cs" />
     <Compile Include="helpers\ScriptNamespaceAttributeDecoration.cs" />
     <Compile Include="MscorlibProgramWrapper.cs" />
     <Compile Include="ProgramWrapper.cs" />
@@ -131,6 +135,10 @@
     <ProjectReference Include="..\ScriptSharp.Definition\ScriptSharp.Definition.csproj">
       <Project>{730970a0-58ad-4911-905d-126832243e82}</Project>
       <Name>ScriptSharp.Definition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScriptSharp\ScriptSharp.csproj">
+      <Project>{ce0c7ea4-8bfd-43df-8682-0ab211799f1e}</Project>
+      <Name>ScriptSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

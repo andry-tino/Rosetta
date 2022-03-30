@@ -7,7 +7,7 @@ namespace Rosetta.Reflection.Factories
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -49,6 +49,9 @@ namespace Rosetta.Reflection.Factories
         public SyntaxNode Create()
         {
             var classNode = SyntaxFactory.ClassDeclaration(this.ClassInfo.Name);
+
+            // Define attributes
+            classNode = this.HandleAttributes(classNode);
 
             // Defining accessibility
             classNode = this.HandleAccessibility(classNode);
@@ -185,6 +188,43 @@ namespace Rosetta.Reflection.Factories
                 }
             }
 
+            return newNode;
+        }
+
+        private ClassDeclarationSyntax HandleAttributes(ClassDeclarationSyntax node)
+        {
+            //this.ClassInfo.CustomAttributes
+            var newNode = node;
+
+            foreach (var attribute in this.ClassInfo.CustomAttributes)
+            {
+                var attributeList = SyntaxFactory.AttributeList();
+                var attributeArgumentsList = SyntaxFactory.AttributeArgumentList();
+                var argumentList = SyntaxFactory.SeparatedList<AttributeArgumentSyntax>();
+                foreach (var argument in attribute.ConstructorArguments)
+                {
+                    if (argument.ArgumentType.Name != "String") { continue; }
+                    var attributeArgument = SyntaxFactory.AttributeArgument(
+                        SyntaxFactory.LiteralExpression(
+                            SyntaxKind.StringLiteralExpression,
+                            SyntaxFactory.Literal(argument.Value as string)
+                        )
+                    );
+                    attributeArgumentsList = attributeArgumentsList.AddArguments(attributeArgument);
+                }                
+
+                newNode = newNode.AddAttributeLists(
+                    attributeList.AddAttributes(
+                        SyntaxFactory.Attribute(
+                            SyntaxFactory.IdentifierName(attribute.AttributeType.Name),
+                            attributeArgumentsList
+                        )
+                    )
+                );
+            }
+            
+            
+            
             return newNode;
         }
 

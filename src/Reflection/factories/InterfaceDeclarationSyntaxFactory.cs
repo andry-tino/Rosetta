@@ -43,6 +43,9 @@ namespace Rosetta.Reflection.Factories
         {
             var interfaceNode = SyntaxFactory.InterfaceDeclaration(this.InterfaceInfo.Name);
 
+            // Define attributes
+            interfaceNode = this.HandleAttributes(interfaceNode);
+
             // Defining accessibility
             interfaceNode = this.HandleAccessibility(interfaceNode);
 
@@ -105,6 +108,43 @@ namespace Rosetta.Reflection.Factories
                     newNode = newNode.AddMembers(this.CreateMethodDeclarationSyntaxFactory(method).Create() as MethodDeclarationSyntax);
                 }
             }
+
+            return newNode;
+        }
+
+        private InterfaceDeclarationSyntax HandleAttributes(InterfaceDeclarationSyntax node)
+        {
+            //this.ClassInfo.CustomAttributes
+            var newNode = node;
+
+            foreach (var attribute in this.InterfaceInfo.CustomAttributes)
+            {
+                var attributeList = SyntaxFactory.AttributeList();
+                var attributeArgumentsList = SyntaxFactory.AttributeArgumentList();
+                var argumentList = SyntaxFactory.SeparatedList<AttributeArgumentSyntax>();
+                foreach (var argument in attribute.ConstructorArguments)
+                {
+                    if (argument.ArgumentType.Name != "String") { continue; }
+                    var attributeArgument = SyntaxFactory.AttributeArgument(
+                        SyntaxFactory.LiteralExpression(
+                            SyntaxKind.StringLiteralExpression,
+                            SyntaxFactory.Literal(argument.Value as string)
+                        )
+                    );
+                    attributeArgumentsList = attributeArgumentsList.AddArguments(attributeArgument);
+                }
+
+                newNode = newNode.AddAttributeLists(
+                    attributeList.AddAttributes(
+                        SyntaxFactory.Attribute(
+                            SyntaxFactory.IdentifierName(attribute.AttributeType.Name),
+                            attributeArgumentsList
+                        )
+                    )
+                );
+            }
+
+
 
             return newNode;
         }

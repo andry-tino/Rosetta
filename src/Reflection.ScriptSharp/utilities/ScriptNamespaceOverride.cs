@@ -6,7 +6,8 @@
 namespace Rosetta.Reflection.ScriptSharp.Utilities
 {
     using System;
-
+    using System.Reflection.Metadata;
+    using System.Text.RegularExpressions;
     using Rosetta.Reflection.ScriptSharp.Helpers;
 
     /// <summary>
@@ -24,7 +25,7 @@ namespace Rosetta.Reflection.ScriptSharp.Utilities
         {
             var typeDefinition = typeLookup.GetByFullName(fullName);
 
-            // Could not find a definition for the type. Strange but we can go on
+            // Could not find a definition for the type. StrfullName.Contains("ObservableCollection")ange but we can go on
             // TODO: Find a reporting strategy
             if (typeDefinition == null)
             {
@@ -34,8 +35,20 @@ namespace Rosetta.Reflection.ScriptSharp.Utilities
             // Check the presence of the ScriptNamespace attribute
             var namespaceHelper         = new Namespace(typeDefinition);                            // Gets the ScriptNamespace override
             var ordinaryNamespaceHelper = new Rosetta.Reflection.Helpers.Namespace(typeDefinition); // Gets the original namespace
+            var scriptNameHelper        = new ScriptName(typeDefinition);
 
-            return Rosetta.Reflection.Helpers.Namespace.ReplaceNamespace(fullName, 
+            if (!fullName.Contains(typeDefinition.Name)) {
+                throw new ArgumentException($"fullName {fullName} doesn't contain typeDefinition.Name {typeDefinition.Name}");
+            }
+            if (scriptNameHelper.HasScriptNameOverride)
+            {
+                var typeNameRegex = new Regex($"{Regex.Escape(typeDefinition.Name)}$", RegexOptions.None, new TimeSpan(0, 0, seconds: 1));
+                fullName = typeNameRegex.Replace(fullName, scriptNameHelper.Name);
+            }
+            
+            return ordinaryNamespaceHelper.FullName == ""
+                ? fullName
+                : Rosetta.Reflection.Helpers.Namespace.ReplaceNamespace(fullName, 
                 ordinaryNamespaceHelper.FullName, namespaceHelper.FullName);
         }
     }

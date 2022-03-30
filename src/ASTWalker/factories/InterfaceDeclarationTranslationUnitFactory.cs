@@ -46,7 +46,7 @@ namespace Rosetta.AST.Factories
         /// <returns>A <see cref="InterfaceDeclarationTranslationUnit"/>.</returns>
         public ITranslationUnit Create()
         {
-            InterfaceDeclaration helper = new InterfaceDeclaration(this.Node as InterfaceDeclarationSyntax, this.SemanticModel);
+            InterfaceDeclaration helper = this.CreateHelper(this.Node as InterfaceDeclarationSyntax, this.SemanticModel);
 
             var interfaceDeclaration = this.CreateTranslationUnit(helper.Visibility,
                 IdentifierTranslationUnit.Create(helper.Name)) as InterfaceDeclarationTranslationUnit;
@@ -71,6 +71,11 @@ namespace Rosetta.AST.Factories
         protected virtual ITranslationUnit CreateTranslationUnit(ModifierTokens visibility, ITranslationUnit name)
         {
             return InterfaceDeclarationTranslationUnit.Create(visibility, name);
+        }
+
+        protected virtual InterfaceDeclaration CreateHelper(InterfaceDeclarationSyntax node, SemanticModel semanticModel)
+        {
+            return new InterfaceDeclaration(node, semanticModel);
         }
     }
 }

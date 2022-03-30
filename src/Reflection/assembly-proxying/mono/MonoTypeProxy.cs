@@ -43,6 +43,25 @@ namespace Rosetta.Reflection.Proxies
         /// <summary>
         /// Gets the full name of the type.
         /// </summary>
-        public string FullName => this.typeReference.FullName;
+        public string FullName
+        {
+            get
+            {
+                if (this.typeReference.MetadataType == MetadataType.GenericInstance)
+                {
+                    return ((GenericInstanceType)this.typeReference).ElementType.FullName;
+                } else if (this.typeReference.IsGenericParameter)
+                {
+                    return "any";
+                } else if (this.typeReference.IsArray && this.typeReference.ContainsGenericParameter)
+                {
+                    return "any[]";
+                }
+                else
+                {
+                    return this.typeReference.FullName;
+                }
+            }
+        }
     }
 }

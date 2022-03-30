@@ -6,7 +6,7 @@
 namespace Rosetta.Reflection.ScriptSharp
 {
     using System;
-
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Rosetta.Reflection.Factories;
     using Rosetta.Reflection.Proxies;
     using Rosetta.Reflection.ScriptSharp.Helpers;
@@ -36,15 +36,57 @@ namespace Rosetta.Reflection.ScriptSharp
             this.lookup = new LinearSearchTypeLookup(assembly);
         }
 
+        protected override ISyntaxFactory CreateEnumDeclarationSyntaxFactory(ITypeInfoProxy typeInfo)
+        {
+            var helper = new Namespace(typeInfo);
+            if (helper.HasIgnoreOutput)
+            {
+                return null;
+            }
+            else
+            {
+                return base.CreateEnumDeclarationSyntaxFactory(typeInfo);
+            }
+        }
+
         protected override ISyntaxFactory CreateClassDeclarationSyntaxFactory(ITypeInfoProxy typeInfo)
-            => new ScriptSharpFactories.ClassDeclarationSyntaxFactory(typeInfo, this.lookup);
+        {
+            var helper = new Namespace(typeInfo);
+            if (helper.HasIgnoreOutput)
+            {
+                return null;
+            }
+            else
+            {
+                return new ScriptSharpFactories.ClassDeclarationSyntaxFactory(typeInfo, this.lookup);
+            }
+        }
 
         protected override ISyntaxFactory CreateInterfaceDeclarationSyntaxFactory(ITypeInfoProxy typeInfo)
-            => new ScriptSharpFactories.InterfaceDeclarationSyntaxFactory(typeInfo, this.lookup);
+        {
+            var helper = new Namespace(typeInfo);
+            if (helper.HasIgnoreOutput)
+            {
+                return null;
+            }
+            else
+            {
+                return new ScriptSharpFactories.InterfaceDeclarationSyntaxFactory(typeInfo, this.lookup);
+            }
+        }
 
         protected override Rosetta.Reflection.Helpers.Namespace CreateNamespaceHelper(ITypeInfoProxy type)
         {
             return new Namespace(type);
         }
+
+        protected override MemberDeclarationSyntax BuildClassNode(ITypeInfoProxy type) => new Namespace(type).HasIgnoreOutput ? null : base.BuildClassNode(type);
+    
+        protected override MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type) => new Namespace(type).HasIgnoreOutput ? null : base.BuildEnumNode(type);
+
+        protected override MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type) => new Namespace(type).HasIgnoreOutput ? null : base.BuildInterfaceNode(type);
+
+        protected override MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type) => new Namespace(type).HasIgnoreOutput ? null : base.BuildStructNode(type);
+
     }
 }

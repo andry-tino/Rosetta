@@ -91,7 +91,7 @@ namespace Rosetta.Reflection
             return types;
         }
 
-        private ASTInfo BuildASTInfo()
+        protected ASTInfo BuildASTInfo()
         {
             IEnumerable<ITypeInfoProxy> types = null;
             try
@@ -113,13 +113,25 @@ namespace Rosetta.Reflection
             // System.Enum, so we need to pay attention to that
             foreach (var type in types)
             {
-                if (type.IsNativeClassType()) { nodes.Add(this.BuildClassNode(type)); numberOfClasses++; continue; }
+                if (type.IsNativeClassType()) {
+                    var node = this.BuildClassNode(type);
+                    if (node != null) { nodes.Add(this.BuildClassNode(type)); numberOfClasses++; continue; }
+                }
 
-                if (type.IsNativeStructType()) { nodes.Add(this.BuildStructNode(type)); numberOfStructs++; continue; }
+                if (type.IsNativeStructType()) {
+                    var node = this.BuildStructNode(type);
+                    if (node != null) { nodes.Add(node); numberOfStructs++; continue; }
+                }
 
-                if (type.IsInterface) { nodes.Add(this.BuildInterfaceNode(type)); numberOfInterfaces++; continue; }
+                if (type.IsInterface) {
+                    var node = this.BuildInterfaceNode(type);
+                    if (node != null) { nodes.Add(node); numberOfInterfaces++; continue; }
+                }
 
-                if (type.IsNativeEnumType()) { nodes.Add(this.BuildEnumNode(type)); numberOfEnums++; continue; }
+                if (type.IsNativeEnumType()) {
+                    var node = this.BuildEnumNode(type);
+                    if (node != null) { nodes.Add(node); numberOfEnums++; continue; }
+                }
             }
 
             // Use collected nodes to build a tree containing them all in the root.
@@ -137,7 +149,7 @@ namespace Rosetta.Reflection
             };
         }
 
-        private MemberDeclarationSyntax BuildClassNode(ITypeInfoProxy type)
+        protected virtual MemberDeclarationSyntax BuildClassNode(ITypeInfoProxy type)
         {
             if (this.IsLoggingEnabled)
             {
@@ -147,7 +159,7 @@ namespace Rosetta.Reflection
             return this.BuildNode(type, this.BuildClassNodeCore(type));
         }
 
-        private MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type)
+        protected virtual MemberDeclarationSyntax BuildStructNode(ITypeInfoProxy type)
         {
             if (this.IsLoggingEnabled)
             {
@@ -158,7 +170,7 @@ namespace Rosetta.Reflection
             return this.BuildNode(type, SyntaxFactory.StructDeclaration);
         }
 
-        private MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type)
+        protected virtual MemberDeclarationSyntax BuildEnumNode(ITypeInfoProxy type)
         {
             if (this.IsLoggingEnabled)
             {
@@ -168,7 +180,7 @@ namespace Rosetta.Reflection
             return this.BuildNode(type, this.BuildEnumNodeCore(type));
         }
 
-        private MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type)
+        protected virtual MemberDeclarationSyntax BuildInterfaceNode(ITypeInfoProxy type)
         {
             if (this.IsLoggingEnabled)
             {
@@ -239,7 +251,7 @@ namespace Rosetta.Reflection
         /// <param name="type"></param>
         /// <param name="typeNode"></param>
         /// <returns></returns>
-        private MemberDeclarationSyntax BuildNode(ITypeInfoProxy type, MemberDeclarationSyntax typeNode)
+        protected MemberDeclarationSyntax BuildNode(ITypeInfoProxy type, MemberDeclarationSyntax typeNode)
         {
             var helper = this.CreateNamespaceHelper(type);
             var namespaceNode = helper.Exists ? SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(helper.FullName)) : null;

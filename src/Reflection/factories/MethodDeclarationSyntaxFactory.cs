@@ -97,6 +97,7 @@ namespace Rosetta.Reflection.Factories
             {
                 foreach (var parameter in parameters)
                 {
+                    //parameter.ParameterType
                     newNode = newNode.AddParameterListParameters(SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Name))
                         .WithType(SyntaxFactory.ParseTypeName(this.GetParameterTypeFullName(parameter.ParameterType))));
                 }
