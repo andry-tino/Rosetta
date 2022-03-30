@@ -116,6 +116,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="EnumMemberDeclarationTest.cs" />
+    <Compile Include="EnumDeclarationTest.cs" />
     <Compile Include="EventFieldDeclarationTest.cs" />
     <Compile Include="InterfaceDeclarationTest.cs" />
     <Compile Include="ClassDeclarationTest.cs" />

@@ -33,11 +33,11 @@ namespace Rosetta.ScriptSharp.AST.Helpers
         private readonly bool preserveName;
 
         /// <summary>
-        /// Do not lowercase first char
+        /// Preserve name as is
         /// </summary>
         public bool PreserveCase => preserveCase;
         /// <summary>
-        /// Doesn't allow transformation of name
+        /// It prevents generating transforming private/internal member variable names from "Variable" to "_variable". Currently Rosetta doesn't do this transformation, so it is not implemented. https://github.com/nikhilk/scriptsharp/blob/0b2d2770ac4c94b4ae14e589f090e33c215df4b7/src/Core/Compiler/Compiler/MetadataBuilder.cs#L277</para>
         /// </summary>
         public bool PreserveName => preserveName;
         /// <summary>

@@ -78,6 +78,16 @@ namespace Rosetta.AST.Helpers
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AttributeLists"/> class.
+        /// </summary>
+        /// <param name="syntaxNode">The <see cref="EnumMemberDeclarationSyntax"/> from which attributes will be extracted.</param>
+        public AttributeLists(EnumMemberDeclarationSyntax syntaxNode)
+            : base(syntaxNode)
+        {
+            this.attributeLists = syntaxNode.AttributeLists;
+        }
+
+        /// <summary>
         /// Gets the collections of attributes.
         /// </summary>
         public IEnumerable<AttributeDecoration> Attributes
